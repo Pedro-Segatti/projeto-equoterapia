@@ -1,0 +1,27 @@
+{
+  "name": "babel-plugin-react-html-attrs",
+  "description": "Babel plugin which transforms HTML and SVG attributes on JSX host elements into React-compatible attributes",
+  "version": "3.0.5",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@babel/core": "7.x",
+    "@babel/plugin-external-helpers": "7.x",
+    "@babel/plugin-transform-react-inline-elements": "7.x",
+    "@babel/preset-react": "7.x",
+    "jest": "25.x"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/insin/babel-plugin-react-html-attrs.git"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  }
+}
