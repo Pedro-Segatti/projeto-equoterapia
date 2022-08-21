@@ -4,7 +4,6 @@ import './index.css';
 import Menu from './view/menu';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
 import { BrowserRouter as Router, Route, Navigate, Routes } from 'react-router-dom';
 
 import NovaPagina from './view/novaPagina';
