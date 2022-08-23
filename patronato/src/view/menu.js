@@ -1,10 +1,8 @@
-import React, { useEffect } from 'react'
-import './menu.css';
+import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import $ from 'jquery';
 
 const Navbar = () => {
-
   function animation() {
     var tabsNewAnim = $('#navbarSupportedContent');
     var activeItemNewAnim = tabsNewAnim.find('.active');
