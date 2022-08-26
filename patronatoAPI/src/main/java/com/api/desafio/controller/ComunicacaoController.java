@@ -16,13 +16,12 @@ public class ComunicacaoController {
     @GetMapping("/")
     public ResponseEntity<?> index(){
         return as.busca(1);
-
     }
 
     @CrossOrigin(origins = "*")
     @PostMapping("/calcular")
     public ResponseEntity<?> calcular(@RequestBody Integer numero){
-        return as.busca(1);
+        return as.busca(numero);
     }
 
 }

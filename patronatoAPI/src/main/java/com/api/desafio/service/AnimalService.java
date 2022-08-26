@@ -5,11 +5,14 @@ import com.api.desafio.model.ResponseModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.Id;
+import javax.transaction.Transactional;
 
-@Service
+@Component
+@Transactional
 public class AnimalService {
     @Autowired
     private ResponseModel rm;
@@ -19,10 +22,8 @@ public class AnimalService {
 
     public ResponseEntity<?> busca(Integer id) {
         rm.setMensagem(null);
-        int codigo = 99999;
-        Animal animal = ac.findById(codigo).get();
+        Animal animal = ac.findById(id).get();
         rm.setOcorrencias(animal.getAniNome());
-        rm.setTempo("100");
         return new ResponseEntity<ResponseModel>(rm, HttpStatus.OK);
     }
 }

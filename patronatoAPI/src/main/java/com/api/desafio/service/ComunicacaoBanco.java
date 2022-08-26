@@ -15,7 +15,6 @@ public class ComunicacaoBanco {
     public ResponseEntity<?> buscar(Integer id){
         rm.setMensagem(null);
         rm.setOcorrencias("Funciona");
-        rm.setTempo("100");
         return new ResponseEntity<ResponseModel>(rm, HttpStatus.OK);
     }
 

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 public class ResponseModel {
     private String mensagem;
     private String ocorrencias;
-    private String tempo;
 
     public String getMensagem() {
         return mensagem;
@@ -24,11 +23,4 @@ public class ResponseModel {
         this.ocorrencias = ocorrencias;
     }
 
-    public String getTempo() {
-        return tempo;
-    }
-
-    public void setTempo(String tempo) {
-        this.tempo = tempo;
-    }
 }
