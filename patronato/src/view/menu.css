@@ -8,7 +8,7 @@
   padding-right: 5vh !important;
 }
 .dropdown-menu[data-bs-popper]{
-  top: 110% !important;
+  top: 132% !important;
   background-color: rgba(34, 56, 43, 0.9);
 }
 
@@ -29,11 +29,27 @@ i >.navbar-toggler {
   border-color: rgb(255,102,203);
 } 
 
+.logo{
+  width: 60px;
+}
+
+.textoLogo{
+  margin-left: 20px;
+  width: 150px;
+}
+
 @media (max-width: 992px) {
   .nav-link{
     margin-left: 5vh;
   }
   .dropdown-item{
     margin-left: 6vh;
+  }
+  .logo{
+    width: 50px;
+  }
+  
+  .textoLogo{
+    width: 120px;
   }
 }
