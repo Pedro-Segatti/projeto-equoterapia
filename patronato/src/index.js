@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router, Route, Navigate, Routes } from 'react-router-dom';
 
 import NovaPagina from './view/novaPagina';
-import OutraPagina from './view/outraPagina';
+import CadastroAnimais from './view/cadastroAnimais';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -15,7 +15,7 @@ root.render(
       <Menu />
       <Routes>
         <Route path='/novaPagina' element={<NovaPagina />} />
-        <Route path='/outraPagina' element={<OutraPagina />} />
+        <Route path='/cadastroAnimais' element={<CadastroAnimais />} />
         <Route path="/" element={true ? <Navigate to="/novaPagina"/> : <Navigate to="/outraPagina"/>}/>
       </Routes>
     </Router>

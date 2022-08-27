@@ -19,9 +19,9 @@ public class ComunicacaoController {
     }
 
     @CrossOrigin(origins = "*")
-    @PostMapping("/calcular")
-    public ResponseEntity<?> calcular(@RequestBody Integer numero){
-        return as.busca(numero);
+    @PostMapping("/cadsatraAnimal")
+    public ResponseEntity<?> calcular(@RequestBody String nome){
+        return as.salva(nome);
     }
 
 }

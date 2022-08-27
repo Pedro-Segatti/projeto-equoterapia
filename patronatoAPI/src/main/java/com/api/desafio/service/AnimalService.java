@@ -3,6 +3,7 @@ package com.api.desafio.service;
 import com.api.desafio.model.Animal;
 import com.api.desafio.model.ResponseModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -20,10 +21,21 @@ public class AnimalService {
     @Autowired
     private AnimalCrud ac;
 
+    @Autowired
+    AnimalPesquisa pesquisa;
+
     public ResponseEntity<?> busca(Integer id) {
-        rm.setMensagem(null);
+        rm.setMensagem(pesquisa .findByAniNomeLike("cavalo cadastrado no banco").getAniNome());
         Animal animal = ac.findById(id).get();
         rm.setOcorrencias(animal.getAniNome());
+        return new ResponseEntity<ResponseModel>(rm, HttpStatus.OK);
+    }
+    public ResponseEntity<?> salva(String nome) {
+        Animal animal = new Animal();
+        animal.setAniNome(nome);
+        ac.save(animal);
+        rm.setMensagem("Animal " + nome + " cadastrado com sucesso!");
+        rm.setOcorrencias(null);
         return new ResponseEntity<ResponseModel>(rm, HttpStatus.OK);
     }
 }
