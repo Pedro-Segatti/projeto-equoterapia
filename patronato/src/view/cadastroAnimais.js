@@ -3,8 +3,10 @@ import { Form, Button, Col, Row, Container } from 'react-bootstrap';
 
 function cadastroAnimais(){
 const enviaJson = () => {
-    if (validaForm()) {
     let nomeAnimal = document.getElementById('nome').value  
+    if(!nomeAnimal){
+      return;
+    }
     fetch('http://localhost:8080/cadsatraAnimal', {
         method: 'POST',
         body: nomeAnimal,
@@ -17,17 +19,7 @@ const enviaJson = () => {
         } else {
             console.log("não gravou");
         }
-        
       })
-    }
-  }
-
-  const validaForm = () => {
-    let nomeAnimal = document.getElementById('nome').value
-    if (!nomeAnimal) {
-      return false;
-    }
-    return true;
   }
 
 const cadastroAnimais = () => {
