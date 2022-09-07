@@ -11,8 +11,12 @@ public class Animal implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="ANI_COD")
     private Integer aniCod;
-    @Column(name="ANI_NOME",length = 100)
+    @Column(name="ANI_NOME",length = 60)
     private String aniNome;
+    @Column(name="ANI_IDADE")
+    private Integer aniIdade;
+    @Column(name="ANI_PORTE",length = 2)
+    private String aniPorte;
 
     public Animal() {
     }
@@ -31,6 +35,22 @@ public class Animal implements Serializable {
 
     public void setAniNome(String aniNome) {
         this.aniNome = aniNome;
+    }
+
+    public Integer getAniIdade() {
+        return aniIdade;
+    }
+
+    public void setAniIdade(Integer aniIdade) {
+        this.aniIdade = aniIdade;
+    }
+
+    public String getAniPorte() {
+        return aniPorte;
+    }
+
+    public void setAniPorte(String aniPorte) {
+        this.aniPorte = aniPorte;
     }
 
     @Override
