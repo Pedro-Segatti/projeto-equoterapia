@@ -1,20 +1,59 @@
 package com.api.desafio.model;
 
-import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+/**
+ *
+ * @author Pedro
+ */
 @Entity
-@Table(name="PAIS")
+@Table(name = "PAIS")
 public class Pais implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="PAI_ISO",length = 4)
+    @Basic(optional = false)
+    @Column(name = "PAI_ID")
+    private Integer paiId;
+    @Basic(optional = false)
+    @Column(name = "PAI_ISO")
     private String paiIso;
-    @Column(name="PAI_NOME",length = 100)
+    @Basic(optional = false)
+    @Column(name = "PAI_NOME")
     private String paiNome;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pais")
+    private List<Estado> estadoList;
 
     public Pais() {
+    }
+
+    public Pais(Integer paiId) {
+        this.paiId = paiId;
+    }
+
+    public Pais(Integer paiId, String paiIso, String paiNome) {
+        this.paiId = paiId;
+        this.paiIso = paiIso;
+        this.paiNome = paiNome;
+    }
+
+    public Integer getPaiId() {
+        return paiId;
+    }
+
+    public void setPaiId(Integer paiId) {
+        this.paiId = paiId;
     }
 
     public String getPaiIso() {
@@ -33,16 +72,37 @@ public class Pais implements Serializable {
         this.paiNome = paiNome;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Pais pais = (Pais) o;
-        return Objects.equals(paiIso, pais.paiIso) && Objects.equals(paiNome, pais.paiNome);
+    public List<Estado> getEstadoList() {
+        return estadoList;
+    }
+
+    public void setEstadoList(List<Estado> estadoList) {
+        this.estadoList = estadoList;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(paiIso, paiNome);
+        int hash = 0;
+        hash += (paiId != null ? paiId.hashCode() : 0);
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Pais)) {
+            return false;
+        }
+        Pais other = (Pais) object;
+        if ((this.paiId == null && other.paiId != null) || (this.paiId != null && !this.paiId.equals(other.paiId))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.api.desafio.model.Pais_1[ paiId=" + paiId + " ]";
+    }
+
 }
