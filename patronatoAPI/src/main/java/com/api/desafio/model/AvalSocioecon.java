@@ -35,9 +35,7 @@ public class AvalSocioecon implements Serializable {
     @Lob
     @Column(name = "ASE_OBS_MEDICAMENTOS")
     private byte[] aseObsMedicamentos;
-    @JoinColumns({
-        @JoinColumn(name = "ASE_ID_PRATICANTE", referencedColumnName = "PRAT_ID"),
-        @JoinColumn(name = "ASE_ID_PRATICANTE", referencedColumnName = "PRAT_ID")})
+    @JoinColumn(name = "ASE_ID_PRATICANTE", referencedColumnName = "PRAT_ID")
     @ManyToOne(optional = false)
     private Praticante praticante;
 

@@ -163,14 +163,10 @@ public class AvalFisioter implements Serializable {
     @Column(name = "AFT_DATA")
     @Temporal(TemporalType.DATE)
     private Date aftData;
-    @JoinColumns({
-        @JoinColumn(name = "AFT_ID_FUNCIONARIO", referencedColumnName = "FUNC_ID"),
-        @JoinColumn(name = "AFT_ID_FUNCIONARIO", referencedColumnName = "FUNC_ID")})
+        @JoinColumn(name = "AFT_ID_FUNCIONARIO", referencedColumnName = "FUNC_ID")
     @ManyToOne(optional = false)
     private Funcionario funcionario;
-    @JoinColumns({
-        @JoinColumn(name = "AFT_ID_PRATICANTE", referencedColumnName = "PRAT_ID"),
-        @JoinColumn(name = "AFT_ID_PRATICANTE", referencedColumnName = "PRAT_ID")})
+        @JoinColumn(name = "AFT_ID_PRATICANTE", referencedColumnName = "PRAT_ID")
     @ManyToOne(optional = false)
     private Praticante praticante;
 

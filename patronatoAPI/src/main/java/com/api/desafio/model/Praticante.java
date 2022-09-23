@@ -33,9 +33,7 @@ public class Praticante implements Serializable {
     @ManyToMany(mappedBy = "praticanteList")
     private List<FichaEvolucao> fichaEvolucaoList;
     @JoinTable(name = "praticante_responsavel", joinColumns = {
-        @JoinColumn(name = "PXR_ID_PRAT", referencedColumnName = "PRAT_ID"),
         @JoinColumn(name = "PXR_ID_PRAT", referencedColumnName = "PRAT_ID")}, inverseJoinColumns = {
-        @JoinColumn(name = "PXR_ID_RESP", referencedColumnName = "RESP_ID"),
         @JoinColumn(name = "PXR_ID_RESP", referencedColumnName = "RESP_ID")})
     @ManyToMany
     private List<Responsavel> responsavelList;

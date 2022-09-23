@@ -31,9 +31,7 @@ public class Cargo implements Serializable {
     @Column(name = "CAR_DESCRICAO")
     private String carDescricao;
     @JoinTable(name = "funcionario_cargo", joinColumns = {
-        @JoinColumn(name = "FXC_ID_CARGO", referencedColumnName = "CAR_ID"),
         @JoinColumn(name = "FXC_ID_CARGO", referencedColumnName = "CAR_ID")}, inverseJoinColumns = {
-        @JoinColumn(name = "FXC_ID_FUNC", referencedColumnName = "FUNC_ID"),
         @JoinColumn(name = "FXC_ID_FUNC", referencedColumnName = "FUNC_ID")})
     @ManyToMany
     private List<Funcionario> funcionarioList;

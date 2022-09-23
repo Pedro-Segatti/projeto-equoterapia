@@ -50,27 +50,24 @@ public class FichaEvolucao implements Serializable {
     @Column(name = "EVOL_PROGRESSO")
     private byte[] evolProgresso;
     @JoinTable(name = "ficha_evol_praticante", joinColumns = {
-        @JoinColumn(name = "FXPR_ID_FICHA", referencedColumnName = "EVOL_ID"),
         @JoinColumn(name = "FXPR_ID_FICHA", referencedColumnName = "EVOL_ID")}, inverseJoinColumns = {
-        @JoinColumn(name = "FXPR_ID_PRATICANTE", referencedColumnName = "PRAT_ID"),
         @JoinColumn(name = "FXPR_ID_PRATICANTE", referencedColumnName = "PRAT_ID")})
     @ManyToMany
     private List<Praticante> praticanteList;
     @JoinTable(name = "ficha_evol_picadeiro", joinColumns = {
-        @JoinColumn(name = "FXP_ID_FICHA", referencedColumnName = "EVOL_ID"),
         @JoinColumn(name = "FXP_ID_FICHA", referencedColumnName = "EVOL_ID")}, inverseJoinColumns = {
-        @JoinColumn(name = "FXP_ID_PICADEIRO", referencedColumnName = "PIC_ID"),
         @JoinColumn(name = "FXP_ID_PICADEIRO", referencedColumnName = "PIC_ID")})
     @ManyToMany
     private List<Picadeiro> picadeiroList;
     @JoinTable(name = "ficha_evol_funcionario", joinColumns = {
-        @JoinColumn(name = "FXF_ID_FICHA", referencedColumnName = "EVOL_ID"),
         @JoinColumn(name = "FXF_ID_FICHA", referencedColumnName = "EVOL_ID")}, inverseJoinColumns = {
-        @JoinColumn(name = "FXF_ID_FUNCIONARIO", referencedColumnName = "FUNC_ID"),
         @JoinColumn(name = "FXF_ID_FUNCIONARIO", referencedColumnName = "FUNC_ID")})
     @ManyToMany
     private List<Funcionario> funcionarioList;
-    @ManyToMany(mappedBy = "fichaEvolucaoList")
+    @JoinTable(name = "ficha_evol_animal", joinColumns = {
+        @JoinColumn(name = "FXA_ID_FICHA", referencedColumnName = "EVOL_ID")}, inverseJoinColumns = {
+        @JoinColumn(name = "FXA_ID_ANIMAL", referencedColumnName = "ANI_ID")})
+    @ManyToMany
     private List<Animal> animalList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fichaEvolucao")
     private List<FichaEvolAtividadeMaterial> fichaEvolAtividadeMaterialList;

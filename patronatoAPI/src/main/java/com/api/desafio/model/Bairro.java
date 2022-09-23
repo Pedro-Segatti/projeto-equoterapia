@@ -32,9 +32,7 @@ public class Bairro implements Serializable {
     @Basic(optional = false)
     @Column(name = "BAR_NOME")
     private String barNome;
-    @JoinColumns({
-        @JoinColumn(name = "BAR_ID_CID", referencedColumnName = "CID_ID"),
-        @JoinColumn(name = "BAR_ID_CID", referencedColumnName = "CID_ID")})
+    @JoinColumn(name = "BAR_ID_CID", referencedColumnName = "CID_ID")
     @ManyToOne(optional = false)
     private Cidade cidade;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "bairro")

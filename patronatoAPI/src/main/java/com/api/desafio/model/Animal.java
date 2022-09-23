@@ -20,7 +20,7 @@ import javax.persistence.Table;
  * @author Pedro
  */
 @Entity
-@Table(name = "animal", catalog = "patronato", schema = "")
+@Table(name = "ANIMAL")
 public class Animal implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -38,9 +38,7 @@ public class Animal implements Serializable {
     @Column(name = "ANI_PORTE")
     private String aniPorte;
     @JoinTable(name = "ficha_evol_animal", joinColumns = {
-        @JoinColumn(name = "FXA_ID_ANIMAL", referencedColumnName = "ANI_ID"),
         @JoinColumn(name = "FXA_ID_ANIMAL", referencedColumnName = "ANI_ID")}, inverseJoinColumns = {
-        @JoinColumn(name = "FXA_ID_FICHA", referencedColumnName = "EVOL_ID"),
         @JoinColumn(name = "FXA_ID_FICHA", referencedColumnName = "EVOL_ID")})
     @ManyToMany
     private List<FichaEvolucao> fichaEvolucaoList;
