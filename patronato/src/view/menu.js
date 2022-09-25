@@ -4,12 +4,11 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Image from 'react-bootstrap/Image';
 import logo from '../img/logoSemFundo.png';
-import texto from '../img/textoPatronatoSaoJose.png';
 
 const Menu = () => {
   return (
     <Navbar sticky='top' expand="lg">
-      <Navbar.Brand className="mx-3" href="#home"><Image className="logo" src={logo}></Image><Image className="textoLogo" src={texto}></Image></Navbar.Brand>
+      <Navbar.Brand className="mx-3" href="#home"><Image className="logo" src={logo}></Image></Navbar.Brand>
       <Navbar.Toggle className="bg-ligth" aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">

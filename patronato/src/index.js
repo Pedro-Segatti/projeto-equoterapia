@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Navigate, Routes } from 'react-router-d
 
 import NovaPagina from './view/novaPagina';
 import CadastroAnimais from './view/cadastroAnimais';
+import Footer from './view/footer';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -18,6 +19,7 @@ root.render(
         <Route path='/cadastroAnimais' element={<CadastroAnimais />} />
         <Route path="/" element={true ? <Navigate to="/novaPagina"/> : <Navigate to="/outraPagina"/>}/>
       </Routes>
+      <Footer />
     </Router>
   </React.StrictMode>
 );
