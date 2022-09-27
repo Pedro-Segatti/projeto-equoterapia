@@ -14,12 +14,16 @@ code {
 }
 
 .btn-primary{
-  background-color: #14A650 !important;
   font-weight: bold !important;
-  border: none !important;
 }
 
-.btn-primary:focus,
-.btn-primary:active {
-  box-shadow: 0px 0px 5px 4px #09813a !important;
+.right{
+  float: right;
+}
+
+.toolbar{
+  border: 2px solid #62935e!important;
+  padding: 8px;
+  background-color: #ffffff8a;
+  border-radius: 12px;
 }
