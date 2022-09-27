@@ -1,28 +1,77 @@
 package com.api.desafio.model;
 
-import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+/**
+ *
+ * @author Pedro
+ */
 @Entity
-@Table(name="ANIMAL")
+@Table(name = "ANIMAL")
 public class Animal implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="ANI_COD")
-    private Integer aniCod;
-    @Column(name="ANI_NOME",length = 100)
+    @Basic(optional = false)
+    @Column(name = "ANI_ID")
+    private Integer aniId;
+    @Column(name = "ANI_IDADE")
+    private Integer aniIdade;
+    @Basic(optional = false)
+    @Column(name = "ANI_NOME")
     private String aniNome;
+    @Basic(optional = false)
+    @Column(name = "ANI_PORTE")
+    private String aniPorte;
+    @JoinTable(name = "ficha_evol_animal", joinColumns = {
+        @JoinColumn(name = "FXA_ID_ANIMAL", referencedColumnName = "ANI_ID")}, inverseJoinColumns = {
+        @JoinColumn(name = "FXA_ID_FICHA", referencedColumnName = "EVOL_ID")})
+    @ManyToMany
+    private List<FichaEvolucao> fichaEvolucaoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "axaIdAnimal")
+    private List<AgendamentoAnimal> agendamentoAnimalList;
 
     public Animal() {
     }
 
-    public Integer getAniCod() {
-        return aniCod;
+    public Animal(Integer aniId) {
+        this.aniId = aniId;
     }
 
-    public void setAniCod(Integer aniCod) {
-        this.aniCod = aniCod;
+    public Animal(Integer aniId, String aniNome, String aniPorte) {
+        this.aniId = aniId;
+        this.aniNome = aniNome;
+        this.aniPorte = aniPorte;
+    }
+
+    public Integer getAniId() {
+        return aniId;
+    }
+
+    public void setAniId(Integer aniId) {
+        this.aniId = aniId;
+    }
+
+    public Integer getAniIdade() {
+        return aniIdade;
+    }
+
+    public void setAniIdade(Integer aniIdade) {
+        this.aniIdade = aniIdade;
     }
 
     public String getAniNome() {
@@ -33,16 +82,53 @@ public class Animal implements Serializable {
         this.aniNome = aniNome;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Animal animal = (Animal) o;
-        return aniCod.equals(animal.aniCod);
+    public String getAniPorte() {
+        return aniPorte;
+    }
+
+    public void setAniPorte(String aniPorte) {
+        this.aniPorte = aniPorte;
+    }
+
+    public List<FichaEvolucao> getFichaEvolucaoList() {
+        return fichaEvolucaoList;
+    }
+
+    public void setFichaEvolucaoList(List<FichaEvolucao> fichaEvolucaoList) {
+        this.fichaEvolucaoList = fichaEvolucaoList;
+    }
+
+    public List<AgendamentoAnimal> getAgendamentoAnimalList() {
+        return agendamentoAnimalList;
+    }
+
+    public void setAgendamentoAnimalList(List<AgendamentoAnimal> agendamentoAnimalList) {
+        this.agendamentoAnimalList = agendamentoAnimalList;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(aniCod);
+        int hash = 0;
+        hash += (aniId != null ? aniId.hashCode() : 0);
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Animal)) {
+            return false;
+        }
+        Animal other = (Animal) object;
+        if ((this.aniId == null && other.aniId != null) || (this.aniId != null && !this.aniId.equals(other.aniId))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.api.desafio.model.Animal_1[ aniId=" + aniId + " ]";
+    }
+    
 }
