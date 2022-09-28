@@ -1,6 +1,6 @@
 package com.api.desafio.controller;
 
-import com.api.desafio.service.AnimalCrud;
+import com.api.desafio.model.Animal;
 import com.api.desafio.service.AnimalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,15 +13,14 @@ public class ComunicacaoController {
     private AnimalService as;
 
     @CrossOrigin(origins = "*")
-    @GetMapping("/")
-    public ResponseEntity<?> index(){
-        return as.busca(1);
+    @GetMapping("/buscaAnimal")
+    public ResponseEntity<?> index(@RequestBody Animal animal){
+            return as.busca(animal.getAniNome());
     }
 
     @CrossOrigin(origins = "*")
-    @PostMapping("/cadsatraAnimal")
-    public ResponseEntity<?> calcular(@RequestBody String nome){
-        return as.salva(nome);
+    @PostMapping("/cadastraAnimal")
+    public ResponseEntity<?> cadastrarAnimal(@RequestBody Animal animal){
+        return as.salva(animal);
     }
-
 }

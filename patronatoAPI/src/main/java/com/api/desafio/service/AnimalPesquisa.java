@@ -8,4 +8,5 @@ import java.util.List;
 public interface AnimalPesquisa extends JpaRepository<Animal, Integer> {
 
     Animal findByAniNomeLike(String nome);
+    Animal findByAniPorteLikeIgnoreCase(String porte);
 }
