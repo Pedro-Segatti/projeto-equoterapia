@@ -1,8 +1,6 @@
 import React, { useState, createContext } from "react";
 
-import { Navigate, useNavigate } from "react-router-dom";
-import NovaPagina from "./view/novaPagina";
-
+import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 
@@ -12,7 +10,7 @@ export const AuthProvider = ({ children }) => {
 
     const login = (log, password) => {
         console.log('login', { log, password });
-        if (password == "123") {
+        if (password === "123") {
             setUser({ id: "123", log });
             navegar("/home");
         }

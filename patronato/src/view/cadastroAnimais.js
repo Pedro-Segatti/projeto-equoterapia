@@ -1,6 +1,9 @@
 import React from 'react';
 import { Form, Button, Col, Row, Container } from 'react-bootstrap';
 
+import Menu from "./menu"
+import Footer from "./footer"
+
 function cadastroAnimais() {
     const enviaJson = () => {
         let nomeAnimal = document.getElementById('nome').value
@@ -25,8 +28,10 @@ function cadastroAnimais() {
 
     const cadastroAnimais = () => {
         return (
-            <Container fluid="md">
-                <br />
+            <div>
+                <Menu />
+                <Container fluid="md">
+                    <br />
                     <Row>
                         <h3>Cadastro de Animais</h3>
                     </Row>
@@ -36,7 +41,7 @@ function cadastroAnimais() {
                             <Form.Control type="text" id="nome" />
                         </Col>
                     </Row>
-                <br />
+                    <br />
                     <Row>
                         <Col md="1">
                             <Button variant="primary" className='btn-success' onClick={enviaJson}>Salvar</Button>
@@ -45,7 +50,9 @@ function cadastroAnimais() {
                             <Button variant="primary" className='btn-danger' onClick={enviaJson}>Excluir</Button>
                         </Col>
                     </Row>
-            </Container>
+                </Container>
+                <Footer />
+            </div >
         )
     }
     return cadastroAnimais();

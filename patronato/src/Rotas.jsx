@@ -10,6 +10,7 @@ import {
 import Login from "./view/login";
 import HomePage from "./view/homePage";
 import NovaPagina from "./view/novaPagina";
+import CadastroAnimais from "./view/cadastroAnimais";
 
 import { AuthContext, AuthProvider } from "./autenticacao";
 import { useContext } from 'react';
@@ -30,13 +31,10 @@ const Rotas = () => {
         <Router>
             <AuthProvider>
                 <Routes>
-                    <Route exact path="/login" element={<Login />} />
-                    <Route exact path="/restrito" element={
-                        <Private path="/home">
-                            <HomePage />
-                        </Private>
-                    }
-                    />
+                    <Route exact path="/" element={<Login />} />
+                    <Route path="/home" element={<HomePage />} />
+                    <Route path="/novaPagina" element={<NovaPagina />} />
+                    <Route path="/cadastroAnimais" element={<CadastroAnimais />} />
                 </Routes>
             </AuthProvider>
         </Router >
