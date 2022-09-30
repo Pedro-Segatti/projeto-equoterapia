@@ -37,6 +37,8 @@ public class Pessoa implements Serializable {
     @Basic(optional = false)
     @Column(name = "PES_CPF")
     private String pesCpf;
+    @Column(name = "PES_LOGIN_PASSWORD")
+    private String pesLoginPassword;
     @Basic(optional = false)
     @Column(name = "PES_SEXO")
     private String pesSexo;
@@ -103,6 +105,14 @@ public class Pessoa implements Serializable {
 
     public void setPesCpf(String pesCpf) {
         this.pesCpf = pesCpf;
+    }
+
+    public String getPesLoginPassword() {
+        return pesLoginPassword;
+    }
+
+    public void setPesLoginPassword(String pesLoginPassword) {
+        this.pesLoginPassword = pesLoginPassword;
     }
 
     public String getPesSexo() {
