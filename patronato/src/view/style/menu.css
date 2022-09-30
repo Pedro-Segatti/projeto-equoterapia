@@ -1,55 +1,63 @@
-.navbar{
-  background: rgba(34, 56, 43, 0.9);
+.navbar {
+  background: rgba(34, 56, 43);
 }
-.nav-link{
+
+.nav-link {
   color: white !important;
   font-family: 'Bebas Neue';
   font-size: 22px !important;
   padding-right: 5vh !important;
 }
-.dropdown-menu[data-bs-popper]{
+
+.dropdown-menu[data-bs-popper] {
   top: 132% !important;
   background-color: rgba(34, 56, 43, 0.9);
 }
 
-.dropdown-item{
+.dropdown-item {
   color: white !important;
 }
 
-.dropdown-item:hover{
+.dropdown-item:hover {
   background-color: #B48F69 !important;
   border-radius: 8px !important;
 }
 
-.navbar-toggler-icon{
+.navbar-toggler-icon {
   color: white !important;
 }
 
-i >.navbar-toggler {
-  border-color: rgb(255,102,203);
-} 
+i>.navbar-toggler {
+  border-color: rgb(255, 102, 203);
+}
 
-.logo{
+.logo {
   width: 60px;
 }
 
-.textoLogo{
+.textoLogo {
   margin-left: 20px;
   width: 150px;
 }
 
 @media (max-width: 992px) {
-  .nav-link{
+  .nav-link {
     margin-left: 5vh;
   }
-  .dropdown-item{
+
+  .dropdown-item {
     margin-left: 6vh;
   }
-  .logo{
+
+  .logo {
     width: 50px;
   }
-  
-  .textoLogo{
+
+  .textoLogo {
     width: 120px;
   }
+}
+
+.container-md {
+  height: 75.6vh;
 }

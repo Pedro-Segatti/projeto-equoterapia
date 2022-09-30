@@ -12,14 +12,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
-.btn-primary {
-  background-color: #14A650 !important;
-  font-weight: bold !important;
-  border: none !important;
-}
-
-.btn-primary:focus,
-.btn-primary:active {
-  box-shadow: 0px 0px 5px 4px #09813a !important;
-}

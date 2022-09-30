@@ -1,6 +1,6 @@
 import React from "react";
 import Image from 'react-bootstrap/Image';
-import texto from '../img/textoPatronatoSaoJose.png';
+import texto from './img/textoPatronatoSaoJose.png';
 import {
   Box,
   Container,
