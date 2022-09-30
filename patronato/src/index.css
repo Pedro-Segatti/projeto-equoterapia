@@ -12,3 +12,18 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.btn-primary {
+  font-weight: bold !important;
+}
+
+.right {
+  float: right;
+}
+
+.toolbar {
+  border: 2px solid #62935e !important;
+  padding: 8px;
+  background-color: #ffffff8a;
+  border-radius: 12px;
+}
