@@ -20,24 +20,15 @@ public class ComunicacaoController {
     @CrossOrigin(origins = "*")
     @GetMapping("/login")
     public boolean getAuthenticate(@RequestParam(defaultValue = "empty") String login, @RequestParam(defaultValue = "empty") String password){
-        if(login == null || login.isEmpty()){
+        if(login == null || login.isEmpty() || password == null || password.isEmpty()){
             return false;
         }
-
-        if(password == null || password.isEmpty()){
-            return false;
-        }
-
         Pessoa pessoa = pessoaService.getPessoaByPesCpf(login);
         if(pessoa == null){
             return false;
         }
 
-        if(pessoa.getPesLoginPassword().equals(password)){
-            return false;
-        }
-
-        return false;
+        return pessoa.getPesLoginPassword().equals(password);
     }
 
     @CrossOrigin(origins = "*")
