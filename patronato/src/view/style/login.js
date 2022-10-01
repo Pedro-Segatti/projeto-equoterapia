@@ -46,9 +46,13 @@ export const Card = styled.div`
         width: 150px;
         padding-bottom: 10px;
     }
+
+    @media(max-width: 1000px){
+        height: 90vh; 
+    }
+
     @media(max-width: 640px){
         width: 90vw;
-        heigth: 90vh; 
     }`;
 
 export const Box = styled.div`
@@ -66,6 +70,8 @@ export const Box = styled.div`
         width: 100%;
         height: 40px;
         margin-top: 20px;
+        background: rgba(34, 56, 43, 0.5607843137);
+        border: none;
     }
 
     .esqueciSenha{

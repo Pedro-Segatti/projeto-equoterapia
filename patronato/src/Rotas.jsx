@@ -12,16 +12,19 @@ import HomePage from "./view/homePage";
 import NovaPagina from "./view/novaPagina";
 import CadastroAnimais from "./view/cadastroAnimais";
 
-import { AuthContext, AuthProvider } from "./autenticacao";
+import { AuthContext, AuthProvider } from "./contexts/autenticacao";
 import { useContext } from 'react';
 
 const Rotas = () => {
     const Private = ({ children }) => {
-        const { authenticado } = useContext(AuthContext);
+        const { autenticado, loading } = useContext(AuthContext);
+
+        if (loading) {
+            return <div>Carregando...</div>;
+        }
 
         //realizar comunicação com api para autenticar
-
-        if (!authenticado) {
+        if (!autenticado) {
             return <Navigate to="/login" />;
         }
         return children;
@@ -31,10 +34,11 @@ const Rotas = () => {
         <Router>
             <AuthProvider>
                 <Routes>
-                    <Route exact path="/" element={<Login />} />
-                    <Route path="/home" element={<HomePage />} />
-                    <Route path="/novaPagina" element={<NovaPagina />} />
-                    <Route path="/cadastroAnimais" element={<CadastroAnimais />} />
+                    {/**/}
+                    <Route exact path="/login" element={<Login />} />
+                    <Route exact path="/" element={<Private><HomePage /></Private>} />
+                    <Route exact path="/novaPagina" element={<Private><NovaPagina /></Private>} />
+                    <Route exact path="/cadastroAnimais" element={<Private><CadastroAnimais /></Private>} />
                 </Routes>
             </AuthProvider>
         </Router >
