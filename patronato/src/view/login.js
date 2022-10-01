@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 
-import { AuthContext } from "../autenticacao";
+import { AuthContext } from "../contexts/autenticacao";
 
 import { Form, Row, Button } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
@@ -15,7 +15,7 @@ import {
 } from "../view/style/login";
 
 const Login = () => {
-    const { autenticado, login, logout } = useContext(AuthContext);
+    const { login } = useContext(AuthContext);
 
     const [log, setLog] = useState("");
     const [password, setPassword] = useState("");
