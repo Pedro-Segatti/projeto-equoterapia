@@ -5,6 +5,5 @@ export const api = axios.create({
 });
 
 export const createSession = async (login, password) => {
-    console.log("reqqq", login, password);
-    return api.get("/login", JSON.stringify(login), JSON.stringify(password));
+    return api.get("/login", { params: { "login": login, "password":password } });
 }

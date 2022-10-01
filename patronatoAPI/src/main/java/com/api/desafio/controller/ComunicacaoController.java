@@ -5,6 +5,7 @@ import com.api.desafio.model.Pessoa;
 import com.api.desafio.service.AnimalService;
 import com.api.desafio.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,17 +20,26 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/login")
-    public boolean getAuthenticate(@RequestParam(defaultValue = "empty") String login, @RequestParam(defaultValue = "empty") String password){
-        if(login == null || login.isEmpty() || password == null || password.isEmpty()){
-            return false;
-        }
-        Pessoa pessoa = pessoaService.getPessoaByPesCpf(login);
-        if(pessoa == null){
-            return false;
-        }
+        public ResponseEntity<?> getAuthenticate(@RequestParam String login,@RequestParam String password){
+            if(login == null || login.isEmpty() || password == null || password.isEmpty()){
+                return new ResponseEntity<Pessoa>(new Pessoa(), HttpStatus.BAD_REQUEST);
+            }
 
-        return pessoa.getPesLoginPassword().equals(password);
-    }
+            System.out.println("Log " + login);
+            System.out.println("senha " + password);
+
+            Pessoa pessoa = pessoaService.getPessoaByPesCpf(login);
+            if(pessoa == null){
+                return new ResponseEntity<Pessoa>(new Pessoa(), HttpStatus.NOT_FOUND);
+            }
+
+            if(pessoa.getPesLoginPassword().equals(password)){
+                pessoa.setLogradouro(null);
+                return new ResponseEntity<Pessoa>(pessoa, HttpStatus.OK);
+            }
+
+            return new ResponseEntity<Pessoa>(new Pessoa(), HttpStatus.NOT_FOUND);
+        }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/buscaAnimal")
