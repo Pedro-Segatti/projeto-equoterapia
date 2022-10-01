@@ -1,5 +1,9 @@
 package com.api.desafio.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -56,6 +60,7 @@ public class Pessoa implements Serializable {
     private String pesNacionalidade;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
     private List<Telefone> telefoneList;
+
     @JoinColumn(name = "PES_ID_LOG", referencedColumnName = "LOG_ID")
     @ManyToOne(optional = false)
     private Logradouro logradouro;
@@ -163,6 +168,7 @@ public class Pessoa implements Serializable {
         this.telefoneList = telefoneList;
     }
 
+    @JsonIgnore
     public Logradouro getLogradouro() {
         return logradouro;
     }

@@ -25,8 +25,8 @@ export const AuthProvider = ({ children }) => {
 
         console.log("response", response);
 
-        const loggedUser = response.data.user;
-        const token = response.data.token;
+        const loggedUser = response.data.pesId;
+        const token = response.data.pesCpf;
 
         localStorage.setItem("user", JSON.stringify(loggedUser));
         localStorage.setItem("token", token);

@@ -34,7 +34,7 @@ public class ComunicacaoController {
             }
 
             if(pessoa.getPesLoginPassword().equals(password)){
-                pessoa.setLogradouro(null);
+//                pessoa.setLogradouro(null);
                 return new ResponseEntity<Pessoa>(pessoa, HttpStatus.OK);
             }
 
