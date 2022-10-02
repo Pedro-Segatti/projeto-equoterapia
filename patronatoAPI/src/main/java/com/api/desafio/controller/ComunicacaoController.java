@@ -25,21 +25,31 @@ public class ComunicacaoController {
                 return new ResponseEntity<Pessoa>(new Pessoa(), HttpStatus.BAD_REQUEST);
             }
 
-            System.out.println("Log " + login);
-            System.out.println("senha " + password);
-
             Pessoa pessoa = pessoaService.getPessoaByPesCpf(login);
             if(pessoa == null){
                 return new ResponseEntity<Pessoa>(new Pessoa(), HttpStatus.NOT_FOUND);
             }
 
             if(pessoa.getPesLoginPassword().equals(password)){
-//                pessoa.setLogradouro(null);
                 return new ResponseEntity<Pessoa>(pessoa, HttpStatus.OK);
             }
 
             return new ResponseEntity<Pessoa>(new Pessoa(), HttpStatus.NOT_FOUND);
         }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/pessoaLogada")
+    public ResponseEntity<?> getPessoaLogada(@RequestParam Integer id){
+        if(id == null){
+            return new ResponseEntity<Pessoa>(new Pessoa(), HttpStatus.BAD_REQUEST);
+        }
+
+        Pessoa pessoa = pessoaService.getPessoaByPesId(id);
+        if(pessoa == null){
+            return new ResponseEntity<Pessoa>(new Pessoa(), HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Pessoa>(pessoa, HttpStatus.OK);
+    }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/buscaAnimal")

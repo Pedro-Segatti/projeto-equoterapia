@@ -11,9 +11,11 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const recoveredUser = localStorage.getItem("user");
+        const recoveredToken = localStorage.getItem("access_token");
 
-        if (recoveredUser) {
-            setUser(JSON.parse(recoveredUser))
+        if (recoveredUser && recoveredToken) {
+            const idUser = JSON.parse(recoveredUser);
+            setUser(idUser)
         }
 
         setLoading(false);
@@ -23,17 +25,15 @@ export const AuthProvider = ({ children }) => {
 
         const response = await createSession(log, password);
 
-        console.log("response", response);
+        const user = response.data.pesId;
+        const token = response.data.access_token;
 
-        const loggedUser = response.data.pesId;
-        const token = response.data.pesCpf;
-
-        localStorage.setItem("user", JSON.stringify(loggedUser));
-        localStorage.setItem("token", token);
+        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("access_token", token);
 
         api.defaults.headers.Authorization = `Bearer ${token}`;
 
-        setUser(loggedUser);
+        setUser(user);
         navegar("/");
     };
 
@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }) => {
         console.log('logout');
         setUser(null);
         localStorage.removeItem("user");
-        localStorage.removeItem("token");
+        localStorage.removeItem("access_token");
         api.defaults.headers.Authorization = null;
         navegar("/login");
     };

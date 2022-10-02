@@ -1,25 +1,13 @@
 package com.api.desafio.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 /**
  *
@@ -58,18 +46,24 @@ public class Pessoa implements Serializable {
     @Basic(optional = false)
     @Column(name = "PES_NACIONALIDADE")
     private String pesNacionalidade;
+    @Lob
+    @Basic(optional = true)
+    @Column(name = "PES_FOTO")
+    private byte[] pesFoto;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
     private List<Telefone> telefoneList;
-
     @JoinColumn(name = "PES_ID_LOG", referencedColumnName = "LOG_ID")
     @ManyToOne(optional = false)
-    private Logradouro logradouro;
+    private Logradouro logradouro; // Estudar para remapear usando tabela de ligação
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
     private List<Funcionario> funcionarioList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
     private List<Responsavel> responsavelList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
     private List<Praticante> praticanteList;
+    @Transient
+    @JsonProperty("access_token")
+    private String pesAcessToken;
 
     public Pessoa() {
     }
@@ -111,7 +105,7 @@ public class Pessoa implements Serializable {
     public void setPesCpf(String pesCpf) {
         this.pesCpf = pesCpf;
     }
-
+    @JsonIgnore
     public String getPesLoginPassword() {
         return pesLoginPassword;
     }
@@ -160,6 +154,14 @@ public class Pessoa implements Serializable {
         this.pesNacionalidade = pesNacionalidade;
     }
 
+    public byte[] getPesFoto() {
+        return pesFoto;
+    }
+
+    public void setPesFoto(byte[] pesFoto) {
+        this.pesFoto = pesFoto;
+    }
+
     public List<Telefone> getTelefoneList() {
         return telefoneList;
     }
@@ -199,6 +201,17 @@ public class Pessoa implements Serializable {
 
     public void setPraticanteList(List<Praticante> praticanteList) {
         this.praticanteList = praticanteList;
+    }
+
+    public String getPesAcessToken() {
+        if(this.pesId == null){
+            return "";
+        }
+        if(this.pesCpf == null || this.pesCpf.isEmpty()){
+            return "";
+        }
+
+        return pesAcessToken = DigestUtils.md5Hex(this.pesId + Math.random() + this.pesCpf).toUpperCase();
     }
 
     @Override

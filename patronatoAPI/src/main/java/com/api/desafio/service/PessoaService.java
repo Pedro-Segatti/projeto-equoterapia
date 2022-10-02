@@ -1,7 +1,6 @@
 package com.api.desafio.service;
 
 import com.api.desafio.model.Pessoa;
-import com.api.desafio.model.ResponseModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +16,10 @@ public class PessoaService {
 
     public Pessoa getPessoaByPesCpf(String filtroCpf) {
         return pessoaCrud.findPessoaByPesCpf(filtroCpf);
+    }
+
+    public Pessoa getPessoaByPesId(Integer pesId){
+        return pessoaCrud.findPessoaByPesId(pesId);
     }
 
 }
