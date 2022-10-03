@@ -1,4 +1,4 @@
-package com.api.desafio.service;
+package com.api.desafio.crudFiles;
 
 import com.api.desafio.model.Animal;
 import org.springframework.data.jpa.repository.Query;

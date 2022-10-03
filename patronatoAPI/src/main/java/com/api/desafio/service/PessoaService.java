@@ -1,9 +1,8 @@
 package com.api.desafio.service;
 
+import com.api.desafio.crudFiles.PessoaCrud;
 import com.api.desafio.model.Pessoa;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import javax.transaction.Transactional;
 

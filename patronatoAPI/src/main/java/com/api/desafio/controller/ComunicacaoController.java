@@ -54,7 +54,7 @@ public class ComunicacaoController {
     @CrossOrigin(origins = "*")
     @GetMapping("/buscaAnimal")
     public ResponseEntity<?> buscarAnimal(@RequestBody Animal animal){
-            return animalService.busca(animal);
+        return animalService.busca(animal);
     }
 
     @CrossOrigin(origins = "*")
@@ -62,4 +62,5 @@ public class ComunicacaoController {
     public ResponseEntity<?> cadastrarAnimal(@RequestBody Animal animal){
         return animalService.salva(animal);
     }
+    
 }
