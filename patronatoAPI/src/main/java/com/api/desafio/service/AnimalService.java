@@ -28,9 +28,9 @@ public class AnimalService {
         return new ResponseEntity<ResponseModel>(rm, HttpStatus.OK);
     }
     public ResponseEntity<?> salva(Animal animal) {
-        ResponseModel rm = new ResponseModel();
         ac.save(animal);
-        rm.setMensagem("Animal " + animal + " cadastrado com sucesso!");
+        ResponseModel rm = new ResponseModel();
+        rm.setMensagem("Animal " + animal.getAniNome() + " cadastrado com sucesso!");
         rm.setOcorrencias(null);
         return new ResponseEntity<ResponseModel>(rm, HttpStatus.OK);
     }

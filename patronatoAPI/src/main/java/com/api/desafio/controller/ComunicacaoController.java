@@ -62,5 +62,5 @@ public class ComunicacaoController {
     public ResponseEntity<?> cadastrarAnimal(@RequestBody Animal animal){
         return animalService.salva(animal);
     }
-    
+
 }

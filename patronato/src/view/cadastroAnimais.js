@@ -1,29 +1,31 @@
 import React from 'react';
 import { Form, Button, Col, Row, Container } from 'react-bootstrap';
+import PatronatoUtil from '../JSON/patronatoUtil.json';
 
 import Menu from "./menu"
 import Footer from "./footer"
 
+import axios from "axios"
+
+export const api = axios.create({
+    baseURL: "http://localhost:8080",
+});
+
 function cadastroAnimais() {
     const enviaJson = () => {
-        let nomeAnimal = document.getElementById('nome').value
-        if (!nomeAnimal) {
+        let aniNome = document.getElementById('nome').value;
+        let aniIdade = document.getElementById('idade').value;
+        let aniPorte = document.getElementById('porte').value;
+        const json = {
+            aniNome:this.aniNome,
+            aniIdade:this.aniIdade,
+            aniPorte:this.aniPorte
+        };
+        console.log(JSON.stringify(json));
+        if (!aniNome) {
             return;
         }
-        fetch('http://localhost:8080/cadsatraAnimal', {
-            method: 'POST',
-            body: nomeAnimal,
-            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }
-        })
-            .then(retorno => retorno.json())
-            .then(retornoConv => {
-                console.log(retornoConv);
-                if (retornoConv.mensagem) {
-                    console.log("gravou");
-                } else {
-                    console.log("não gravou");
-                }
-            })
+        api.post("cadastraAnimal",json);
     }
 
     const cadastroAnimais = () => {
@@ -39,6 +41,16 @@ function cadastroAnimais() {
                         <Col md="4">
                             <Form.Label htmlFor="inputNome">Nome</Form.Label>
                             <Form.Control type="text" id="nome" />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md="2">
+                            <Form.Label htmlFor="inputIdade">Idade</Form.Label>
+                            <Form.Control type="text" id="idade" />
+                        </Col>
+                        <Col md="2">
+                            <Form.Label htmlFor="inputPorte">Porte</Form.Label>
+                            <Form.Control type="text" id="porte" />
                         </Col>
                     </Row>
                     <br />
