@@ -17,15 +17,23 @@ function cadastroAnimais() {
         let aniIdade = document.getElementById('idade').value;
         let aniPorte = document.getElementById('porte').value;
         const json = {
-            aniNome:this.aniNome,
-            aniIdade:this.aniIdade,
-            aniPorte:this.aniPorte
+            "aniNome":aniNome,
+            "aniIdade":aniIdade,
+            "aniPorte":aniPorte
         };
         console.log(JSON.stringify(json));
         if (!aniNome) {
             return;
         }
-        api.post("cadastraAnimal",json);
+        api.post("/cadastraAnimal",json);
+    }
+
+    const enviaJsonRemove = () => {
+        let aniId = document.getElementById('id').value;
+        if (!aniId) {
+            return;
+        }
+        api.delete("/removeAnimal?aniId="+aniId);
     }
 
     const cadastroAnimais = () => {
@@ -36,6 +44,12 @@ function cadastroAnimais() {
                     <br />
                     <Row>
                         <h3>Cadastro de Animais</h3>
+                    </Row>
+                    <Row>
+                        <Col md="4">
+                            <Form.Label htmlFor="inputId">Código</Form.Label>
+                            <Form.Control type="text" id="id" />
+                        </Col>
                     </Row>
                     <Row>
                         <Col md="4">
@@ -59,7 +73,7 @@ function cadastroAnimais() {
                             <Button variant="primary" className='btn-success' onClick={enviaJson}>Salvar</Button>
                         </Col>
                         <Col md="1">
-                            <Button variant="primary" className='btn-danger' onClick={enviaJson}>Excluir</Button>
+                            <Button variant="primary" className='btn-danger' onClick={enviaJsonRemove}>Excluir</Button>
                         </Col>
                     </Row>
                 </Container>

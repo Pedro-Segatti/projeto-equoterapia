@@ -63,4 +63,11 @@ public class ComunicacaoController {
         return animalService.salva(animal);
     }
 
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/removeAnimal")
+    public ResponseEntity<?> removeAnimal(@RequestParam Integer aniId){
+        return animalService.remove(aniId);
+    }
+
+
 }

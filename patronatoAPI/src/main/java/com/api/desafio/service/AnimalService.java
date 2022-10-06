@@ -34,4 +34,13 @@ public class AnimalService {
         rm.setOcorrencias(null);
         return new ResponseEntity<ResponseModel>(rm, HttpStatus.OK);
     }
+
+    public ResponseEntity<?> remove(Integer aniId) {
+        Animal animal = ac.findById(aniId).orElse(null);
+        ac.delete(animal);
+        ResponseModel rm = new ResponseModel();
+        rm.setMensagem("Animal " + animal.getAniNome() + " removido com sucesso!");
+        rm.setOcorrencias(null);
+        return new ResponseEntity<ResponseModel>(rm, HttpStatus.OK);
+    }
 }
