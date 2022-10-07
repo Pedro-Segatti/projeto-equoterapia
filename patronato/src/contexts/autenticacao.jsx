@@ -1,6 +1,8 @@
 import React, { useState, useEffect, createContext } from "react";
 import { api, createSession } from "../api/autenticacaoController";
 import { useNavigate } from "react-router-dom";
+import { Store } from 'react-notifications-component';
+
 export const AuthContext = createContext();
 
 
@@ -23,19 +25,46 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (log, password) => {
 
-        const response = await createSession(log, password);
+        try {
+            const response = await createSession(log, password);
 
-        const user = response.data.pesId;
-        const token = response.data.access_token;
+            const user = response.data.pesId;
+            const token = response.data.access_token;
 
-        localStorage.setItem("user", JSON.stringify(user));
-        localStorage.setItem("access_token", token);
+            localStorage.setItem("user", JSON.stringify(user));
+            localStorage.setItem("access_token", token);
 
-        api.defaults.headers.Authorization = `Bearer ${token}`;
+            api.defaults.headers.Authorization = `Bearer ${token}`;
 
-        setUser(user);
-        navegar("/");
+            setUser(user);
+            navegar("/");
+        } catch (error) {
+            if (error.response.status === 404) {
+                notificationOnError();
+            }
+
+            if (error.response.status === 400) {
+                notificationOnError();
+            }
+        }
     };
+
+    const notificationOnError = () => {
+        Store.addNotification({
+            title: "Login ou Senha inválidos",
+            message: "Revise os campos",
+            type: "danger",
+            insert: "top",
+            container: "top-right",
+            animationIn: ["animate__animated", "animate__fadeIn"],
+            animationOut: ["animate__animated", "animate__fadeOut"],
+            dismiss: {
+                duration: 2000,
+                onScreen: true,
+                pauseOnHover: true
+            },
+        });
+    }
 
     const logout = () => {
         console.log('logout');

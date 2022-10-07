@@ -1,12 +1,14 @@
 import React, { useState, useContext } from 'react';
-
 import { AuthContext } from "../contexts/autenticacao";
-
+import { IMaskInput } from 'react-imask';
 import { Form, Row, Button } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
 import logo from './img/logoComFundo.png';
 import texto from './img/textoPatronatoSaoJoseourado.png';
 import bgimg from './img/login-img.png';
+import { ReactNotifications } from 'react-notifications-component'
+import 'react-notifications-component/dist/theme.css'
+
 
 import {
     Container,
@@ -22,13 +24,14 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        console.log("submit", { log, password });
-        login(log, password);
+        const LogUnmask = log.replace(/[^\d]/g, '');
+        login(LogUnmask, password);
     };
 
     return (
         <Container>
+            <ReactNotifications />
+
             <Image className="bgImg" src={bgimg}></Image>
             <Card>
                 <div className="logoContent">
@@ -41,10 +44,11 @@ const Login = () => {
                     <Box>
                         <Form onSubmit={handleSubmit}>
                             <Form.Label htmlFor="inputLogin">Login</Form.Label>
-                            <Form.Control id="inputLogin" type="text" value={log} onChange={(l) => setLog(l.target.value)} className="inputLogin" />
+                            <Form.Control id="inputLogin" type="text" maxLength='14' as={IMaskInput}
+                                mask="000.000.000-00" placeholder='Digite aqui o seu CPF...' required value={log} onChange={(l) => setLog(l.target.value)} className="inputLogin" />
                             <br />
                             <Form.Label htmlFor="inputSenha">Senha</Form.Label>
-                            <Form.Control id="inputPassword" type="password" value={password} onChange={(p) => setPassword(p.target.value)} className="inputLogin" />
+                            <Form.Control id="inputPassword" type="password" placeholder='Digite aqui a sua senha...' required value={password} onChange={(p) => setPassword(p.target.value)} className="inputLogin" />
 
                             <br />
                             <Button type="submit" className="buttonLogin">Entrar</Button>

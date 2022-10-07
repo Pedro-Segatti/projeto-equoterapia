@@ -1,12 +1,32 @@
-import React from 'react';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+import React, { useState, useEffect, useContext } from 'react';
+import { buscarPessoaPeloId } from "../api/autenticacaoController";
+import { AuthContext } from "../contexts/autenticacao";
+import { Nav, Navbar, NavDropdown, Button } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
 import logo from './img/logoSemFundo.png';
-
+import logoutImg from './img/logout.png';
 
 const Menu = () => {
+  const [pessoaLogada, setPessoaLogada] = useState(null);
+  const { user, logout } = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const buscarPessoaLogada = async () => {
+      const response = await buscarPessoaPeloId(user);
+      setPessoaLogada(response.data);
+      setLoading(false);
+    };
+
+    buscarPessoaLogada();
+  }, []);
+
+  const handleClickLogout = (e) => {
+    e.preventDefault();
+
+    logout();
+  };
+
   return (
     <Navbar sticky='top' expand="lg">
       <Navbar.Brand className="mx-3" href="/"><Image className="logo" src={logo}></Image></Navbar.Brand>
@@ -38,13 +58,24 @@ const Menu = () => {
           </NavDropdown>
         </Nav>
       </Navbar.Collapse>
+      {!loading &&
+        <div className='user-display'>
+          <Navbar.Collapse className="justify-content-end">
+            <div>
+              <Navbar.Brand className="mx-3" href="#">
+                <Image className="ftPerfil" src={pessoaLogada.pesFoto}></Image>
+              </Navbar.Brand>
+            </div>
 
-      <Navbar.Collapse className="justify-content-end">
-        <Navbar.Brand className="mx-3" href="/"><Image className="logo" src="ds"></Image></Navbar.Brand>
-        <Navbar.Text>
-          Signed in as: <a href="#login">Mark Otto</a>
-        </Navbar.Text>
-      </Navbar.Collapse>
+            <div className='textos'>
+              <p className='nomeLogin'>{pessoaLogada.pesNome}</p>
+              <a onClick={handleClickLogout} href='/'>
+                <Image className='logout' src={logoutImg}></Image>
+              </a>
+            </div>
+          </Navbar.Collapse>
+        </div>
+      }
     </Navbar>
   )
 }

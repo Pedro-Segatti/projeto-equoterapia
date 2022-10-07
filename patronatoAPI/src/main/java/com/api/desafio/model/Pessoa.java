@@ -49,7 +49,7 @@ public class Pessoa implements Serializable {
     @Lob
     @Basic(optional = true)
     @Column(name = "PES_FOTO")
-    private byte[] pesFoto;
+    private String pesFoto;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
     private List<Telefone> telefoneList;
     @JoinColumn(name = "PES_ID_LOG", referencedColumnName = "LOG_ID")
@@ -154,11 +154,11 @@ public class Pessoa implements Serializable {
         this.pesNacionalidade = pesNacionalidade;
     }
 
-    public byte[] getPesFoto() {
+    public String getPesFoto() {
         return pesFoto;
     }
 
-    public void setPesFoto(byte[] pesFoto) {
+    public void setPesFoto(String pesFoto) {
         this.pesFoto = pesFoto;
     }
 
