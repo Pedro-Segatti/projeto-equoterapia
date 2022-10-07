@@ -51,7 +51,6 @@ const Footer = () => {
             </Link>
             <p style={{ marginBottom: "0", textAlign: "right", fontSize: "12px" }}>© Copyright 2022. Todos os direitos reservados.</p>
           </ColumnRigth>
-
         </Row>
       </Container>
     </Box >
