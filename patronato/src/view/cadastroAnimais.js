@@ -1,5 +1,5 @@
-import React from 'react';
-import { Form, Button, Col, Row, Container } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Form, Col, Row, Container, Modal, Button, Table } from 'react-bootstrap';
 import Toolbar from './toolbar';
 
 import Menu from "./menu"
@@ -12,6 +12,14 @@ export const api = axios.create({
 });
 
 function cadastroAnimais() {
+    const [abrirPesquisa, setAbrirPesquisa] = useState(false);
+    var [list, setList] = useState([{ codigo: 1, nome: "Cavalo Teste", idade: 20, algomais: "Teste" }])
+    
+    const atualizaDlgPesquisa = async () => {
+        setList(await (await api.get("/pesquisaAnimal")).data);
+        setAbrirPesquisa(true);
+    }
+
     const enviaJson = () => {
         let aniNome = document.getElementById('nome').value;
         let aniIdade = document.getElementById('idade').value;
@@ -38,6 +46,7 @@ function cadastroAnimais() {
 
     const enviaJsonRemove = () => {
         let aniId = document.getElementById('id').value;
+        console.log(aniId);
         if (!aniId) {
             return;
         }
@@ -49,51 +58,87 @@ function cadastroAnimais() {
             <div>
                 <Menu />
                 <Container fluid="md">
-                    <br />
-                    <Row>
-                        <h3>Cadastro de Animais</h3>
-                    </Row>
-                    <Row>
-                        <Col md="4">
-                            <Form.Label htmlFor="inputId">Código</Form.Label>
-                            <Form.Control type="text" id="id" />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col md="4">
-                            <Form.Label htmlFor="inputNome">Nome</Form.Label>
-                            <Form.Control type="text" id="nome" />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col md="2">
-                            <Form.Label htmlFor="inputIdade">Idade</Form.Label>
-                            <Form.Control type="text" id="idade" />
-                        </Col>
-                        <Col md="2">
-                            <Form.Label htmlFor="inputPorte">Porte</Form.Label>
-                            <Form.Select aria-label="Default select example" id='porte'>
-                                <option>Selecione</option>
-                                <option value="P">Pequeno</option>
-                                <option value="M">Médio</option>
-                                <option value="G">Grande</option>
-                            </Form.Select>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col md="4">
-                            <Form.Label htmlFor="inputComportamento">Comportamento</Form.Label>
-                            <Form.Control type="text" id="comportamento" />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col md="4">
-                            <Form.Label htmlFor="inputAndadura">Andadura</Form.Label>
-                            <Form.Control type="text" id="andadura" />
-                        </Col>
-                    </Row>
-                    <br />
-                    <Toolbar json={enviaJson} jsonRemove={enviaJsonRemove} />
+                    <Form>
+                        <br />
+                        <Row>
+                            <h3>Cadastro de Animais</h3>
+                        </Row>
+                        <Row>
+                            <Col md="4">
+                                <Form.Label htmlFor="inputId">Código</Form.Label>
+                                <Form.Control type="text" id="id" />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md="4">
+                                <Form.Label htmlFor="inputNome">Nome</Form.Label>
+                                <Form.Control type="text" id="nome" required />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md="2">
+                                <Form.Label htmlFor="inputIdade">Idade</Form.Label>
+                                <Form.Control type="text" id="idade" required />
+                            </Col>
+                            <Col md="2">
+                                <Form.Label htmlFor="inputPorte">Porte</Form.Label>
+                                <Form.Select aria-label="Default select example" id='porte' required>
+                                    <option>Selecione</option>
+                                    <option value="P">Pequeno</option>
+                                    <option value="M">Médio</option>
+                                    <option value="G">Grande</option>
+                                </Form.Select>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md="4">
+                                <Form.Label htmlFor="inputComportamento">Comportamento</Form.Label>
+                                <Form.Control type="text" id="comportamento" required />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md="4">
+                                <Form.Label htmlFor="inputAndadura">Andadura</Form.Label>
+                                <Form.Control type="text" id="andadura" required />
+                            </Col>
+                        </Row>
+                        <br />
+
+                        <Modal show={abrirPesquisa}>
+                            <Modal.Header><b>Pesquisa de Animal</b></Modal.Header>
+                            <Modal.Body>
+                                {abrirPesquisa &&
+                                    <Table>
+                                        <thead>
+                                            <tr>
+                                                <th>Codigo</th>
+                                                <th>Nome</th>
+                                                <th>Idade</th>
+                                                <th>Porte</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {
+                                                list.map(({ aniId, aniNome, aniIdade, aniPorte }) => {
+                                                    return <tr key={aniId}>
+                                                        <td>{aniId}</td>
+                                                        <td>{aniNome}</td>
+                                                        <td>{aniIdade}</td>
+                                                        <td>{aniPorte}</td>
+                                                    </tr>
+                                                })
+                                            }
+                                        </tbody>
+                                    </Table>
+                                }
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="primary" className='btn-danger btnToolbar' onClick={() => setAbrirPesquisa(false)}>Fechar</Button>
+                            </Modal.Footer>
+                        </Modal>
+
+                        <Toolbar jsonCadastro={enviaJson} jsonRemove={enviaJsonRemove} abrirPesquisa={atualizaDlgPesquisa} />
+                    </Form>
                 </Container>
                 <Footer />
             </div >

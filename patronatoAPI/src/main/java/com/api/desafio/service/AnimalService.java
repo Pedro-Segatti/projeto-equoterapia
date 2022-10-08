@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Component
 @Transactional
@@ -42,5 +43,10 @@ public class AnimalService {
         rm.setMensagem("Animal " + animal.getAniNome() + " removido com sucesso!");
         rm.setOcorrencias(null);
         return new ResponseEntity<ResponseModel>(rm, HttpStatus.OK);
+    }
+
+    public ResponseEntity<List<Animal>> pesquisaAnimais() {
+        List<Animal> animais = (List<Animal>) ac.findAll();
+        return new ResponseEntity<List<Animal>>(animais, HttpStatus.OK);
     }
 }

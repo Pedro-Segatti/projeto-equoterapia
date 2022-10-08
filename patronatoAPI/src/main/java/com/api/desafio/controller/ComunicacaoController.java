@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class ComunicacaoController {
 
@@ -69,5 +71,9 @@ public class ComunicacaoController {
         return animalService.remove(aniId);
     }
 
-
+    @CrossOrigin(origins = "*")
+    @GetMapping("/pesquisaAnimal")
+    public ResponseEntity<List<Animal>> pesquisaAnimais(){
+        return animalService.pesquisaAnimais();
+    }
 }
