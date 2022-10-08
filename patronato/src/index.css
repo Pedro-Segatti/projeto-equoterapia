@@ -31,3 +31,13 @@ code {
 .btnToolbar{
   margin-right: 5px;
 }
+
+.btn-info{
+  font-weight: bold !important;
+  color: white !important;
+    background-color: #006bff !important;
+}
+
+.center{
+  text-align: center;
+}

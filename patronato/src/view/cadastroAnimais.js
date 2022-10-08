@@ -14,10 +14,35 @@ export const api = axios.create({
 function cadastroAnimais() {
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
     var [list, setList] = useState([{ codigo: 1, nome: "Cavalo Teste", idade: 20, algomais: "Teste" }])
-    
+
     const atualizaDlgPesquisa = async () => {
         setList(await (await api.get("/pesquisaAnimal")).data);
         setAbrirPesquisa(true);
+    }
+
+    const atualizaItemSelecionado = (item) => {
+        document.getElementById("id").value = item.aniId;
+        document.getElementById("nome").value = item.aniNome;
+        document.getElementById("idade").value = item.aniIdade;
+        document.getElementById("porte").value = item.aniPorte;
+        document.getElementById("comportamento").value = item.aniComportamento;
+        document.getElementById("andadura").value = item.aniAndadura;
+        setAbrirPesquisa(false);
+    }
+
+    const Item = ({ item }) => {
+        const { aniId, aniNome, aniIdade, aniPorte } = item;
+        const selecionarItem = e => atualizaItemSelecionado(item);
+
+        return <tr>
+            <td>{aniId}</td>
+            <td>{aniNome}</td>
+            <td>{aniIdade}</td>
+            <td>{aniPorte}</td>
+            <td className='center'>
+                <Button className='btn-success' onClick={selecionarItem}>Selecionar</Button>
+            </td>
+        </tr>
     }
 
     const enviaJson = () => {
@@ -64,23 +89,23 @@ function cadastroAnimais() {
                             <h3>Cadastro de Animais</h3>
                         </Row>
                         <Row>
-                            <Col md="4">
+                            <Col md="2">
                                 <Form.Label htmlFor="inputId">Código</Form.Label>
                                 <Form.Control type="text" id="id" />
                             </Col>
                         </Row>
                         <Row>
-                            <Col md="4">
+                            <Col md="6">
                                 <Form.Label htmlFor="inputNome">Nome</Form.Label>
                                 <Form.Control type="text" id="nome" required />
                             </Col>
                         </Row>
                         <Row>
-                            <Col md="2">
+                            <Col md="3">
                                 <Form.Label htmlFor="inputIdade">Idade</Form.Label>
                                 <Form.Control type="text" id="idade" required />
                             </Col>
-                            <Col md="2">
+                            <Col md="3">
                                 <Form.Label htmlFor="inputPorte">Porte</Form.Label>
                                 <Form.Select aria-label="Default select example" id='porte' required>
                                     <option>Selecione</option>
@@ -91,13 +116,13 @@ function cadastroAnimais() {
                             </Col>
                         </Row>
                         <Row>
-                            <Col md="4">
+                            <Col md="6">
                                 <Form.Label htmlFor="inputComportamento">Comportamento</Form.Label>
                                 <Form.Control type="text" id="comportamento" required />
                             </Col>
                         </Row>
                         <Row>
-                            <Col md="4">
+                            <Col md="6">
                                 <Form.Label htmlFor="inputAndadura">Andadura</Form.Label>
                                 <Form.Control type="text" id="andadura" required />
                             </Col>
@@ -115,18 +140,12 @@ function cadastroAnimais() {
                                                 <th>Nome</th>
                                                 <th>Idade</th>
                                                 <th>Porte</th>
+                                                <th className='center'>Ação</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {
-                                                list.map(({ aniId, aniNome, aniIdade, aniPorte }) => {
-                                                    return <tr key={aniId}>
-                                                        <td>{aniId}</td>
-                                                        <td>{aniNome}</td>
-                                                        <td>{aniIdade}</td>
-                                                        <td>{aniPorte}</td>
-                                                    </tr>
-                                                })
+                                                list.map(item => <Item key={item.aniId} item={item} />)
                                             }
                                         </tbody>
                                     </Table>
