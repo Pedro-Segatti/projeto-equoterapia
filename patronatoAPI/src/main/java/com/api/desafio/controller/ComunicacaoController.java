@@ -4,6 +4,7 @@ import com.api.desafio.model.Animal;
 import com.api.desafio.model.Pessoa;
 import com.api.desafio.service.AnimalService;
 import com.api.desafio.service.PessoaService;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,8 @@ public class ComunicacaoController {
                 return new ResponseEntity<Pessoa>(new Pessoa(), HttpStatus.NOT_FOUND);
             }
 
-            if(pessoa.getPesLoginPassword().equals(password)){
+            String encryptPassword = DigestUtils.md5Hex(password);
+            if(pessoa.getPesLoginPassword().equals(encryptPassword)){
                 return new ResponseEntity<Pessoa>(pessoa, HttpStatus.OK);
             }
 
