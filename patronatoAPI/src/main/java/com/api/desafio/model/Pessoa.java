@@ -50,6 +50,12 @@ public class Pessoa implements Serializable {
     @Basic(optional = true)
     @Column(name = "PES_FOTO")
     private String pesFoto;
+    @Column(name = "PES_EMAIL1")
+    @Basic(optional = false)
+    private String pesEmail1;
+    @Column(name = "PES_EMAIL2")
+    @Basic(optional = true)
+    private String pesEmail2;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
     private List<Telefone> telefoneList;
     @JoinColumn(name = "PES_ID_LOG", referencedColumnName = "LOG_ID")
@@ -160,6 +166,22 @@ public class Pessoa implements Serializable {
 
     public void setPesFoto(String pesFoto) {
         this.pesFoto = pesFoto;
+    }
+
+    public String getPesEmail1() {
+        return pesEmail1;
+    }
+
+    public void setPesEmail1(String pesEmail1) {
+        this.pesEmail1 = pesEmail1;
+    }
+
+    public String getPesEmail2() {
+        return pesEmail2;
+    }
+
+    public void setPesEmail2(String pesEmail2) {
+        this.pesEmail2 = pesEmail2;
     }
 
     public List<Telefone> getTelefoneList() {
