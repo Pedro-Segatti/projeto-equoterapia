@@ -9,11 +9,11 @@ export const Box = styled.div`
 	width: 100%;
 	
 	@media (min-width: 1000px) {
-		padding: 32px 10px;
+		padding: 15px 10px;
 	}
 
 	@media (max-width: 1000px) {
-		padding: 30px 10px;
+		padding: 12px 10px;
 	}`;
 
 export const Container = styled.div`
@@ -56,7 +56,7 @@ export const FooterLink = styled.a`
 	border-radius: 20px;
 
 	&:hover {
-		color: #B48F69;;
+		color: #B48F69;
 		transition: 200ms ease-in;
 		background-color: white;
 	}`;

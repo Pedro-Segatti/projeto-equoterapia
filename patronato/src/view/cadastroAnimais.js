@@ -110,7 +110,7 @@ function cadastroAnimais() {
         return (
             <div>
                 <Menu />
-                <Container fluid="md">
+                <Container>
                     <Form>
                         <br />
                         <Row>
