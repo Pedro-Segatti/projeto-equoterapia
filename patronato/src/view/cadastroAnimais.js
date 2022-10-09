@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Form, Col, Row, Container, Modal, Button, Table } from 'react-bootstrap';
 import Toolbar from './toolbar';
+import TableFooter from './table/tableFooter';
+import useTable from './table/useTable';
+import { BsPencilSquare } from "react-icons/bs";
 
 import Menu from "./menu"
 import Footer from "./footer"
@@ -13,10 +16,47 @@ export const api = axios.create({
 
 function cadastroAnimais() {
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
-    var [list, setList] = useState([{ codigo: 1, nome: "Cavalo Teste", idade: 20, algomais: "Teste" }])
+    var [list, setList] = useState('[]');
+
+    const TablePaginada = ({ data, rowsPerPage }) => {
+        const [pagina, setPage] = useState(1);
+        const { slice, range } = useTable(data, pagina, rowsPerPage);
+        return (
+            <>
+                <Table>
+                    <thead>
+                        <tr>
+                            <th>Codigo</th>
+                            <th>Nome</th>
+                            <th>Idade</th>
+                            <th>Porte</th>
+                            <th className='center'>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            slice.map(item => <LinhaTabela key={item.aniId} item={item} />)
+                        }
+                    </tbody>
+                </Table>
+                <TableFooter range={range} slice={slice} setPage={setPage} page={pagina} />
+            </>
+        );
+    };
 
     const atualizaDlgPesquisa = async () => {
         setList(await (await api.get("/pesquisaAnimal")).data);
+        setAbrirPesquisa(true);
+    }
+
+    const buscaRegistros = async () => {
+        let id = document.getElementById('idPesquisa').value;
+        let nome = document.getElementById('nomePesquisa').value;
+        const json = {
+            "aniId": id,
+            "aniNome": nome
+        };
+        setList(await (await api.get("/pesquisaAnimal", json)).data);
         setAbrirPesquisa(true);
     }
 
@@ -30,7 +70,7 @@ function cadastroAnimais() {
         setAbrirPesquisa(false);
     }
 
-    const Item = ({ item }) => {
+    const LinhaTabela = ({ item }) => {
         const { aniId, aniNome, aniIdade, aniPorte } = item;
         const selecionarItem = e => atualizaItemSelecionado(item);
 
@@ -40,21 +80,17 @@ function cadastroAnimais() {
             <td>{aniIdade}</td>
             <td>{aniPorte}</td>
             <td className='center'>
-                <Button className='btn-success' onClick={selecionarItem}>Selecionar</Button>
+                <Button className='btn-success' onClick={selecionarItem}><BsPencilSquare /></Button>
             </td>
         </tr>
     }
 
-    const enviaJson = () => {
+    const enviaJsonGravar = () => {
         let aniNome = document.getElementById('nome').value;
         let aniIdade = document.getElementById('idade').value;
         let aniPorte = document.getElementById('porte').value;
         let aniComportamento = document.getElementById('comportamento').value;
         let aniAndadura = document.getElementById('andadura').value;
-        if (aniPorte === 'Selecione') {
-            console.log('selecione um porte');
-            return;
-        }
         const json = {
             "aniNome": aniNome,
             "aniIdade": aniIdade,
@@ -62,19 +98,11 @@ function cadastroAnimais() {
             "aniComportamento": aniComportamento,
             "aniAndadura": aniAndadura
         };
-        console.log(JSON.stringify(json));
-        if (!aniNome) {
-            return;
-        }
         api.post("/cadastraAnimal", json);
     }
 
     const enviaJsonRemove = () => {
         let aniId = document.getElementById('id').value;
-        console.log(aniId);
-        if (!aniId) {
-            return;
-        }
         api.delete("/removeAnimal?aniId=" + aniId);
     }
 
@@ -128,37 +156,43 @@ function cadastroAnimais() {
                             </Col>
                         </Row>
                         <br />
-
-                        <Modal show={abrirPesquisa}>
-                            <Modal.Header><b>Pesquisa de Animal</b></Modal.Header>
-                            <Modal.Body>
-                                {abrirPesquisa &&
-                                    <Table>
-                                        <thead>
-                                            <tr>
-                                                <th>Codigo</th>
-                                                <th>Nome</th>
-                                                <th>Idade</th>
-                                                <th>Porte</th>
-                                                <th className='center'>Ação</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {
-                                                list.map(item => <Item key={item.aniId} item={item} />)
-                                            }
-                                        </tbody>
-                                    </Table>
-                                }
-                            </Modal.Body>
-                            <Modal.Footer>
-                                <Button variant="primary" className='btn-danger btnToolbar' onClick={() => setAbrirPesquisa(false)}>Fechar</Button>
-                            </Modal.Footer>
-                        </Modal>
-
-                        <Toolbar jsonCadastro={enviaJson} jsonRemove={enviaJsonRemove} abrirPesquisa={atualizaDlgPesquisa} />
+                        <Toolbar jsonCadastro={enviaJsonGravar} jsonRemove={enviaJsonRemove} abrirPesquisa={atualizaDlgPesquisa} />
                     </Form>
                 </Container>
+
+                <Modal className='modal-lg' show={abrirPesquisa}>
+                    <Modal.Header><b>Pesquisa de Animal</b></Modal.Header>
+                    <Modal.Body>
+                        {abrirPesquisa &&
+                            <>
+                                <Container>
+                                    <Form>
+                                        <Row>
+                                            <Col md="2">
+                                                <Form.Label>Código</Form.Label>
+                                                <Form.Control type="text" id="idPesquisa" />
+                                            </Col>
+                                            <Col md="6">
+                                                <Form.Label>Nome</Form.Label>
+                                                <Form.Control type="text" id="nomePesquisa" />
+                                            </Col>
+                                        </Row>
+                                        <br />
+                                        <div className='right'>
+                                            <Button onClick={buscaRegistros}>Pesquisar</Button>
+                                        </div>
+                                    </Form>
+                                </Container>
+
+                                <TablePaginada data={list} rowsPerPage={5} />
+                            </>
+                        }
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="primary" className='btn-danger btnToolbar' onClick={() => setAbrirPesquisa(false)}>Fechar</Button>
+                    </Modal.Footer>
+                </Modal>
+
                 <Footer />
             </div >
         )

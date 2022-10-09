@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { buscarPessoaPeloId } from "../api/autenticacaoController";
 import { AuthContext } from "../contexts/autenticacao";
-import { Nav, Navbar, NavDropdown, Button } from 'react-bootstrap';
+import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
 import logo from './img/logoSemFundo.png';
 import logoutImg from './img/logout.png';

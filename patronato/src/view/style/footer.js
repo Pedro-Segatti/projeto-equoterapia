@@ -6,9 +6,11 @@ export const Box = styled.div`
 	padding-right: 15px;
 	padding-left: 15px;
 	background: rgba(34, 56, 43);
-	position: sticky;
-	bottom: 0;
 	width: 100%;
+	
+	@media (min-width: 1000px) {
+		padding: 32px 10px;
+	}
 
 	@media (max-width: 1000px) {
 		padding: 30px 10px;

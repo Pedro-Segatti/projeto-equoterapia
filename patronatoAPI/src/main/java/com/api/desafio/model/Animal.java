@@ -37,6 +37,12 @@ public class Animal implements Serializable {
     @Basic(optional = false)
     @Column(name = "ANI_PORTE")
     private String aniPorte;
+    @Basic(optional = false)
+    @Column(name = "ANI_COMPORTAMENTO")
+    private String aniComportamento;
+    @Basic(optional = false)
+    @Column(name = "ANI_ANDADURA")
+    private String aniAndadura;
     @JoinTable(name = "ficha_evol_animal", joinColumns = {
         @JoinColumn(name = "FXA_ID_ANIMAL", referencedColumnName = "ANI_ID")}, inverseJoinColumns = {
         @JoinColumn(name = "FXA_ID_FICHA", referencedColumnName = "EVOL_ID")})
@@ -88,6 +94,22 @@ public class Animal implements Serializable {
 
     public void setAniPorte(String aniPorte) {
         this.aniPorte = aniPorte;
+    }
+
+    public String getAniComportamento() {
+        return aniComportamento;
+    }
+
+    public void setAniComportamento(String aniComportamento) {
+        this.aniComportamento = aniComportamento;
+    }
+
+    public String getAniAndadura() {
+        return aniAndadura;
+    }
+
+    public void setAniAndadura(String aniAndadura) {
+        this.aniAndadura = aniAndadura;
     }
 
     public List<FichaEvolucao> getFichaEvolucaoList() {

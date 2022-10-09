@@ -41,3 +41,11 @@ code {
 .center{
   text-align: center;
 }
+
+.container-md{
+  overflow-y: auto;
+}
+
+.right{
+  float: right
+}
