@@ -1,7 +1,8 @@
 import React, { useState, useEffect, createContext } from "react";
 import { api, createSession } from "../api/autenticacaoController";
 import { useNavigate } from "react-router-dom";
-import { Store } from 'react-notifications-component';
+import HTTP_STATUS from '../utilitario/httpStatus';
+import { loginSenhaInvalidos } from '../utilitario/mensagemUtil'
 
 export const AuthContext = createContext();
 
@@ -39,32 +40,15 @@ export const AuthProvider = ({ children }) => {
             setUser(user);
             navegar("/");
         } catch (error) {
-            if (error.response.status === 404) {
-                notificationOnError();
+            if (error.response.status === HTTP_STATUS.NOT_FOUND) {
+                loginSenhaInvalidos();
             }
 
-            if (error.response.status === 400) {
-                notificationOnError();
+            if (error.response.status === HTTP_STATUS.BAD_REQUEST) {
+                loginSenhaInvalidos();
             }
         }
     };
-
-    const notificationOnError = () => {
-        Store.addNotification({
-            title: "Login ou Senha inválidos",
-            message: "Revise os campos",
-            type: "danger",
-            insert: "top",
-            container: "top-right",
-            animationIn: ["animate__animated", "animate__fadeIn"],
-            animationOut: ["animate__animated", "animate__fadeOut"],
-            dismiss: {
-                duration: 2000,
-                onScreen: true,
-                pauseOnHover: true
-            },
-        });
-    }
 
     const logout = () => {
         console.log('logout');
