@@ -17,6 +17,18 @@ export const api = axios.create({
 function cadastroAnimais() {
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
     var [list, setList] = useState('[]');
+    
+    //Variáveis de cadastro
+    const [aniId, setAniId] = useState("");
+    const [aniNome, setAniNome] = useState("");
+    const [aniIdade, setAniIdade] = useState("");
+    const [aniPorte, setAniPorte] = useState("");
+    const [aniComportamento, setAniComportamento] = useState("");
+    const [aniAndadura, setAniAndadura] = useState("");
+
+    //variáveis da dialog de pesquisa
+    const [aniIdPesquisa, setAniIdPesquisa] = useState("");
+    const [aniNomePesquisa, setAniNomePesquisa] = useState("");
 
     const TablePaginada = ({ data, rowsPerPage }) => {
         const [pagina, setPage] = useState(1);
@@ -50,23 +62,17 @@ function cadastroAnimais() {
     }
 
     const buscaRegistros = async () => {
-        let id = document.getElementById('idPesquisa').value;
-        let nome = document.getElementById('nomePesquisa').value;
-        const json = {
-            "aniId": id,
-            "aniNome": nome
-        };
-        setList(await (await api.get("/pesquisaAnimal", json)).data);
+        setList(await (await api.get("/pesquisaAnimal?aniId=" + aniIdPesquisa + "&aniNome=" + aniNomePesquisa)).data);
         setAbrirPesquisa(true);
     }
 
     const atualizaItemSelecionado = (item) => {
-        document.getElementById("id").value = item.aniId;
-        document.getElementById("nome").value = item.aniNome;
-        document.getElementById("idade").value = item.aniIdade;
-        document.getElementById("porte").value = item.aniPorte;
-        document.getElementById("comportamento").value = item.aniComportamento;
-        document.getElementById("andadura").value = item.aniAndadura;
+        setAniId(item.aniId);
+        setAniNome(item.aniNome);
+        setAniIdade(item.aniIdade);
+        setAniPorte(item.aniPorte);
+        setAniComportamento(item.aniComportamento);
+        setAniAndadura(item.aniAndadura);
         setAbrirPesquisa(false);
     }
 
@@ -86,12 +92,8 @@ function cadastroAnimais() {
     }
 
     const enviaJsonGravar = () => {
-        let aniNome = document.getElementById('nome').value;
-        let aniIdade = document.getElementById('idade').value;
-        let aniPorte = document.getElementById('porte').value;
-        let aniComportamento = document.getElementById('comportamento').value;
-        let aniAndadura = document.getElementById('andadura').value;
         const json = {
+            "aniId": aniId,
             "aniNome": aniNome,
             "aniIdade": aniIdade,
             "aniPorte": aniPorte,
@@ -102,7 +104,6 @@ function cadastroAnimais() {
     }
 
     const enviaJsonRemove = () => {
-        let aniId = document.getElementById('id').value;
         api.delete("/removeAnimal?aniId=" + aniId);
     }
 
@@ -119,23 +120,29 @@ function cadastroAnimais() {
                         <Row>
                             <Col md="2">
                                 <Form.Label htmlFor="inputId">Código</Form.Label>
-                                <Form.Control type="text" id="id" />
+                                <Form.Control value={aniId} type="text" id="id" disabled={true} />
                             </Col>
                         </Row>
                         <Row>
                             <Col md="6">
                                 <Form.Label htmlFor="inputNome">Nome</Form.Label>
-                                <Form.Control type="text" id="nome" required />
+                                <Form.Control value={aniNome}
+                                onChange={(e) => setAniNome(e.target.value)}
+                                type="text" id="nome" required />
                             </Col>
                         </Row>
                         <Row>
                             <Col md="3">
                                 <Form.Label htmlFor="inputIdade">Idade</Form.Label>
-                                <Form.Control type="text" id="idade" required />
+                                <Form.Control value={aniIdade}
+                                onChange={(e) => setAniIdade(e.target.value)}
+                                type="text" id="idade" required />
                             </Col>
                             <Col md="3">
                                 <Form.Label htmlFor="inputPorte">Porte</Form.Label>
-                                <Form.Select aria-label="Default select example" id='porte' required>
+                                <Form.Select aria-label="Default select example" id='porte' required
+                                value={aniPorte}
+                                onChange={(e) => setAniPorte(e.target.value)}>
                                     <option>Selecione</option>
                                     <option value="P">Pequeno</option>
                                     <option value="M">Médio</option>
@@ -146,13 +153,17 @@ function cadastroAnimais() {
                         <Row>
                             <Col md="6">
                                 <Form.Label htmlFor="inputComportamento">Comportamento</Form.Label>
-                                <Form.Control type="text" id="comportamento" required />
+                                <Form.Control type="text" id="comportamento" required
+                                value={aniComportamento} 
+                                onChange={(e) => setAniComportamento(e.target.value)}/>
                             </Col>
                         </Row>
                         <Row>
                             <Col md="6">
                                 <Form.Label htmlFor="inputAndadura">Andadura</Form.Label>
-                                <Form.Control type="text" id="andadura" required />
+                                <Form.Control type="text" id="andadura" required 
+                                value={aniAndadura}
+                                onChange={(e) => setAniAndadura(e.target.value)}/>
                             </Col>
                         </Row>
                         <br />
@@ -170,11 +181,15 @@ function cadastroAnimais() {
                                         <Row>
                                             <Col md="2">
                                                 <Form.Label>Código</Form.Label>
-                                                <Form.Control type="text" id="idPesquisa" />
+                                                <Form.Control type="text" id="idPesquisa"
+                                                value={aniIdPesquisa}
+                                                onChange={(e) => setAniIdPesquisa(e.target.value)} />
                                             </Col>
                                             <Col md="6">
                                                 <Form.Label>Nome</Form.Label>
-                                                <Form.Control type="text" id="nomePesquisa" />
+                                                <Form.Control type="text" id="nomePesquisa"
+                                                value={aniNomePesquisa}
+                                                onChange={(e) => setAniNomePesquisa(e.target.value)} />
                                             </Col>
                                         </Row>
                                         <br />
