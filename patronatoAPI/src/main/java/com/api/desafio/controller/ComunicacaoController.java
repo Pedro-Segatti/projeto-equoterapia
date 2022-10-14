@@ -75,7 +75,7 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaAnimal")
-    public ResponseEntity<List<Animal>> pesquisaAnimais(){
-        return animalService.pesquisaAnimais();
+    public ResponseEntity<List<Animal>> pesquisaAnimais(@RequestParam (required=false) Integer aniId,@RequestParam (required=false) String aniNome ){
+        return animalService.pesquisaAnimais(aniId,aniNome);
     }
 }

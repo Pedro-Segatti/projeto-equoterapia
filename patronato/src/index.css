@@ -35,7 +35,12 @@ code {
 .btn-info{
   font-weight: bold !important;
   color: white !important;
-    background-color: #006bff !important;
+  background-color: #006bff !important;
+  border: none !important;
+}
+
+button{
+  height: 38px;
 }
 
 .center{
