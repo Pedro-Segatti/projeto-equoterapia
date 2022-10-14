@@ -24,13 +24,14 @@ export const Container = styled.div`
 
 export const Card = styled.div`
     width: 400px;
-    height: 80%;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background: #fff;
     border-radius: 12px;
+    padding-bottom: 30px;
+    padding-top: 20px;
     
     .logoContent{
         text-align: center;

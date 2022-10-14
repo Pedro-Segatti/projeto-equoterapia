@@ -34,7 +34,6 @@ const Rotas = () => {
         <Router>
             <AuthProvider>
                 <Routes>
-                    {/**/}
                     <Route exact path="/login" element={<Login />} />
                     <Route exact path="/" element={<Private><HomePage /></Private>} />
                     <Route exact path="/novaPagina" element={<Private><NovaPagina /></Private>} />

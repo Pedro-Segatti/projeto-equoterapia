@@ -4,6 +4,9 @@ import Toolbar from './toolbar';
 import TableFooter from './table/tableFooter';
 import useTable from './table/useTable';
 import { BsPencilSquare } from "react-icons/bs";
+import { registroSalvo } from "../utilitario/mensagemUtil"
+import { ReactNotifications } from 'react-notifications-component'
+import 'react-notifications-component/dist/theme.css'
 
 import Menu from "./menu"
 import Footer from "./footer"
@@ -99,6 +102,7 @@ function cadastroAnimais() {
             "aniAndadura": aniAndadura
         };
         api.post("/cadastraAnimal", json);
+        registroSalvo();
     }
 
     const enviaJsonRemove = () => {
@@ -111,6 +115,7 @@ function cadastroAnimais() {
             <div>
                 <Menu />
                 <Container>
+                <ReactNotifications />
                     <Form>
                         <br />
                         <Row>
