@@ -38,7 +38,7 @@ function cadastroAnimais() {
         const { slice, range } = useTable(data, pagina, rowsPerPage);
         return (
             <>
-                <Table>
+                <Table size="sm">
                     <thead>
                         <tr>
                             <th>Codigo</th>
@@ -84,11 +84,11 @@ function cadastroAnimais() {
         const selecionarItem = e => atualizaItemSelecionado(item);
 
         return <tr>
-            <td>{aniId}</td>
+            <td width={'80px'}>{aniId}</td>
             <td>{aniNome}</td>
-            <td>{aniIdade}</td>
-            <td>{aniPorte}</td>
-            <td className='center'>
+            <td width={'100px'}>{aniIdade}</td>
+            <td width={'100px'}>{aniPorte}</td>
+            <td width={'80px'} className='center'>
                 <Button className='btn-success' onClick={selecionarItem}><BsPencilSquare /></Button>
             </td>
         </tr>
@@ -125,7 +125,7 @@ function cadastroAnimais() {
                         <Row>
                             <Col md="2">
                                 <Form.Label htmlFor="inputId">Código</Form.Label>
-                                <Form.Control value={aniId} type="text" id="id" disabled={true} />
+                                <Form.Control value={aniId} type="text" id="id" disabled />
                             </Col>
                         </Row>
                         <Row>
@@ -176,7 +176,7 @@ function cadastroAnimais() {
                     </Form>
                 </Container>
 
-                <Modal className='modal-lg' show={abrirPesquisa}>
+                <Modal className='modal-xl' show={abrirPesquisa}>
                     <Modal.Header><b>Pesquisa de Animal</b></Modal.Header>
                     <Modal.Body>
                         {abrirPesquisa &&
@@ -193,11 +193,10 @@ function cadastroAnimais() {
                                             <Col md="6">
                                                 <Form.Label>Nome</Form.Label>
                                                 <Form.Control type="text" id="nomePesquisa"
-                                                value={aniNomePesquisa}
+                                                initi={aniNomePesquisa}
                                                 onChange={(e) => setAniNomePesquisa(e.target.value)} />
                                             </Col>
                                         </Row>
-                                        <br />
                                         <div className='right'>
                                             <Button onClick={buscaRegistros}>Pesquisar</Button>
                                         </div>
