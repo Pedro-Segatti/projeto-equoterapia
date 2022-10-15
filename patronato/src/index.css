@@ -28,8 +28,14 @@ code {
   border-radius: 12px;
 }
 
+.nossoToolbar{
+  text-align: right;
+}
+
 .btnToolbar{
   margin-right: 5px;
+  width: 110px;
+  height: 40px;
 }
 
 .btn-info{
@@ -49,6 +55,14 @@ button{
 
 .right{
   float: right
+}
+
+.btnPaginacao{
+  margin: 5px;
+}
+
+.modal-90w{
+  width: 90%;
 }
 
 @media(max-width: 1000px){

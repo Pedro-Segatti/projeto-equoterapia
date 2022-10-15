@@ -1,13 +1,13 @@
 import React from "react";
 import Menu from "./menu.js";
 import Footer from "./footer.js";
-import { Container} from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 
 const HomePage = () => {
     return (
         <div>
             <Menu />
-            <Container fluid="md">
+            <Container className="vh-100">
             </Container>
             <Footer />
         </div>

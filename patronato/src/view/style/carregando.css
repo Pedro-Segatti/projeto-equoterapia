@@ -1,0 +1,22 @@
+.panelCarregando {
+    width: 200px;
+    border: 2px solid #B48F69;
+    border-radius: 12px;
+    background-color: rgba(34, 56, 43);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+    margin-left: 25%;
+}
+
+.dialog .modal-content {
+    top: 50%;
+    background-color: transparent;
+    border: none;
+
+    -webkit-transform: translate(0, 150%);
+    transform: translate(0, 150%);
+}
+
+.cavaloGif {
+    width: 200px;
+}
