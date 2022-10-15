@@ -31,7 +31,7 @@ public class Atividade implements Serializable {
     private String atvDescricao;
     @Basic(optional = false)
     @Column(name = "ATV_DURACAO")
-    private String atvDuracao;
+    private Integer atvDuracao;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "atividade")
     private List<FichaEvolAtividadeMaterial> fichaEvolAtividadeMaterialList;
 
@@ -42,7 +42,7 @@ public class Atividade implements Serializable {
         this.atvId = atvId;
     }
 
-    public Atividade(Integer atvId, String atvDescricao, String atvDuracao) {
+    public Atividade(Integer atvId, String atvDescricao, Integer atvDuracao) {
         this.atvId = atvId;
         this.atvDescricao = atvDescricao;
         this.atvDuracao = atvDuracao;
@@ -64,11 +64,11 @@ public class Atividade implements Serializable {
         this.atvDescricao = atvDescricao;
     }
 
-    public String getAtvDuracao() {
+    public Integer getAtvDuracao() {
         return atvDuracao;
     }
 
-    public void setAtvDuracao(String atvDuracao) {
+    public void setAtvDuracao(Integer atvDuracao) {
         this.atvDuracao = atvDuracao;
     }
 
