@@ -3,15 +3,19 @@ import { Button } from 'react-bootstrap';
 
 
 const Toolbar = ({ jsonCadastro, jsonRemove, abrirPesquisa }) => {
+  const reloadPage = (e) => { 
+    e.preventDefault();
+    window.location.reload(true); 
+  };
+
   return (
-    <>
-      <div>
-        <Button variant="primary" className='btn-success btnToolbar' type="submit" onClick={jsonCadastro}>Salvar</Button>
-        <Button variant="primary" className='btn-info btnToolbar' onClick={abrirPesquisa}>Pesquisar</Button>
-        <Button variant="primary" className='btn-danger btnToolbar' type="submit" onClick={jsonRemove}>Excluir</Button>
-      </div>
+    <div className="nossoToolbar">
+      <Button variant="primary" className='btn-success btnToolbar' type="submit" onClick={jsonCadastro}>Salvar</Button>
+      <Button variant="primary" className='btn-warning btnToolbar' type="button" onClick={reloadPage}>Cancelar</Button>
+      <Button variant="primary" className='btn-info btnToolbar' onClick={abrirPesquisa}>Pesquisar</Button>
+      <Button variant="primary" className='btn-danger btnToolbar' type="submit" onClick={jsonRemove}>Excluir</Button>
       <br />
-    </>
+    </div >
   );
 };
 export default Toolbar;

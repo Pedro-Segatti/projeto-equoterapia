@@ -11,6 +11,7 @@ import Login from "./view/login";
 import HomePage from "./view/homePage";
 import NovaPagina from "./view/novaPagina";
 import CadastroAnimais from "./view/cadastroAnimais";
+import Carregando from "./view/carregando";
 
 import { AuthContext, AuthProvider } from "./contexts/autenticacao";
 import { useContext } from 'react';
@@ -20,7 +21,7 @@ const Rotas = () => {
         const { autenticado, loading } = useContext(AuthContext);
 
         if (loading) {
-            return <div>Carregando...</div>;
+            return <Carregando showCarregando={loading} />;
         }
 
         //realizar comunicação com api para autenticar

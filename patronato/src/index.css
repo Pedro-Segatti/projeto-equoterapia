@@ -28,8 +28,14 @@ code {
   border-radius: 12px;
 }
 
+.nossoToolbar {
+  text-align: right;
+}
+
 .btnToolbar {
   margin-right: 5px;
+  width: 110px;
+  height: 40px;
 }
 
 .btn-info {
@@ -56,50 +62,59 @@ button {
     position: fixed;
     right: 15px;
   }
-}
 
-/*Scroll Bar*/
-/* width */
-::-webkit-scrollbar {
-  width: 5px;
-}
+  .btnPaginacao {
+    margin: 5px;
+  }
 
-/* Track */
-::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px grey;
-}
+  .modal-90w {
+    width: 90%;
+  }
 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: rgba(34, 56, 43);
-}
+  /*Scroll Bar*/
+  /* width */
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #B48F69;
-  ;
-}
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+  }
 
-.my-modal {
-  width: 90vw;
-  max-width: 90vw;
-}
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgba(34, 56, 43);
+  }
 
-tr {
-  height: 12px !important;
-}
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #B48F69;
+    ;
+  }
 
-.form-control {
-  height: 35px;
-}
+  .my-modal {
+    width: 90vw;
+    max-width: 90vw;
+  }
 
-.form-label {
-  margin-bottom: 0;
-}
+  tr {
+    height: 12px !important;
+  }
 
-.table {
-  margin-bottom: 5px !important;
-}
-.modal-body{
-  margin-bottom: -10px;
+  .form-control {
+    height: 35px;
+  }
+
+  .form-label {
+    margin-bottom: 0;
+  }
+
+  .table {
+    margin-bottom: 5px !important;
+  }
+
+  .modal-body {
+    margin-bottom: -10px;
+  }
 }

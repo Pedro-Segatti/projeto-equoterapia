@@ -115,7 +115,7 @@ function cadastroAnimais() {
         return (
             <div>
                 <Menu />
-                <Container>
+                <Container className="vh-100">
                 <ReactNotifications />
                     <Form>
                         <br />
@@ -208,7 +208,7 @@ function cadastroAnimais() {
                         }
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="primary" className='btn-danger btnToolbar' onClick={() => setAbrirPesquisa(false)}>Fechar</Button>
+                        <Button variant="primary" className='btn-danger' onClick={() => setAbrirPesquisa(false)}>Fechar</Button>
                     </Modal.Footer>
                 </Modal>
 

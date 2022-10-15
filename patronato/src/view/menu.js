@@ -28,55 +28,57 @@ const Menu = () => {
   };
 
   return (
-    <Navbar sticky='top' expand="lg">
-      <Navbar.Brand className="mx-3" href="/"><Image className="logo" src={logo}></Image></Navbar.Brand>
-      <Navbar.Toggle className="bg-ligth" aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="me-auto">
-          <NavDropdown title="Cadastros" id="basic-nav-dropdown" className="mr-4">
-            <NavDropdown.Item href="/cadastroAnimais">Animais</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">Funcionarios</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.3">....</NavDropdown.Item>
-          </NavDropdown>
+    <header>
+      <Navbar sticky='top' expand="lg">
+        <Navbar.Brand className="mx-3" href="/"><Image className="logo" src={logo}></Image></Navbar.Brand>
+        <Navbar.Toggle className="bg-ligth" aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <NavDropdown title="Cadastros" id="basic-nav-dropdown" className="mr-4">
+              <NavDropdown.Item href="/cadastroAnimais">Animais</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">Funcionarios</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">....</NavDropdown.Item>
+            </NavDropdown>
 
-          <NavDropdown title="Movimentos" id="basic-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">Pacientes</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">Funcionarios</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.3">....</NavDropdown.Item>
-          </NavDropdown>
+            <NavDropdown title="Movimentos" id="basic-nav-dropdown">
+              <NavDropdown.Item href="#action/3.1">Pacientes</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">Funcionarios</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">....</NavDropdown.Item>
+            </NavDropdown>
 
-          <NavDropdown title="Consultas" id="basic-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">Pacientes</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">Funcionarios</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.3">....</NavDropdown.Item>
-          </NavDropdown>
+            <NavDropdown title="Consultas" id="basic-nav-dropdown">
+              <NavDropdown.Item href="#action/3.1">Pacientes</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">Funcionarios</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">....</NavDropdown.Item>
+            </NavDropdown>
 
-          <NavDropdown title="Relatórios" id="basic-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">Pacientes</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">Funcionarios</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.3">....</NavDropdown.Item>
-          </NavDropdown>
-        </Nav>
-      </Navbar.Collapse>
-      {!loading &&
-        <div className='user-display'>
-          <Navbar.Collapse className="justify-content-end">
-            <div>
-              <Navbar.Brand className="mx-3" href="#">
-                <Image className="ftPerfil" src={pessoaLogada.pesFoto}></Image>
-              </Navbar.Brand>
-            </div>
+            <NavDropdown title="Relatórios" id="basic-nav-dropdown">
+              <NavDropdown.Item href="#action/3.1">Pacientes</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">Funcionarios</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">....</NavDropdown.Item>
+            </NavDropdown>
+          </Nav>
+        </Navbar.Collapse>
+        {!loading &&
+          <div className='user-display'>
+            <Navbar.Collapse className="justify-content-end">
+              <div>
+                <Navbar.Brand className="mx-3" href="#">
+                  <Image className="ftPerfil" src={pessoaLogada.pesFoto}></Image>
+                </Navbar.Brand>
+              </div>
 
-            <div className='textos'>
-              <p className='nomeLogin'>{pessoaLogada.pesNome}</p>
-              <a onClick={handleClickLogout} href='/'>
-                <Image className='logout' src={logoutImg}></Image>
-              </a>
-            </div>
-          </Navbar.Collapse>
-        </div>
-      }
-    </Navbar>
+              <div className='textos'>
+                <p className='nomeLogin'>{pessoaLogada.pesNome}</p>
+                <a onClick={handleClickLogout} href='/'>
+                  <Image className='logout' src={logoutImg}></Image>
+                </a>
+              </div>
+            </Navbar.Collapse>
+          </div>
+        }
+      </Navbar>
+    </header>
   )
 }
 export default Menu;
