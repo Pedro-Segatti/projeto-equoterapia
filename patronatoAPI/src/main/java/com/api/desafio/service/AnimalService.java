@@ -19,16 +19,6 @@ public class AnimalService {
     @Autowired
     private AnimalCrud ac;
 
-    public ResponseEntity<?> busca(Animal filtroAnimal) {
-        ResponseModel rm = new ResponseModel();
-        Animal animal = new Animal();
-        if(animal != null){
-            rm.setMensagem("O animal: " +  animal.getAniNome() + " possui o porte: " + animal.getAniPorte());
-        }else{
-            rm.setMensagem("Nenhum animal encontrado");
-        }
-        return new ResponseEntity<ResponseModel>(rm, HttpStatus.OK);
-    }
     public ResponseEntity<?> salva(Animal animal) {
         ac.save(animal);
         ResponseModel rm = new ResponseModel();

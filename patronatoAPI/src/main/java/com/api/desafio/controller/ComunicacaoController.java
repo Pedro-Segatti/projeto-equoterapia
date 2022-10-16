@@ -1,8 +1,10 @@
 package com.api.desafio.controller;
 
 import com.api.desafio.model.Animal;
+import com.api.desafio.model.FichaEvolucao;
 import com.api.desafio.model.Pessoa;
 import com.api.desafio.service.AnimalService;
+import com.api.desafio.service.FichaEvolService;
 import com.api.desafio.service.PessoaService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +19,10 @@ public class ComunicacaoController {
 
     @Autowired
     private AnimalService animalService;
-
     @Autowired
     private PessoaService pessoaService;
+    @Autowired
+    private FichaEvolService fichaEvolService;
 
     @CrossOrigin(origins = "*")
     @GetMapping("/login")
@@ -56,12 +59,6 @@ public class ComunicacaoController {
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping("/buscaAnimal")
-    public ResponseEntity<?> buscarAnimal(@RequestBody Animal animal){
-        return animalService.busca(animal);
-    }
-
-    @CrossOrigin(origins = "*")
     @PostMapping("/cadastraAnimal")
     public ResponseEntity<?> cadastrarAnimal(@RequestBody Animal animal){
         return animalService.salva(animal);
@@ -77,5 +74,23 @@ public class ComunicacaoController {
     @GetMapping("/pesquisaAnimal")
     public ResponseEntity<List<Animal>> pesquisaAnimais(@RequestParam (required=false) Integer aniId,@RequestParam (required=false) String aniNome ){
         return animalService.pesquisaAnimais(aniId,aniNome);
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/cadastraFichaEvol")
+    public ResponseEntity<?> cadastrarFichaEvol(@RequestBody FichaEvolucao fichaEvolucao){
+        return fichaEvolService.salva(fichaEvolucao);
+    }
+
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/removeFichaEvol")
+    public ResponseEntity<?> removeFichaEvol(@RequestParam Integer evolId){
+        return fichaEvolService.remove(evolId);
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/pesquisaFichaEvol")
+    public ResponseEntity<List<FichaEvolucao>> pesquisaFichaEvol(@RequestParam (required=false) Integer evolId ){
+        return fichaEvolService.pesquisa(evolId);
     }
 }

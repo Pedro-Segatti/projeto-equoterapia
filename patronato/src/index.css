@@ -57,14 +57,22 @@ button {
   float: right
 }
 
+.btnPaginacao {
+  margin: 2px;
+}
+
+.btnMarginTop{
+  margin-top: 5px;
+}
+
+.textArea{
+  height: 70px;
+}
+
 @media(max-width: 1000px) {
   .navbar .navbar-toggler {
     position: fixed;
     right: 15px;
-  }
-
-  .btnPaginacao {
-    margin: 5px;
   }
 
   .modal-90w {

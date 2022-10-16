@@ -2,24 +2,8 @@ package com.api.desafio.model;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-/**
- *
- * @author Pedro
- */
 @Entity
 @Table(name = "FICHA_EVOLUCAO")
 public class FichaEvolucao implements Serializable {
@@ -30,25 +14,39 @@ public class FichaEvolucao implements Serializable {
     @Basic(optional = false)
     @Column(name = "EVOL_ID")
     private Integer evolId;
-    @Lob
-    @Column(name = "EVOL_ALTERACOES")
-    private byte[] evolAlteracoes;
-    @Column(name = "EVOL_COMPORT_EQUIPE")
-    private Boolean evolComportEquipe;
-    @Column(name = "EVOL_COMPORT_ANIMAL")
-    private Boolean evolComportAnimal;
-    @Column(name = "EVOL_HUMOR_BOOLEAN")
-    private Boolean evolHumorBoolean;
-    @Column(name = "EVOL_ATENCAO")
-    private Boolean evolAtencao;
-    @Column(name = "EVOL_AUTONOMIA")
-    private Boolean evolAutonomia;
-    @Lob
-    @Column(name = "EVOL_POSTURA")
-    private byte[] evolPostura;
-    @Lob
-    @Column(name = "EVOL_PROGRESSO")
-    private byte[] evolProgresso;
+    @Column(name = "EVOL_CLIMA")
+    private String evolClima;
+    @Column(name = "EVOL_HUMOR")
+    private String evolHumor;
+    @Column(name = "EVOL_ATENC")
+    private String evolAtenc;
+    @Column(name = "EVOL_AUTON")
+    private String evolAuton;
+    @Column(name = "EVOL_ESTEREOTIPIA")
+    private String evolEstereotipia;
+    @Column(name = "EVOL_POST")
+    private String evolPost;
+    @Column(name = "EVOL_PROG")
+    private String evolProg;
+    @Column(name = "EVOL_REG")
+    private String evolReg;
+    @Column(name = "EVOL_OBS")
+    private String evolObs;
+    @Column(name = "EVOL_REC_LUDICOS")
+    private boolean evolRecLudicos;
+    @Column(name = "EVOL_QUAIS_REC_LUD")
+    private String evolQuaisRecLud;
+    @Column(name = "EVOL_OBS_REC_LUD")
+    private String evolObsRecLud;
+    @Column(name = "EVOL_DECUBITO")
+    private String evolDecubito;
+    @Column(name = "EVOL_COMP_ANI")
+    private String evolCompAni;
+    @Column(name = "EVOL_AND_ANI")
+    private String evolAndAni;
+    @JoinColumn(name = "EVOL_ID_MONT", referencedColumnName = "MONT_ID")
+    @ManyToOne(optional = false)
+    private Montaria evolIdMont;
     @JoinTable(name = "ficha_evol_praticante", joinColumns = {
         @JoinColumn(name = "FXPR_ID_FICHA", referencedColumnName = "EVOL_ID")}, inverseJoinColumns = {
         @JoinColumn(name = "FXPR_ID_PRATICANTE", referencedColumnName = "PRAT_ID")})
@@ -87,68 +85,132 @@ public class FichaEvolucao implements Serializable {
         this.evolId = evolId;
     }
 
-    public byte[] getEvolAlteracoes() {
-        return evolAlteracoes;
+    public String getEvolClima() {
+        return evolClima;
     }
 
-    public void setEvolAlteracoes(byte[] evolAlteracoes) {
-        this.evolAlteracoes = evolAlteracoes;
+    public void setEvolClima(String evolClima) {
+        this.evolClima = evolClima;
     }
 
-    public Boolean getEvolComportEquipe() {
-        return evolComportEquipe;
+    public String getEvolHumor() {
+        return evolHumor;
     }
 
-    public void setEvolComportEquipe(Boolean evolComportEquipe) {
-        this.evolComportEquipe = evolComportEquipe;
+    public void setEvolHumor(String evolHumor) {
+        this.evolHumor = evolHumor;
     }
 
-    public Boolean getEvolComportAnimal() {
-        return evolComportAnimal;
+    public String getEvolAtenc() {
+        return evolAtenc;
     }
 
-    public void setEvolComportAnimal(Boolean evolComportAnimal) {
-        this.evolComportAnimal = evolComportAnimal;
+    public void setEvolAtenc(String evolAtenc) {
+        this.evolAtenc = evolAtenc;
     }
 
-    public Boolean getEvolHumorBoolean() {
-        return evolHumorBoolean;
+    public String getEvolAuton() {
+        return evolAuton;
     }
 
-    public void setEvolHumorBoolean(Boolean evolHumorBoolean) {
-        this.evolHumorBoolean = evolHumorBoolean;
+    public void setEvolAuton(String evolAuton) {
+        this.evolAuton = evolAuton;
     }
 
-    public Boolean getEvolAtencao() {
-        return evolAtencao;
+    public String getEvolEstereotipia() {
+        return evolEstereotipia;
     }
 
-    public void setEvolAtencao(Boolean evolAtencao) {
-        this.evolAtencao = evolAtencao;
+    public void setEvolEstereotipia(String evolEstereotipia) {
+        this.evolEstereotipia = evolEstereotipia;
     }
 
-    public Boolean getEvolAutonomia() {
-        return evolAutonomia;
+    public String getEvolPost() {
+        return evolPost;
     }
 
-    public void setEvolAutonomia(Boolean evolAutonomia) {
-        this.evolAutonomia = evolAutonomia;
+    public void setEvolPost(String evolPost) {
+        this.evolPost = evolPost;
     }
 
-    public byte[] getEvolPostura() {
-        return evolPostura;
+    public String getEvolProg() {
+        return evolProg;
     }
 
-    public void setEvolPostura(byte[] evolPostura) {
-        this.evolPostura = evolPostura;
+    public void setEvolProg(String evolProg) {
+        this.evolProg = evolProg;
     }
 
-    public byte[] getEvolProgresso() {
-        return evolProgresso;
+    public String getEvolReg() {
+        return evolReg;
     }
 
-    public void setEvolProgresso(byte[] evolProgresso) {
-        this.evolProgresso = evolProgresso;
+    public void setEvolReg(String evolReg) {
+        this.evolReg = evolReg;
+    }
+
+    public String getEvolObs() {
+        return evolObs;
+    }
+
+    public void setEvolObs(String evolObs) {
+        this.evolObs = evolObs;
+    }
+
+    public boolean isEvolRecLudicos() {
+        return evolRecLudicos;
+    }
+
+    public void setEvolRecLudicos(boolean evolRecLudicos) {
+        this.evolRecLudicos = evolRecLudicos;
+    }
+
+    public String getEvolQuaisRecLud() {
+        return evolQuaisRecLud;
+    }
+
+    public void setEvolQuaisRecLud(String evolQuaisRecLud) {
+        this.evolQuaisRecLud = evolQuaisRecLud;
+    }
+
+    public String getEvolObsRecLud() {
+        return evolObsRecLud;
+    }
+
+    public void setEvolObsRecLud(String evolObsRecLud) {
+        this.evolObsRecLud = evolObsRecLud;
+    }
+
+    public String getEvolDecubito() {
+        return evolDecubito;
+    }
+
+    public void setEvolDecubito(String evolDecubito) {
+        this.evolDecubito = evolDecubito;
+    }
+
+    public String getEvolCompAni() {
+        return evolCompAni;
+    }
+
+    public void setEvolCompAni(String evolCompAni) {
+        this.evolCompAni = evolCompAni;
+    }
+
+    public String getEvolAndAni() {
+        return evolAndAni;
+    }
+
+    public void setEvolAndAni(String evolAndAni) {
+        this.evolAndAni = evolAndAni;
+    }
+
+    public Montaria getEvolIdMont() {
+        return evolIdMont;
+    }
+
+    public void setEvolIdMont(Montaria evolIdMont) {
+        this.evolIdMont = evolIdMont;
     }
 
     public List<Praticante> getPraticanteList() {

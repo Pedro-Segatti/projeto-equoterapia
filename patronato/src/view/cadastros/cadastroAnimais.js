@@ -1,21 +1,16 @@
 import React, { useState } from 'react';
 import { Form, Col, Row, Container, Modal, Button, Table } from 'react-bootstrap';
-import Toolbar from './toolbar';
-import TableFooter from './table/tableFooter';
-import useTable from './table/useTable';
+import Toolbar from '../toolbar';
+import TableFooter from '../table/tableFooter';
+import useTable from '../table/useTable';
 import { BsPencilSquare } from "react-icons/bs";
-import { registroSalvo } from "../utilitario/mensagemUtil"
+import { registroSalvo } from "../../utilitario/mensagemUtil"
 import { ReactNotifications } from 'react-notifications-component'
 import 'react-notifications-component/dist/theme.css'
+import {api} from "../../utilitario/baseComunicacao";
+import Menu from "../menu"
+import Footer from "../footer"
 
-import Menu from "./menu"
-import Footer from "./footer"
-
-import axios from "axios"
-
-export const api = axios.create({
-    baseURL: "http://localhost:8080",
-});
 
 function cadastroAnimais() {
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
@@ -198,7 +193,7 @@ function cadastroAnimais() {
                                             </Col>
                                         </Row>
                                         <div className='right'>
-                                            <Button onClick={buscaRegistros}>Pesquisar</Button>
+                                            <Button className='btnMarginTop' onClick={buscaRegistros}>Pesquisar</Button>
                                         </div>
                                     </Form>
                                 </Container>

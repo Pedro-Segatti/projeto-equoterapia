@@ -10,7 +10,8 @@ import {
 import Login from "./view/login";
 import HomePage from "./view/homePage";
 import NovaPagina from "./view/novaPagina";
-import CadastroAnimais from "./view/cadastroAnimais";
+import CadastroAnimais from "./view/cadastros/cadastroAnimais";
+import CadastroFichaEvol from "./view/cadastros/cadastroFichaEvol";
 import Carregando from "./view/carregando";
 
 import { AuthContext, AuthProvider } from "./contexts/autenticacao";
@@ -39,6 +40,7 @@ const Rotas = () => {
                     <Route exact path="/" element={<Private><HomePage /></Private>} />
                     <Route exact path="/novaPagina" element={<Private><NovaPagina /></Private>} />
                     <Route exact path="/cadastroAnimais" element={<Private><CadastroAnimais /></Private>} />
+                    <Route exact path="/cadastroFichaEvol" element={<Private><CadastroFichaEvol /></Private>} />
                 </Routes>
             </AuthProvider>
         </Router >
