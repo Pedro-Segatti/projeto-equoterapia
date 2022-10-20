@@ -13,7 +13,6 @@ import Footer from "../footer"
 import { api } from "../../utilitario/baseComunicacao";
 
 function cadastroFichaEvol() {
-
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
     var [list, setList] = useState('[]');
 
@@ -28,7 +27,8 @@ function cadastroFichaEvol() {
     const [evolProg, setEvolProg] = useState("");
     const [evolReg, setEvolReg] = useState("");
     const [evolObs, setEvolObs] = useState("");
-    const [evolRecLudicos, setEvolRecLudicos] = this.handleCheckboxChange.bind(this);
+    const [evolRecLudicos, setEvolRecLudicos] = useState(false);
+    const selecionaRecLudicos = () => setEvolRecLudicos(!evolRecLudicos)
     const [evolQuaisRecLud, setEvolQuaisRecLud] = useState("");
     const [evolObsRecLud, setEvolObsRecLud] = useState("");
     const [evolDecubito, setEvolDecubito] = useState("");
@@ -121,8 +121,8 @@ function cadastroFichaEvol() {
         api.delete("/removeFichaEvol?evolId=" + evolId);
     }
 
-    const atualizaRecursosLudicos = (event) => {
-        setEvolRecLudicos(event.target.value);
+    const atualizaRecursosLudicos = () => {
+        selecionaRecLudicos();
         setEvolObsRecLud("");
         setEvolQuaisRecLud("");
     }
@@ -145,18 +145,14 @@ function cadastroFichaEvol() {
                             </Col>
                         </Row>
                         <Row>
-                            <Col md="6">
+                            <Col md="3">
                                 <Form.Label htmlFor="inputHumor">Humor</Form.Label>
-                                <Form.Control value={evolHumor}
-                                    onChange={(e) => setEvolHumor(e.target.value)}
-                                    type="text" id="humor" maxLength={1} />
-                            </Col>
-
-                            <Col md="6">
-                                <Form.Label htmlFor="inputClima">Clima</Form.Label>
-                                <Form.Control value={evolClima}
-                                    onChange={(e) => setEvolClima(e.target.value)}
-                                    type="text" id="clima" />
+                                <Form.Select id='porte' required value={evolHumor}
+                                onChange={(e) => setEvolHumor(e.target.value)}>
+                                    <option>Selecione</option>
+                                    <option value="T">Tranquilo</option>
+                                    <option value="A">Agitado</option>
+                                </Form.Select>
                             </Col>
                         </Row>
                         <Row>
@@ -180,6 +176,12 @@ function cadastroFichaEvol() {
                                 <Form.Control value={evolPost}
                                     onChange={(e) => setEvolPost(e.target.value)}
                                     type="text" id="post" />
+                            </Col>
+                            <Col md="6">
+                                <Form.Label htmlFor="inputClima">Clima</Form.Label>
+                                <Form.Control value={evolClima}
+                                    onChange={(e) => setEvolClima(e.target.value)}
+                                    type="text" id="clima" />
                             </Col>
                         </Row>
                         <Row>
@@ -214,8 +216,8 @@ function cadastroFichaEvol() {
                         <Row>
                             <Col md="6">
                                 <Form.Check
-                                    value={evolRecLudicos}
-                                    onChange={(e) => atualizaRecursosLudicos(e)}
+                                    checked={evolRecLudicos}
+                                    onClick={atualizaRecursosLudicos}
                                     type="checkbox"
                                     id="recLud"
                                     label="Recursos Lúdicos"
