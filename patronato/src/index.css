@@ -125,4 +125,8 @@ button {
   .modal-body {
     margin-bottom: -10px;
   }
+
+  .marginLeft{
+    margin-left: 5px !important;
+  }
 }

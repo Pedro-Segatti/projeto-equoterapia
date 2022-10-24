@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { Form, Col, Row, Container, Modal, Button, Table } from 'react-bootstrap';
+import { Form, Col, Row, Container, Button, Card, Table } from 'react-bootstrap';
 import Toolbar from '../toolbar';
-import TableFooter from '../table/tableFooter';
-import useTable from '../table/useTable';
-import { BsPencilSquare } from "react-icons/bs";
-import { registroSalvo } from "../../utilitario/mensagemUtil"
-import { ReactNotifications } from 'react-notifications-component'
-import 'react-notifications-component/dist/theme.css'
+import { registroSalvo } from "../../utilitario/mensagemUtil";
+import { ReactNotifications } from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
+import PesquisaAnimais from "../pesquisas/pesquisaAnimais";
+import PesquisaFichaEvol from "../pesquisas/pesquisaFichaEvol";
 
 import Menu from "../menu"
 import Footer from "../footer"
@@ -14,7 +13,20 @@ import { api } from "../../utilitario/baseComunicacao";
 
 function cadastroFichaEvol() {
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
+    const [abrirPesquisaAnimal, setAbrirPesquisaAnimal] = useState(false);
     var [list, setList] = useState('[]');
+    var [listAnimal, setListAnimal] = useState([]);
+
+    const atualizaDlgPesquisa = async () => {
+        setList(await (await api.get("/pesquisaFichaEvol")).data);
+        setAbrirPesquisa(true);
+    }
+
+    const atualizaDlgPesquisaAnimal = async () => {
+        setListAnimal(await (await api.get("/pesquisaAnimal")).data);
+        console.log(evolAniSelecionado);
+        setAbrirPesquisaAnimal(true);
+    }
 
     //Variáveis de cadastro
     const [evolId, setEvolId] = useState("");
@@ -34,64 +46,32 @@ function cadastroFichaEvol() {
     const [evolDecubito, setEvolDecubito] = useState("");
     const [evolCompAni, setEvolCompAni] = useState("");
     const [evolAndAni, setEvolAndAni] = useState("");
+    const [evolAniSelecionado, setEvolAniSelecionado] = useState([]);
 
-    //variáveis da dialog de pesquisa
-    const [evolIdPesquisa, setEvolIdPesquisa] = useState("");
-
-    const TablePaginada = ({ data, rowsPerPage }) => {
-        const [pagina, setPage] = useState(1);
-        const { slice, range } = useTable(data, pagina, rowsPerPage);
-        return (
-            <>
-                <Table size="sm">
-                    <thead>
-                        <tr>
-                            <th>Codigo</th>
-                            <th>Nome</th>
-                            <th>Idade</th>
-                            <th>Porte</th>
-                            <th className='center'>Ação</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            slice.map(item => <LinhaTabela key={item.evolId} item={item} />)
-                        }
-                    </tbody>
-                </Table>
-                <TableFooter range={range} slice={slice} setPage={setPage} page={pagina} />
-            </>
-        );
-    };
-
-    const atualizaDlgPesquisa = async () => {
-        setList(await (await api.get("/pesquisaFichaEvol")).data);
-        setAbrirPesquisa(true);
-    }
-
-    const buscaRegistros = async () => {
-        setList(await (await api.get("/pesquisaFichaEvol?evolId=" + evolIdPesquisa)).data);
-        setAbrirPesquisa(true);
-    }
-
-    const atualizaItemSelecionado = (item) => {
+    const atualizaEvolSelecionada = (item) => {
         setEvolId(item.evolId);
+        setEvolClima(item.evolClima || '');
+        setEvolHumor(item.evolHumor || '');
+        setEvolAtenc(item.evolAtenc || '');
+        setEvolAuton(item.evolAuton || '');
+        setEvolEstereotipia(item.evolEstereotipia || '');
+        setEvolPost(item.evolPost || '');
+        setEvolProg(item.evolProg || '');
+        setEvolReg(item.evolReg || '');
+        setEvolObs(item.evolObs || '');
+        setEvolRecLudicos(item.evolRecLudicos || '');
+        setEvolQuaisRecLud(item.evolQuaisRecLud || '');
+        setEvolObsRecLud(item.evolObsRecLud || '');
+        setEvolDecubito(item.evolDecubito || '');
+        setEvolCompAni(item.evolCompAni || '');
+        setEvolAndAni(item.evolAndAni || '');
+        setEvolAniSelecionado(item.animalList || []);
         setAbrirPesquisa(false);
     }
 
-    const LinhaTabela = ({ item }) => {
-        const { aniId, aniNome, aniIdade, aniPorte } = item;
-        const selecionarItem = e => atualizaItemSelecionado(item);
-
-        return <tr>
-            <td width={'80px'}>{aniId}</td>
-            <td>{aniNome}</td>
-            <td width={'100px'}>{aniIdade}</td>
-            <td width={'100px'}>{aniPorte}</td>
-            <td width={'80px'} className='center'>
-                <Button className='btn-success' onClick={selecionarItem}><BsPencilSquare /></Button>
-            </td>
-        </tr>
+    const atualizaAnimalSelecionado = (item) => {
+        setEvolAniSelecionado(current => [...current, item.aniId])
+        setAbrirPesquisaAnimal(false);
     }
 
     const enviaJsonGravar = () => {
@@ -111,8 +91,10 @@ function cadastroFichaEvol() {
             "evolDecubito": evolDecubito,
             "evolObsRecLud": evolObsRecLud,
             "evolCompAni": evolCompAni,
-            "evolAndAni": evolAndAni
+            "evolAndAni": evolAndAni,
+            "animalList": evolAniSelecionado.map(aniId => ({ aniId }))
         };
+        console.log(json);
         api.post("/cadastraFichaEvol", json);
         registroSalvo();
     }
@@ -148,7 +130,7 @@ function cadastroFichaEvol() {
                             <Col md="3">
                                 <Form.Label htmlFor="inputHumor">Humor</Form.Label>
                                 <Form.Select id='porte' required value={evolHumor}
-                                onChange={(e) => setEvolHumor(e.target.value)}>
+                                    onChange={(e) => setEvolHumor(e.target.value)}>
                                     <option>Selecione</option>
                                     <option value="T">Tranquilo</option>
                                     <option value="A">Agitado</option>
@@ -216,7 +198,7 @@ function cadastroFichaEvol() {
                         <Row>
                             <Col md="6">
                                 <Form.Check
-                                    checked={evolRecLudicos}
+                                    defaultChecked={true}
                                     onClick={atualizaRecursosLudicos}
                                     type="checkbox"
                                     id="recLud"
@@ -263,41 +245,43 @@ function cadastroFichaEvol() {
                             </Col>
                         </Row>
                         <br />
+                        <Row>
+                            <Col md="6">
+                                <Card>
+                                    <div className='marginLeft'>
+                                        <b>Animais</b>
+                                        <Col md="2">
+                                            <Button variant="primary" className='btn-success btnMarginTop' onClick={atualizaDlgPesquisaAnimal}>Adicionar</Button>
+                                        </Col>
+                                        {evolAniSelecionado.length > 0 &&
+                                            <Table size="sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Codigo</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {
+                                                        evolAniSelecionado.map(item => <tr key={item}><td>{item}</td></tr>)
+                                                    }
+                                                </tbody>
+                                            </Table>
+                                        }
+                                    </div>
+                                </Card>
+                            </Col>
+                        </Row>
+                        <br />
                         <Toolbar jsonCadastro={enviaJsonGravar} jsonRemove={enviaJsonRemove} abrirPesquisa={atualizaDlgPesquisa} />
                         <br />
                     </Form>
                 </Container>
-
-                <Modal className='modal-xl' show={abrirPesquisa}>
-                    <Modal.Header><b>Pesquisa de Animal</b></Modal.Header>
-                    <Modal.Body>
-                        {abrirPesquisa &&
-                            <>
-                                <Container>
-                                    <Form>
-                                        <Row>
-                                            <Col md="2">
-                                                <Form.Label>Código</Form.Label>
-                                                <Form.Control type="text" id="idPesquisa"
-                                                    value={evolIdPesquisa}
-                                                    onChange={(e) => setEvolIdPesquisa(e.target.value)} />
-                                            </Col>
-                                        </Row>
-                                        <div className='right'>
-                                            <Button className='btnMarginTop' onClick={buscaRegistros}>Pesquisar</Button>
-                                        </div>
-                                    </Form>
-                                </Container>
-
-                                <TablePaginada data={list} rowsPerPage={5} />
-                            </>
-                        }
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="primary" className='btn-danger' onClick={() => setAbrirPesquisa(false)}>Fechar</Button>
-                    </Modal.Footer>
-                </Modal>
-
+                {abrirPesquisa &&
+                    <PesquisaFichaEvol setValores={setList} valores={list} atualizaItemSelecionado={atualizaEvolSelecionada} setAbrirPesquisa={setAbrirPesquisa} />
+                }
+                {abrirPesquisaAnimal &&
+                    <PesquisaAnimais setValores={setListAnimal} valores={listAnimal} atualizaItemSelecionado={atualizaAnimalSelecionado} setAbrirPesquisa={setAbrirPesquisaAnimal} />
+                }
                 <Footer />
             </div >
         )

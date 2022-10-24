@@ -53,3 +53,7 @@ button {
 .textArea{
   height: 80px;
 }
+
+.marginLeft{
+  margin-left: 10px !important;
+}
