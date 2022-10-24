@@ -60,8 +60,8 @@ const Menu = () => {
           </Nav>
         </Navbar.Collapse>
         {!loading &&
-          <div className='user-display'>
-            <Navbar.Collapse className="justify-content-end">
+          <Navbar.Collapse className="justify-content-end">
+            <div className='user-display'>
               <div>
                 <Navbar.Brand className="mx-3" href="#">
                   <Image className="ftPerfil" src={pessoaLogada.pesFoto}></Image>
@@ -74,8 +74,8 @@ const Menu = () => {
                   <Image className='logout' src={logoutImg}></Image>
                 </a>
               </div>
-            </Navbar.Collapse>
-          </div>
+            </div>
+          </Navbar.Collapse>
         }
       </Navbar>
     </header>

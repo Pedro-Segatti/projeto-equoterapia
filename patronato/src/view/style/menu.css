@@ -56,6 +56,13 @@ i>.navbar-toggler {
   .textoLogo {
     width: 120px;
   }
+
+  .user-display {
+    margin-right: auto !important;
+    flex-direction: column;
+    align-items: center;
+    width: auto !important;
+  }
 }
 
 .container-md {
@@ -63,8 +70,9 @@ i>.navbar-toggler {
 }
 
 .user-display {
-  margin-right: 5vh;
+  margin-right: 30vh;
   width: 60px;
+  display: flex;
 }
 
 .nomeLogin {
@@ -76,7 +84,6 @@ i>.navbar-toggler {
 
 .textos {
   text-align: center;
-  margin-top: -6px;
 }
 
 .logout {

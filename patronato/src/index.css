@@ -71,8 +71,7 @@ button {
 
 @media(max-width: 1000px) {
   .navbar .navbar-toggler {
-    position: fixed;
-    right: 15px;
+    margin-right: 20px;
   }
 
   .modal-90w {
