@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Form, Col, Row, Container, Button, Card, Table } from 'react-bootstrap';
+import { Form, Col, Row, Container, Button, Card } from 'react-bootstrap';
 import Toolbar from '../toolbar';
 import { registroSalvo } from "../../utilitario/mensagemUtil";
 import { ReactNotifications } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import PesquisaAnimais from "../pesquisas/pesquisaAnimais";
+import { TablePaginada } from "../pesquisas/pesquisaAnimais";
 import PesquisaFichaEvol from "../pesquisas/pesquisaFichaEvol";
 
 import Menu from "../menu"
@@ -14,7 +15,7 @@ import { api } from "../../utilitario/baseComunicacao";
 function cadastroFichaEvol() {
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
     const [abrirPesquisaAnimal, setAbrirPesquisaAnimal] = useState(false);
-    var [list, setList] = useState('[]');
+    var [list, setList] = useState([]);
     var [listAnimal, setListAnimal] = useState([]);
 
     const atualizaDlgPesquisa = async () => {
@@ -24,7 +25,6 @@ function cadastroFichaEvol() {
 
     const atualizaDlgPesquisaAnimal = async () => {
         setListAnimal(await (await api.get("/pesquisaAnimal")).data);
-        console.log(evolAniSelecionado);
         setAbrirPesquisaAnimal(true);
     }
 
@@ -46,6 +46,7 @@ function cadastroFichaEvol() {
     const [evolDecubito, setEvolDecubito] = useState("");
     const [evolCompAni, setEvolCompAni] = useState("");
     const [evolAndAni, setEvolAndAni] = useState("");
+    const [evolIdMont, setEvolIdMont] = useState("");
     const [evolAniSelecionado, setEvolAniSelecionado] = useState([]);
 
     const atualizaEvolSelecionada = (item) => {
@@ -66,12 +67,22 @@ function cadastroFichaEvol() {
         setEvolCompAni(item.evolCompAni || '');
         setEvolAndAni(item.evolAndAni || '');
         setEvolAniSelecionado(item.animalList || []);
+        setEvolIdMont(item.evolIdMont || '');
         setAbrirPesquisa(false);
     }
 
     const atualizaAnimalSelecionado = (item) => {
-        setEvolAniSelecionado(current => [...current, item.aniId])
+        setEvolAniSelecionado(current => [...current, item])
         setAbrirPesquisaAnimal(false);
+    }
+
+    const removeAnimalSelecionado = (item) => {
+        var array = [...evolAniSelecionado];
+        var index = array.indexOf(item);
+        if (index !== -1) {
+            array.splice(index, 1);
+            setEvolAniSelecionado(array);
+        }
     }
 
     const enviaJsonGravar = () => {
@@ -92,7 +103,8 @@ function cadastroFichaEvol() {
             "evolObsRecLud": evolObsRecLud,
             "evolCompAni": evolCompAni,
             "evolAndAni": evolAndAni,
-            "animalList": evolAniSelecionado.map(aniId => ({ aniId }))
+            "evolIdMont": evolIdMont,
+            "animalList": evolAniSelecionado.map(animal => (animal))
         };
         console.log(json);
         api.post("/cadastraFichaEvol", json);
@@ -254,18 +266,7 @@ function cadastroFichaEvol() {
                                             <Button variant="primary" className='btn-success btnMarginTop' onClick={atualizaDlgPesquisaAnimal}>Adicionar</Button>
                                         </Col>
                                         {evolAniSelecionado.length > 0 &&
-                                            <Table size="sm">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Codigo</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {
-                                                        evolAniSelecionado.map(item => <tr key={item}><td>{item}</td></tr>)
-                                                    }
-                                                </tbody>
-                                            </Table>
+                                            <TablePaginada data={evolAniSelecionado} rowsPerPage={5} selecionaLinha={false} removeAnimalSelecionado={removeAnimalSelecionado} />
                                         }
                                     </div>
                                 </Card>
