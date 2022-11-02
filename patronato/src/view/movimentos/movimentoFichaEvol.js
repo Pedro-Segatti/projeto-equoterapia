@@ -106,7 +106,6 @@ function cadastroFichaEvol() {
             "evolIdMont": evolIdMont,
             "animalList": evolAniSelecionado.map(animal => (animal))
         };
-        console.log(json);
         api.post("/cadastraFichaEvol", json);
         registroSalvo();
     }

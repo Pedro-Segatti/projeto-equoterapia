@@ -42,7 +42,7 @@ const Menu = () => {
 
             <NavDropdown title="Movimentos" id="basic-nav-dropdown">
               <NavDropdown.Item href="/movimentoFichaEvol">Ficha de Evolução</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">Funcionarios</NavDropdown.Item>
+              <NavDropdown.Item href="/movimentoAvalSocioecon">Avaliação Socioeconômica</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.3">....</NavDropdown.Item>
             </NavDropdown>
 

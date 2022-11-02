@@ -1,11 +1,14 @@
 package com.api.desafio.controller;
 
 import com.api.desafio.model.Animal;
+import com.api.desafio.model.AvalSocioecon;
 import com.api.desafio.model.FichaEvolucao;
 import com.api.desafio.model.Pessoa;
 import com.api.desafio.service.AnimalService;
+import com.api.desafio.service.AvalSocioeconService;
 import com.api.desafio.service.FichaEvolService;
 import com.api.desafio.service.PessoaService;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +26,8 @@ public class ComunicacaoController {
     private PessoaService pessoaService;
     @Autowired
     private FichaEvolService fichaEvolService;
+    @Autowired
+    private AvalSocioeconService avalSocioeconService;
 
     @CrossOrigin(origins = "*")
     @GetMapping("/login")
@@ -92,5 +97,22 @@ public class ComunicacaoController {
     @GetMapping("/pesquisaFichaEvol")
     public ResponseEntity<List<FichaEvolucao>> pesquisaFichaEvol(@RequestParam (required=false) Integer evolId ){
         return fichaEvolService.pesquisa(evolId);
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/cadastraAvalSocioEcon")
+    public ResponseEntity<?> cadastrarAvalSocioEcon(@RequestBody AvalSocioecon avalSocioEcon){
+        return avalSocioeconService.salva(avalSocioEcon);
+    }
+    @CrossOrigin(origins = "*")
+    @PostMapping("/removeAvalSocioEcon")
+    public ResponseEntity<?> removerAvalSocioEcon(@RequestParam Integer ascId){
+        return avalSocioeconService.remove(ascId);
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/pesquisaAvalSocioEcon")
+    public ResponseEntity<List<AvalSocioecon>> pesquisaAvalSocioEcon(){
+        return avalSocioeconService.pesquisa();
     }
 }

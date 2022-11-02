@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import TableFooter from '../table/tableFooter';
 import useTable from '../table/useTable';
-import { BsPencilSquare } from "react-icons/bs";
+import { BsPencilSquare,BsXLg } from "react-icons/bs";
 import { Form, Col, Row, Container, Modal, Button, Table } from 'react-bootstrap';
 import { api } from "../../utilitario/baseComunicacao";
 
@@ -48,7 +48,7 @@ const LinhaTabela = ({ item, selecionaLinha, atualizaItemSelecionado,removeAnima
         }
         {!selecionaLinha &&
             <td width={'80px'} className='center'>
-                <Button className='btn-danger' onClick={removerItem}></Button>
+                <Button className='btn-danger' onClick={removerItem}><BsXLg /></Button>
             </td>
         }
 
@@ -58,8 +58,6 @@ const LinhaTabela = ({ item, selecionaLinha, atualizaItemSelecionado,removeAnima
 function pesquisaAnimais({ setValores, valores, atualizaItemSelecionado, setAbrirPesquisa }) {
     const [aniIdPesquisa, setAniIdPesquisa] = useState("");
     const [aniNomePesquisa, setAniNomePesquisa] = useState("");
-
-
 
     const buscaRegistros = async () => {
         setValores(await (await api.get("/pesquisaAnimal?aniId=" + aniIdPesquisa + "&aniNome=" + aniNomePesquisa)).data);
