@@ -30,7 +30,7 @@ public class Estado implements Serializable {
     private String estNome;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "estado")
     private List<Cidade> cidadeList;
-    @JoinColumn(name = "EST_ID_PAIS", referencedColumnName = "PAI_ID")
+    @JoinColumn(name = "EST_ISO_PAIS", referencedColumnName = "PAI_ISO")
     @ManyToOne(optional = false)
     private Pais pais;
 

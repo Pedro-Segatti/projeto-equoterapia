@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext } from "react";
-import { api, createSession } from "../utilitario/baseComunicacao";
+import { api, criarSessao } from "../utilitario/baseComunicacao";
 import { useNavigate } from "react-router-dom";
 import HTTP_STATUS from '../utilitario/httpStatus';
 import { loginSenhaInvalidos } from '../utilitario/mensagemUtil'
@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
     const login = async (log, password) => {
 
         try {
-            const response = await createSession(log, password);
+            const response = await criarSessao(log, password);
 
             const user = response.data.pesId;
             const token = response.data.access_token;

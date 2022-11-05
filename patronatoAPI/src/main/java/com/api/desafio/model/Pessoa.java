@@ -43,9 +43,9 @@ public class Pessoa implements Serializable {
     private int pesEndNum;
     @Column(name = "PES_END_COMPL")
     private String pesEndCompl;
-    @Basic(optional = false)
-    @Column(name = "PES_NACIONALIDADE")
-    private String pesNacionalidade;
+    @JoinColumn(name = "PES_NACIONALIDADE", referencedColumnName = "PAI_ISO")
+    @ManyToOne(optional = false)
+    private Pais pesNacionalidade;
     @Lob
     @Basic(optional = true)
     @Column(name = "PES_FOTO")
@@ -78,15 +78,6 @@ public class Pessoa implements Serializable {
         this.pesId = pesId;
     }
 
-    public Pessoa(Integer pesId, String pesNome, String pesCpf, String pesSexo, Date pesDataNasc, int pesEndNum, String pesNacionalidade) {
-        this.pesId = pesId;
-        this.pesNome = pesNome;
-        this.pesCpf = pesCpf;
-        this.pesSexo = pesSexo;
-        this.pesDataNasc = pesDataNasc;
-        this.pesEndNum = pesEndNum;
-        this.pesNacionalidade = pesNacionalidade;
-    }
 
     public Integer getPesId() {
         return pesId;
@@ -152,11 +143,12 @@ public class Pessoa implements Serializable {
         this.pesEndCompl = pesEndCompl;
     }
 
-    public String getPesNacionalidade() {
+    @JsonIgnore
+    public Pais getPesNacionalidade() {
         return pesNacionalidade;
     }
 
-    public void setPesNacionalidade(String pesNacionalidade) {
+    public void setPesNacionalidade(Pais pesNacionalidade) {
         this.pesNacionalidade = pesNacionalidade;
     }
 
