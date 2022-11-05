@@ -1,11 +1,7 @@
 package com.api.desafio.controller;
 
-import com.api.desafio.model.Animal;
-import com.api.desafio.model.FichaEvolucao;
-import com.api.desafio.model.Pessoa;
-import com.api.desafio.service.AnimalService;
-import com.api.desafio.service.FichaEvolService;
-import com.api.desafio.service.PessoaService;
+import com.api.desafio.model.*;
+import com.api.desafio.service.*;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +19,14 @@ public class ComunicacaoController {
     private PessoaService pessoaService;
     @Autowired
     private FichaEvolService fichaEvolService;
+    @Autowired
+    private AtividadeService atividadeService;
+    @Autowired
+    private MaterialService materialService;
+    @Autowired
+    private CargoService cargoService;
+    @Autowired
+    private PicadeiroService picadeiroService;
 
     @CrossOrigin(origins = "*")
     @GetMapping("/login")
@@ -58,6 +62,8 @@ public class ComunicacaoController {
         return new ResponseEntity<Pessoa>(pessoa, HttpStatus.OK);
     }
 
+    //ANIMAL
+
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastraAnimal")
     public ResponseEntity<?> cadastrarAnimal(@RequestBody Animal animal){
@@ -75,6 +81,89 @@ public class ComunicacaoController {
     public ResponseEntity<List<Animal>> pesquisaAnimais(@RequestParam (required=false) Integer aniId,@RequestParam (required=false) String aniNome ){
         return animalService.pesquisaAnimais(aniId,aniNome);
     }
+
+    //ATIVIDADE
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/cadastraAtividade")
+    public ResponseEntity<?> cadastrarAtividade(@RequestBody Atividade atividade){
+        return atividadeService.salva(atividade);
+    }
+
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/removeAtividade")
+    public ResponseEntity<?> removeAtividade(@RequestParam Integer atvId){
+        return atividadeService.remove(atvId);
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/pesquisaAtividade")
+    public ResponseEntity<List<Atividade>> pesquisaAtividade(@RequestParam (required=false) Integer atvId,@RequestParam (required=false) String atvDescricao ){
+        return atividadeService.pesquisa();
+    }
+
+    //CARGO
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/cadastraCargo")
+    public ResponseEntity<?> cadastrarCargo(@RequestBody Cargo cargo){
+        return cargoService.salva(cargo);
+    }
+
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/removeCargo")
+    public ResponseEntity<?> removeCargo(@RequestParam Integer carId){
+        return cargoService.remove(carId);
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/pesquisaCargo")
+    public ResponseEntity<List<Cargo>> pesquisaCargo(@RequestParam (required=false) Integer carId,@RequestParam (required=false) String carDescricao ){
+        return cargoService.pesquisa();
+    }
+
+    //MATERIAL
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/cadastraMaterial")
+    public ResponseEntity<?> cadastrarMaterial(@RequestBody Material material){
+        return materialService.salva(material);
+    }
+
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/removeMaterial")
+    public ResponseEntity<?> removeMaterial(@RequestParam Integer matId){
+        return materialService.remove(matId);
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/pesquisaMaterial")
+    public ResponseEntity<List<Material>> pesquisaMaterial(@RequestParam (required=false) Integer matId,@RequestParam (required=false) String matDescricao ){
+        return materialService.pesquisa();
+    }
+
+    //PICADEIRO
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/cadastraPicadeiro")
+    public ResponseEntity<?> cadastrarPicadeiro(@RequestBody Picadeiro picadeiro){
+        return picadeiroService.salva(picadeiro);
+    }
+
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/removePicadeiro")
+    public ResponseEntity<?> removePicadeiro(@RequestParam Integer picId){
+        return picadeiroService.remove(picId);
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/pesquisaPicadeiro")
+    public ResponseEntity<List<Picadeiro>> pesquisaPicadeiro(@RequestParam (required=false) Integer picId,@RequestParam (required=false) String picDescricao ){
+        return picadeiroService.pesquisa();
+    }
+
+
+    //FICHA EVOLUÇÃO
 
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastraFichaEvol")

@@ -177,7 +177,7 @@ function cadastroFichaEvol() {
                                     onChange={(e) => setEvolPost(e.target.value)}
                                     type="text" id="post" />
                             </Col>
-                            <Col md="6">
+                            <Col md="3">
                                 <Form.Label htmlFor="inputClima">Clima</Form.Label>
                                 <Form.Control value={evolClima}
                                     onChange={(e) => setEvolClima(e.target.value)}

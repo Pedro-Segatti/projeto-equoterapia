@@ -36,6 +36,10 @@ const Menu = () => {
           <Nav className="me-auto">
             <NavDropdown title="Cadastros" id="basic-nav-dropdown" className="mr-4">
               <NavDropdown.Item href="/cadastroAnimais">Animais</NavDropdown.Item>
+              <NavDropdown.Item href="/cadastroAtividade">Atividades</NavDropdown.Item>
+              <NavDropdown.Item href="/cadastroMaterial">Materiais de Encilhamento</NavDropdown.Item>
+              <NavDropdown.Item href="/cadastroPicadeiro">Picadeiro</NavDropdown.Item>
+              <NavDropdown.Item href="/cadastroCargo">Cargos</NavDropdown.Item>
               <NavDropdown.Item href="/cadastroFichaEvol">Ficha Evolução</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.3">....</NavDropdown.Item>
             </NavDropdown>
