@@ -10,12 +10,19 @@ import com.api.desafio.service.AnimalService;
 import com.api.desafio.service.AvalSocioeconService;
 import com.api.desafio.service.FichaEvolService;
 import com.api.desafio.service.PessoaService;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -37,6 +44,10 @@ public class ComunicacaoController {
     private PicadeiroService picadeiroService;
     @Autowired
     private AvalSocioeconService avalSocioeconService;
+    @Autowired
+    private LogradouroService logradouroService;
+    @Autowired
+    private PaisService paisService;
 
     @CrossOrigin(origins = "*")
     @GetMapping("/login")
@@ -92,8 +103,6 @@ public class ComunicacaoController {
         return animalService.pesquisaAnimais(aniId,aniNome);
     }
 
-    //ATIVIDADE
-
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastraAtividade")
     public ResponseEntity<?> cadastrarAtividade(@RequestBody Atividade atividade){
@@ -111,8 +120,6 @@ public class ComunicacaoController {
     public ResponseEntity<List<Atividade>> pesquisaAtividade(@RequestParam (required=false) Integer atvId,@RequestParam (required=false) String atvDescricao ){
         return atividadeService.pesquisa();
     }
-
-    //CARGO
 
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastraCargo")
@@ -132,8 +139,6 @@ public class ComunicacaoController {
         return cargoService.pesquisa();
     }
 
-    //MATERIAL
-
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastraMaterial")
     public ResponseEntity<?> cadastrarMaterial(@RequestBody Material material){
@@ -152,8 +157,6 @@ public class ComunicacaoController {
         return materialService.pesquisa();
     }
 
-    //PICADEIRO
-
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastraPicadeiro")
     public ResponseEntity<?> cadastrarPicadeiro(@RequestBody Picadeiro picadeiro){
@@ -171,9 +174,6 @@ public class ComunicacaoController {
     public ResponseEntity<List<Picadeiro>> pesquisaPicadeiro(@RequestParam (required=false) Integer picId,@RequestParam (required=false) String picDescricao ){
         return picadeiroService.pesquisa();
     }
-
-
-    //FICHA EVOLUÇÃO
 
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastraFichaEvol")
@@ -208,5 +208,48 @@ public class ComunicacaoController {
     @GetMapping("/pesquisaAvalSocioEcon")
     public ResponseEntity<List<AvalSocioecon>> pesquisaAvalSocioEcon(){
         return avalSocioeconService.pesquisa();
+    }
+
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/cadastrarPessoa")
+    public ResponseEntity<?> cadastrarPessoa(@RequestBody String jsonPessoa){
+        JsonObject jsonConvertido = new Gson().fromJson(jsonPessoa, JsonObject.class);
+        Pessoa pessoaExistente = pessoaService.getPessoaByPesCpf(jsonConvertido.get("pesCpf").getAsString());
+
+        if(pessoaExistente != null){
+            return new ResponseEntity<Pessoa>(new Pessoa(), HttpStatus.BAD_REQUEST);
+        }
+
+        Logradouro logradouro = logradouroService.getLogradouroById(jsonConvertido.get("pesLogId").getAsInt());
+        Pais pais = paisService.getPaisByIso(jsonConvertido.get("pesNacionalidade").getAsString());
+
+        Pessoa novaPessoa = new Pessoa();
+        novaPessoa.setPesNome(jsonConvertido.get("pesNome").getAsString());
+        novaPessoa.setPesCpf(jsonConvertido.get("pesCpf").getAsString());
+        novaPessoa.setPesEmail1(jsonConvertido.get("pesEmail1").getAsString());
+
+        JsonElement pesEmailS = jsonConvertido.get("pesEmail2");
+        if(!pesEmailS.isJsonNull()){
+            novaPessoa.setPesEmail2(pesEmailS.getAsString());
+        }
+
+        novaPessoa.setPesSexo(jsonConvertido.get("pesSexo").getAsString());
+        try {
+            JsonElement pesDatanasc = jsonConvertido.get("pesDataNasc");
+            Date dataNasc = new SimpleDateFormat("yyyy-MM-dd").parse(pesDatanasc.getAsString());
+            novaPessoa.setPesDataNasc(dataNasc);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        novaPessoa.setPesEndNum(jsonConvertido.get("pesEndNum").getAsInt());
+        novaPessoa.setPesEndCompl(jsonConvertido.get("pesEndCompl").getAsString());
+        novaPessoa.setPesNacionalidade(pais);
+        novaPessoa.setLogradouro(logradouro);
+        novaPessoa.setPesFoto(jsonConvertido.get("pesFoto").getAsString());
+
+        novaPessoa = pessoaService.salva(novaPessoa);
+
+        return new ResponseEntity<Pessoa>(novaPessoa, HttpStatus.OK);
     }
 }

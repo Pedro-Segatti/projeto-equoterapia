@@ -25,6 +25,8 @@ const Login = () => {
         e.preventDefault();
         const LogUnmask = log.replace(/[^\d]/g, '');
         login(LogUnmask, password);
+        setLog("");
+        setPassword("");
     };
 
     return (

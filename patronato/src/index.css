@@ -129,3 +129,33 @@ button {
     margin-left: 5px !important;
   }
 }
+
+input[type="file"] {
+  display: none;
+}
+.label-input-file {
+  padding: 20px 10px;
+  width: 300px;
+  background-color: rgba(34, 56, 43);
+  color: #FFF;
+  text-transform: uppercase;
+  text-align: center;
+  display: block;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.fotoPraticante {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#imgPrat{
+  width: 300px;
+  border-radius: 8px;
+  border: 2px solid #B48F69;
+}
