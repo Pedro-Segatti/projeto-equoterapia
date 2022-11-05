@@ -1,5 +1,7 @@
 package com.api.desafio.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -43,6 +45,7 @@ public class Animal implements Serializable {
     @Basic(optional = false)
     @Column(name = "ANI_ANDADURA")
     private String aniAndadura;
+    @JsonIgnoreProperties("animalList")
     @JoinTable(name = "ficha_evol_animal", joinColumns = {
         @JoinColumn(name = "FXA_ID_ANIMAL", referencedColumnName = "ANI_ID")}, inverseJoinColumns = {
         @JoinColumn(name = "FXA_ID_FICHA", referencedColumnName = "EVOL_ID")})

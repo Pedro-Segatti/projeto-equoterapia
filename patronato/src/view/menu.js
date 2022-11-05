@@ -40,13 +40,13 @@ const Menu = () => {
               <NavDropdown.Item href="/cadastroMaterial">Materiais de Encilhamento</NavDropdown.Item>
               <NavDropdown.Item href="/cadastroPicadeiro">Picadeiro</NavDropdown.Item>
               <NavDropdown.Item href="/cadastroCargo">Cargos</NavDropdown.Item>
-              <NavDropdown.Item href="/cadastroFichaEvol">Ficha Evolução</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">Teste</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.3">....</NavDropdown.Item>
             </NavDropdown>
 
             <NavDropdown title="Movimentos" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Pacientes</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">Funcionarios</NavDropdown.Item>
+              <NavDropdown.Item href="/movimentoFichaEvol">Ficha de Evolução</NavDropdown.Item>
+              <NavDropdown.Item href="/movimentoAvalSocioecon">Avaliação Socioeconômica</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.3">....</NavDropdown.Item>
             </NavDropdown>
 
@@ -64,8 +64,8 @@ const Menu = () => {
           </Nav>
         </Navbar.Collapse>
         {!loading &&
-          <div className='user-display'>
-            <Navbar.Collapse className="justify-content-end">
+          <Navbar.Collapse className="justify-content-end">
+            <div className='user-display'>
               <div>
                 <Navbar.Brand className="mx-3" href="#">
                   <Image className="ftPerfil" src={pessoaLogada.pesFoto}></Image>
@@ -78,8 +78,8 @@ const Menu = () => {
                   <Image className='logout' src={logoutImg}></Image>
                 </a>
               </div>
-            </Navbar.Collapse>
-          </div>
+            </div>
+          </Navbar.Collapse>
         }
       </Navbar>
     </header>

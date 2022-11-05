@@ -30,11 +30,11 @@ public class AvalSocioecon implements Serializable {
     @Basic(optional = false)
     @Lob
     @Column(name = "ASE_OBS_CONT_FAM")
-    private byte[] aseObsContFam;
+    private String aseObsContFam;
     @Basic(optional = false)
     @Lob
     @Column(name = "ASE_OBS_MEDICAMENTOS")
-    private byte[] aseObsMedicamentos;
+    private String aseObsMedicamentos;
     @JoinColumn(name = "ASE_ID_PRATICANTE", referencedColumnName = "PRAT_ID")
     @ManyToOne(optional = false)
     private Praticante praticante;
@@ -46,7 +46,7 @@ public class AvalSocioecon implements Serializable {
         this.aseId = aseId;
     }
 
-    public AvalSocioecon(Integer aseId, byte[] aseObsContFam, byte[] aseObsMedicamentos) {
+    public AvalSocioecon(Integer aseId, String aseObsContFam, String aseObsMedicamentos) {
         this.aseId = aseId;
         this.aseObsContFam = aseObsContFam;
         this.aseObsMedicamentos = aseObsMedicamentos;
@@ -60,19 +60,19 @@ public class AvalSocioecon implements Serializable {
         this.aseId = aseId;
     }
 
-    public byte[] getAseObsContFam() {
+    public String getAseObsContFam() {
         return aseObsContFam;
     }
 
-    public void setAseObsContFam(byte[] aseObsContFam) {
+    public void setAseObsContFam(String aseObsContFam) {
         this.aseObsContFam = aseObsContFam;
     }
 
-    public byte[] getAseObsMedicamentos() {
+    public String getAseObsMedicamentos() {
         return aseObsMedicamentos;
     }
 
-    public void setAseObsMedicamentos(byte[] aseObsMedicamentos) {
+    public void setAseObsMedicamentos(String aseObsMedicamentos) {
         this.aseObsMedicamentos = aseObsMedicamentos;
     }
 

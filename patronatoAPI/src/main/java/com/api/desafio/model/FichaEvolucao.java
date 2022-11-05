@@ -1,5 +1,7 @@
 package com.api.desafio.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
@@ -47,21 +49,25 @@ public class FichaEvolucao implements Serializable {
     @JoinColumn(name = "EVOL_ID_MONT", referencedColumnName = "MONT_ID")
     @ManyToOne(optional = false)
     private Montaria evolIdMont;
+    @JsonIgnoreProperties("fichaEvolucaoList")
     @JoinTable(name = "ficha_evol_praticante", joinColumns = {
         @JoinColumn(name = "FXPR_ID_FICHA", referencedColumnName = "EVOL_ID")}, inverseJoinColumns = {
         @JoinColumn(name = "FXPR_ID_PRATICANTE", referencedColumnName = "PRAT_ID")})
     @ManyToMany
     private List<Praticante> praticanteList;
+    @JsonIgnoreProperties("fichaEvolucaoList")
     @JoinTable(name = "ficha_evol_picadeiro", joinColumns = {
         @JoinColumn(name = "FXP_ID_FICHA", referencedColumnName = "EVOL_ID")}, inverseJoinColumns = {
         @JoinColumn(name = "FXP_ID_PICADEIRO", referencedColumnName = "PIC_ID")})
     @ManyToMany
     private List<Picadeiro> picadeiroList;
+    @JsonIgnoreProperties("fichaEvolucaoList")
     @JoinTable(name = "ficha_evol_funcionario", joinColumns = {
         @JoinColumn(name = "FXF_ID_FICHA", referencedColumnName = "EVOL_ID")}, inverseJoinColumns = {
         @JoinColumn(name = "FXF_ID_FUNCIONARIO", referencedColumnName = "FUNC_ID")})
     @ManyToMany
     private List<Funcionario> funcionarioList;
+    @JsonIgnoreProperties("fichaEvolucaoList")
     @JoinTable(name = "ficha_evol_animal", joinColumns = {
         @JoinColumn(name = "FXA_ID_FICHA", referencedColumnName = "EVOL_ID")}, inverseJoinColumns = {
         @JoinColumn(name = "FXA_ID_ANIMAL", referencedColumnName = "ANI_ID")})
