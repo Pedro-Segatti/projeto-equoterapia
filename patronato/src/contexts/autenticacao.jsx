@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext } from "react";
-import { api, createSession } from "../api/autenticacaoController";
+import { api, createSession } from "../utilitario/baseComunicacao";
 import { useNavigate } from "react-router-dom";
 import HTTP_STATUS from '../utilitario/httpStatus';
 import { loginSenhaInvalidos } from '../utilitario/mensagemUtil'

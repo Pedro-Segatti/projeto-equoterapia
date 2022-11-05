@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { buscarPessoaPeloId } from "../api/autenticacaoController";
+import { buscarPessoaPeloId } from "../utilitario/baseComunicacao";
 import { AuthContext } from "../contexts/autenticacao";
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
