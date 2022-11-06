@@ -1,5 +1,7 @@
 package com.api.desafio.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -61,7 +63,7 @@ public class Documentos implements Serializable {
     public void setDocDocumento(byte[] docDocumento) {
         this.docDocumento = docDocumento;
     }
-
+    @JsonIgnore
     public Praticante getPraticante() {
         return praticante;
     }

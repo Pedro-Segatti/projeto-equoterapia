@@ -290,4 +290,22 @@ public class ComunicacaoController {
 
         return new ResponseEntity<Praticante>(praticanteExistente, HttpStatus.OK);
     }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/pesquisaPraticantes")
+    public ResponseEntity<List<Praticante>> pesquisaPraticantes(@RequestParam (required=false) String pesCpf,@RequestParam (required=false) String pesNome){
+        return praticanteService.pesquisaPraticantes(pesCpf, pesNome);
+    }
+
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/removePraticante")
+    public ResponseEntity<Praticante> removePraticante(@RequestParam (required=false) Integer pratId){
+        try{
+            praticanteService.remove(pratId);
+            return new ResponseEntity<>(new Praticante(), HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(new Praticante(), HttpStatus.FORBIDDEN);
+        }
+
+    }
 }

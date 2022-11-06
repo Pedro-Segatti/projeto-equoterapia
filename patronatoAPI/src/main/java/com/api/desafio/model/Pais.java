@@ -1,5 +1,7 @@
 package com.api.desafio.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -56,6 +58,7 @@ public class Pais implements Serializable {
         this.paiNome = paiNome;
     }
 
+    @JsonIgnore
     public List<Estado> getEstadoList() {
         return estadoList;
     }

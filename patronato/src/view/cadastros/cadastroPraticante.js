@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import { Form, Col, Row, Container, Modal, Button, Table, Image } from 'react-bootstrap';
 import Toolbar from '../toolbar';
 import { IMaskInput } from 'react-imask';
-import { registroSalvo, pessoaDuplicada, semRegistros } from "../../utilitario/mensagemUtil"
+import { registroSalvo, pessoaDuplicada, semRegistros, registroExcluido} from "../../utilitario/mensagemUtil"
 import { ReactNotifications } from 'react-notifications-component'
 import { criarPessoa, atualizarPessoa } from "../../utilitario/patronatoUtil";
 import { cadastrarPraticante, atualizarPraticante } from "../../utilitario/baseComunicacao";
+import { api } from "../../utilitario/baseComunicacao";
 import HTTP_STATUS from "../../utilitario/httpStatus";
+import PesquisaPraticantes from "../pesquisas/pesquisaPraticantes";
+
 
 import Menu from "../menu"
 import Footer from "../footer"
@@ -43,6 +46,47 @@ const cadastroPraticante = () => {
     const [pesEmail1, setPesEmail1] = useState("");
     const [pesEmail2, setPesEmail2] = useState("");
     const [pesLogId, setPesLogId] = useState(1);
+
+    const [abrirPesquisa, setAbrirPesquisa] = useState(false);
+    var [list, setList] = useState('[]');
+
+    const atualizaDlgPesquisa = async () => {
+        setList(await (await api.get("/pesquisaPraticantes")).data);
+        setAbrirPesquisa(true);
+    }
+
+    const removerPraticante = async () => {
+        try{
+            const response = await (await api.delete("/removePraticante?pratId=" + pratId));
+            if(response.status === HTTP_STATUS.OK){
+                registroExcluido();
+                limparCamposFormulario();
+            }
+        }catch(error){
+            console.log(error);   
+        }
+        
+        
+    }
+
+    const atualizaItemSelecionado = (item) => {
+        console.log(item);
+        setPratId(item.pratId);
+        setPesNome(item.pessoa.pesNome);
+        setPesCpf(item.pessoa.pesCpf);
+        setPesSexo(item.pessoa.pesSexo);
+        setPesDataNasc(item.pessoa.pesDataNasc);
+        setPesEndNum(item.pessoa.pesEndNum);
+        setPesEndCompl(item.pessoa.pesEndCompl);
+        setPesNacionalidade(item.pessoa.pesNacionalidade.paiIso);
+        setPesFoto(item.pessoa.pesFoto);
+        setPesEmail1(item.pessoa.pesEmail1);
+        setPesEmail2(item.pessoa.pesEmail2);
+        setPesLogId(1);
+        setPratAltura(item.pratAltura);
+        setPratPeso(item.pratPeso);
+        setAbrirPesquisa(false);
+    }
 
     const limparCamposFormulario = () => {
         setPratId(null);
@@ -143,7 +187,7 @@ const cadastroPraticante = () => {
         <div>
             <Menu />
             <ReactNotifications />
-            <Container className="vh-100">
+            <Container>
                 <Form onSubmit={handleSubmit}>
                     <Row>
                         <h3>Cadastro de Praticantes</h3>
@@ -256,9 +300,13 @@ const cadastroPraticante = () => {
                                 type="text" id="inputEndCompl" />
                         </Col>
                     </Row>
-                    <Toolbar />
+                    <Toolbar abrirPesquisa={atualizaDlgPesquisa} jsonRemove={removerPraticante} />
                 </Form>
             </Container>
+
+            {abrirPesquisa &&
+                    <PesquisaPraticantes setValores={setList} valores={list} atualizaItemSelecionado={atualizaItemSelecionado} setAbrirPesquisa={setAbrirPesquisa} />
+                }
             <Footer />
         </div>
     );

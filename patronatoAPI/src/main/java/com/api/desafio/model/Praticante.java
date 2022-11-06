@@ -88,7 +88,7 @@ public class Praticante implements Serializable {
     public void setPratPeso(Integer pratPeso) {
         this.pratPeso = pratPeso;
     }
-
+    @JsonIgnore
     public List<FichaEvolucao> getFichaEvolucaoList() {
         return fichaEvolucaoList;
     }
@@ -96,7 +96,7 @@ public class Praticante implements Serializable {
     public void setFichaEvolucaoList(List<FichaEvolucao> fichaEvolucaoList) {
         this.fichaEvolucaoList = fichaEvolucaoList;
     }
-
+    @JsonIgnore
     public List<Responsavel> getResponsavelList() {
         return responsavelList;
     }
@@ -104,7 +104,7 @@ public class Praticante implements Serializable {
     public void setResponsavelList(List<Responsavel> responsavelList) {
         this.responsavelList = responsavelList;
     }
-
+    @JsonIgnore
     public List<FichaAnamnese> getFichaAnamneseList() {
         return fichaAnamneseList;
     }
@@ -112,7 +112,7 @@ public class Praticante implements Serializable {
     public void setFichaAnamneseList(List<FichaAnamnese> fichaAnamneseList) {
         this.fichaAnamneseList = fichaAnamneseList;
     }
-
+    @JsonIgnore
     public List<AvalFisioter> getAvalFisioterList() {
         return avalFisioterList;
     }
@@ -120,7 +120,7 @@ public class Praticante implements Serializable {
     public void setAvalFisioterList(List<AvalFisioter> avalFisioterList) {
         this.avalFisioterList = avalFisioterList;
     }
-
+    @JsonIgnore
     public List<AgendamentoPraticante> getAgendamentoPraticanteList() {
         return agendamentoPraticanteList;
     }
@@ -128,7 +128,7 @@ public class Praticante implements Serializable {
     public void setAgendamentoPraticanteList(List<AgendamentoPraticante> agendamentoPraticanteList) {
         this.agendamentoPraticanteList = agendamentoPraticanteList;
     }
-
+    @JsonIgnore
     public List<Documentos> getDocumentosList() {
         return documentosList;
     }
@@ -136,7 +136,7 @@ public class Praticante implements Serializable {
     public void setDocumentosList(List<Documentos> documentosList) {
         this.documentosList = documentosList;
     }
-
+    @JsonIgnore
     public List<AvalSocioecon> getAvalSocioeconList() {
         return avalSocioeconList;
     }
@@ -144,7 +144,6 @@ public class Praticante implements Serializable {
     public void setAvalSocioeconList(List<AvalSocioecon> avalSocioeconList) {
         this.avalSocioeconList = avalSocioeconList;
     }
-    @JsonIgnore
     public Pessoa getPessoa() {
         return pessoa;
     }

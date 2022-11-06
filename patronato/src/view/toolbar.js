@@ -19,7 +19,7 @@ const Toolbar = ({ jsonCadastro, jsonRemove, abrirPesquisa }) => {
             <Button variant="primary" className='btn-success btnToolbar btnMarginTop' type="submit">Salvar</Button>
             <Button variant="primary" className='btn-warning btnToolbar btnMarginTop' type="button" onClick={reloadPage}>Cancelar</Button>
             <Button variant="primary" className='btn-info btnToolbar btnMarginTop' onClick={abrirPesquisa}>Pesquisar</Button>
-            <Button variant="primary" className='btn-danger btnToolbar btnMarginTop' type="submit" onClick={jsonRemove}>Excluir</Button>
+            <Button variant="primary" className='btn-danger btnToolbar btnMarginTop' onClick={jsonRemove}>Excluir</Button>
           </Col>
         </Row>
       </Container>

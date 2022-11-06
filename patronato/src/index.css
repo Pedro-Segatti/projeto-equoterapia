@@ -155,7 +155,8 @@ input[type="file"] {
 }
 
 #imgPrat{
-  width: 300px;
+  max-height: 200px;
+  max-width: 300px;
   border-radius: 8px;
   border: 2px solid #B48F69;
 }

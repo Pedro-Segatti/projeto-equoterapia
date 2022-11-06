@@ -61,12 +61,6 @@ public class Pessoa implements Serializable {
     @JoinColumn(name = "PES_ID_LOG", referencedColumnName = "LOG_ID")
     @ManyToOne(optional = false)
     private Logradouro logradouro; // Estudar para remapear usando tabela de ligação
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
-    private List<Funcionario> funcionarioList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
-    private List<Responsavel> responsavelList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
-    private List<Praticante> praticanteList;
     @Transient
     @JsonProperty("access_token")
     private String pesAcessToken;
@@ -143,7 +137,7 @@ public class Pessoa implements Serializable {
         this.pesEndCompl = pesEndCompl;
     }
 
-    @JsonIgnore
+
     public Pais getPesNacionalidade() {
         return pesNacionalidade;
     }
@@ -175,7 +169,7 @@ public class Pessoa implements Serializable {
     public void setPesEmail2(String pesEmail2) {
         this.pesEmail2 = pesEmail2;
     }
-
+    @JsonIgnore
     public List<Telefone> getTelefoneList() {
         return telefoneList;
     }
@@ -192,32 +186,6 @@ public class Pessoa implements Serializable {
     public void setLogradouro(Logradouro logradouro) {
         this.logradouro = logradouro;
     }
-    @JsonIgnore
-    public List<Funcionario> getFuncionarioList() {
-        return funcionarioList;
-    }
-
-    public void setFuncionarioList(List<Funcionario> funcionarioList) {
-        this.funcionarioList = funcionarioList;
-    }
-    @JsonIgnore
-    public List<Responsavel> getResponsavelList() {
-        return responsavelList;
-    }
-
-    public void setResponsavelList(List<Responsavel> responsavelList) {
-        this.responsavelList = responsavelList;
-    }
-
-    @JsonIgnore
-    public List<Praticante> getPraticanteList() {
-        return praticanteList;
-    }
-
-    public void setPraticanteList(List<Praticante> praticanteList) {
-        this.praticanteList = praticanteList;
-    }
-
     public String getPesAcessToken() {
         if(this.pesId == null){
             return "";
