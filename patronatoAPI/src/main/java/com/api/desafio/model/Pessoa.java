@@ -192,7 +192,7 @@ public class Pessoa implements Serializable {
     public void setLogradouro(Logradouro logradouro) {
         this.logradouro = logradouro;
     }
-
+    @JsonIgnore
     public List<Funcionario> getFuncionarioList() {
         return funcionarioList;
     }
@@ -200,7 +200,7 @@ public class Pessoa implements Serializable {
     public void setFuncionarioList(List<Funcionario> funcionarioList) {
         this.funcionarioList = funcionarioList;
     }
-
+    @JsonIgnore
     public List<Responsavel> getResponsavelList() {
         return responsavelList;
     }
@@ -209,6 +209,7 @@ public class Pessoa implements Serializable {
         this.responsavelList = responsavelList;
     }
 
+    @JsonIgnore
     public List<Praticante> getPraticanteList() {
         return praticanteList;
     }

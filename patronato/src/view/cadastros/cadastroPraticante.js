@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { Form, Col, Row, Container, Modal, Button, Table, Image } from 'react-bootstrap';
 import Toolbar from '../toolbar';
 import { IMaskInput } from 'react-imask';
-import { registroSalvo, pessoaDuplicada } from "../../utilitario/mensagemUtil"
+import { registroSalvo, pessoaDuplicada, semRegistros } from "../../utilitario/mensagemUtil"
 import { ReactNotifications } from 'react-notifications-component'
-import { criarPessoa } from "../../utilitario/patronatoUtil";
+import { criarPessoa, atualizarPessoa } from "../../utilitario/patronatoUtil";
+import { cadastrarPraticante, atualizarPraticante } from "../../utilitario/baseComunicacao";
 import HTTP_STATUS from "../../utilitario/httpStatus";
 
 import Menu from "../menu"
@@ -12,17 +13,25 @@ import Footer from "../footer"
 
 const cadastroPraticante = () => {
     const showPreview = (e) => {
-        const reader = new FileReader();
-        reader.onload = () => {
-            if (reader.readyState === 2) {
-                setPesFoto(reader.result);
+        try {
+            const reader = new FileReader();
+            reader.onload = () => {
+                if (reader.readyState === 2) {
+                    setPesFoto(reader.result);
+                }
             }
-        }
 
-        reader.readAsDataURL(e.target.files[0]);
+            reader.readAsDataURL(e.target.files[0]);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
-    const [patId, setpatId] = useState(null);
+    const [pratId, setPratId] = useState(null);
+    const [pratAltura, setPratAltura] = useState(null);
+    const [pratPeso, setPratPeso] = useState(null);
+
+
     const [pesNome, setPesNome] = useState("");
     const [pesCpf, setPesCpf] = useState("");
     const [pesSexo, setPesSexo] = useState(null);
@@ -36,7 +45,7 @@ const cadastroPraticante = () => {
     const [pesLogId, setPesLogId] = useState(1);
 
     const limparCamposFormulario = () => {
-        setpatId(null);
+        setPratId(null);
         setPesNome("");
         setPesCpf("");
         setPesSexo(null);
@@ -48,6 +57,8 @@ const cadastroPraticante = () => {
         setPesEmail1("");
         setPesEmail2("");
         setPesLogId("");
+        setPratAltura("");
+        setPratPeso("");
     }
 
     const handleSubmit = async (e) => {
@@ -57,18 +68,73 @@ const cadastroPraticante = () => {
             return await criarPessoa(pesNome, pesCpf, pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pesNacionalidade, pesFoto, pesEmail1, pesEmail2, pesLogId);
         }
 
-        if (patId == null) {
+        const atualizaPessoa = async () => {
+            return await atualizarPessoa(pesNome, pesCpf, pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pesNacionalidade, pesFoto, pesEmail1, pesEmail2, pesLogId);
+        }
+
+        const montaJsonPraticante = (idPessoa) => {
+            const jsonPraticante = {
+                "pratId": pratId,
+                "pessoaId": idPessoa,
+                "pratAltura": pratAltura,
+                "pratPeso": pratPeso,
+            }
+
+            return jsonPraticante;
+        }
+
+        const cadastraPraticante = async (idPessoa) => {
+            return await cadastrarPraticante(montaJsonPraticante(idPessoa));
+        }
+
+        const atualizaPraticante = async () => {
+            return await atualizarPraticante(montaJsonPraticante(null));
+        }
+
+        const atualizarRegistros = async () => {
             try {
-                const response = await cadastraPessoa();
-                if (response.status === HTTP_STATUS.OK) {
+                const responseAttPessoa = await atualizaPessoa();
+                const responseAttPraticante = await atualizaPraticante();
+
+                if (responseAttPessoa.status === HTTP_STATUS.OK && responseAttPraticante.status === HTTP_STATUS.OK) {
                     registroSalvo();
                     limparCamposFormulario();
                 }
             } catch (error) {
-                if (error.response.status === HTTP_STATUS.BAD_REQUEST) {
-                    pessoaDuplicada();
+                if (error.response.status === HTTP_STATUS.FORBIDDEN) {
+                    console.log(error);
+                    semRegistros();
                 }
             }
+
+        }
+
+        const criarPessoaEPraticante  = async () =>{
+            try {
+                const response = await cadastraPessoa();
+                if (response.status === HTTP_STATUS.OK) {
+                    const responsePraticante = await cadastraPraticante(response.data.pesId);
+                    if (responsePraticante.status === HTTP_STATUS.OK) {
+                        registroSalvo();
+                        limparCamposFormulario();
+                    }
+                }
+            } catch (error) {
+                if (error.response.status === HTTP_STATUS.BAD_REQUEST) {
+                    atualizaPessoa();
+                    pessoaDuplicada();
+                }
+
+                if (error.response.status === HTTP_STATUS.FORBIDDEN) {
+                    console.log(error);
+                }
+            }
+        }
+
+        if (pratId == null) {
+            criarPessoaEPraticante();
+        } else {
+            atualizarRegistros();
         }
     };
 
@@ -77,12 +143,12 @@ const cadastroPraticante = () => {
         <div>
             <Menu />
             <ReactNotifications />
-            <Container>
+            <Container className="vh-100">
                 <Form onSubmit={handleSubmit}>
                     <Row>
                         <h3>Cadastro de Praticantes</h3>
                     </Row>
-                
+
                     <Row>
                         <Col md="12">
                             <div className='fotoPraticante'>
@@ -96,7 +162,7 @@ const cadastroPraticante = () => {
                     <Row>
                         <Col md="2">
                             <Form.Label htmlFor="inputId">Código</Form.Label>
-                            <Form.Control value={patId} type="text" id="inputId" disabled />
+                            <Form.Control value={pratId} type="text" id="inputId" disabled />
                         </Col>
                     </Row>
                     <Row>
@@ -156,6 +222,23 @@ const cadastroPraticante = () => {
                             <Form.Control value={pesEmail2}
                                 onChange={(e) => setPesEmail2(e.target.value)}
                                 type="text" id="inputEmailS" />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md="3">
+                            <Form.Label htmlFor="inputPratAltura">Altura (cm)</Form.Label>
+                            <div >
+                                <Form.Control value={pratAltura}
+                                    onChange={(e) => setPratAltura(e.target.value)}
+                                    type="number" id="inputPratAltura" required />
+                            </div>
+                        </Col>
+
+                        <Col md="3">
+                            <Form.Label htmlFor="inputPratPeso">Peso (g)</Form.Label>
+                            <Form.Control value={pratPeso}
+                                onChange={(e) => setPratPeso(e.target.value)}
+                                type="number" id="inputPratPeso" required />
                         </Col>
                     </Row>
 

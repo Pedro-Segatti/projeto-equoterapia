@@ -48,6 +48,8 @@ public class ComunicacaoController {
     private LogradouroService logradouroService;
     @Autowired
     private PaisService paisService;
+    @Autowired
+    private PraticanteService praticanteService;
 
     @CrossOrigin(origins = "*")
     @GetMapping("/login")
@@ -225,31 +227,67 @@ public class ComunicacaoController {
         Pais pais = paisService.getPaisByIso(jsonConvertido.get("pesNacionalidade").getAsString());
 
         Pessoa novaPessoa = new Pessoa();
-        novaPessoa.setPesNome(jsonConvertido.get("pesNome").getAsString());
-        novaPessoa.setPesCpf(jsonConvertido.get("pesCpf").getAsString());
-        novaPessoa.setPesEmail1(jsonConvertido.get("pesEmail1").getAsString());
-
-        JsonElement pesEmailS = jsonConvertido.get("pesEmail2");
-        if(!pesEmailS.isJsonNull()){
-            novaPessoa.setPesEmail2(pesEmailS.getAsString());
-        }
-
-        novaPessoa.setPesSexo(jsonConvertido.get("pesSexo").getAsString());
-        try {
-            JsonElement pesDatanasc = jsonConvertido.get("pesDataNasc");
-            Date dataNasc = new SimpleDateFormat("yyyy-MM-dd").parse(pesDatanasc.getAsString());
-            novaPessoa.setPesDataNasc(dataNasc);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-        novaPessoa.setPesEndNum(jsonConvertido.get("pesEndNum").getAsInt());
-        novaPessoa.setPesEndCompl(jsonConvertido.get("pesEndCompl").getAsString());
-        novaPessoa.setPesNacionalidade(pais);
-        novaPessoa.setLogradouro(logradouro);
-        novaPessoa.setPesFoto(jsonConvertido.get("pesFoto").getAsString());
-
+        novaPessoa = pessoaService.manipularPessoa(jsonConvertido, novaPessoa, logradouro, pais);
+        novaPessoa.setPesLoginPassword(DigestUtils.md5Hex(novaPessoa.getPesId().toString() + novaPessoa.getPesCpf()));
         novaPessoa = pessoaService.salva(novaPessoa);
 
         return new ResponseEntity<Pessoa>(novaPessoa, HttpStatus.OK);
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/atualizarPessoa")
+    public ResponseEntity<?> atualizarPessoa(@RequestBody String jsonPessoa){
+        JsonObject jsonConvertido = new Gson().fromJson(jsonPessoa, JsonObject.class);
+        Pessoa pessoaExistente = pessoaService.getPessoaByPesCpf(jsonConvertido.get("pesCpf").getAsString());
+
+        if(pessoaExistente == null){
+            return new ResponseEntity<Pessoa>(new Pessoa(), HttpStatus.FORBIDDEN);
+        }
+
+        Logradouro logradouro = logradouroService.getLogradouroById(jsonConvertido.get("pesLogId").getAsInt());
+        Pais pais = paisService.getPaisByIso(jsonConvertido.get("pesNacionalidade").getAsString());
+
+        pessoaExistente = pessoaService.manipularPessoa(jsonConvertido, pessoaExistente, logradouro, pais);
+
+        return new ResponseEntity<Pessoa>(pessoaExistente, HttpStatus.OK);
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/cadastrarPraticante")
+    public ResponseEntity<?> cadastrarPraticante(@RequestBody String jsonPraticante){
+        JsonObject jsonConvertido = new Gson().fromJson(jsonPraticante, JsonObject.class);
+        Praticante novoPraticante = new Praticante();
+
+        JsonElement idPessoa = jsonConvertido.get("pessoaId");
+        if(idPessoa.isJsonNull()){
+            return new ResponseEntity<Praticante>(novoPraticante, HttpStatus.FORBIDDEN);
+        }
+
+        Pessoa pes = pessoaService.getPessoaByPesId(idPessoa.getAsInt());
+        novoPraticante.setPessoa(pes);
+        novoPraticante.setPratAltura(jsonConvertido.get("pratAltura").getAsInt());
+        novoPraticante.setPratPeso(jsonConvertido.get("pratPeso").getAsInt());
+
+        novoPraticante = praticanteService.salva(novoPraticante);
+
+        return new ResponseEntity<Praticante>(novoPraticante, HttpStatus.OK);
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/atualizarPraticante")
+    public ResponseEntity<?> atualizarPraticante(@RequestBody String jsonPraticante){
+        JsonObject jsonConvertido = new Gson().fromJson(jsonPraticante, JsonObject.class);
+        Praticante praticanteExistente = praticanteService.getPraticanteById(jsonConvertido.get("pratId").getAsInt());
+
+        if(praticanteExistente == null){
+            return new ResponseEntity<Praticante>(praticanteExistente, HttpStatus.FORBIDDEN);
+        }
+
+        praticanteExistente.setPratAltura(jsonConvertido.get("pratAltura").getAsInt());
+        praticanteExistente.setPratPeso(jsonConvertido.get("pratPeso").getAsInt());
+
+        praticanteExistente = praticanteService.salva(praticanteExistente);
+
+        return new ResponseEntity<Praticante>(praticanteExistente, HttpStatus.OK);
     }
 }

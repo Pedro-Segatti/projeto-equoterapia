@@ -15,3 +15,15 @@ export const buscarPessoaPeloId = async (id) => {
 export const cadastrarPessoa = async (json) => {
     return api.post("/cadastrarPessoa", json);
 };
+
+export const atualizaPessoa = async (json) => {
+    return api.post("/atualizarPessoa", json);
+};
+
+export const cadastrarPraticante = async (jsonPraticante) => {
+    return await api.post("/cadastrarPraticante", jsonPraticante);
+};
+
+export const atualizarPraticante = async (json) => {
+    return api.post("/atualizarPraticante", json);
+};
