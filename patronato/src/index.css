@@ -70,6 +70,14 @@ button {
   height: 70px;
 }
 
+
+.form-control {
+  height: 35px;
+
+.alturaLogin{
+  height: auto !important;
+}
+
 @media(max-width: 1000px) {
   .navbar .navbar-toggler {
     margin-right: 20px;
@@ -108,10 +116,6 @@ button {
 
   tr {
     height: 12px !important;
-  }
-
-  .form-control {
-    height: 35px;
   }
 
   .form-label {

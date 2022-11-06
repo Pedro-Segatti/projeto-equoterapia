@@ -34,7 +34,7 @@ const Login = () => {
             <ReactNotifications />
 
             <Image className="bgImg" src={bgimg}></Image>
-            <Card>
+            <Card className='alturaLogin'>
                 <div className="logoContent">
                     <Image className="logo" src={logo}></Image>
                     <br />

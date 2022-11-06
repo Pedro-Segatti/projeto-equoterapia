@@ -50,6 +50,8 @@ public class ComunicacaoController {
     private PaisService paisService;
     @Autowired
     private PraticanteService praticanteService;
+    @Autowired
+    private MontariaService montariaService;
 
     @CrossOrigin(origins = "*")
     @GetMapping("/login")
@@ -84,8 +86,6 @@ public class ComunicacaoController {
         }
         return new ResponseEntity<Pessoa>(pessoa, HttpStatus.OK);
     }
-
-    //ANIMAL
 
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastraAnimal")
@@ -177,6 +177,7 @@ public class ComunicacaoController {
         return picadeiroService.pesquisa();
     }
 
+
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastraFichaEvol")
     public ResponseEntity<?> cadastrarFichaEvol(@RequestBody FichaEvolucao fichaEvolucao){
@@ -211,7 +212,6 @@ public class ComunicacaoController {
     public ResponseEntity<List<AvalSocioecon>> pesquisaAvalSocioEcon(){
         return avalSocioeconService.pesquisa();
     }
-
 
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastrarPessoa")
@@ -310,8 +310,9 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaLogradouros")
-    public ResponseEntity<List<Logradouro>> pesquisaLogradouros(@RequestParam (required=false) String logDesc){
+    public ResponseEntity<List<Logradouro>> pesquisaLogradouros(@RequestParam (required=false) String logDesc) {
         List<Logradouro> logradouros = (List<Logradouro>) logradouroService.getLogradouroByDescricao(logDesc);
         return new ResponseEntity<List<Logradouro>>(logradouros, HttpStatus.OK);
+
     }
 }
