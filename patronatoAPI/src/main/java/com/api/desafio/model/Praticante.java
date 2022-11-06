@@ -1,5 +1,6 @@
 package com.api.desafio.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
@@ -32,6 +33,13 @@ public class Praticante implements Serializable {
     @Basic(optional = false)
     @Column(name = "PRAT_ID")
     private Integer pratId;
+    @JoinColumn(name = "PRAT_ID_PESSOA", referencedColumnName = "PES_ID")
+    @ManyToOne(optional = false)
+    private Pessoa pessoa;
+    @Column(name = "PRAT_ALTURA")
+    private Integer pratAltura;
+    @Column(name = "PRAT_PESO")
+    private Integer pratPeso;
     @ManyToMany(mappedBy = "praticanteList")
     private List<FichaEvolucao> fichaEvolucaoList;
     @JoinTable(name = "praticante_responsavel", joinColumns = {
@@ -49,9 +57,6 @@ public class Praticante implements Serializable {
     private List<Documentos> documentosList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "praticante")
     private List<AvalSocioecon> avalSocioeconList;
-    @JoinColumn(name = "PRAT_ID_PESSOA", referencedColumnName = "PES_ID")
-    @ManyToOne(optional = false)
-    private Pessoa pessoa;
 
     public Praticante() {
     }
@@ -68,6 +73,22 @@ public class Praticante implements Serializable {
         this.pratId = pratId;
     }
 
+    public Integer getPratAltura() {
+        return pratAltura;
+    }
+
+    public void setPratAltura(Integer pratAltura) {
+        this.pratAltura = pratAltura;
+    }
+
+    public Integer getPratPeso() {
+        return pratPeso;
+    }
+
+    public void setPratPeso(Integer pratPeso) {
+        this.pratPeso = pratPeso;
+    }
+    @JsonIgnore
     public List<FichaEvolucao> getFichaEvolucaoList() {
         return fichaEvolucaoList;
     }
@@ -75,7 +96,7 @@ public class Praticante implements Serializable {
     public void setFichaEvolucaoList(List<FichaEvolucao> fichaEvolucaoList) {
         this.fichaEvolucaoList = fichaEvolucaoList;
     }
-
+    @JsonIgnore
     public List<Responsavel> getResponsavelList() {
         return responsavelList;
     }
@@ -83,7 +104,7 @@ public class Praticante implements Serializable {
     public void setResponsavelList(List<Responsavel> responsavelList) {
         this.responsavelList = responsavelList;
     }
-
+    @JsonIgnore
     public List<FichaAnamnese> getFichaAnamneseList() {
         return fichaAnamneseList;
     }
@@ -91,7 +112,7 @@ public class Praticante implements Serializable {
     public void setFichaAnamneseList(List<FichaAnamnese> fichaAnamneseList) {
         this.fichaAnamneseList = fichaAnamneseList;
     }
-
+    @JsonIgnore
     public List<AvalFisioter> getAvalFisioterList() {
         return avalFisioterList;
     }
@@ -99,7 +120,7 @@ public class Praticante implements Serializable {
     public void setAvalFisioterList(List<AvalFisioter> avalFisioterList) {
         this.avalFisioterList = avalFisioterList;
     }
-
+    @JsonIgnore
     public List<AgendamentoPraticante> getAgendamentoPraticanteList() {
         return agendamentoPraticanteList;
     }
@@ -107,7 +128,7 @@ public class Praticante implements Serializable {
     public void setAgendamentoPraticanteList(List<AgendamentoPraticante> agendamentoPraticanteList) {
         this.agendamentoPraticanteList = agendamentoPraticanteList;
     }
-
+    @JsonIgnore
     public List<Documentos> getDocumentosList() {
         return documentosList;
     }
@@ -115,7 +136,7 @@ public class Praticante implements Serializable {
     public void setDocumentosList(List<Documentos> documentosList) {
         this.documentosList = documentosList;
     }
-
+    @JsonIgnore
     public List<AvalSocioecon> getAvalSocioeconList() {
         return avalSocioeconList;
     }
@@ -123,7 +144,6 @@ public class Praticante implements Serializable {
     public void setAvalSocioeconList(List<AvalSocioecon> avalSocioeconList) {
         this.avalSocioeconList = avalSocioeconList;
     }
-
     public Pessoa getPessoa() {
         return pessoa;
     }

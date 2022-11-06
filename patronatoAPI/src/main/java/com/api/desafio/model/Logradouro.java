@@ -34,8 +34,6 @@ public class Logradouro implements Serializable {
     @Basic(optional = false)
     @Column(name = "LOG_CEP")
     private String logCep;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "logradouro")
-    private List<Pessoa> pessoaList;
     @JoinColumn(name = "LOG_ID_BAI", referencedColumnName = "BAR_ID")
     @ManyToOne(optional = false)
     private Bairro bairro;
@@ -75,14 +73,6 @@ public class Logradouro implements Serializable {
 
     public void setLogCep(String logCep) {
         this.logCep = logCep;
-    }
-
-    public List<Pessoa> getPessoaList() {
-        return pessoaList;
-    }
-
-    public void setPessoaList(List<Pessoa> pessoaList) {
-        this.pessoaList = pessoaList;
     }
 
     public Bairro getBairro() {

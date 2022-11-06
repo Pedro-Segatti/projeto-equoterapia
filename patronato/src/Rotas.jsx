@@ -11,6 +11,7 @@ import Login from "./view/login";
 import HomePage from "./view/homePage";
 import NovaPagina from "./view/novaPagina";
 import CadastroAnimais from "./view/cadastros/cadastroAnimais";
+import CadastroPraticantes from "./view/cadastros/cadastroPraticante";
 import CadastroAtividades from "./view/cadastros/cadastroAtividade";
 import CadastroMateriais from "./view/cadastros/cadastroMaterial";
 import CadastroPicadeiro from "./view/cadastros/cadastroPicadeiro";
@@ -46,6 +47,7 @@ const Rotas = () => {
                     <Route exact path="/" element={<Private><HomePage /></Private>} />
                     <Route exact path="/novaPagina" element={<Private><NovaPagina /></Private>} />
                     <Route exact path="/cadastroAnimais" element={<Private><CadastroAnimais /></Private>} />
+                    <Route exact path="/cadastroPraticantes" element={<Private><CadastroPraticantes /></Private>} />
                     <Route exact path="/cadastroAtividade" element={<Private><CadastroAtividades /></Private>} />
                     <Route exact path="/cadastroMaterial" element={<Private><CadastroMateriais /></Private>} />
                     <Route exact path="/cadastroPicadeiro" element={<Private><CadastroPicadeiro/></Private>} />

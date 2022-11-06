@@ -20,7 +20,7 @@ export const loginSenhaInvalidos = () => {
 export const registroSalvo = () => {
     Store.addNotification({
         title: "Registro salvo com sucesso",
-        type: "sucess",
+        type: "success",
         insert: "top",
         container: "top-right",
         animationIn: ["animate__animated", "animate__fadeIn"],
@@ -36,7 +36,7 @@ export const registroSalvo = () => {
 export const registroExcluido = () => {
     Store.addNotification({
         title: "Registro excluído com sucesso",
-        type: "sucess",
+        type: "success",
         insert: "top",
         container: "top-right",
         animationIn: ["animate__animated", "animate__fadeIn"],
@@ -52,6 +52,22 @@ export const registroExcluido = () => {
 export const semRegistros = () => {
     Store.addNotification({
         title: "A pesquisa não retornou registros",
+        type: "info",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+            duration: 2000,
+            onScreen: true,
+            pauseOnHover: true
+        },
+    });
+};
+
+export const pessoaDuplicada = () => {
+    Store.addNotification({
+        title: "Já existe praticante com o CPF informado",
         type: "info",
         insert: "top",
         container: "top-right",

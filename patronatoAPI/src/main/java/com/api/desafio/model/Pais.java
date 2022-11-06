@@ -1,7 +1,10 @@
 package com.api.desafio.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,10 +25,6 @@ public class Pais implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "PAI_ID")
-    private Integer paiId;
     @Basic(optional = false)
     @Column(name = "PAI_ISO")
     private String paiIso;
@@ -38,22 +37,9 @@ public class Pais implements Serializable {
     public Pais() {
     }
 
-    public Pais(Integer paiId) {
-        this.paiId = paiId;
-    }
-
-    public Pais(Integer paiId, String paiIso, String paiNome) {
-        this.paiId = paiId;
+    public Pais(String paiIso, String paiNome) {
         this.paiIso = paiIso;
         this.paiNome = paiNome;
-    }
-
-    public Integer getPaiId() {
-        return paiId;
-    }
-
-    public void setPaiId(Integer paiId) {
-        this.paiId = paiId;
     }
 
     public String getPaiIso() {
@@ -72,6 +58,7 @@ public class Pais implements Serializable {
         this.paiNome = paiNome;
     }
 
+    @JsonIgnore
     public List<Estado> getEstadoList() {
         return estadoList;
     }
@@ -81,28 +68,15 @@ public class Pais implements Serializable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pais pais = (Pais) o;
+        return paiIso.equals(pais.paiIso);
+    }
+
+    @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (paiId != null ? paiId.hashCode() : 0);
-        return hash;
+        return Objects.hash(paiIso);
     }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Pais)) {
-            return false;
-        }
-        Pais other = (Pais) object;
-        if ((this.paiId == null && other.paiId != null) || (this.paiId != null && !this.paiId.equals(other.paiId))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.api.desafio.model.Pais_1[ paiId=" + paiId + " ]";
-    }
-
 }

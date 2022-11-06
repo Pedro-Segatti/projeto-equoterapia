@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { buscarPessoaPeloId } from "../api/autenticacaoController";
+import { buscarPessoaPeloId } from "../utilitario/baseComunicacao";
 import { AuthContext } from "../contexts/autenticacao";
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
@@ -36,6 +36,7 @@ const Menu = () => {
           <Nav className="me-auto">
             <NavDropdown title="Cadastros" id="basic-nav-dropdown" className="mr-4">
               <NavDropdown.Item href="/cadastroAnimais">Animais</NavDropdown.Item>
+              <NavDropdown.Item href="/cadastroPraticantes">Praticantes</NavDropdown.Item>
               <NavDropdown.Item href="/cadastroAtividade">Atividades</NavDropdown.Item>
               <NavDropdown.Item href="/cadastroMaterial">Materiais de Encilhamento</NavDropdown.Item>
               <NavDropdown.Item href="/cadastroPicadeiro">Picadeiro</NavDropdown.Item>
@@ -51,7 +52,6 @@ const Menu = () => {
             <NavDropdown title="Relatórios" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Pacientes</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Funcionarios</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">....</NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>

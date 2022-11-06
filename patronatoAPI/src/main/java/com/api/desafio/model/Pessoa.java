@@ -43,9 +43,9 @@ public class Pessoa implements Serializable {
     private int pesEndNum;
     @Column(name = "PES_END_COMPL")
     private String pesEndCompl;
-    @Basic(optional = false)
-    @Column(name = "PES_NACIONALIDADE")
-    private String pesNacionalidade;
+    @JoinColumn(name = "PES_NACIONALIDADE", referencedColumnName = "PAI_ISO")
+    @ManyToOne(optional = false)
+    private Pais pesNacionalidade;
     @Lob
     @Basic(optional = true)
     @Column(name = "PES_FOTO")
@@ -61,12 +61,6 @@ public class Pessoa implements Serializable {
     @JoinColumn(name = "PES_ID_LOG", referencedColumnName = "LOG_ID")
     @ManyToOne(optional = false)
     private Logradouro logradouro; // Estudar para remapear usando tabela de ligação
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
-    private List<Funcionario> funcionarioList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
-    private List<Responsavel> responsavelList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
-    private List<Praticante> praticanteList;
     @Transient
     @JsonProperty("access_token")
     private String pesAcessToken;
@@ -78,15 +72,6 @@ public class Pessoa implements Serializable {
         this.pesId = pesId;
     }
 
-    public Pessoa(Integer pesId, String pesNome, String pesCpf, String pesSexo, Date pesDataNasc, int pesEndNum, String pesNacionalidade) {
-        this.pesId = pesId;
-        this.pesNome = pesNome;
-        this.pesCpf = pesCpf;
-        this.pesSexo = pesSexo;
-        this.pesDataNasc = pesDataNasc;
-        this.pesEndNum = pesEndNum;
-        this.pesNacionalidade = pesNacionalidade;
-    }
 
     public Integer getPesId() {
         return pesId;
@@ -152,11 +137,12 @@ public class Pessoa implements Serializable {
         this.pesEndCompl = pesEndCompl;
     }
 
-    public String getPesNacionalidade() {
+
+    public Pais getPesNacionalidade() {
         return pesNacionalidade;
     }
 
-    public void setPesNacionalidade(String pesNacionalidade) {
+    public void setPesNacionalidade(Pais pesNacionalidade) {
         this.pesNacionalidade = pesNacionalidade;
     }
 
@@ -183,7 +169,7 @@ public class Pessoa implements Serializable {
     public void setPesEmail2(String pesEmail2) {
         this.pesEmail2 = pesEmail2;
     }
-
+    @JsonIgnore
     public List<Telefone> getTelefoneList() {
         return telefoneList;
     }
@@ -200,31 +186,6 @@ public class Pessoa implements Serializable {
     public void setLogradouro(Logradouro logradouro) {
         this.logradouro = logradouro;
     }
-
-    public List<Funcionario> getFuncionarioList() {
-        return funcionarioList;
-    }
-
-    public void setFuncionarioList(List<Funcionario> funcionarioList) {
-        this.funcionarioList = funcionarioList;
-    }
-
-    public List<Responsavel> getResponsavelList() {
-        return responsavelList;
-    }
-
-    public void setResponsavelList(List<Responsavel> responsavelList) {
-        this.responsavelList = responsavelList;
-    }
-
-    public List<Praticante> getPraticanteList() {
-        return praticanteList;
-    }
-
-    public void setPraticanteList(List<Praticante> praticanteList) {
-        this.praticanteList = praticanteList;
-    }
-
     public String getPesAcessToken() {
         if(this.pesId == null){
             return "";
