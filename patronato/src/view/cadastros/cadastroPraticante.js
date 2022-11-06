@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Col, Row, Container, Modal, Button, Table, Image } from 'react-bootstrap';
+import { Form, Col, Row, Container, Image } from 'react-bootstrap';
 import Toolbar from '../toolbar';
 import { IMaskInput } from 'react-imask';
 import { registroSalvo, pessoaDuplicada, semRegistros, registroExcluido} from "../../utilitario/mensagemUtil"
@@ -30,14 +30,14 @@ const cadastroPraticante = () => {
         }
     }
 
-    const [pratId, setPratId] = useState(null);
-    const [pratAltura, setPratAltura] = useState(null);
-    const [pratPeso, setPratPeso] = useState(null);
+    const [pratId, setPratId] = useState("");
+    const [pratAltura, setPratAltura] = useState("");
+    const [pratPeso, setPratPeso] = useState("");
 
 
     const [pesNome, setPesNome] = useState("");
     const [pesCpf, setPesCpf] = useState("");
-    const [pesSexo, setPesSexo] = useState(null);
+    const [pesSexo, setPesSexo] = useState("");
     const [pesDataNasc, setPesDataNasc] = useState("");
     const [pesEndNum, setPesEndNum] = useState("");
     const [pesEndCompl, setPesEndCompl] = useState("");
@@ -70,7 +70,6 @@ const cadastroPraticante = () => {
     }
 
     const atualizaItemSelecionado = (item) => {
-        console.log(item);
         setPratId(item.pratId);
         setPesNome(item.pessoa.pesNome);
         setPesCpf(item.pessoa.pesCpf);
@@ -89,10 +88,10 @@ const cadastroPraticante = () => {
     }
 
     const limparCamposFormulario = () => {
-        setPratId(null);
+        setPratId("");
         setPesNome("");
         setPesCpf("");
-        setPesSexo(null);
+        setPesSexo("");
         setPesDataNasc("");
         setPesEndNum("");
         setPesEndCompl("");
@@ -175,7 +174,7 @@ const cadastroPraticante = () => {
             }
         }
 
-        if (pratId == null) {
+        if (pratId === "") {
             criarPessoaEPraticante();
         } else {
             atualizarRegistros();

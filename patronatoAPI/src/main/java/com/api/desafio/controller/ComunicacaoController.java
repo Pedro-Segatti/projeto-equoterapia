@@ -306,6 +306,12 @@ public class ComunicacaoController {
         }catch(Exception e){
             return new ResponseEntity<>(new Praticante(), HttpStatus.FORBIDDEN);
         }
+    }
 
+    @CrossOrigin(origins = "*")
+    @GetMapping("/pesquisaLogradouros")
+    public ResponseEntity<List<Logradouro>> pesquisaLogradouros(@RequestParam (required=false) String logDesc){
+        List<Logradouro> logradouros = (List<Logradouro>) logradouroService.getLogradouroByDescricao(logDesc);
+        return new ResponseEntity<List<Logradouro>>(logradouros, HttpStatus.OK);
     }
 }

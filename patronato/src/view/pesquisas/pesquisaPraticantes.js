@@ -33,7 +33,7 @@ export const TablePaginada = ({ data, rowsPerPage, selecionaLinha, atualizaItemS
 
 const LinhaTabela = ({ item, selecionaLinha, atualizaItemSelecionado, removePraticanteSelecionado }) => {
     const { pratId } = item;
-    const {pesNome, pesCpf, pesDataNasc} = item.pessoa;
+    const { pesNome, pesCpf, pesDataNasc } = item.pessoa;
     const selecionarItem = e => atualizaItemSelecionado(item);
     const removerItem = e => removePraticanteSelecionado(item);
 
@@ -65,6 +65,13 @@ function pesquisaPraticantes({ setValores, valores, atualizaItemSelecionado, set
         setAbrirPesquisa(true);
     }
 
+    const limparPesquisa = () => {
+        setAbrirPesquisa(false);
+        setPesNomePesquisa("");
+        setPesCpfPesquisa("");
+        buscaRegistros();
+    }
+
     const pesquisaPraticantes = () => {
         return (
             <>
@@ -75,20 +82,21 @@ function pesquisaPraticantes({ setValores, valores, atualizaItemSelecionado, set
                             <Form>
                                 <Row>
                                     <Col md="6">
-                                        <Form.Label>CPF</Form.Label>
-                                        <Form.Control type="text" id="nomePesquisa"
-                                            initi={pesCpfPesquisa}
-                                            onChange={(e) => setPesCpfPesquisa(e.target.value)} />
-                                    </Col>
-                                    <Col md="6">
                                         <Form.Label>Nome</Form.Label>
                                         <Form.Control type="text" id="nomePesquisa"
-                                            initi={pesNomePesquisa}
+                                            value={pesNomePesquisa}
                                             onChange={(e) => setPesNomePesquisa(e.target.value)} />
+                                    </Col>
+                                    <Col md="6">
+                                        <Form.Label>CPF</Form.Label>
+                                        <Form.Control type="text" id="cpfPesquisa"
+                                            value={pesCpfPesquisa} inputMode="numeric"
+                                            onChange={(e) => setPesCpfPesquisa(e.target.value)} />
                                     </Col>
                                 </Row>
                                 <div className='right'>
-                                    <Button className='btnMarginTop' onClick={buscaRegistros}>Pesquisar</Button>
+                                    <Button className='btnMarginTop btnToolbar' onClick={buscaRegistros}>Pesquisar</Button>
+                                    <Button className='btnMarginTop btn-warning btnToolbar' onClick={limparPesquisa}>Limpar</Button>
                                 </div>
                             </Form>
                         </Container>

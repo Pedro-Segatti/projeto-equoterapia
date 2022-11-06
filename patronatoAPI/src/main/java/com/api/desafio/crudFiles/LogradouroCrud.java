@@ -10,4 +10,5 @@ import java.util.List;
 
 public interface LogradouroCrud extends CrudRepository<Logradouro,Integer> {
     Logradouro findLogradouroByLogId(Integer logId);
+    List<Logradouro> findLogradouroByLogDescricaoContaining(String logDescricao);
 }

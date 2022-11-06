@@ -1,5 +1,7 @@
 package com.api.desafio.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -73,7 +75,7 @@ public class Bairro implements Serializable {
     public void setCidade(Cidade cidade) {
         this.cidade = cidade;
     }
-
+    @JsonIgnore
     public List<Logradouro> getLogradouroList() {
         return logradouroList;
     }
