@@ -69,6 +69,10 @@ button {
   height: 70px;
 }
 
+
+.form-control {
+  height: 35px;
+
 .alturaLogin{
   height: auto !important;
 }
@@ -111,10 +115,6 @@ button {
 
   tr {
     height: 12px !important;
-  }
-
-  .form-control {
-    height: 35px;
   }
 
   .form-label {
