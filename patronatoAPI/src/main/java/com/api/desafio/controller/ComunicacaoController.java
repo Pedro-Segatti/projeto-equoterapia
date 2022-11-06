@@ -315,4 +315,23 @@ public class ComunicacaoController {
         return new ResponseEntity<List<Logradouro>>(logradouros, HttpStatus.OK);
 
     }
+
+    //MONTARIA
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/cadastraMontaria")
+    public ResponseEntity<?> cadastrarMontaria(@RequestBody Montaria montaria){
+        return montariaService.salva(montaria);
+    }
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/removeMontaria")
+    public ResponseEntity<?> removerMontaria(@RequestParam Integer montId){
+        return montariaService.remove(montId);
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/pesquisaMontaria")
+    public ResponseEntity<List<Montaria>> pesquisaMontaria(){
+        return montariaService.pesquisa();
+    }
 }

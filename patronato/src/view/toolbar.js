@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import { Container, Row, Col } from 'react-bootstrap';
 
 
-const Toolbar = ({ jsonCadastro, jsonRemove, abrirPesquisa }) => {
+const Toolbar = ({ jsonRemove, abrirPesquisa }) => {
   const reloadPage = (e) => {
     e.preventDefault();
     window.location.reload(true);
