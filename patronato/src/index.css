@@ -69,6 +69,10 @@ button {
   height: 70px;
 }
 
+.alturaLogin{
+  height: auto !important;
+}
+
 @media(max-width: 1000px) {
   .navbar .navbar-toggler {
     margin-right: 20px;
