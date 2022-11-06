@@ -3,7 +3,7 @@ import { Button, InputGroup, Form } from 'react-bootstrap';
 import { BsSearch } from "react-icons/bs";
 
 
-const Toolbar = ({ descricao, atualizaDlgPesquisa }) => {
+const InputConverter = ({ descricao, atualizaDlgPesquisa }) => {
   return (
     <InputGroup>
       <Form.Control value={descricao} type="text" disabled />
@@ -11,4 +11,4 @@ const Toolbar = ({ descricao, atualizaDlgPesquisa }) => {
     </InputGroup>
   );
 };
-export default Toolbar;
+export default InputConverter;
