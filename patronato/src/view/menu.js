@@ -41,26 +41,16 @@ const Menu = () => {
               <NavDropdown.Item href="/cadastroMaterial">Materiais de Encilhamento</NavDropdown.Item>
               <NavDropdown.Item href="/cadastroPicadeiro">Picadeiro</NavDropdown.Item>
               <NavDropdown.Item href="/cadastroCargo">Cargos</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">Teste</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">....</NavDropdown.Item>
             </NavDropdown>
 
             <NavDropdown title="Movimentos" id="basic-nav-dropdown">
               <NavDropdown.Item href="/movimentoFichaEvol">Ficha de Evolução</NavDropdown.Item>
               <NavDropdown.Item href="/movimentoAvalSocioecon">Avaliação Socioeconômica</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">....</NavDropdown.Item>
-            </NavDropdown>
-
-            <NavDropdown title="Consultas" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Pacientes</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">Funcionarios</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">....</NavDropdown.Item>
             </NavDropdown>
 
             <NavDropdown title="Relatórios" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Pacientes</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Funcionarios</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">....</NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
