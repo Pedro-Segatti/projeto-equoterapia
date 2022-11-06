@@ -37,6 +37,8 @@ public class ComunicacaoController {
     private PicadeiroService picadeiroService;
     @Autowired
     private AvalSocioeconService avalSocioeconService;
+    @Autowired
+    private MontariaService montariaService;
 
     @CrossOrigin(origins = "*")
     @GetMapping("/login")
@@ -172,7 +174,6 @@ public class ComunicacaoController {
         return picadeiroService.pesquisa();
     }
 
-
     //FICHA EVOLUÇÃO
 
     @CrossOrigin(origins = "*")
@@ -193,6 +194,8 @@ public class ComunicacaoController {
         return fichaEvolService.pesquisa(evolId);
     }
 
+    //AVALIAÇÃO SOCIOECONÔMICA
+
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastraAvalSocioEcon")
     public ResponseEntity<?> cadastrarAvalSocioEcon(@RequestBody AvalSocioecon avalSocioEcon){
@@ -208,5 +211,24 @@ public class ComunicacaoController {
     @GetMapping("/pesquisaAvalSocioEcon")
     public ResponseEntity<List<AvalSocioecon>> pesquisaAvalSocioEcon(){
         return avalSocioeconService.pesquisa();
+    }
+
+    //MONTARIA
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/cadastraMontaria")
+    public ResponseEntity<?> cadastrarMontaria(@RequestBody Montaria montaria){
+        return montariaService.salva(montaria);
+    }
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/removeMontaria")
+    public ResponseEntity<?> removerMontaria(@RequestParam Integer montId){
+        return montariaService.remove(montId);
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/pesquisaMontaria")
+    public ResponseEntity<List<Montaria>> pesquisaMontaria(){
+        return montariaService.pesquisa();
     }
 }

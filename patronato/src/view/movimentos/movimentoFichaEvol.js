@@ -7,6 +7,8 @@ import 'react-notifications-component/dist/theme.css';
 import PesquisaAnimais from "../pesquisas/pesquisaAnimais";
 import { TablePaginada } from "../pesquisas/pesquisaAnimais";
 import PesquisaFichaEvol from "../pesquisas/pesquisaFichaEvol";
+import PesquisaMontaria from "../pesquisas/pesquisaMontaria";
+import InputConverter from "../inputConverter";
 
 import Menu from "../menu"
 import Footer from "../footer"
@@ -15,9 +17,12 @@ import { api } from "../../utilitario/baseComunicacao";
 function cadastroFichaEvol() {
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
     const [abrirPesquisaAnimal, setAbrirPesquisaAnimal] = useState(false);
+    const [abrirPesquisaMontaria, setAbrirPesquisaMontaria] = useState(false);
     var [list, setList] = useState([]);
     var [listAnimal, setListAnimal] = useState([]);
+    var [listMontaria, setListMontaria] = useState([]);
 
+    
     const atualizaDlgPesquisa = async () => {
         setList(await (await api.get("/pesquisaFichaEvol")).data);
         setAbrirPesquisa(true);
@@ -26,6 +31,11 @@ function cadastroFichaEvol() {
     const atualizaDlgPesquisaAnimal = async () => {
         setListAnimal(await (await api.get("/pesquisaAnimal")).data);
         setAbrirPesquisaAnimal(true);
+    }
+    
+    const atualizaDlgPesquisaMontaria = async () => {
+        setListMontaria(await (await api.get("/pesquisaMontaria")).data);
+        setAbrirPesquisaMontaria(true);
     }
 
     //Variáveis de cadastro
@@ -74,6 +84,11 @@ function cadastroFichaEvol() {
     const atualizaAnimalSelecionado = (item) => {
         setEvolAniSelecionado(current => [...current, item])
         setAbrirPesquisaAnimal(false);
+    }
+
+    const atualizaMontariaSelecionada = (item) => {
+        setEvolIdMont(item)
+        setAbrirPesquisaMontaria(false);
     }
 
     const removeAnimalSelecionado = (item) => {
@@ -135,6 +150,12 @@ function cadastroFichaEvol() {
                             <Col md="2">
                                 <Form.Label htmlFor="inputId">Código</Form.Label>
                                 <Form.Control value={evolId} type="text" id="id" disabled />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md="3">
+                                <Form.Label htmlFor="inputMontaria">Montaria</Form.Label>
+                                <InputConverter descricao={evolIdMont.montDescricao} atualizaDlgPesquisa={atualizaDlgPesquisaMontaria} />
                             </Col>
                         </Row>
                         <Row>
@@ -281,6 +302,9 @@ function cadastroFichaEvol() {
                 }
                 {abrirPesquisaAnimal &&
                     <PesquisaAnimais setValores={setListAnimal} valores={listAnimal} atualizaItemSelecionado={atualizaAnimalSelecionado} setAbrirPesquisa={setAbrirPesquisaAnimal} />
+                }
+                {abrirPesquisaMontaria &&
+                    <PesquisaMontaria setValores={setListMontaria} valores={listMontaria} atualizaItemSelecionado={atualizaMontariaSelecionada} setAbrirPesquisa={setAbrirPesquisaMontaria} />
                 }
                 <Footer />
             </div >
