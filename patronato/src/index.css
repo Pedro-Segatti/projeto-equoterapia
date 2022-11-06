@@ -69,8 +69,12 @@ button {
   height: 70px;
 }
 
+
 .form-control {
   height: 35px;
+
+.alturaLogin{
+  height: auto !important;
 }
 
 @media(max-width: 1000px) {

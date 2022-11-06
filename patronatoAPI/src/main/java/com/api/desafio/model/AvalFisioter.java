@@ -32,28 +32,28 @@ public class AvalFisioter implements Serializable {
     private Integer aftId;
     @Lob
     @Column(name = "AFT_QUEIXA")
-    private byte[] aftQueixa;
+    private String aftQueixa;
     @Lob
     @Column(name = "AFT_DIAG_CLIN")
-    private byte[] aftDiagClin;
+    private String aftDiagClin;
     @Lob
     @Column(name = "AFT_DIAG_FISIO")
-    private byte[] aftDiagFisio;
+    private String aftDiagFisio;
     @Lob
     @Column(name = "AFT_ANAMNESE")
-    private byte[] aftAnamnese;
+    private String aftAnamnese;
     @Lob
     @Column(name = "AFT_ROT_TERAPIA")
-    private byte[] aftRotTerapia;
+    private String aftRotTerapia;
     @Lob
     @Column(name = "AFT_EXAME_FIS")
-    private byte[] aftExameFis;
+    private String aftExameFis;
     @Lob
     @Column(name = "AFT_DES_MOTO_NEURO")
-    private byte[] aftDesMotoNeuro;
+    private String aftDesMotoNeuro;
     @Lob
     @Column(name = "AFT_REF_PRIM_TEND")
-    private byte[] aftRefPrimTend;
+    private String aftRefPrimTend;
     @Column(name = "AFT_ATV_REFLE_RCERV")
     private Boolean aftAtvRefleRcerv;
     @Column(name = "AFT_ATV_REFLE_RCORP")
@@ -66,7 +66,7 @@ public class AvalFisioter implements Serializable {
     private Boolean aftAtvRefleRapop;
     @Lob
     @Column(name = "AFT_ATV_REFLE_OBS")
-    private byte[] aftAtvRefleObs;
+    private String aftAtvRefleObs;
     @Column(name = "AFT_SENSE_TATIL")
     private Boolean aftSenseTatil;
     @Column(name = "AFT_SENSE_DOLO")
@@ -75,7 +75,7 @@ public class AvalFisioter implements Serializable {
     private Boolean aftSenseTerm;
     @Lob
     @Column(name = "AFT_SENSE_OBS")
-    private byte[] aftSenseObs;
+    private String aftSenseObs;
     @Column(name = "AFT_AMOTO_COR_HIPE")
     private Boolean aftAmotoCorHipe;
     @Column(name = "AFT_AMOTO_ATE_HIPO")
@@ -88,16 +88,16 @@ public class AvalFisioter implements Serializable {
     private Boolean aftAmotoClonus;
     @Lob
     @Column(name = "AFT_AMOTO_OBS")
-    private byte[] aftAmotoObs;
+    private String aftAmotoObs;
     @Lob
     @Column(name = "AFT_MAR_LOC_ATU")
-    private byte[] aftMarLocAtu;
+    private String aftMarLocAtu;
     @Lob
     @Column(name = "AFT_AVAL_POST")
-    private byte[] aftAvalPost;
+    private String aftAvalPost;
     @Lob
     @Column(name = "AFT_SOLO_CAVALO")
-    private byte[] aftSoloCavalo;
+    private String aftSoloCavalo;
     @Column(name = "AFT_MTR_ALC_OBJ")
     private String aftMtrAlcObj;
     @Column(name = "AFT_MTR_ALIMEN")
@@ -124,10 +124,10 @@ public class AvalFisioter implements Serializable {
     private String aftFmuscObs;
     @Lob
     @Column(name = "AFT_CMOTO_EST_OBS")
-    private byte[] aftCmotoEstObs;
+    private String aftCmotoEstObs;
     @Lob
     @Column(name = "AFT_CMOTO_DIN_OBS")
-    private byte[] aftCmotoDinObs;
+    private String aftCmotoDinObs;
     @Column(name = "AFT_PREEN_PALMAR")
     private Boolean aftPreenPalmar;
     @Column(name = "AFT_PREEN_PINCA")
@@ -144,22 +144,22 @@ public class AvalFisioter implements Serializable {
     private String aftMovContEsfinct;
     @Lob
     @Column(name = "AFT_QUAD_COGNITIVO")
-    private byte[] aftQuadCognitivo;
+    private String aftQuadCognitivo;
     @Lob
     @Column(name = "AFT_SIST_RESP")
-    private byte[] aftSistResp;
+    private String aftSistResp;
     @Lob
     @Column(name = "AFT_SIST_CIRC")
-    private byte[] aftSistCirc;
+    private String aftSistCirc;
     @Lob
     @Column(name = "AFT_EXAM_COMP")
-    private byte[] aftExamComp;
+    private String aftExamComp;
     @Lob
     @Column(name = "AFT_MEDICACOES")
-    private byte[] aftMedicacoes;
+    private String aftMedicacoes;
     @Lob
     @Column(name = "AFT_PARECER_FISIO")
-    private byte[] aftParecerFisio;
+    private String aftParecerFisio;
     @Column(name = "AFT_DATA")
     @Temporal(TemporalType.DATE)
     private Date aftData;
@@ -176,7 +176,7 @@ public class AvalFisioter implements Serializable {
     public AvalFisioter(Integer aftId) {
         this.aftId = aftId;
     }
-
+    
     public Integer getAftId() {
         return aftId;
     }
@@ -185,67 +185,67 @@ public class AvalFisioter implements Serializable {
         this.aftId = aftId;
     }
 
-    public byte[] getAftQueixa() {
+    public String getAftQueixa() {
         return aftQueixa;
     }
 
-    public void setAftQueixa(byte[] aftQueixa) {
+    public void setAftQueixa(String aftQueixa) {
         this.aftQueixa = aftQueixa;
     }
 
-    public byte[] getAftDiagClin() {
+    public String getAftDiagClin() {
         return aftDiagClin;
     }
 
-    public void setAftDiagClin(byte[] aftDiagClin) {
+    public void setAftDiagClin(String aftDiagClin) {
         this.aftDiagClin = aftDiagClin;
     }
 
-    public byte[] getAftDiagFisio() {
+    public String getAftDiagFisio() {
         return aftDiagFisio;
     }
 
-    public void setAftDiagFisio(byte[] aftDiagFisio) {
+    public void setAftDiagFisio(String aftDiagFisio) {
         this.aftDiagFisio = aftDiagFisio;
     }
 
-    public byte[] getAftAnamnese() {
+    public String getAftAnamnese() {
         return aftAnamnese;
     }
 
-    public void setAftAnamnese(byte[] aftAnamnese) {
+    public void setAftAnamnese(String aftAnamnese) {
         this.aftAnamnese = aftAnamnese;
     }
 
-    public byte[] getAftRotTerapia() {
+    public String getAftRotTerapia() {
         return aftRotTerapia;
     }
 
-    public void setAftRotTerapia(byte[] aftRotTerapia) {
+    public void setAftRotTerapia(String aftRotTerapia) {
         this.aftRotTerapia = aftRotTerapia;
     }
 
-    public byte[] getAftExameFis() {
+    public String getAftExameFis() {
         return aftExameFis;
     }
 
-    public void setAftExameFis(byte[] aftExameFis) {
+    public void setAftExameFis(String aftExameFis) {
         this.aftExameFis = aftExameFis;
     }
 
-    public byte[] getAftDesMotoNeuro() {
+    public String getAftDesMotoNeuro() {
         return aftDesMotoNeuro;
     }
 
-    public void setAftDesMotoNeuro(byte[] aftDesMotoNeuro) {
+    public void setAftDesMotoNeuro(String aftDesMotoNeuro) {
         this.aftDesMotoNeuro = aftDesMotoNeuro;
     }
 
-    public byte[] getAftRefPrimTend() {
+    public String getAftRefPrimTend() {
         return aftRefPrimTend;
     }
 
-    public void setAftRefPrimTend(byte[] aftRefPrimTend) {
+    public void setAftRefPrimTend(String aftRefPrimTend) {
         this.aftRefPrimTend = aftRefPrimTend;
     }
 
@@ -289,11 +289,11 @@ public class AvalFisioter implements Serializable {
         this.aftAtvRefleRapop = aftAtvRefleRapop;
     }
 
-    public byte[] getAftAtvRefleObs() {
+    public String getAftAtvRefleObs() {
         return aftAtvRefleObs;
     }
 
-    public void setAftAtvRefleObs(byte[] aftAtvRefleObs) {
+    public void setAftAtvRefleObs(String aftAtvRefleObs) {
         this.aftAtvRefleObs = aftAtvRefleObs;
     }
 
@@ -321,11 +321,11 @@ public class AvalFisioter implements Serializable {
         this.aftSenseTerm = aftSenseTerm;
     }
 
-    public byte[] getAftSenseObs() {
+    public String getAftSenseObs() {
         return aftSenseObs;
     }
 
-    public void setAftSenseObs(byte[] aftSenseObs) {
+    public void setAftSenseObs(String aftSenseObs) {
         this.aftSenseObs = aftSenseObs;
     }
 
@@ -369,35 +369,35 @@ public class AvalFisioter implements Serializable {
         this.aftAmotoClonus = aftAmotoClonus;
     }
 
-    public byte[] getAftAmotoObs() {
+    public String getAftAmotoObs() {
         return aftAmotoObs;
     }
 
-    public void setAftAmotoObs(byte[] aftAmotoObs) {
+    public void setAftAmotoObs(String aftAmotoObs) {
         this.aftAmotoObs = aftAmotoObs;
     }
 
-    public byte[] getAftMarLocAtu() {
+    public String getAftMarLocAtu() {
         return aftMarLocAtu;
     }
 
-    public void setAftMarLocAtu(byte[] aftMarLocAtu) {
+    public void setAftMarLocAtu(String aftMarLocAtu) {
         this.aftMarLocAtu = aftMarLocAtu;
     }
 
-    public byte[] getAftAvalPost() {
+    public String getAftAvalPost() {
         return aftAvalPost;
     }
 
-    public void setAftAvalPost(byte[] aftAvalPost) {
+    public void setAftAvalPost(String aftAvalPost) {
         this.aftAvalPost = aftAvalPost;
     }
 
-    public byte[] getAftSoloCavalo() {
+    public String getAftSoloCavalo() {
         return aftSoloCavalo;
     }
 
-    public void setAftSoloCavalo(byte[] aftSoloCavalo) {
+    public void setAftSoloCavalo(String aftSoloCavalo) {
         this.aftSoloCavalo = aftSoloCavalo;
     }
 
@@ -497,19 +497,19 @@ public class AvalFisioter implements Serializable {
         this.aftFmuscObs = aftFmuscObs;
     }
 
-    public byte[] getAftCmotoEstObs() {
+    public String getAftCmotoEstObs() {
         return aftCmotoEstObs;
     }
 
-    public void setAftCmotoEstObs(byte[] aftCmotoEstObs) {
+    public void setAftCmotoEstObs(String aftCmotoEstObs) {
         this.aftCmotoEstObs = aftCmotoEstObs;
     }
 
-    public byte[] getAftCmotoDinObs() {
+    public String getAftCmotoDinObs() {
         return aftCmotoDinObs;
     }
 
-    public void setAftCmotoDinObs(byte[] aftCmotoDinObs) {
+    public void setAftCmotoDinObs(String aftCmotoDinObs) {
         this.aftCmotoDinObs = aftCmotoDinObs;
     }
 
@@ -569,51 +569,51 @@ public class AvalFisioter implements Serializable {
         this.aftMovContEsfinct = aftMovContEsfinct;
     }
 
-    public byte[] getAftQuadCognitivo() {
+    public String getAftQuadCognitivo() {
         return aftQuadCognitivo;
     }
 
-    public void setAftQuadCognitivo(byte[] aftQuadCognitivo) {
+    public void setAftQuadCognitivo(String aftQuadCognitivo) {
         this.aftQuadCognitivo = aftQuadCognitivo;
     }
 
-    public byte[] getAftSistResp() {
+    public String getAftSistResp() {
         return aftSistResp;
     }
 
-    public void setAftSistResp(byte[] aftSistResp) {
+    public void setAftSistResp(String aftSistResp) {
         this.aftSistResp = aftSistResp;
     }
 
-    public byte[] getAftSistCirc() {
+    public String getAftSistCirc() {
         return aftSistCirc;
     }
 
-    public void setAftSistCirc(byte[] aftSistCirc) {
+    public void setAftSistCirc(String aftSistCirc) {
         this.aftSistCirc = aftSistCirc;
     }
 
-    public byte[] getAftExamComp() {
+    public String getAftExamComp() {
         return aftExamComp;
     }
 
-    public void setAftExamComp(byte[] aftExamComp) {
+    public void setAftExamComp(String aftExamComp) {
         this.aftExamComp = aftExamComp;
     }
 
-    public byte[] getAftMedicacoes() {
+    public String getAftMedicacoes() {
         return aftMedicacoes;
     }
 
-    public void setAftMedicacoes(byte[] aftMedicacoes) {
+    public void setAftMedicacoes(String aftMedicacoes) {
         this.aftMedicacoes = aftMedicacoes;
     }
 
-    public byte[] getAftParecerFisio() {
+    public String getAftParecerFisio() {
         return aftParecerFisio;
     }
 
-    public void setAftParecerFisio(byte[] aftParecerFisio) {
+    public void setAftParecerFisio(String aftParecerFisio) {
         this.aftParecerFisio = aftParecerFisio;
     }
 
