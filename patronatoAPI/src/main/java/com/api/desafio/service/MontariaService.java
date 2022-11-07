@@ -24,10 +24,10 @@ public class MontariaService {
         return new ResponseEntity<Montaria>(montaria, HttpStatus.OK);
     }
 
-    public ResponseEntity<?> remove(Integer montId) {
+    public Montaria remove(Integer montId) {
         Montaria montaria = mc.findById(montId).orElse(null);
         mc.delete(montaria);
-        return new ResponseEntity<Montaria>(montaria, HttpStatus.OK);
+        return montaria;
     }
 
     public ResponseEntity<List<Montaria>> pesquisa() {

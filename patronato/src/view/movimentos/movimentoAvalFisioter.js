@@ -82,7 +82,7 @@ function movimentoAvalSocioecon() {
                             </Col>
                         </Row>
                         <br />
-                        <Toolbar jsonCadastro={enviaJsonGravar} jsonRemove={enviaJsonRemove} abrirPesquisa={atualizaDlgPesquisa} />
+                        <Toolbar jsonRemove={enviaJsonRemove} abrirPesquisa={atualizaDlgPesquisa} />
                     </Form>
                 </Container>
                 {abrirPesquisa &&

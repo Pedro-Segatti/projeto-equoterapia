@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { Form, Col, Row, Container } from 'react-bootstrap';
 import Toolbar from '../toolbar';
 import PesquisaMontaria from "../pesquisas/pesquisaMontaria";
-import { registroSalvo } from "../../utilitario/mensagemUtil"
-import { ReactNotifications } from 'react-notifications-component'
-import 'react-notifications-component/dist/theme.css'
+import { registroSalvo,registroExcluido } from "../../utilitario/mensagemUtil";
+import { ReactNotifications } from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
 import { api } from "../../utilitario/baseComunicacao";
-import Menu from "../menu"
-import Footer from "../footer"
+import Menu from "../menu";
+import Footer from "../footer";
+import HTTP_STATUS from "../../utilitario/httpStatus";
 
 function cadastroMontaria() {
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
@@ -39,17 +40,39 @@ function cadastroMontaria() {
         registroSalvo();
     }
 
-    const enviaJsonRemove = () => {
-        api.delete("/removeMontaria?montId=" + montId);
+    const enviaJsonRemove = async () => {
+        if(montId === ""){
+            return;
+        }
+        try{
+            const response = await (await api.delete("/removeMontaria?montId=" + montId));
+            if(response.status === HTTP_STATUS.OK){
+                registroExcluido();
+                limparCamposFormulario();
+            }
+        }catch(error){
+            console.log(error);   
+        }
+    }
+
+    const limparCamposFormulario = () => {
+        setMontId("");
+        setMontDescricao("");
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        enviaJsonGravar();
+        limparCamposFormulario();
     }
 
     const cadastroMontaria = () => {
         return (
             <div>
                 <Menu />
+                <ReactNotifications />
                 <Container className="vh-100">
-                    <ReactNotifications />
-                    <Form>
+                    <Form onSubmit={handleSubmit}>
                         <br />
                         <Row>
                             <h3>Cadastro de Montaria</h3>
@@ -63,13 +86,13 @@ function cadastroMontaria() {
                         <Row>
                             <Col md="6">
                                 <Form.Label htmlFor="inputDescricao">Descrição</Form.Label>
-                                <Form.Control value={montDescricao}
+                                <Form.Control value={montDescricao} maxLength={50}
                                     onChange={(e) => setMontDescricao(e.target.value)}
                                     type="text" id="descricao" required />
                             </Col>
                         </Row>
                         <br />
-                        <Toolbar jsonCadastro={enviaJsonGravar} jsonRemove={enviaJsonRemove} abrirPesquisa={atualizaDlgPesquisa} />
+                        <Toolbar jsonRemove={enviaJsonRemove} abrirPesquisa={atualizaDlgPesquisa} />
                     </Form>
                 </Container>
                 {abrirPesquisa &&

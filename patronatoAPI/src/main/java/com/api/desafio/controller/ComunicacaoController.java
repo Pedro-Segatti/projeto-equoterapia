@@ -95,8 +95,13 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @DeleteMapping("/removeAnimal")
-    public ResponseEntity<?> removeAnimal(@RequestParam Integer aniId){
-        return animalService.remove(aniId);
+    public ResponseEntity<Animal> removeAnimal(@RequestParam Integer aniId){
+        try{
+            Animal animal = animalService.remove(aniId);
+            return new ResponseEntity<>(animal, HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(new Animal(), HttpStatus.FORBIDDEN);
+        }
     }
 
     @CrossOrigin(origins = "*")
@@ -325,8 +330,14 @@ public class ComunicacaoController {
     }
     @CrossOrigin(origins = "*")
     @DeleteMapping("/removeMontaria")
-    public ResponseEntity<?> removerMontaria(@RequestParam Integer montId){
-        return montariaService.remove(montId);
+    public ResponseEntity<Montaria> removerMontaria(@RequestParam Integer montId){
+        try{
+            Montaria montaria = montariaService.remove(montId);
+            return new ResponseEntity<>(montaria, HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(new Montaria(), HttpStatus.FORBIDDEN);
+        }
+
     }
 
     @CrossOrigin(origins = "*")
