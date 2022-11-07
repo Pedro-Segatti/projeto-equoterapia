@@ -153,7 +153,7 @@ function cadastroFichaEvol() {
                             </Col>
                         </Row>
                         <Row>
-                            <Col md="3">
+                            <Col md="6">
                                 <Form.Label htmlFor="inputMontaria">Montaria</Form.Label>
                                 <InputConverter descricao={evolIdMont.montDescricao} atualizaDlgPesquisa={atualizaDlgPesquisaMontaria} />
                             </Col>

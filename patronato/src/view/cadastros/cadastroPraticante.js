@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { Form, Col, Row, Container, Image } from 'react-bootstrap';
 import Toolbar from '../toolbar';
 import { IMaskInput } from 'react-imask';
-import { registroSalvo, pessoaDuplicada, semRegistros, registroExcluido} from "../../utilitario/mensagemUtil"
+import { registroSalvo, pessoaDuplicada, semRegistros, registroExcluido } from "../../utilitario/mensagemUtil"
 import { ReactNotifications } from 'react-notifications-component'
 import { criarPessoa, atualizarPessoa } from "../../utilitario/patronatoUtil";
 import { cadastrarPraticante, atualizarPraticante } from "../../utilitario/baseComunicacao";
 import { api } from "../../utilitario/baseComunicacao";
 import HTTP_STATUS from "../../utilitario/httpStatus";
 import PesquisaPraticantes from "../pesquisas/pesquisaPraticantes";
+import PesquisaLogradouros from "../pesquisas/pesquisaLogradouro";
+import InputConverter from "../inputConverter";
 
 
 import Menu from "../menu"
@@ -45,28 +47,42 @@ const cadastroPraticante = () => {
     const [pesFoto, setPesFoto] = useState("");
     const [pesEmail1, setPesEmail1] = useState("");
     const [pesEmail2, setPesEmail2] = useState("");
-    const [pesLogId, setPesLogId] = useState(1);
+    const [pesLogId, setPesLogId] = useState("");
+    const [pesLogDescricao, setPesLogDescricao] = useState("");
 
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
+    const [abrirPesquisaLogradouro, setAbrirPesquisaLogradouro] = useState(false);
     var [list, setList] = useState('[]');
+    var [listLogradouro, setListLogradouro] = useState('[]');
 
     const atualizaDlgPesquisa = async () => {
         setList(await (await api.get("/pesquisaPraticantes")).data);
         setAbrirPesquisa(true);
     }
 
+    const atualizaDlgPesquisaLogradouro = async () => {
+        setListLogradouro(await (await api.get("/pesquisaLogradouros")).data);
+        setAbrirPesquisaLogradouro(true);
+    }
+
+    const atualizaLogradouroSelecionado = (item) => {
+        setPesLogId(item.logId)
+        setPesLogDescricao(item.logDescricao)
+        setAbrirPesquisaLogradouro(false);
+    }
+
     const removerPraticante = async () => {
-        try{
+        try {
             const response = await (await api.delete("/removePraticante?pratId=" + pratId));
-            if(response.status === HTTP_STATUS.OK){
+            if (response.status === HTTP_STATUS.OK) {
                 registroExcluido();
                 limparCamposFormulario();
             }
-        }catch(error){
-            console.log(error);   
+        } catch (error) {
+            console.log(error);
         }
-        
-        
+
+
     }
 
     const atualizaItemSelecionado = (item) => {
@@ -84,6 +100,8 @@ const cadastroPraticante = () => {
         setPesLogId(1);
         setPratAltura(item.pratAltura);
         setPratPeso(item.pratPeso);
+        setPesLogId(item.pessoa.logradouro.logId);
+        setPesLogDescricao(item.pessoa.logradouro.logDescricao);
         setAbrirPesquisa(false);
     }
 
@@ -102,6 +120,8 @@ const cadastroPraticante = () => {
         setPesLogId("");
         setPratAltura("");
         setPratPeso("");
+        setPesLogId("");
+        setPesLogDescricao("");
     }
 
     const handleSubmit = async (e) => {
@@ -152,7 +172,7 @@ const cadastroPraticante = () => {
 
         }
 
-        const criarPessoaEPraticante  = async () =>{
+        const criarPessoaEPraticante = async () => {
             try {
                 const response = await cadastraPessoa();
                 if (response.status === HTTP_STATUS.OK) {
@@ -288,6 +308,12 @@ const cadastroPraticante = () => {
                     <br />
 
                     <Row>
+                        <Col md="6">
+                            <Form.Label htmlFor="inputLogradouro">Logradouro</Form.Label>
+                            <InputConverter descricao={pesLogDescricao} atualizaDlgPesquisa={atualizaDlgPesquisaLogradouro} />
+                        </Col>
+                    </Row>
+                    <Row>
                         <Col md="2">
                             <Form.Label htmlFor="inputEndNum">Número</Form.Label>
                             <Form.Control value={pesEndNum} type="text" id="inputEndNum" onChange={(e) => setPesEndNum(e.target.value)} required />
@@ -304,8 +330,12 @@ const cadastroPraticante = () => {
             </Container>
 
             {abrirPesquisa &&
-                    <PesquisaPraticantes setValores={setList} valores={list} atualizaItemSelecionado={atualizaItemSelecionado} setAbrirPesquisa={setAbrirPesquisa} />
-                }
+                <PesquisaPraticantes setValores={setList} valores={list} atualizaItemSelecionado={atualizaItemSelecionado} setAbrirPesquisa={setAbrirPesquisa} />
+            }
+
+            {abrirPesquisaLogradouro &&
+                <PesquisaLogradouros setValores={setListLogradouro} valores={listLogradouro} atualizaItemSelecionado={atualizaLogradouroSelecionado} setAbrirPesquisa={setAbrirPesquisaLogradouro} />
+            }
             <Footer />
         </div>
     );
