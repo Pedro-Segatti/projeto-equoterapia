@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Col, Row, Container, Button, Card } from 'react-bootstrap';
 import Toolbar from '../toolbar';
-import { registroSalvo } from "../../utilitario/mensagemUtil";
+import { registroSalvo, registroExcluido } from "../../utilitario/mensagemUtil";
 import { ReactNotifications } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import PesquisaAnimais from "../pesquisas/pesquisaAnimais";
@@ -9,6 +9,7 @@ import { TablePaginada } from "../pesquisas/pesquisaAnimais";
 import PesquisaFichaEvol from "../pesquisas/pesquisaFichaEvol";
 import PesquisaMontaria from "../pesquisas/pesquisaMontaria";
 import InputConverter from "../inputConverter";
+import HTTP_STATUS from "../../utilitario/httpStatus";
 
 import Menu from "../menu"
 import Footer from "../footer"
@@ -22,7 +23,7 @@ function cadastroFichaEvol() {
     var [listAnimal, setListAnimal] = useState([]);
     var [listMontaria, setListMontaria] = useState([]);
 
-    
+
     const atualizaDlgPesquisa = async () => {
         setList(await (await api.get("/pesquisaFichaEvol")).data);
         setAbrirPesquisa(true);
@@ -32,7 +33,7 @@ function cadastroFichaEvol() {
         setListAnimal(await (await api.get("/pesquisaAnimal")).data);
         setAbrirPesquisaAnimal(true);
     }
-    
+
     const atualizaDlgPesquisaMontaria = async () => {
         setListMontaria(await (await api.get("/pesquisaMontaria")).data);
         setAbrirPesquisaMontaria(true);
@@ -125,8 +126,15 @@ function cadastroFichaEvol() {
         registroSalvo();
     }
 
-    const enviaJsonRemove = () => {
-        api.delete("/removeFichaEvol?evolId=" + evolId);
+    const enviaJsonRemove = async () => {
+        if (evolId === "") {
+            return;
+        }
+        const response = await (await api.delete("/removeFichaEvol?evolId=" + evolId));
+        if (response.status === HTTP_STATUS.OK) {
+            registroExcluido();
+            limparCamposFormulario();
+        }
     }
 
     const atualizaRecursosLudicos = () => {
@@ -135,13 +143,25 @@ function cadastroFichaEvol() {
         setEvolQuaisRecLud("");
     }
 
+    const limparCamposFormulario = () => {
+        setEvolId("");
+        setEvolHumor("");
+        //adicionar todos os campos
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        enviaJsonGravar();
+        limparCamposFormulario();
+    }
+
     const cadastroFichaEvol = () => {
         return (
             <div>
                 <Menu />
+                <ReactNotifications />
                 <Container>
-                    <ReactNotifications />
-                    <Form>
+                    <Form onSubmit={handleSubmit}>
                         <br />
                         <Row>
                             <h3>Ficha de Evolução</h3>
@@ -153,7 +173,7 @@ function cadastroFichaEvol() {
                             </Col>
                         </Row>
                         <Row>
-                            <Col md="3">
+                            <Col md="6">
                                 <Form.Label htmlFor="inputMontaria">Montaria</Form.Label>
                                 <InputConverter descricao={evolIdMont.montDescricao} atualizaDlgPesquisa={atualizaDlgPesquisaMontaria} />
                             </Col>
@@ -172,14 +192,14 @@ function cadastroFichaEvol() {
                         <Row>
                             <Col md="6">
                                 <Form.Label htmlFor="inputAtenc">Atenção</Form.Label>
-                                <Form.Control value={evolAtenc}
+                                <Form.Control value={evolAtenc} maxLength={20}
                                     onChange={(e) => setEvolAtenc(e.target.value)}
                                     type="text" id="atenc" />
                             </Col>
 
                             <Col md="6">
                                 <Form.Label htmlFor="inputAuton">Autonomia</Form.Label>
-                                <Form.Control value={evolAuton}
+                                <Form.Control value={evolAuton} maxLength={20}
                                     onChange={(e) => setEvolAuton(e.target.value)}
                                     type="text" id="auton" />
                             </Col>
@@ -187,13 +207,13 @@ function cadastroFichaEvol() {
                         <Row>
                             <Col md="6">
                                 <Form.Label htmlFor="inputPost">Postura</Form.Label>
-                                <Form.Control value={evolPost}
+                                <Form.Control value={evolPost} maxLength={20}
                                     onChange={(e) => setEvolPost(e.target.value)}
                                     type="text" id="post" />
                             </Col>
                             <Col md="3">
                                 <Form.Label htmlFor="inputClima">Clima</Form.Label>
-                                <Form.Control value={evolClima}
+                                <Form.Control value={evolClima} maxLength={1}
                                     onChange={(e) => setEvolClima(e.target.value)}
                                     type="text" id="clima" />
                             </Col>
@@ -256,7 +276,7 @@ function cadastroFichaEvol() {
                         <Row>
                             <Col>
                                 <Form.Label htmlFor="decubito">Decubito</Form.Label>
-                                <Form.Control value={evolDecubito}
+                                <Form.Control value={evolDecubito} maxLength={1}
                                     onChange={(e) => setEvolDecubito(e.target.value)}
                                     type="text" id="decubito" />
                             </Col>
@@ -264,14 +284,14 @@ function cadastroFichaEvol() {
                         <Row>
                             <Col md="6">
                                 <Form.Label htmlFor="compAni">Comportamento do Animal</Form.Label>
-                                <Form.Control value={evolCompAni}
+                                <Form.Control value={evolCompAni} maxLength={30}
                                     onChange={(e) => setEvolCompAni(e.target.value)}
                                     type="text" id="compAni" />
                             </Col>
 
                             <Col md="6">
                                 <Form.Label htmlFor="andAni">Andadura do Animal</Form.Label>
-                                <Form.Control value={evolAndAni}
+                                <Form.Control value={evolAndAni} maxLength={30}
                                     onChange={(e) => setEvolAndAni(e.target.value)}
                                     type="text" id="andAni" />
                             </Col>
@@ -293,7 +313,7 @@ function cadastroFichaEvol() {
                             </Col>
                         </Row>
                         <br />
-                        <Toolbar jsonCadastro={enviaJsonGravar} jsonRemove={enviaJsonRemove} abrirPesquisa={atualizaDlgPesquisa} />
+                        <Toolbar jsonRemove={enviaJsonRemove} abrirPesquisa={atualizaDlgPesquisa} />
                         <br />
                     </Form>
                 </Container>

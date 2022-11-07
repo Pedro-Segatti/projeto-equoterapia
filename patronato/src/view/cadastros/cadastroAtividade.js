@@ -4,12 +4,13 @@ import Toolbar from '../toolbar';
 import TableFooter from '../table/tableFooter';
 import useTable from '../table/useTable';
 import { BsPencilSquare } from "react-icons/bs";
-import { registroSalvo } from "../../utilitario/mensagemUtil"
-import { ReactNotifications } from 'react-notifications-component'
-import 'react-notifications-component/dist/theme.css'
+import { registroSalvo, registroExcluido } from "../../utilitario/mensagemUtil";
+import { ReactNotifications } from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
 import {api} from "../../utilitario/baseComunicacao";
-import Menu from "../menu"
-import Footer from "../footer"
+import Menu from "../menu";
+import Footer from "../footer";
+import HTTP_STATUS from "../../utilitario/httpStatus";
 
 function cadastroAtividade() {
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
@@ -90,17 +91,36 @@ function cadastroAtividade() {
         registroSalvo();
     }
 
-    const enviaJsonRemove = () => {
-        api.delete("/removeAtividade?atvId=" + atvId);
+    const enviaJsonRemove = async () => {
+        if(atvId === ""){
+            return;
+        }
+        const response = await (await api.delete("/removeAtividade?atvId=" + atvId));
+        if(response.status === HTTP_STATUS.OK){
+            registroExcluido();
+            limparCamposFormulario();
+        }
+    }
+
+    const limparCamposFormulario = () => {
+        setAtvId("");
+        setAtvDescricao("");
+        setAtvDuracao("");
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        enviaJsonGravar();
+        limparCamposFormulario();
     }
 
 const cadastroAtividade = () => {
     return (
         <div>
             <Menu />
-            <Container className="vh-100">
             <ReactNotifications />
-                <Form>
+            <Container className="vh-100">
+                <Form onSubmit={handleSubmit}>
                     <br />
                     <Row>
                         <h3>Cadastro de Atividades</h3>
@@ -114,22 +134,22 @@ const cadastroAtividade = () => {
                     <Row>
                         <Col md="6">
                             <Form.Label htmlFor="inputDescricao">Descrição</Form.Label>
-                            <Form.Control value={atvDescricao}
+                            <Form.Control value={atvDescricao} maxLength={100}
                             onChange={(e) => setAtvDescricao(e.target.value)}
                             type="text" id="descricao" required />
                         </Col>
                     </Row>
                     <Row>
                         <Col md="3">
-                            <Form.Label htmlFor="inputDuracao">Duração</Form.Label>
-                            <Form.Control value={atvDuracao}
+                            <Form.Label htmlFor="inputDuracao">Duração (min)</Form.Label>
+                            <Form.Control value={atvDuracao} min={1} max={1000}
                             onChange={(e) => setAtvDuracao(e.target.value)}
-                            type="text" id="duracao" required />
+                            type="number" id="duracao" required />
                         </Col>
                     </Row>
     
                     <br />
-                    <Toolbar jsonCadastro={enviaJsonGravar} jsonRemove={enviaJsonRemove} abrirPesquisa={atualizaDlgPesquisa} />
+                    <Toolbar jsonRemove={enviaJsonRemove} abrirPesquisa={atualizaDlgPesquisa} />
                 </Form>
             </Container>
             

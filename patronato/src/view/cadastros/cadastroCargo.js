@@ -4,17 +4,18 @@ import Toolbar from '../toolbar';
 import TableFooter from '../table/tableFooter';
 import useTable from '../table/useTable';
 import { BsPencilSquare } from "react-icons/bs";
-import { registroSalvo } from "../../utilitario/mensagemUtil"
-import { ReactNotifications } from 'react-notifications-component'
-import 'react-notifications-component/dist/theme.css'
-import {api} from "../../utilitario/baseComunicacao";
-import Menu from "../menu"
-import Footer from "../footer"
+import { registroSalvo, registroExcluido } from "../../utilitario/mensagemUtil";
+import { ReactNotifications } from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
+import { api } from "../../utilitario/baseComunicacao";
+import Menu from "../menu";
+import Footer from "../footer";
+import HTTP_STATUS from "../../utilitario/httpStatus";
 
 function cadastroCargo() {
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
     var [list, setList] = useState('[]');
-    
+
     //Variáveis de cadastro
     const [carId, setCarId] = useState("");
     const [carDescricao, setCarDescricao] = useState("");
@@ -64,7 +65,7 @@ function cadastroCargo() {
     }
 
     const LinhaTabela = ({ item }) => {
-        const { carId, carDescricao} = item;
+        const { carId, carDescricao } = item;
         const selecionarItem = e => atualizaItemSelecionado(item);
 
         return <tr>
@@ -85,81 +86,99 @@ function cadastroCargo() {
         registroSalvo();
     }
 
-    const enviaJsonRemove = () => {
-        api.delete("/removeCargo?carId=" + carId);
+    const enviaJsonRemove = async () => {
+        if (carId === "") {
+            return;
+        }
+        const response = await (await api.delete("/removeCargo?carId=" + carId));
+        if (response.status === HTTP_STATUS.OK) {
+            registroExcluido();
+            limparCamposFormulario();
+        }
     }
 
-const cadastroCargo = () => {
-    return (
-        <div>
-            <Menu />
-            <Container className="vh-100">
-            <ReactNotifications />
-                <Form>
-                    <br />
-                    <Row>
-                        <h3>Cadastro de Cargos</h3>
-                    </Row>
-                    <Row>
-                        <Col md="2">
-                            <Form.Label htmlFor="inputId">Código</Form.Label>
-                            <Form.Control value={carId} type="text" id="id" disabled />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col md="6">
-                            <Form.Label htmlFor="inputDescricao">Descrição</Form.Label>
-                            <Form.Control value={carDescricao}
-                            onChange={(e) => setCarDescricao(e.target.value)}
-                            type="text" id="descricao" required />
-                        </Col>
-                    </Row>
-                    <br />
-                    <Toolbar jsonCadastro={enviaJsonGravar} jsonRemove={enviaJsonRemove} abrirPesquisa={atualizaDlgPesquisa} />
-                </Form>
-            </Container>
-            
+    const limparCamposFormulario = () => {
+        setCarId("");
+        setCarDescricao("");
+    }
 
-            <Modal className='modal-xl' show={abrirPesquisa}>
-                <Modal.Header><b>Pesquisa de Cargos</b></Modal.Header>
-                <Modal.Body>
-                    {abrirPesquisa &&
-                        <>
-                             <Container>
-                                <Form>
-                                    <Row>
-                                        <Col md="2">
-                                            <Form.Label>Código</Form.Label>
-                                            <Form.Control type="text" id="idPesquisa"
-                                            value={carIdPesquisa}
-                                            onChange={(e) => setCarIdPesquisa(e.target.value)} />
-                                        </Col>
-                                        <Col md="6">
-                                            <Form.Label>Descrição</Form.Label>
-                                            <Form.Control type="text" id="descricaoPesquisa"
-                                            initi={carDescricaoPesquisa}
-                                            onChange={(e) => setCarDescricaoPesquisa(e.target.value)} />
-                                        </Col>
-                                    </Row>
-                                    <div className='right'>
-                                        <Button className='btnMarginTop' onClick={buscaRegistros}>Pesquisar</Button>
-                                    </div>
-                                </Form>
-                            </Container>
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        enviaJsonGravar();
+        limparCamposFormulario();
+    }
 
-                            <TablePaginada data={list} rowsPerPage={50} />
-                        </>
-                    }
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="primary" className='btn-danger' onClick={() => setAbrirPesquisa(false)}>Fechar</Button>
-                </Modal.Footer>
-            </Modal>
+    const cadastroCargo = () => {
+        return (
+            <div>
+                <Menu />
+                <ReactNotifications />
+                <Container className="vh-100">
+                    <Form onSubmit={handleSubmit}>
+                        <br />
+                        <Row>
+                            <h3>Cadastro de Cargos</h3>
+                        </Row>
+                        <Row>
+                            <Col md="2">
+                                <Form.Label htmlFor="inputId">Código</Form.Label>
+                                <Form.Control value={carId} type="text" id="id" disabled />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md="6">
+                                <Form.Label htmlFor="inputDescricao">Descrição</Form.Label>
+                                <Form.Control value={carDescricao} maxLength={100}
+                                    onChange={(e) => setCarDescricao(e.target.value)}
+                                    type="text" id="descricao" required />
+                            </Col>
+                        </Row>
+                        <br />
+                        <Toolbar jsonRemove={enviaJsonRemove} abrirPesquisa={atualizaDlgPesquisa} />
+                    </Form>
+                </Container>
 
-            <Footer />
-        </div >
-    )
-}
-return cadastroCargo();
+
+                <Modal className='modal-xl' show={abrirPesquisa}>
+                    <Modal.Header><b>Pesquisa de Cargos</b></Modal.Header>
+                    <Modal.Body>
+                        {abrirPesquisa &&
+                            <>
+                                <Container>
+                                    <Form>
+                                        <Row>
+                                            <Col md="2">
+                                                <Form.Label>Código</Form.Label>
+                                                <Form.Control type="text" id="idPesquisa"
+                                                    value={carIdPesquisa}
+                                                    onChange={(e) => setCarIdPesquisa(e.target.value)} />
+                                            </Col>
+                                            <Col md="6">
+                                                <Form.Label>Descrição</Form.Label>
+                                                <Form.Control type="text" id="descricaoPesquisa"
+                                                    initi={carDescricaoPesquisa}
+                                                    onChange={(e) => setCarDescricaoPesquisa(e.target.value)} />
+                                            </Col>
+                                        </Row>
+                                        <div className='right'>
+                                            <Button className='btnMarginTop' onClick={buscaRegistros}>Pesquisar</Button>
+                                        </div>
+                                    </Form>
+                                </Container>
+
+                                <TablePaginada data={list} rowsPerPage={50} />
+                            </>
+                        }
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="primary" className='btn-danger' onClick={() => setAbrirPesquisa(false)}>Fechar</Button>
+                    </Modal.Footer>
+                </Modal>
+
+                <Footer />
+            </div >
+        )
+    }
+    return cadastroCargo();
 }
 export default cadastroCargo;

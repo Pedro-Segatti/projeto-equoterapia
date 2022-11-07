@@ -43,7 +43,6 @@ const LinhaTabela = ({ item, atualizaItemSelecionado }) => {
 }
 
 function pesquisaAnimais({ setValores, valores, atualizaItemSelecionado, setAbrirPesquisa }) {
-    const [montId, setMontId] = useState("");
     const [montDescricao, setMontDescricao] = useState("");
 
     const buscaRegistros = async () => {
@@ -55,17 +54,11 @@ function pesquisaAnimais({ setValores, valores, atualizaItemSelecionado, setAbri
         return (
             <>
                 <Modal className='modal-xl' show={true}>
-                    <Modal.Header><b>Pesquisa de Animal</b></Modal.Header>
+                    <Modal.Header><b>Pesquisa de Montaria</b></Modal.Header>
                     <Modal.Body>
                         <Container>
                             <Form>
                                 <Row>
-                                    <Col md="2">
-                                        <Form.Label>Código</Form.Label>
-                                        <Form.Control type="text" id="idPesquisa"
-                                            value={montId}
-                                            onChange={(e) => setMontId(e.target.value)} />
-                                    </Col>
                                     <Col md="6">
                                         <Form.Label>Descrição</Form.Label>
                                         <Form.Control type="text" id="descricaoPesquisa"
