@@ -7,7 +7,7 @@ import { BsPencilSquare } from "react-icons/bs";
 import { registroSalvo, registroExcluido } from "../../utilitario/mensagemUtil";
 import { ReactNotifications } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
-import {api} from "../../utilitario/baseComunicacao";
+import { api } from "../../utilitario/baseComunicacao";
 import Menu from "../menu";
 import Footer from "../footer";
 import HTTP_STATUS from "../../utilitario/httpStatus";
@@ -15,7 +15,7 @@ import HTTP_STATUS from "../../utilitario/httpStatus";
 function cadastroAtividade() {
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
     var [list, setList] = useState('[]');
-    
+
     //Variáveis de cadastro
     const [atvId, setAtvId] = useState("");
     const [atvDescricao, setAtvDescricao] = useState("");
@@ -68,7 +68,7 @@ function cadastroAtividade() {
     }
 
     const LinhaTabela = ({ item }) => {
-        const { atvId, atvDescricao, atvDuracao} = item;
+        const { atvId, atvDescricao, atvDuracao } = item;
         const selecionarItem = e => atualizaItemSelecionado(item);
 
         return <tr>
@@ -92,13 +92,17 @@ function cadastroAtividade() {
     }
 
     const enviaJsonRemove = async () => {
-        if(atvId === ""){
+        if (atvId === "") {
             return;
         }
-        const response = await (await api.delete("/removeAtividade?atvId=" + atvId));
-        if(response.status === HTTP_STATUS.OK){
-            registroExcluido();
-            limparCamposFormulario();
+        try {
+            const response = await (await api.delete("/removeAtividade?atvId=" + atvId));
+            if (response.status === HTTP_STATUS.OK) {
+                registroExcluido();
+                limparCamposFormulario();
+            }
+        } catch (error) {
+            console.log(error);
         }
     }
 
@@ -114,86 +118,86 @@ function cadastroAtividade() {
         limparCamposFormulario();
     }
 
-const cadastroAtividade = () => {
-    return (
-        <div>
-            <Menu />
-            <ReactNotifications />
-            <Container className="vh-100">
-                <Form onSubmit={handleSubmit}>
-                    <br />
-                    <Row>
-                        <h3>Cadastro de Atividades</h3>
-                    </Row>
-                    <Row>
-                        <Col md="2">
-                            <Form.Label htmlFor="inputId">Código</Form.Label>
-                            <Form.Control value={atvId} type="text" id="id" disabled />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col md="6">
-                            <Form.Label htmlFor="inputDescricao">Descrição</Form.Label>
-                            <Form.Control value={atvDescricao} maxLength={100}
-                            onChange={(e) => setAtvDescricao(e.target.value)}
-                            type="text" id="descricao" required />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col md="3">
-                            <Form.Label htmlFor="inputDuracao">Duração (min)</Form.Label>
-                            <Form.Control value={atvDuracao} min={1} max={1000}
-                            onChange={(e) => setAtvDuracao(e.target.value)}
-                            type="number" id="duracao" required />
-                        </Col>
-                    </Row>
-    
-                    <br />
-                    <Toolbar jsonRemove={enviaJsonRemove} abrirPesquisa={atualizaDlgPesquisa} />
-                </Form>
-            </Container>
-            
+    const cadastroAtividade = () => {
+        return (
+            <div>
+                <Menu />
+                <ReactNotifications />
+                <Container className="vh-100">
+                    <Form onSubmit={handleSubmit}>
+                        <br />
+                        <Row>
+                            <h3>Cadastro de Atividades</h3>
+                        </Row>
+                        <Row>
+                            <Col md="2">
+                                <Form.Label htmlFor="inputId">Código</Form.Label>
+                                <Form.Control value={atvId} type="text" id="id" disabled />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md="6">
+                                <Form.Label htmlFor="inputDescricao">Descrição</Form.Label>
+                                <Form.Control value={atvDescricao} maxLength={100}
+                                    onChange={(e) => setAtvDescricao(e.target.value)}
+                                    type="text" id="descricao" required />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md="3">
+                                <Form.Label htmlFor="inputDuracao">Duração (min)</Form.Label>
+                                <Form.Control value={atvDuracao} min={1} max={1000}
+                                    onChange={(e) => setAtvDuracao(e.target.value)}
+                                    type="number" id="duracao" required />
+                            </Col>
+                        </Row>
 
-            <Modal className='modal-xl' show={abrirPesquisa}>
-                <Modal.Header><b>Pesquisa de Atividades</b></Modal.Header>
-                <Modal.Body>
-                    {abrirPesquisa &&
-                        <>
-                             <Container>
-                                <Form>
-                                    <Row>
-                                        <Col md="2">
-                                            <Form.Label>Código</Form.Label>
-                                            <Form.Control type="text" id="idPesquisa"
-                                            value={atvIdPesquisa}
-                                            onChange={(e) => setAtvIdPesquisa(e.target.value)} />
-                                        </Col>
-                                        <Col md="6">
-                                            <Form.Label>Descrição</Form.Label>
-                                            <Form.Control type="text" id="descricaoPesquisa"
-                                            initi={atvDescricaoPesquisa}
-                                            onChange={(e) => setAtvDescricaoPesquisa(e.target.value)} />
-                                        </Col>
-                                    </Row>
-                                    <div className='right'>
-                                        <Button className='btnMarginTop' onClick={buscaRegistros}>Pesquisar</Button>
-                                    </div>
-                                </Form>
-                            </Container>
+                        <br />
+                        <Toolbar jsonRemove={enviaJsonRemove} abrirPesquisa={atualizaDlgPesquisa} />
+                    </Form>
+                </Container>
 
-                            <TablePaginada data={list} rowsPerPage={50} />
-                        </>
-                    }
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="primary" className='btn-danger' onClick={() => setAbrirPesquisa(false)}>Fechar</Button>
-                </Modal.Footer>
-            </Modal>
 
-            <Footer />
-        </div >
-    )
-}
-return cadastroAtividade();
+                <Modal className='modal-xl' show={abrirPesquisa}>
+                    <Modal.Header><b>Pesquisa de Atividades</b></Modal.Header>
+                    <Modal.Body>
+                        {abrirPesquisa &&
+                            <>
+                                <Container>
+                                    <Form>
+                                        <Row>
+                                            <Col md="2">
+                                                <Form.Label>Código</Form.Label>
+                                                <Form.Control type="text" id="idPesquisa"
+                                                    value={atvIdPesquisa}
+                                                    onChange={(e) => setAtvIdPesquisa(e.target.value)} />
+                                            </Col>
+                                            <Col md="6">
+                                                <Form.Label>Descrição</Form.Label>
+                                                <Form.Control type="text" id="descricaoPesquisa"
+                                                    initi={atvDescricaoPesquisa}
+                                                    onChange={(e) => setAtvDescricaoPesquisa(e.target.value)} />
+                                            </Col>
+                                        </Row>
+                                        <div className='right'>
+                                            <Button className='btnMarginTop' onClick={buscaRegistros}>Pesquisar</Button>
+                                        </div>
+                                    </Form>
+                                </Container>
+
+                                <TablePaginada data={list} rowsPerPage={50} />
+                            </>
+                        }
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="primary" className='btn-danger' onClick={() => setAbrirPesquisa(false)}>Fechar</Button>
+                    </Modal.Footer>
+                </Modal>
+
+                <Footer />
+            </div >
+        )
+    }
+    return cadastroAtividade();
 }
 export default cadastroAtividade;

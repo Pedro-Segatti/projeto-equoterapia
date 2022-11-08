@@ -56,11 +56,15 @@ function cadastroAnimais() {
         if(aniId === ""){
             return;
         }
-        const response = await (await api.delete("/removeAnimal?aniId=" + aniId));
-        console.log(response.status);
-        if(response.status === HTTP_STATUS.OK){
-            registroExcluido();
-            limparCamposFormulario();
+        try{
+            const response = await (await api.delete("/removeAnimal?aniId=" + aniId));
+            console.log(response.status);
+            if(response.status === HTTP_STATUS.OK){
+                registroExcluido();
+                limparCamposFormulario();
+            }
+        }catch(error){
+            console.log(error);   
         }
     }
 

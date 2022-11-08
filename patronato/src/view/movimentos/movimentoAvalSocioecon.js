@@ -50,10 +50,14 @@ function movimentoAvalSocioecon() {
         if (aseId === "") {
             return;
         }
-        const response = await ( await api.delete("/removeAvalSocioEcon?aseId=" + aseId));
-        if (response.status === HTTP_STATUS.OK) {
-            registroExcluido();
-            limparCamposFormulario();
+        try {
+            const response = await (await api.delete("/removeAvalSocioEcon?aseId=" + aseId));
+            if (response.status === HTTP_STATUS.OK) {
+                registroExcluido();
+                limparCamposFormulario();
+            }
+        } catch (error) {
+            console.log(error);
         }
     }
 

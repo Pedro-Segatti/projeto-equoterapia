@@ -90,10 +90,14 @@ function cadastroCargo() {
         if (carId === "") {
             return;
         }
-        const response = await (await api.delete("/removeCargo?carId=" + carId));
-        if (response.status === HTTP_STATUS.OK) {
-            registroExcluido();
-            limparCamposFormulario();
+        try {
+            const response = await (await api.delete("/removeCargo?carId=" + carId));
+            if (response.status === HTTP_STATUS.OK) {
+                registroExcluido();
+                limparCamposFormulario();
+            }
+        } catch (error) {
+            console.log(error);
         }
     }
 

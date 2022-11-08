@@ -90,10 +90,14 @@ function cadastroMaterial() {
         if (matId === "") {
             return;
         }
-        const response = await (await api.delete("/removeMaterial?matId=" + matId));
-        if (response.status === HTTP_STATUS.OK) {
-            registroExcluido();
-            limparCamposFormulario();
+        try {
+            const response = await (await api.delete("/removeMaterial?matId=" + matId));
+            if (response.status === HTTP_STATUS.OK) {
+                registroExcluido();
+                limparCamposFormulario();
+            }
+        } catch (error) {
+            console.log(error);
         }
     }
 

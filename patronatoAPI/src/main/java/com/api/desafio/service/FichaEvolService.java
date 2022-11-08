@@ -27,13 +27,10 @@ public class FichaEvolService {
         return new ResponseEntity<ResponseModel>(rm, HttpStatus.OK);
     }
 
-    public ResponseEntity<?> remove(Integer evolId) {
+    public FichaEvolucao remove(Integer evolId) {
         FichaEvolucao evolucao = fec.findById(evolId).orElse(null);
         fec.delete(evolucao);
-        ResponseModel rm = new ResponseModel();
-        rm.setMensagem("Ficha de evolução removida com sucesso!");
-        rm.setOcorrencias(null);
-        return new ResponseEntity<ResponseModel>(rm, HttpStatus.OK);
+        return evolucao;
     }
 
     public ResponseEntity<List<FichaEvolucao>> pesquisa(Integer evolId) {

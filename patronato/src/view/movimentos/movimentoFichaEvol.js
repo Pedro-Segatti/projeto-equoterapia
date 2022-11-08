@@ -130,10 +130,14 @@ function cadastroFichaEvol() {
         if (evolId === "") {
             return;
         }
-        const response = await (await api.delete("/removeFichaEvol?evolId=" + evolId));
-        if (response.status === HTTP_STATUS.OK) {
-            registroExcluido();
-            limparCamposFormulario();
+        try {
+            const response = await (await api.delete("/removeFichaEvol?evolId=" + evolId));
+            if (response.status === HTTP_STATUS.OK) {
+                registroExcluido();
+                limparCamposFormulario();
+            }
+        } catch (error) {
+            console.log(error);
         }
     }
 

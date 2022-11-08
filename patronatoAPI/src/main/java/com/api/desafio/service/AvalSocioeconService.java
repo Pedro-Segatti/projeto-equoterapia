@@ -27,13 +27,10 @@ public class AvalSocioeconService {
         return new ResponseEntity<ResponseModel>(rm, HttpStatus.OK);
     }
 
-    public ResponseEntity<?> remove(Integer aseId) {
+    public AvalSocioecon remove(Integer aseId) {
         AvalSocioecon avalSocioecon = asc.findById(aseId).orElse(null);
         asc.delete(avalSocioecon);
-        ResponseModel rm = new ResponseModel();
-        rm.setMensagem("Avaliação removida com sucesso!");
-        rm.setOcorrencias(null);
-        return new ResponseEntity<ResponseModel>(rm, HttpStatus.OK);
+        return (avalSocioecon);
     }
 
     public ResponseEntity<List<AvalSocioecon>> pesquisa() {
