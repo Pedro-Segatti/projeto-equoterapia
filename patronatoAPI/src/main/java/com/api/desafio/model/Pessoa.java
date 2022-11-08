@@ -178,7 +178,6 @@ public class Pessoa implements Serializable {
         this.telefoneList = telefoneList;
     }
 
-    @JsonIgnore
     public Logradouro getLogradouro() {
         return logradouro;
     }

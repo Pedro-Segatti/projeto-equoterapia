@@ -31,15 +31,16 @@ export const TablePaginada = ({ data, rowsPerPage, selecionaLinha, atualizaItemS
 };
 
 const LinhaTabela = ({ item, selecionaLinha, atualizaItemSelecionado, removeLogradouroSelecionado }) => {
+    console.log(item);
     const { logId, logDescricao } = item;
-    const { baiDescricao } = item.bairro.baiDescricao;
+    const { barNome } = item.bairro;
     const selecionarItem = e => atualizaItemSelecionado(item);
     const removerItem = e => removeLogradouroSelecionado(item);
 
     return <tr>
         <td width={'80px'}>{logId}</td>
         <td width={'100px'}>{logDescricao}</td>
-        <td width={'100px'}>{baiDescricao}</td>
+        <td width={'100px'}>{barNome}</td>
         {selecionaLinha &&
             <td width={'80px'} className='center'>
                 <Button className='btn-success' onClick={selecionarItem}><BsPencilSquare /></Button>
@@ -86,6 +87,7 @@ function pesquisaLogradouro({ setValores, valores, atualizaItemSelecionado, setA
                                 </Row>
                                 <div className='right'>
                                     <Button className='btnMarginTop' onClick={buscaRegistros}>Pesquisar</Button>
+                                    <Button className='btnMarginTop btn-warning btnToolbar' onClick={limparPesquisa}>Limpar</Button>
                                 </div>
                             </Form>
                         </Container>
@@ -93,7 +95,6 @@ function pesquisaLogradouro({ setValores, valores, atualizaItemSelecionado, setA
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="primary" className='btn-danger' onClick={() => setAbrirPesquisa(false)}>Fechar</Button>
-                        <Button className='btnMarginTop btn-warning btnToolbar' onClick={limparPesquisa}>Limpar</Button>
                     </Modal.Footer>
                 </Modal>
             </>

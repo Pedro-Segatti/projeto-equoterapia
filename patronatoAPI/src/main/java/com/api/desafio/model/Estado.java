@@ -1,5 +1,7 @@
 package com.api.desafio.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -61,7 +63,7 @@ public class Estado implements Serializable {
     public void setEstNome(String estNome) {
         this.estNome = estNome;
     }
-
+    @JsonIgnore
     public List<Cidade> getCidadeList() {
         return cidadeList;
     }

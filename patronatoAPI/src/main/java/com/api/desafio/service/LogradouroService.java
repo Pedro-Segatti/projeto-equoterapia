@@ -22,7 +22,7 @@ public class LogradouroService {
     }
 
     public List<Logradouro> getLogradouroByDescricao(String logDescricao){
-        return logradouroCrud.findLogradouroByLogDescricaoContaining(logDescricao);
+        return logradouroCrud.findLogradouroByLogDescricao(logDescricao);
     }
 
 }
