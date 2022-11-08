@@ -20,7 +20,7 @@ function movimentoAvalSocioecon() {
     const [aseId, setAseId] = useState("");
     const [aseObsContFam, setAseObsContFam] = useState("");
     const [aseObsMedicamentos, setAseObsMedicamentos] = useState("");
-    const [aseIdPraticante, setAseIdPraticante] = useState({"pessoa":{"pesNome":""}});
+    const [praticante, setPraticante] = useState({"pessoa":{"pesNome":""}});
 
     //variáveis da dialog de pesquisa
     var [list, setList] = useState([]);
@@ -37,7 +37,7 @@ function movimentoAvalSocioecon() {
     }
 
     const atualizaPraticanteSelecionado = async (item) => {
-        await setAseIdPraticante(item);
+        await setPraticante(item);
         setAbrirPesquisaPraticante(false);
     }
 
@@ -45,7 +45,7 @@ function movimentoAvalSocioecon() {
         setAseId(item.aseId);
         setAseObsContFam(item.aseObsContFam);
         setAseObsMedicamentos(item.aseObsMedicamentos);
-        setAseIdPraticante(item.aseIdPraticante);
+        setPraticante(item.praticante);
         setAbrirPesquisa(false);
     }
 
@@ -54,7 +54,7 @@ function movimentoAvalSocioecon() {
             "aseId": aseId,
             "aseObsContFam": aseObsContFam,
             "aseObsMedicamentos": aseObsMedicamentos,
-            "aseIdPraticante": aseIdPraticante
+            "praticante": praticante
         };
         api.post("/cadastraAvalSocioEcon", json);
         registroSalvo();
@@ -78,7 +78,8 @@ function movimentoAvalSocioecon() {
     const limparCamposFormulario = () => {
         setAseId("");
         setAseObsContFam("");
-        setAseIdPraticante("");
+        setAseObsMedicamentos("");
+        setPraticante({"pessoa":{"pesNome":""}});
     }
 
     const handleSubmit = async (e) => {
@@ -107,7 +108,7 @@ function movimentoAvalSocioecon() {
                         <Row>
                             <Col md="6">
                                 <Form.Label htmlFor="aseId">Praticante</Form.Label>
-                                <InputConverter descricao={aseIdPraticante.pessoa.pesNome} atualizaDlgPesquisa={atualizaDlgPesquisaPraticantes} />
+                                <InputConverter descricao={praticante.pessoa.pesNome} atualizaDlgPesquisa={atualizaDlgPesquisaPraticantes} />
                             </Col>
                         </Row>
                         <Row>

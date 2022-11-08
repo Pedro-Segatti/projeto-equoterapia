@@ -232,10 +232,10 @@ public class ComunicacaoController {
         return avalSocioeconService.salva(avalSocioEcon);
     }
     @CrossOrigin(origins = "*")
-    @PostMapping("/removeAvalSocioEcon")
-    public ResponseEntity<AvalSocioecon> removerAvalSocioEcon(@RequestParam Integer ascId){
+    @DeleteMapping("/removeAvalSocioEcon")
+    public ResponseEntity<AvalSocioecon> removerAvalSocioEcon(@RequestParam Integer aseId){
         try{
-            avalSocioeconService.remove(ascId);
+            avalSocioeconService.remove(aseId);
             return new ResponseEntity<>(new AvalSocioecon(), HttpStatus.OK);
         }catch(Exception e){
             return new ResponseEntity<>(new AvalSocioecon(), HttpStatus.FORBIDDEN);

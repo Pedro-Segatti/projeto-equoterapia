@@ -17,7 +17,7 @@ function movimentoAvalSocioecon() {
     const [aseId, setAseId] = useState("");
     const [aseObsContFam, setAseObsContFam] = useState("");
     const [aseObsMedicamentos, setAseObsMedicamentos] = useState("");
-    const [aseIdPraticante, setAseIdPraticante] = useState("");
+    const [praticante, setPraticante] = useState("");
 
     //variáveis da dialog de pesquisa
     var [list, setList] = useState([]);
@@ -31,7 +31,7 @@ function movimentoAvalSocioecon() {
         setAseId(item.aseId);
         setAseObsContFam(item.aseObsContFam);
         setAseObsMedicamentos(item.aseObsMedicamentos);
-        setAseIdPraticante(item.aseIdPraticante);
+        setPraticante(item.aseIdPraticante);
         setAbrirPesquisa(false);
     }
 
@@ -40,7 +40,7 @@ function movimentoAvalSocioecon() {
             "aseId": aseId,
             "aseObsContFam": aseObsContFam,
             "aseObsMedicamentos": aseObsMedicamentos,
-            "aseIdPraticante": aseIdPraticante
+            "praticante": praticante
         };
         api.post("/cadastraAvalSocioEcon", json);
         registroSalvo();
