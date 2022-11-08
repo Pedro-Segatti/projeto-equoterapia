@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form, Col, Row, Container } from 'react-bootstrap';
 import Toolbar from '../toolbar';
 import PesquisaAvalSocioEcon from "../pesquisas/pesquisaAvalSocioecon";
+import PesquisaPraticantes from "../pesquisas/pesquisaPraticantes";
 import { registroSalvo, registroExcluido } from "../../utilitario/mensagemUtil";
 import { ReactNotifications } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
@@ -9,22 +10,35 @@ import { api } from "../../utilitario/baseComunicacao";
 import Menu from "../menu";
 import Footer from "../footer";
 import HTTP_STATUS from "../../utilitario/httpStatus";
+import InputConverter from "../inputConverter";
 
 function movimentoAvalSocioecon() {
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
+    const [abrirPesquisaPraticante, setAbrirPesquisaPraticante] = useState(false);
 
     //Variáveis de cadastro
     const [aseId, setAseId] = useState("");
     const [aseObsContFam, setAseObsContFam] = useState("");
     const [aseObsMedicamentos, setAseObsMedicamentos] = useState("");
-    const [aseIdPraticante, setAseIdPraticante] = useState("");
+    const [aseIdPraticante, setAseIdPraticante] = useState({"pessoa":{"pesNome":""}});
 
     //variáveis da dialog de pesquisa
     var [list, setList] = useState([]);
+    var [listPraticantes, setListPraticantes] = useState([]);
 
     const atualizaDlgPesquisa = async () => {
         setList(await (await api.get("/pesquisaAvalSocioEcon")).data);
         setAbrirPesquisa(true);
+    }
+
+    const atualizaDlgPesquisaPraticantes = async () => {
+        setList(await (await api.get("/pesquisaPraticantes")).data);
+        setAbrirPesquisaPraticante(true);
+    }
+
+    const atualizaPraticanteSelecionado = async (item) => {
+        await setAseIdPraticante(item);
+        setAbrirPesquisaPraticante(false);
     }
 
     const atualizaItemSelecionado = (item) => {
@@ -92,6 +106,12 @@ function movimentoAvalSocioecon() {
                         </Row>
                         <Row>
                             <Col md="6">
+                                <Form.Label htmlFor="aseId">Praticante</Form.Label>
+                                <InputConverter descricao={aseIdPraticante.pessoa.pesNome} atualizaDlgPesquisa={atualizaDlgPesquisaPraticantes} />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md="6">
                                 <Form.Label htmlFor="aseObsContFam">Observação Controle Familiar</Form.Label>
                                 <Form.Control value={aseObsContFam}
                                     onChange={(e) => setAseObsContFam(e.target.value)}
@@ -110,6 +130,9 @@ function movimentoAvalSocioecon() {
                 </Container>
                 {abrirPesquisa &&
                     <PesquisaAvalSocioEcon setValores={setList} valores={list} atualizaItemSelecionado={atualizaItemSelecionado} setAbrirPesquisa={setAbrirPesquisa} />
+                }
+                {abrirPesquisaPraticante &&
+                    <PesquisaPraticantes setValores={setListPraticantes} valores={listPraticantes} atualizaItemSelecionado={atualizaPraticanteSelecionado} setAbrirPesquisa={setAbrirPesquisaPraticante} />
                 }
                 <Footer />
             </div >

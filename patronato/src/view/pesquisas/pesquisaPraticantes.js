@@ -22,7 +22,7 @@ export const TablePaginada = ({ data, rowsPerPage, selecionaLinha, atualizaItemS
                 </thead>
                 <tbody>
                     {
-                        slice.map(item => <LinhaTabela key={item.aniId} item={item} selecionaLinha={selecionaLinha} atualizaItemSelecionado={atualizaItemSelecionado} removePraticanteSelecionado={removePraticanteSelecionado} />)
+                        slice.map(item => <LinhaTabela key={item.pratId} item={item} selecionaLinha={selecionaLinha} atualizaItemSelecionado={atualizaItemSelecionado} removePraticanteSelecionado={removePraticanteSelecionado} />)
                     }
                 </tbody>
             </Table>
