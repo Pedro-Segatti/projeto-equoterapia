@@ -52,6 +52,10 @@ public class ComunicacaoController {
     private PraticanteService praticanteService;
     @Autowired
     private MontariaService montariaService;
+    @Autowired
+    private BairroService bairroService;
+    @Autowired
+    private CidadeService cidadeService;
 
     @CrossOrigin(origins = "*")
     @GetMapping("/login")
@@ -374,5 +378,35 @@ public class ComunicacaoController {
     @GetMapping("/pesquisaMontaria")
     public ResponseEntity<List<Montaria>> pesquisaMontaria(){
         return montariaService.pesquisa();
+    }
+
+    //BAIRRO
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/cadastraBairro")
+    public ResponseEntity<?> cadastrarBairro(@RequestBody Bairro bairro){
+        return bairroService.salva(bairro);
+    }
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/removeBairro")
+    public ResponseEntity<Bairro> removerBairro(@RequestParam Integer barId){
+        try{
+            Bairro bairro = bairroService.remove(barId);
+            return new ResponseEntity<>(bairro, HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(new Bairro(), HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/pesquisaBairro")
+    public ResponseEntity<List<Bairro>> pesquisaBairro(@RequestParam (required=false) String barNome){
+        return bairroService.pesquisa(barNome);
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/pesquisaCidade")
+    public ResponseEntity<List<Cidade>> pesquisaCidade(@RequestParam (required=false) String cidNome){
+        return cidadeService.pesquisa(cidNome);
     }
 }
