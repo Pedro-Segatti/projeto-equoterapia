@@ -59,6 +59,8 @@ button {
 
 .btnPaginacao {
   margin: 2px;
+  width: 38px;
+  font-size: 12px !important;
 }
 
 .btnMarginTop{

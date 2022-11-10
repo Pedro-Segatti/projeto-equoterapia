@@ -73,7 +73,7 @@ function pesquisaCidade({ setValores, valores, atualizaItemSelecionado, setAbrir
                                 </div>
                             </Form>
                         </Container>
-                        <TablePaginada data={valores} rowsPerPage={10} selecionaLinha={true} atualizaItemSelecionado={atualizaItemSelecionado} />
+                        <TablePaginada data={valores} rowsPerPage={8} selecionaLinha={true} atualizaItemSelecionado={atualizaItemSelecionado} />
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="primary" className='btn-danger' onClick={() => setAbrirPesquisa(false)}>Fechar</Button>
