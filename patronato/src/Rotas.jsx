@@ -18,6 +18,7 @@ import CadastroPicadeiro from "./view/cadastros/cadastroPicadeiro";
 import CadastroCargos from "./view/cadastros/cadastroCargo";
 import CadastroMontaria from "./view/cadastros/cadastroMontaria";
 import CadastroBairro from "./view/cadastros/cadastroBairro";
+import CadastroLogradouro from "./view/cadastros/cadastroLogradouro";
 import MovimentoFichaEvol from "./view/movimentos/movimentoFichaEvol";
 import MovimentoAvalSocioecon from "./view/movimentos/movimentoAvalSocioecon";
 import Carregando from "./view/carregando";
@@ -55,6 +56,7 @@ const Rotas = () => {
                     <Route exact path="/cadastroCargo" element={<Private><CadastroCargos /></Private>} />
                     <Route exact path="/cadastroMontaria" element={<Private><CadastroMontaria /></Private>} />
                     <Route exact path="/cadastroBairro" element={<Private><CadastroBairro /></Private>} />
+                    <Route exact path="/cadastroLogradouro" element={<Private><CadastroLogradouro /></Private>} />
                     <Route exact path="/movimentoFichaEvol" element={<Private><MovimentoFichaEvol /></Private>} />
                     <Route exact path="/movimentoAvalSocioecon" element={<Private><MovimentoAvalSocioecon /></Private>} />
                 </Routes>

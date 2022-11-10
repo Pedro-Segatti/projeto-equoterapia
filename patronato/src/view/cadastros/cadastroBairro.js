@@ -109,7 +109,7 @@ function cadastroBairro() {
                         </Row>
                         <Row>
                             <Col md="6">
-                            <Form.Label htmlFor="bairro">Cidade</Form.Label>
+                            <Form.Label>Cidade</Form.Label>
                                 <InputConverter descricao={cidade.cidNome} atualizaDlgPesquisa={atualizaDlgPesquisaCidade} />
                             </Col>
                         </Row>

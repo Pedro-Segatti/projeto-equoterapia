@@ -355,6 +355,23 @@ public class ComunicacaoController {
 
     }
 
+    @CrossOrigin(origins = "*")
+    @PostMapping("/cadastraLogradouro")
+    public ResponseEntity<?> cadastrarLogradouro(@RequestBody Logradouro logradouro){
+        return logradouroService.salva(logradouro);
+    }
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/removeLogradouro")
+    public ResponseEntity<Logradouro> removerLogradouro(@RequestParam Integer logId){
+        try{
+            Logradouro logradouro = logradouroService.remove(logId);
+            return new ResponseEntity<>(logradouro, HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(new Logradouro(), HttpStatus.FORBIDDEN);
+        }
+
+    }
+
     //MONTARIA
 
     @CrossOrigin(origins = "*")

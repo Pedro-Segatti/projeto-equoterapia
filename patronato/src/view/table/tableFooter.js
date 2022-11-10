@@ -12,14 +12,18 @@ const TableFooter = ({ range, setPage, page, slice }) => {
     }, [slice, page, setPage]);
     return (
         <div className={`${styles.tableFooter} center`}>
+            {range.length > 0 &&
             <Button key={1} disabled={page <= 1} className={'btnPaginacao'}
                 onClick={() => setPage(1)}>
                 <BsChevronDoubleLeft />
             </Button>
+            }
+            {range.length > 0 &&
             <Button key={1} disabled={page <= 1} className={'btnPaginacao'}
                 onClick={() => setPage(page - 1)}>
                 <BsChevronCompactLeft />
             </Button>
+            }
             {range.map((el, index) => (
                 ((index < page + 4 && index > page - 7) &&
                     <Button
@@ -30,16 +34,22 @@ const TableFooter = ({ range, setPage, page, slice }) => {
                     </Button>
                 )
             ))}
+            {range.length > 0 &&
             <Button key={1} disabled={page >= range.length} className={'btnPaginacao'}
                 onClick={() => setPage(page + 1)}>
                 <BsChevronCompactRight />
             </Button>
+            }
+            {range.length > 0 &&
             <Button key={1} disabled={page >= range.length} className={'btnPaginacao'}
                 onClick={() => setPage(range.length)}> 
                 <BsChevronDoubleRight />
             </Button>
+            }
             <br />
-            Página {page} de {range.length}
+            {range.length > 0 &&
+            <div>Página {page} de {range.length}</div>
+            }
         </div>
     );
 };
