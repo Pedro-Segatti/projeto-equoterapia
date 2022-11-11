@@ -56,6 +56,8 @@ public class ComunicacaoController {
     private BairroService bairroService;
     @Autowired
     private CidadeService cidadeService;
+    @Autowired
+    private ResponsavelService responsavelService;
 
     @CrossOrigin(origins = "*")
     @GetMapping("/login")
@@ -345,6 +347,12 @@ public class ComunicacaoController {
         }catch(Exception e){
             return new ResponseEntity<>(new Praticante(), HttpStatus.FORBIDDEN);
         }
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/pesquisaResponsavel")
+    public ResponseEntity<List<Responsavel>> pesquisaResponsavel(@RequestParam (required=false) String pesCpf,@RequestParam (required=false) String pesNome){
+        return responsavelService.pesquisaResponsavel(pesCpf, pesNome);
     }
 
     @CrossOrigin(origins = "*")
