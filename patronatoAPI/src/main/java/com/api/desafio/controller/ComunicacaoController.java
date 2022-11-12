@@ -11,6 +11,7 @@ import com.api.desafio.service.AvalSocioeconService;
 import com.api.desafio.service.FichaEvolService;
 import com.api.desafio.service.PessoaService;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -60,6 +61,8 @@ public class ComunicacaoController {
     private ResponsavelService responsavelService;
     @Autowired
     private FuncionarioService funcionarioService;
+    @Autowired
+    private DocumentosService documentosService;
 
     @CrossOrigin(origins = "*")
     @GetMapping("/login")
@@ -310,7 +313,10 @@ public class ComunicacaoController {
         novoPraticante.setPessoa(pes);
         novoPraticante.setPratAltura(jsonConvertido.get("pratAltura").getAsInt());
         novoPraticante.setPratPeso(jsonConvertido.get("pratPeso").getAsInt());
+        novoPraticante = praticanteService.salva(novoPraticante);
 
+        JsonElement documentos = jsonConvertido.get("documentosList");
+        inserirNovoDocumento(documentos, novoPraticante);
         novoPraticante = praticanteService.salva(novoPraticante);
 
         return new ResponseEntity<Praticante>(novoPraticante, HttpStatus.OK);
@@ -331,7 +337,40 @@ public class ComunicacaoController {
 
         praticanteExistente = praticanteService.salva(praticanteExistente);
 
+        JsonElement documentos = jsonConvertido.get("documentosList");
+        inserirNovoDocumento(documentos, praticanteExistente);
+
+        praticanteExistente = praticanteService.salva(praticanteExistente);
+
         return new ResponseEntity<Praticante>(praticanteExistente, HttpStatus.OK);
+    }
+
+    private void inserirNovoDocumento(JsonElement documentos, Praticante praticante){
+        if(!documentos.isJsonNull()){
+            JsonArray documentosArray = documentos.getAsJsonArray();
+            int tamanhoDocs = documentosArray.size();
+
+            for (int i = 0; i < tamanhoDocs; i++){
+                Documentos docs = new Documentos();
+                JsonElement docId = documentosArray.get(i).getAsJsonObject().get("docId");
+                docs.setDocId(!docId.isJsonNull() ? docId.getAsInt() : null);
+                docs.setPraticante(praticante);
+                docs.setDocDescricao(documentosArray.get(i).getAsJsonObject().get("docDescricao").getAsString());
+                docs.setDocDocumento(documentosArray.get(i).getAsJsonObject().get("docDocumento").getAsString());
+                praticante.getDocumentosList().add(docs);
+            }
+        }
+    }
+
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/removerDocumento")
+    public ResponseEntity<Documentos> pesquisaPraticantes(@RequestParam (required=false) Integer docId){
+        try{
+            documentosService.remove(docId);
+            return new ResponseEntity<>(new Documentos(), HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(new Documentos(), HttpStatus.FORBIDDEN);
+        }
     }
 
     @CrossOrigin(origins = "*")

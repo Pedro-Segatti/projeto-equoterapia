@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { Form, Col, Row, Container, Image } from 'react-bootstrap';
+import { Form, Col, Row, Container, Image, Card, Table, Button } from 'react-bootstrap';
+import { BsFillTrashFill, BsDownload } from "react-icons/bs";
+import TableFooter from '../table/tableFooter';
+import useTable from '../table/useTable';
 import Toolbar from '../toolbar';
 import { IMaskInput } from 'react-imask';
-import { registroSalvo, pessoaDuplicada, semRegistros, registroExcluido } from "../../utilitario/mensagemUtil"
+import { registroSalvo, pessoaDuplicada, semRegistros, registroExcluido, mensagemCustomizada} from "../../utilitario/mensagemUtil"
 import { ReactNotifications } from 'react-notifications-component'
 import { criarPessoa, atualizarPessoa } from "../../utilitario/patronatoUtil";
 import { cadastrarPraticante, atualizarPraticante } from "../../utilitario/baseComunicacao";
@@ -11,6 +14,7 @@ import HTTP_STATUS from "../../utilitario/httpStatus";
 import PesquisaPraticantes from "../pesquisas/pesquisaPraticantes";
 import PesquisaLogradouros from "../pesquisas/pesquisaLogradouro";
 import InputConverter from "../inputConverter";
+import { saveAs } from 'file-saver';
 
 
 import Menu from "../menu"
@@ -53,7 +57,75 @@ const cadastroPraticante = () => {
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
     const [abrirPesquisaLogradouro, setAbrirPesquisaLogradouro] = useState(false);
     var [list, setList] = useState('[]');
-    var [listLogradouro, setListLogradouro] = useState('[]');
+    var [listLogradouro, setListLogradouro] = useState([]);
+    var [listDocumentos, setListDocumentos] = useState([]);
+
+    const criarDocumento = (e) => {
+        const jsonItem = {
+            "docId": null,
+            "docDocumento": "",
+            "docDescricao": "",
+            "docIdPraticante": ""
+        }
+
+        try {
+            const reader = new FileReader();
+            reader.onload = () => {
+                if (reader.readyState === 2) {
+                    jsonItem.docDocumento = reader.result;
+                    jsonItem.docDescricao = e.target.files[0].name;
+                    setListDocumentos(doc => [...doc, jsonItem]);
+                }
+            }
+
+            reader.readAsDataURL(e.target.files[0]);
+        } catch (error) {
+            console.log(error);
+       }
+    }
+
+    const convertBase64ToFile = (base64String, fileName) => {
+        let arr = base64String.split(',');
+        let mime = arr[0].match(/:(.*?);/)[1];
+        let bstr = atob(arr[1]);
+        let n = bstr.length;
+        let uint8Array = new Uint8Array(n);
+        while (n--) {
+           uint8Array[n] = bstr.charCodeAt(n);
+        }
+        let file = new File([uint8Array], fileName, { type: mime });
+        return file;
+   }
+
+    const baixarArquivo = (e) =>{
+        let file = convertBase64ToFile(e.docDocumento, e.docDescricao);
+        saveAs(file, e.docDescricao);
+    }
+
+    const removeDocumentoSelecionado = async (e) =>{
+        try {
+            if (e.docId == null){
+                setListDocumentos(current =>
+                    current.filter(doc => {
+                      return doc.docDocumento !== e.docDocumento;
+                    }),
+                );
+            }else{
+                const response = await (await api.delete("/removerDocumento?docId=" + e.docId));
+                if (response.status === HTTP_STATUS.OK) {
+                    setListDocumentos(current =>
+                        current.filter(doc => {
+                        return doc.docDocumento !== e.docDocumento;
+                        }),
+                    );
+                    mensagemCustomizada("Documento Excluído com Sucesso", "success");
+                }
+            }
+        } catch (error) {
+            console.log(error);
+        }
+        
+    }
 
     const atualizaDlgPesquisa = async () => {
         setList(await (await api.get("/pesquisaPraticantes")).data);
@@ -103,6 +175,7 @@ const cadastroPraticante = () => {
         setPesLogId(item.pessoa.logradouro.logId);
         setPesLogDescricao(item.pessoa.logradouro.logDescricao);
         setAbrirPesquisa(false);
+        setListDocumentos(item.documentosList);
     }
 
     const limparCamposFormulario = () => {
@@ -122,6 +195,7 @@ const cadastroPraticante = () => {
         setPratPeso("");
         setPesLogId("");
         setPesLogDescricao("");
+        setListDocumentos([]);
     }
 
     const handleSubmit = async (e) => {
@@ -141,6 +215,7 @@ const cadastroPraticante = () => {
                 "pessoaId": idPessoa,
                 "pratAltura": pratAltura,
                 "pratPeso": pratPeso,
+                "documentosList": listDocumentos
             }
 
             return jsonPraticante;
@@ -200,6 +275,45 @@ const cadastroPraticante = () => {
             atualizarRegistros();
         }
     };
+
+    const TablePaginada = ({ data, rowsPerPage, removeDocumentoSelecionado }) => {
+        const [pagina, setPage] = useState(1);
+        const { slice, range } = useTable(data, pagina, rowsPerPage);
+        return (
+            <>
+                <Table size="sm">
+                    <thead>
+                        <tr>
+                            <th>Descrição</th>
+                            <th className='center'>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            slice.map(item => <LinhaTabela key={item.docDescricao} item={item} removeDocumentoSelecionado={removeDocumentoSelecionado} />)
+                        }
+                    </tbody>
+                </Table>
+                <TableFooter range={range} slice={slice} setPage={setPage} page={pagina} />
+            </>
+        );
+    };
+
+    const LinhaTabela = ({ item, removeDocumentoSelecionado }) => {
+        const { docDescricao } = item;
+
+        const removerItem = e => removeDocumentoSelecionado(item);
+        const baixarItem = e => baixarArquivo(item);
+
+        return <tr>
+            <td width={'100px'}>{docDescricao}</td>
+
+            <td width={'80px'} className='center'>
+                <Button className='btn-succes' onClick={baixarItem}><BsDownload /></Button>
+                <Button className='btn-danger' onClick={removerItem}><BsFillTrashFill /></Button>
+            </td>
+        </tr>
+    }
 
 
     return (
@@ -325,6 +439,24 @@ const cadastroPraticante = () => {
                                 type="text" id="inputEndCompl" />
                         </Col>
                     </Row>
+
+                    <br />
+
+                    <Row>
+                        <Col md="6">
+                            <Card>
+                                <div className='marginLeft'>
+                                    <b>Documentos</b>
+                                    <Col md="2">
+                                        <Form.Control type="file" id="inputDoc" accept="image/*, application/pdf" onChange={criarDocumento} />
+                                        <Form.Label htmlFor="inputDoc" className='label-input-file-pqn'>Anexar Documento</Form.Label>
+                                    </Col>
+                                        <TablePaginada data={listDocumentos} rowsPerPage={5} removeDocumentoSelecionado={removeDocumentoSelecionado}/>
+                                </div>
+                            </Card>
+                        </Col>
+                    </Row>
+
                     <Toolbar abrirPesquisa={atualizaDlgPesquisa} jsonRemove={removerPraticante} />
                 </Form>
             </Container>

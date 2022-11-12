@@ -29,9 +29,12 @@ public class Documentos implements Serializable {
     @Column(name = "DOC_ID")
     private Integer docId;
     @Basic(optional = false)
+    @Column(name = "DOC_DESCRICAO")
+    private String docDescricao;
+    @Basic(optional = false)
     @Lob
     @Column(name = "DOC_DOCUMENTO")
-    private byte[] docDocumento;
+    private String docDocumento;
     @JoinColumn(name = "DOC_ID_PRATICANTE", referencedColumnName = "PRAT_ID")
     @ManyToOne(optional = false)
     private Praticante praticante;
@@ -43,7 +46,7 @@ public class Documentos implements Serializable {
         this.docId = docId;
     }
 
-    public Documentos(Integer docId, byte[] docDocumento) {
+    public Documentos(Integer docId, String docDocumento) {
         this.docId = docId;
         this.docDocumento = docDocumento;
     }
@@ -56,13 +59,22 @@ public class Documentos implements Serializable {
         this.docId = docId;
     }
 
-    public byte[] getDocDocumento() {
+    public String getDocDescricao() {
+        return docDescricao;
+    }
+
+    public void setDocDescricao(String docDescricao) {
+        this.docDescricao = docDescricao;
+    }
+
+    public String getDocDocumento() {
         return docDocumento;
     }
 
-    public void setDocDocumento(byte[] docDocumento) {
+    public void setDocDocumento(String docDocumento) {
         this.docDocumento = docDocumento;
     }
+
     @JsonIgnore
     public Praticante getPraticante() {
         return praticante;
