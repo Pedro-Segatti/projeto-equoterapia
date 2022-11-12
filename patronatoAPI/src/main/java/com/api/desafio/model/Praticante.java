@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -54,7 +55,7 @@ public class Praticante implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "axpIdPraticante")
     private List<AgendamentoPraticante> agendamentoPraticanteList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "praticante")
-    private List<Documentos> documentosList;
+    private List<Documentos> documentosList = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "praticante")
     private List<AvalSocioecon> avalSocioeconList;
 
@@ -128,7 +129,6 @@ public class Praticante implements Serializable {
     public void setAgendamentoPraticanteList(List<AgendamentoPraticante> agendamentoPraticanteList) {
         this.agendamentoPraticanteList = agendamentoPraticanteList;
     }
-    @JsonIgnore
     public List<Documentos> getDocumentosList() {
         return documentosList;
     }

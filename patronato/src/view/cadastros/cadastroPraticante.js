@@ -5,7 +5,7 @@ import TableFooter from '../table/tableFooter';
 import useTable from '../table/useTable';
 import Toolbar from '../toolbar';
 import { IMaskInput } from 'react-imask';
-import { registroSalvo, pessoaDuplicada, semRegistros, registroExcluido } from "../../utilitario/mensagemUtil"
+import { registroSalvo, pessoaDuplicada, semRegistros, registroExcluido, mensagemCustomizada} from "../../utilitario/mensagemUtil"
 import { ReactNotifications } from 'react-notifications-component'
 import { criarPessoa, atualizarPessoa } from "../../utilitario/patronatoUtil";
 import { cadastrarPraticante, atualizarPraticante } from "../../utilitario/baseComunicacao";
@@ -61,7 +61,7 @@ const cadastroPraticante = () => {
 
     const criarDocumento = (e) => {
         const jsonItem = {
-            "docId": "",
+            "docId": null,
             "docDocumento": "",
             "docDescricao": "",
             "docIdPraticante": ""
@@ -81,6 +81,23 @@ const cadastroPraticante = () => {
         } catch (error) {
             console.log(error);
        }
+    }
+
+    const removeDocumentoSelecionado = async (e) =>{
+        try {
+            const response = await (await api.delete("/removerDocumento?docId=" + e.docId));
+            if (response.status === HTTP_STATUS.OK) {
+                setListDocumentos(current =>
+                    current.filter(doc => {
+                      return doc.docDocumento !== e.docDocumento;
+                    }),
+                );
+                mensagemCustomizada("Documento Excluído com Sucesso", "success");
+            }
+        } catch (error) {
+            console.log(error);
+        }
+        
     }
 
     const atualizaDlgPesquisa = async () => {
@@ -131,6 +148,7 @@ const cadastroPraticante = () => {
         setPesLogId(item.pessoa.logradouro.logId);
         setPesLogDescricao(item.pessoa.logradouro.logDescricao);
         setAbrirPesquisa(false);
+        setListDocumentos(item.documentosList);
     }
 
     const limparCamposFormulario = () => {
@@ -150,6 +168,7 @@ const cadastroPraticante = () => {
         setPratPeso("");
         setPesLogId("");
         setPesLogDescricao("");
+        setListDocumentos([]);
     }
 
     const handleSubmit = async (e) => {
@@ -169,6 +188,7 @@ const cadastroPraticante = () => {
                 "pessoaId": idPessoa,
                 "pratAltura": pratAltura,
                 "pratPeso": pratPeso,
+                "documentosList": listDocumentos
             }
 
             return jsonPraticante;
@@ -229,10 +249,6 @@ const cadastroPraticante = () => {
         }
     };
 
-    const removeDocumentoSelecionado = () =>{
-
-    }
-
     const TablePaginada = ({ data, rowsPerPage, removeDocumentoSelecionado }) => {
         const [pagina, setPage] = useState(1);
         const { slice, range } = useTable(data, pagina, rowsPerPage);
@@ -247,7 +263,7 @@ const cadastroPraticante = () => {
                     </thead>
                     <tbody>
                         {
-                            slice.map(item => <LinhaTabela key={listDocumentos.indexOf(item)} item={item} removeDocumentoSelecionado={removeDocumentoSelecionado} />)
+                            slice.map(item => <LinhaTabela key={item.docDescricao} item={item} removeDocumentoSelecionado={removeDocumentoSelecionado} />)
                         }
                     </tbody>
                 </Table>
@@ -412,10 +428,6 @@ const cadastroPraticante = () => {
                         </Col>
                     </Row>
 
-                    <Row>
-                    <Button onClick={removeDocumentoSelecionado}>SALAASA</Button>
-
-                    </Row>
                     <Toolbar abrirPesquisa={atualizaDlgPesquisa} jsonRemove={removerPraticante} />
                 </Form>
             </Container>
