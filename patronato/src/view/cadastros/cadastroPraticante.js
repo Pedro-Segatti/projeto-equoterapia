@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { Form, Col, Row, Container, Image } from 'react-bootstrap';
+import { Form, Col, Row, Container, Image, Card, Table, Button } from 'react-bootstrap';
+import { BsXLg } from "react-icons/bs";
+import TableFooter from '../table/tableFooter';
+import useTable from '../table/useTable';
 import Toolbar from '../toolbar';
 import { IMaskInput } from 'react-imask';
 import { registroSalvo, pessoaDuplicada, semRegistros, registroExcluido } from "../../utilitario/mensagemUtil"
@@ -53,7 +56,32 @@ const cadastroPraticante = () => {
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
     const [abrirPesquisaLogradouro, setAbrirPesquisaLogradouro] = useState(false);
     var [list, setList] = useState('[]');
-    var [listLogradouro, setListLogradouro] = useState('[]');
+    var [listLogradouro, setListLogradouro] = useState([]);
+    var [listDocumentos, setListDocumentos] = useState([]);
+
+    const criarDocumento = (e) => {
+        const jsonItem = {
+            "docId": "",
+            "docDocumento": "",
+            "docDescricao": "",
+            "docIdPraticante": ""
+        }
+
+        try {
+            const reader = new FileReader();
+            reader.onload = () => {
+                if (reader.readyState === 2) {
+                    jsonItem.docDocumento = reader.result;
+                    jsonItem.docDescricao = e.target.files[0].name;
+                    setListDocumentos(doc => [...doc, jsonItem]);
+                }
+            }
+
+            reader.readAsDataURL(e.target.files[0]);
+        } catch (error) {
+            console.log(error);
+       }
+    }
 
     const atualizaDlgPesquisa = async () => {
         setList(await (await api.get("/pesquisaPraticantes")).data);
@@ -201,6 +229,47 @@ const cadastroPraticante = () => {
         }
     };
 
+    const removeDocumentoSelecionado = () =>{
+
+    }
+
+    const TablePaginada = ({ data, rowsPerPage, removeDocumentoSelecionado }) => {
+        const [pagina, setPage] = useState(1);
+        const { slice, range } = useTable(data, pagina, rowsPerPage);
+        return (
+            <>
+                <Table size="sm">
+                    <thead>
+                        <tr>
+                            <th>Descrição</th>
+                            <th className='center'>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            slice.map(item => <LinhaTabela key={listDocumentos.indexOf(item)} item={item} removeDocumentoSelecionado={removeDocumentoSelecionado} />)
+                        }
+                    </tbody>
+                </Table>
+                <TableFooter range={range} slice={slice} setPage={setPage} page={pagina} />
+            </>
+        );
+    };
+
+    const LinhaTabela = ({ item, removeDocumentoSelecionado }) => {
+        const { docDescricao } = item;
+
+        const removerItem = e => removeDocumentoSelecionado(item);
+
+        return <tr>
+            <td width={'100px'}>{docDescricao}</td>
+
+            <td width={'80px'} className='center'>
+                <Button className='btn-danger' onClick={removerItem}><BsXLg /></Button>
+            </td>
+        </tr>
+    }
+
 
     return (
         <div>
@@ -324,6 +393,28 @@ const cadastroPraticante = () => {
                                 onChange={(e) => setPesEndCompl(e.target.value)}
                                 type="text" id="inputEndCompl" />
                         </Col>
+                    </Row>
+
+                    <br />
+
+                    <Row>
+                        <Col md="6">
+                            <Card>
+                                <div className='marginLeft'>
+                                    <b>Documentos</b>
+                                    <Col md="2">
+                                        <Form.Control type="file" id="inputDoc" accept="image/*, application/pdf" onChange={criarDocumento} />
+                                        <Form.Label htmlFor="inputDoc" className='label-input-file-pqn'>Anexar Documento</Form.Label>
+                                    </Col>
+                                        <TablePaginada data={listDocumentos} rowsPerPage={5} removeDocumentoSelecionado={removeDocumentoSelecionado}/>
+                                </div>
+                            </Card>
+                        </Col>
+                    </Row>
+
+                    <Row>
+                    <Button onClick={removeDocumentoSelecionado}>SALAASA</Button>
+
                     </Row>
                     <Toolbar abrirPesquisa={atualizaDlgPesquisa} jsonRemove={removerPraticante} />
                 </Form>

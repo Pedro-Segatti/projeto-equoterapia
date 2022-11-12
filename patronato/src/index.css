@@ -154,6 +154,19 @@ input[type="file"] {
   border-radius: 8px;
 }
 
+.label-input-file-pqn {
+  padding: 5px 10px;
+  width: 200px;
+  background-color: rgba(34, 56, 43);
+  color: #FFF;
+  text-transform: uppercase;
+  text-align: center;
+  display: block;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
 .fotoPraticante {
   align-items: center;
   display: flex;
