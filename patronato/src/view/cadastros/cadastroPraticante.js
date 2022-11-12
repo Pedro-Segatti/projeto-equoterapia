@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Col, Row, Container, Image, Card, Table, Button } from 'react-bootstrap';
-import { BsXLg } from "react-icons/bs";
+import { BsFillTrashFill, BsDownload } from "react-icons/bs";
 import TableFooter from '../table/tableFooter';
 import useTable from '../table/useTable';
 import Toolbar from '../toolbar';
@@ -14,6 +14,7 @@ import HTTP_STATUS from "../../utilitario/httpStatus";
 import PesquisaPraticantes from "../pesquisas/pesquisaPraticantes";
 import PesquisaLogradouros from "../pesquisas/pesquisaLogradouro";
 import InputConverter from "../inputConverter";
+import { saveAs } from 'file-saver';
 
 
 import Menu from "../menu"
@@ -83,16 +84,42 @@ const cadastroPraticante = () => {
        }
     }
 
+    const convertBase64ToFile = (base64String, fileName) => {
+        let arr = base64String.split(',');
+        let mime = arr[0].match(/:(.*?);/)[1];
+        let bstr = atob(arr[1]);
+        let n = bstr.length;
+        let uint8Array = new Uint8Array(n);
+        while (n--) {
+           uint8Array[n] = bstr.charCodeAt(n);
+        }
+        let file = new File([uint8Array], fileName, { type: mime });
+        return file;
+   }
+
+    const baixarArquivo = (e) =>{
+        let file = convertBase64ToFile(e.docDocumento, e.docDescricao);
+        saveAs(file, e.docDescricao);
+    }
+
     const removeDocumentoSelecionado = async (e) =>{
         try {
-            const response = await (await api.delete("/removerDocumento?docId=" + e.docId));
-            if (response.status === HTTP_STATUS.OK) {
+            if (e.docId == null){
                 setListDocumentos(current =>
                     current.filter(doc => {
                       return doc.docDocumento !== e.docDocumento;
                     }),
                 );
-                mensagemCustomizada("Documento Excluído com Sucesso", "success");
+            }else{
+                const response = await (await api.delete("/removerDocumento?docId=" + e.docId));
+                if (response.status === HTTP_STATUS.OK) {
+                    setListDocumentos(current =>
+                        current.filter(doc => {
+                        return doc.docDocumento !== e.docDocumento;
+                        }),
+                    );
+                    mensagemCustomizada("Documento Excluído com Sucesso", "success");
+                }
             }
         } catch (error) {
             console.log(error);
@@ -276,12 +303,14 @@ const cadastroPraticante = () => {
         const { docDescricao } = item;
 
         const removerItem = e => removeDocumentoSelecionado(item);
+        const baixarItem = e => baixarArquivo(item);
 
         return <tr>
             <td width={'100px'}>{docDescricao}</td>
 
             <td width={'80px'} className='center'>
-                <Button className='btn-danger' onClick={removerItem}><BsXLg /></Button>
+                <Button className='btn-succes' onClick={baixarItem}><BsDownload /></Button>
+                <Button className='btn-danger' onClick={removerItem}><BsFillTrashFill /></Button>
             </td>
         </tr>
     }

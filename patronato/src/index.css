@@ -181,3 +181,7 @@ input[type="file"] {
   border-radius: 8px;
   border: 2px solid #B48F69;
 }
+
+img, svg {
+  vertical-align: baseline !important;
+}
