@@ -25,12 +25,12 @@ function cadastroLogradouro() {
     const [bairro, setBairro] = useState({"barNome":""});
 
     const atualizaDlgPesquisa = async () => {
-        setList(await (await api.get("/pesquisaLogradouros")).data);
+        setList(await (await api.get("/pesquisaLogradouros?logDesc=")).data);
         setAbrirPesquisa(true);
     }
 
     const atualizaDlgPesquisaBairro = async () => {
-        setList(await (await api.get("/pesquisaBairro")).data);
+        setListBairro(await (await api.get("/pesquisaBairro?barNome=")).data);
         setAbrirPesquisaBairro(true);
     }
 

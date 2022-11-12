@@ -1,5 +1,6 @@
 package com.api.desafio.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
@@ -32,7 +33,6 @@ public class Cargo implements Serializable {
     @Basic(optional = false)
     @Column(name = "CAR_DESCRICAO")
     private String carDescricao;
-    @JsonIgnoreProperties("cargoList")
     @JoinTable(name = "funcionario_cargo", joinColumns = {
         @JoinColumn(name = "FXC_ID_CARGO", referencedColumnName = "CAR_ID")}, inverseJoinColumns = {
         @JoinColumn(name = "FXC_ID_FUNC", referencedColumnName = "FUNC_ID")})
@@ -66,11 +66,11 @@ public class Cargo implements Serializable {
     public void setCarDescricao(String carDescricao) {
         this.carDescricao = carDescricao;
     }
-
+@JsonIgnore
     public List<Funcionario> getFuncionarioList() {
         return funcionarioList;
     }
-
+    @JsonIgnore
     public void setFuncionarioList(List<Funcionario> funcionarioList) {
         this.funcionarioList = funcionarioList;
     }

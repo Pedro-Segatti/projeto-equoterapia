@@ -5,7 +5,7 @@ import { BsPencilSquare, BsXLg } from "react-icons/bs";
 import { Form, Col, Row, Container, Modal, Button, Table } from 'react-bootstrap';
 import { api } from "../../utilitario/baseComunicacao";
 
-export const TablePaginada = ({ data, rowsPerPage, selecionaLinha, atualizaItemSelecionado, removePraticanteSelecionado }) => {
+export const TablePraticantesPaginada = ({ data, rowsPerPage, selecionaLinha, atualizaItemSelecionado, removePraticanteSelecionado }) => {
     const [pagina, setPage] = useState(1);
     const { slice, range } = useTable(data, pagina, rowsPerPage);
     return (
@@ -100,7 +100,7 @@ function pesquisaPraticantes({ setValores, valores, atualizaItemSelecionado, set
                                 </div>
                             </Form>
                         </Container>
-                        <TablePaginada data={valores} rowsPerPage={5} selecionaLinha={true} atualizaItemSelecionado={atualizaItemSelecionado} />
+                        <TablePraticantesPaginada data={valores} rowsPerPage={5} selecionaLinha={true} atualizaItemSelecionado={atualizaItemSelecionado} />
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="primary" className='btn-danger' onClick={() => setAbrirPesquisa(false)}>Fechar</Button>

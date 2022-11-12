@@ -27,8 +27,8 @@ public class PicadeiroService {
         return new ResponseEntity<Picadeiro>(picadeiro, HttpStatus.OK);
     }
 
-    public ResponseEntity<List<Picadeiro>> pesquisa() {
-        List<Picadeiro> picadeiro = (List<Picadeiro>) pc.findAll();
+    public ResponseEntity<List<Picadeiro>> pesquisa(Integer picId, String picDescricao) {
+        List<Picadeiro> picadeiro = (List<Picadeiro>) pc.findByIdAndDescricao(picId,picDescricao);
         return new ResponseEntity<List<Picadeiro>>(picadeiro, HttpStatus.OK);
     }
 }

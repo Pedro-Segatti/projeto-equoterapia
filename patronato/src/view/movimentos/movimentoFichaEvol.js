@@ -6,8 +6,14 @@ import { ReactNotifications } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import PesquisaAnimais from "../pesquisas/pesquisaAnimais";
 import { TablePaginada } from "../pesquisas/pesquisaAnimais";
+import { TablePicadeiroPaginada } from "../pesquisas/pesquisaPicadeiro";
+import { TablePraticantesPaginada } from "../pesquisas/pesquisaPraticantes";
+import { TableFuncionariosPaginada } from "../pesquisas/pesquisaFuncionario";
 import PesquisaFichaEvol from "../pesquisas/pesquisaFichaEvol";
 import PesquisaMontaria from "../pesquisas/pesquisaMontaria";
+import PesquisaPicadeiro from "../pesquisas/pesquisaPicadeiro";
+import PesquisaPraticantes from '../pesquisas/pesquisaPraticantes';
+import PesquisaFuncionario from '../pesquisas/pesquisaFuncionario';
 import InputConverter from "../inputConverter";
 import HTTP_STATUS from "../../utilitario/httpStatus";
 
@@ -19,9 +25,15 @@ function cadastroFichaEvol() {
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
     const [abrirPesquisaAnimal, setAbrirPesquisaAnimal] = useState(false);
     const [abrirPesquisaMontaria, setAbrirPesquisaMontaria] = useState(false);
+    const [abrirPesquisaPicadeiro, setAbrirPesquisaPicadeiro] = useState(false);
+    const [abrirPesquisaPraticante, setAbrirPesquisaPraticante] = useState(false);
+    const [abrirPesquisaFuncionario, setAbrirPesquisaFuncionario] = useState(false);
     var [list, setList] = useState([]);
     var [listAnimal, setListAnimal] = useState([]);
     var [listMontaria, setListMontaria] = useState([]);
+    var [listPicadeiro, setListPicadeiro] = useState([]);
+    var [listPraticante, setListPraticante] = useState([]);
+    var [listFuncionario, setListFuncionario] = useState([]);
 
 
     const atualizaDlgPesquisa = async () => {
@@ -30,13 +42,28 @@ function cadastroFichaEvol() {
     }
 
     const atualizaDlgPesquisaAnimal = async () => {
-        setListAnimal(await (await api.get("/pesquisaAnimal")).data);
+        setListAnimal(await (await api.get("/pesquisaAnimal?aniId=&aniNome=")).data);
         setAbrirPesquisaAnimal(true);
     }
 
     const atualizaDlgPesquisaMontaria = async () => {
         setListMontaria(await (await api.get("/pesquisaMontaria")).data);
         setAbrirPesquisaMontaria(true);
+    }
+
+    const atualizaDlgPesquisaPicadeiro = async () => {
+        setListPicadeiro(await (await api.get("/pesquisaPicadeiro?picId=&picDescricao=")).data);
+        setAbrirPesquisaPicadeiro(true);
+    }
+
+    const atualizaDlgPesquisaPraticante = async () => {
+        setListPraticante(await (await api.get("/pesquisaPraticantes")).data);
+        setAbrirPesquisaPraticante(true);
+    }
+
+    const atualizaDlgPesquisaFuncionario = async () => {
+        setListFuncionario(await (await api.get("/pesquisaFuncionario?pesCpf=&pesNome=")).data);
+        setAbrirPesquisaFuncionario(true);
     }
 
     //Variáveis de cadastro
@@ -57,8 +84,11 @@ function cadastroFichaEvol() {
     const [evolDecubito, setEvolDecubito] = useState("");
     const [evolCompAni, setEvolCompAni] = useState("");
     const [evolAndAni, setEvolAndAni] = useState("");
-    const [evolIdMont, setEvolIdMont] = useState("");
+    const [evolIdMont, setEvolIdMont] = useState({"montDescricao":""});
     const [evolAniSelecionado, setEvolAniSelecionado] = useState([]);
+    const [evolPicSelecionado, setEvolPicSelecionado] = useState([]);
+    const [evolPratSelecionado, setEvolPratSelecionado] = useState([]);
+    const [evolFuncSelecionado, setEvolFuncSelecionado] = useState([]);
 
     const atualizaEvolSelecionada = (item) => {
         setEvolId(item.evolId);
@@ -78,13 +108,31 @@ function cadastroFichaEvol() {
         setEvolCompAni(item.evolCompAni || '');
         setEvolAndAni(item.evolAndAni || '');
         setEvolAniSelecionado(item.animalList || []);
-        setEvolIdMont(item.evolIdMont || '');
+        setEvolPicSelecionado(item.picadeiroList || []);
+        setEvolPratSelecionado(item.praticanteList || []);
+        setEvolFuncSelecionado(item.funcionarioList || []);
+        setEvolIdMont(item.evolIdMont || {"montDescricao":""});
         setAbrirPesquisa(false);
+    }
+
+    const atualizaPicadeiroSelecionado = (item) => {
+        setEvolPicSelecionado(current => [...current, item])
+        setAbrirPesquisaPicadeiro(false);
     }
 
     const atualizaAnimalSelecionado = (item) => {
         setEvolAniSelecionado(current => [...current, item])
         setAbrirPesquisaAnimal(false);
+    }
+
+    const atualizaPraticanteSelecionado = (item) => {
+        setEvolPratSelecionado(current => [...current, item])
+        setAbrirPesquisaPraticante(false);
+    }
+
+    const atualizaFuncionarioSelecionado = (item) => {
+        setEvolFuncSelecionado(current => [...current, item])
+        setAbrirPesquisaFuncionario(false);
     }
 
     const atualizaMontariaSelecionada = (item) => {
@@ -98,6 +146,33 @@ function cadastroFichaEvol() {
         if (index !== -1) {
             array.splice(index, 1);
             setEvolAniSelecionado(array);
+        }
+    }
+
+    const removePicadeiroSelecionado = (item) => {
+        var array = [...evolPicSelecionado];
+        var index = array.indexOf(item);
+        if (index !== -1) {
+            array.splice(index, 1);
+            setEvolPicSelecionado(array);
+        }
+    }
+
+    const removePraticanteSelecionado = (item) => {
+        var array = [...evolPratSelecionado];
+        var index = array.indexOf(item);
+        if (index !== -1) {
+            array.splice(index, 1);
+            setEvolPratSelecionado(array);
+        }
+    }
+
+    const removeFuncionarioSelecionado = (item) => {
+        var array = [...evolFuncSelecionado];
+        var index = array.indexOf(item);
+        if (index !== -1) {
+            array.splice(index, 1);
+            setEvolFuncSelecionado(array);
         }
     }
 
@@ -120,7 +195,10 @@ function cadastroFichaEvol() {
             "evolCompAni": evolCompAni,
             "evolAndAni": evolAndAni,
             "evolIdMont": evolIdMont,
-            "animalList": evolAniSelecionado.map(animal => (animal))
+            "animalList": evolAniSelecionado.map(animal => (animal)),
+            "picadeiroList": evolPicSelecionado.map(picadeiro => (picadeiro)),
+            "praticanteList": evolPratSelecionado.map(praticante => (praticante)),
+            "funcionarioList": evolFuncSelecionado.map(funcionario => (funcionario))
         };
         api.post("/cadastraFichaEvol", json);
         registroSalvo();
@@ -150,7 +228,28 @@ function cadastroFichaEvol() {
     const limparCamposFormulario = () => {
         setEvolId("");
         setEvolHumor("");
-        //adicionar todos os campos
+        setEvolAndAni("");
+        setEvolClima("");
+        setEvolAtenc("");
+        setEvolAuton("");
+        setEvolEstereotipia("");
+        setEvolPost("");
+        setEvolProg("");
+        setEvolReg("");
+        setEvolObs("");
+        setEvolRecLudicos("");
+        setEvolQuaisRecLud("");
+        setEvolDecubito("");
+        setEvolObsRecLud("");
+        setEvolObsRecLud("");
+        setEvolCompAni("");
+        setEvolAndAni("");
+        setEvolIdMont("");
+        setEvolAniSelecionado([]);
+        setEvolPicSelecionado([]);
+        setEvolPratSelecionado([]);
+        setEvolFuncSelecionado([]);
+        setEvolIdMont({"montDescricao":""});
     }
 
     const handleSubmit = async (e) => {
@@ -265,14 +364,14 @@ function cadastroFichaEvol() {
                         <Row>
                             <Col md="6">
                                 <Form.Label htmlFor="quaisRecLud">Quais Recursos Lúdicos</Form.Label>
-                                <Form.Control value={evolQuaisRecLud} disabled={!evolRecLudicos}
+                                <Form.Control value={evolQuaisRecLud} disabled={evolRecLudicos}
                                     onChange={(e) => setEvolQuaisRecLud(e.target.value)}
                                     type="text" id="quaisRecLud" as="textarea" className='textArea' />
                             </Col>
 
                             <Col md="6">
                                 <Form.Label htmlFor="obsRecLud">Observação Recursos Lúdicos</Form.Label>
-                                <Form.Control value={evolObsRecLud} disabled={!evolRecLudicos}
+                                <Form.Control value={evolObsRecLud} disabled={evolRecLudicos}
                                     onChange={(e) => setEvolObsRecLud(e.target.value)}
                                     type="text" id="obsRecLud" as="textarea" className='textArea' />
                             </Col>
@@ -309,9 +408,43 @@ function cadastroFichaEvol() {
                                         <Col md="2">
                                             <Button variant="primary" className='btn-success btnMarginTop' onClick={atualizaDlgPesquisaAnimal}>Adicionar</Button>
                                         </Col>
-                                        {evolAniSelecionado.length > 0 &&
-                                            <TablePaginada data={evolAniSelecionado} rowsPerPage={5} selecionaLinha={false} removeAnimalSelecionado={removeAnimalSelecionado} />
-                                        }
+                                        <TablePaginada data={evolAniSelecionado} rowsPerPage={5} selecionaLinha={false} removeAnimalSelecionado={removeAnimalSelecionado} />
+                                    </div>
+                                </Card>
+                            </Col>
+                            <Col md="6">
+                                <Card>
+                                    <div className='marginLeft'>
+                                        <b>Picadeiros</b>
+                                        <Col md="2">
+                                            <Button variant="primary" className='btn-success btnMarginTop' onClick={atualizaDlgPesquisaPicadeiro}>Adicionar</Button>
+                                        </Col>
+                                        <TablePicadeiroPaginada data={evolPicSelecionado} rowsPerPage={5} selecionaLinha={false} removeItemSelecionado={removePicadeiroSelecionado} />
+                                    </div>
+                                </Card>
+                            </Col>
+                        </Row>
+                        <br />
+                        <Row>
+                            <Col md="6">
+                                <Card>
+                                    <div className='marginLeft'>
+                                        <b>Praticantes</b>
+                                        <Col md="2">
+                                            <Button variant="primary" className='btn-success btnMarginTop' onClick={atualizaDlgPesquisaPraticante}>Adicionar</Button>
+                                        </Col>
+                                        <TablePraticantesPaginada data={evolPratSelecionado} rowsPerPage={5} selecionaLinha={false} removePraticanteSelecionado={removePraticanteSelecionado} />
+                                    </div>
+                                </Card>
+                            </Col>
+                            <Col md="6">
+                                <Card>
+                                    <div className='marginLeft'>
+                                        <b>Funcionarios</b>
+                                        <Col md="2">
+                                            <Button variant="primary" className='btn-success btnMarginTop' onClick={atualizaDlgPesquisaFuncionario}>Adicionar</Button>
+                                        </Col>
+                                        <TableFuncionariosPaginada data={evolFuncSelecionado} rowsPerPage={5} selecionaLinha={false} removeItemSelecionado={removeFuncionarioSelecionado} />
                                     </div>
                                 </Card>
                             </Col>
@@ -329,6 +462,15 @@ function cadastroFichaEvol() {
                 }
                 {abrirPesquisaMontaria &&
                     <PesquisaMontaria setValores={setListMontaria} valores={listMontaria} atualizaItemSelecionado={atualizaMontariaSelecionada} setAbrirPesquisa={setAbrirPesquisaMontaria} />
+                }
+                {abrirPesquisaPicadeiro &&
+                    <PesquisaPicadeiro setValores={setListPicadeiro} valores={listPicadeiro} atualizaItemSelecionado={atualizaPicadeiroSelecionado} setAbrirPesquisa={setAbrirPesquisaPicadeiro} />
+                }
+                {abrirPesquisaPraticante &&
+                    <PesquisaPraticantes setValores={setListPraticante} valores={listPraticante} atualizaItemSelecionado={atualizaPraticanteSelecionado} setAbrirPesquisa={setAbrirPesquisaPraticante} />
+                }
+                {abrirPesquisaFuncionario &&
+                    <PesquisaFuncionario setValores={setListFuncionario} valores={listFuncionario} atualizaItemSelecionado={atualizaFuncionarioSelecionado} setAbrirPesquisa={setAbrirPesquisaFuncionario} />
                 }
                 <Footer />
             </div >

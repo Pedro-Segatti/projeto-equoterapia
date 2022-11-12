@@ -30,8 +30,8 @@ public class AtividadeService {
         return new ResponseEntity<Atividade>(atividade, HttpStatus.OK);
     }
 
-    public ResponseEntity<List<Atividade>> pesquisa() {
-        List<Atividade> atividades =  (List<Atividade>) ac.findAll();
+    public ResponseEntity<List<Atividade>> pesquisa(Integer atvId, String atvDescricao) {
+        List<Atividade> atividades =  (List<Atividade>) ac.findByIdAndDescricao(atvId,atvDescricao);
         return new ResponseEntity<List<Atividade>>(atividades, HttpStatus.OK);
     }
 }

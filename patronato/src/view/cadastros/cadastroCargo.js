@@ -49,7 +49,7 @@ function cadastroCargo() {
     };
 
     const atualizaDlgPesquisa = async () => {
-        setList(await (await api.get("/pesquisaCargo")).data);
+        setList(await (await api.get("/pesquisaCargo?carId=" + carIdPesquisa + "&carDescricao=" + carDescricaoPesquisa)).data);
         setAbrirPesquisa(true);
     }
 
