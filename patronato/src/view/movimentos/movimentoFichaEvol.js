@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Form, Col, Row, Container, Button, Card } from 'react-bootstrap';
+import { Form, Col, Row, Container, Button, Card, Modal, Table } from 'react-bootstrap';
 import Toolbar from '../toolbar';
-import { registroSalvo, registroExcluido } from "../../utilitario/mensagemUtil";
+import { registroSalvo, registroExcluido, mensagemCustomizada } from "../../utilitario/mensagemUtil";
 import { ReactNotifications } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import PesquisaAnimais from "../pesquisas/pesquisaAnimais";
@@ -14,7 +14,12 @@ import PesquisaMontaria from "../pesquisas/pesquisaMontaria";
 import PesquisaPicadeiro from "../pesquisas/pesquisaPicadeiro";
 import PesquisaPraticantes from '../pesquisas/pesquisaPraticantes';
 import PesquisaFuncionario from '../pesquisas/pesquisaFuncionario';
+import PesquisaAtividade from '../pesquisas/pesquisaAtividade';
+import PesquisaMaterial from '../pesquisas/pesquisaMaterial';
 import InputConverter from "../inputConverter";
+import useTable from '../table/useTable';
+import { BsXLg } from "react-icons/bs";
+import TableFooter from '../table/tableFooter';
 import HTTP_STATUS from "../../utilitario/httpStatus";
 
 import Menu from "../menu"
@@ -28,13 +33,21 @@ function cadastroFichaEvol() {
     const [abrirPesquisaPicadeiro, setAbrirPesquisaPicadeiro] = useState(false);
     const [abrirPesquisaPraticante, setAbrirPesquisaPraticante] = useState(false);
     const [abrirPesquisaFuncionario, setAbrirPesquisaFuncionario] = useState(false);
+    const [abrirAtividadeMaterial, setAbrirAtividadeMaterial] = useState(false);
+    const [abrirPesquisaAtividade, setAbrirPesquisaAtividade] = useState(false);
+    const [abrirPesquisaMaterial, setAbrirPesquisaMaterial] = useState(false);
     var [list, setList] = useState([]);
     var [listAnimal, setListAnimal] = useState([]);
     var [listMontaria, setListMontaria] = useState([]);
     var [listPicadeiro, setListPicadeiro] = useState([]);
     var [listPraticante, setListPraticante] = useState([]);
     var [listFuncionario, setListFuncionario] = useState([]);
+    var [listAtividade, setListAtividade] = useState([]);
+    var [listMaterial, setListMaterial] = useState([]);
+    var [listAtividadeMaterial, setListAtividadeMaterial] = useState([]);
 
+    var [ativMaterialMat, setAtivMaterialMat] = useState({ "matDescricao": "" });
+    var [ativMaterialAtiv, setAtivMaterialAtiv] = useState({ "atvDescricao": "" });
 
     const atualizaDlgPesquisa = async () => {
         setList(await (await api.get("/pesquisaFichaEvol")).data);
@@ -49,6 +62,16 @@ function cadastroFichaEvol() {
     const atualizaDlgPesquisaMontaria = async () => {
         setListMontaria(await (await api.get("/pesquisaMontaria")).data);
         setAbrirPesquisaMontaria(true);
+    }
+
+    const atualizaDlgPesquisaAtividade = async () => {
+        setListAtividade(await (await api.get("/pesquisaAtividade?atvId=&atvDescricao=")).data);
+        setAbrirPesquisaAtividade(true);
+    }
+
+    const atualizaDlgPesquisaMaterial = async () => {
+        setListMaterial(await (await api.get("/pesquisaMaterial?matId=&matDescricao=")).data);
+        setAbrirPesquisaMaterial(true);
     }
 
     const atualizaDlgPesquisaPicadeiro = async () => {
@@ -84,7 +107,7 @@ function cadastroFichaEvol() {
     const [evolDecubito, setEvolDecubito] = useState("");
     const [evolCompAni, setEvolCompAni] = useState("");
     const [evolAndAni, setEvolAndAni] = useState("");
-    const [evolIdMont, setEvolIdMont] = useState({"montDescricao":""});
+    const [evolIdMont, setEvolIdMont] = useState({ "montDescricao": "" });
     const [evolAniSelecionado, setEvolAniSelecionado] = useState([]);
     const [evolPicSelecionado, setEvolPicSelecionado] = useState([]);
     const [evolPratSelecionado, setEvolPratSelecionado] = useState([]);
@@ -111,8 +134,28 @@ function cadastroFichaEvol() {
         setEvolPicSelecionado(item.picadeiroList || []);
         setEvolPratSelecionado(item.praticanteList || []);
         setEvolFuncSelecionado(item.funcionarioList || []);
-        setEvolIdMont(item.evolIdMont || {"montDescricao":""});
+        setEvolIdMont(item.evolIdMont || { "montDescricao": "" });
+        setListAtividadeMaterial(item.fichaEvolAtividadeMaterialList || []);
         setAbrirPesquisa(false);
+    }
+
+    const atualizaAtividadeMaterial = () => {
+        if(ativMaterialAtiv.atvDescricao === ""){
+            mensagemCustomizada("Selecione uma atividade","warning");
+            return;
+        }
+        if(ativMaterialMat.matDescricao === ""){
+            mensagemCustomizada("Selecione um material","warning");
+            return;
+        }
+        const fichaEvolAtividadeMaterial = {
+            "fxatId": "",
+            "atividade": ativMaterialAtiv,
+            "material": ativMaterialMat,
+            "fichaEvolucao": ""
+        }
+        setListAtividadeMaterial(current => [...current, fichaEvolAtividadeMaterial])
+        setAbrirAtividadeMaterial(false);
     }
 
     const atualizaPicadeiroSelecionado = (item) => {
@@ -138,6 +181,16 @@ function cadastroFichaEvol() {
     const atualizaMontariaSelecionada = (item) => {
         setEvolIdMont(item)
         setAbrirPesquisaMontaria(false);
+    }
+
+    const atualizaAtividadeSelecionada = (item) => {
+        setAtivMaterialAtiv(item)
+        setAbrirPesquisaAtividade(false);
+    }
+
+    const atualizaMaterialSelecionado = (item) => {
+        setAtivMaterialMat(item)
+        setAbrirPesquisaMaterial(false);
     }
 
     const removeAnimalSelecionado = (item) => {
@@ -176,6 +229,15 @@ function cadastroFichaEvol() {
         }
     }
 
+    const removeAtivMatSelecionado = (item) => {
+        var array = [...listAtividadeMaterial];
+        var index = array.indexOf(item);
+        if (index !== -1) {
+            array.splice(index, 1);
+            setListAtividadeMaterial(array);
+        }
+    }
+
     const enviaJsonGravar = () => {
         const json = {
             "evolId": evolId,
@@ -198,8 +260,18 @@ function cadastroFichaEvol() {
             "animalList": evolAniSelecionado.map(animal => (animal)),
             "picadeiroList": evolPicSelecionado.map(picadeiro => (picadeiro)),
             "praticanteList": evolPratSelecionado.map(praticante => (praticante)),
-            "funcionarioList": evolFuncSelecionado.map(funcionario => (funcionario))
+            "funcionarioList": evolFuncSelecionado.map(funcionario => (funcionario)),
+            "fichaEvolAtividadeMaterialList": []
         };
+        if (listAtividadeMaterial.length > 0) {
+            listAtividadeMaterial.forEach(atvm => {
+                if (atvm.fxatId === "") {
+                    atvm.fichaEvolucao = json.evolId;
+                }
+            });
+            json.fichaEvolAtividadeMaterialList = listAtividadeMaterial;
+            console.log(json);
+        }
         api.post("/cadastraFichaEvol", json);
         registroSalvo();
     }
@@ -223,6 +295,47 @@ function cadastroFichaEvol() {
         selecionaRecLudicos();
         setEvolObsRecLud("");
         setEvolQuaisRecLud("");
+    }
+
+
+    const TableAtivMatPaginada = () => {
+        const [pagina, setPage] = useState(1);
+        const { slice, range } = useTable(listAtividadeMaterial, pagina, 5);
+
+        return (
+            <>
+                <Table size="sm">
+                    <thead>
+                        <tr>
+                            <th>Codigo</th>
+                            <th>Atividade</th>
+                            <th>Material</th>
+                            <th className='center'>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            slice.map(item => <LinhaTabela key={item.fxatId} item={item} />)
+                        }
+                    </tbody>
+                </Table>
+                <TableFooter range={range} slice={slice} setPage={setPage} page={pagina} />
+            </>
+        );
+    };
+
+    const LinhaTabela = ({ item }) => {
+        const { fxatId, atividade, material } = item;
+        const removerItem = e => removeAtivMatSelecionado(item);
+
+        return <tr>
+            <td width={'80px'}>{fxatId}</td>
+            <td>{atividade.atvDescricao}</td>
+            <td>{material.matDescricao}</td>
+            <td width={'80px'} className='center'>
+                <Button className='btn-danger' onClick={removerItem}><BsXLg /></Button>
+            </td>
+        </tr>
     }
 
     const limparCamposFormulario = () => {
@@ -249,11 +362,49 @@ function cadastroFichaEvol() {
         setEvolPicSelecionado([]);
         setEvolPratSelecionado([]);
         setEvolFuncSelecionado([]);
-        setEvolIdMont({"montDescricao":""});
+        setEvolIdMont({ "montDescricao": "" });
+        setAtivMaterialAtiv({ "atvDescricao": "" });
+        setAtivMaterialMat({ "matDescricao": "" });
+        setListAtividadeMaterial([]);
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (evolIdMont.montDescricao === "") {
+            mensagemCustomizada("Selecione uma montaria","warning");
+            document.getElementById("botaoMontaria").focus();
+            return;
+        }
+        if (evolClima === "") {
+            mensagemCustomizada("Selecione um clima","warning");
+            document.getElementById("clima").focus();
+            return;
+        }
+        if (evolAniSelecionado.length < 1) {
+            mensagemCustomizada("Selecione ao menos um animal","warning");
+            document.getElementById("btnAnimal").focus();
+            return;
+        }
+        if (evolPicSelecionado.length < 1) {
+            mensagemCustomizada("Selecione ao menos um Picadeiro","warning");
+            document.getElementById("btnPicadeiro").focus();
+            return;
+        }
+        if (evolPratSelecionado.length < 1) {
+            mensagemCustomizada("Selecione ao menos um Praticante","warning");
+            document.getElementById("btnPraticante").focus();
+            return;
+        }
+        if (evolFuncSelecionado.length < 1) {
+            mensagemCustomizada("Selecione ao menos um funcionário","warning");
+            document.getElementById("btnFuncionario").focus();
+            return;
+        }
+        if (listAtividadeMaterial.length < 1) {
+            mensagemCustomizada("Selecione ao menos uma atividade e material","warning");
+            document.getElementById("btnAtiv").focus();
+            return;
+        }
         enviaJsonGravar();
         limparCamposFormulario();
     }
@@ -277,8 +428,8 @@ function cadastroFichaEvol() {
                         </Row>
                         <Row>
                             <Col md="6">
-                                <Form.Label htmlFor="inputMontaria">Montaria</Form.Label>
-                                <InputConverter descricao={evolIdMont.montDescricao} atualizaDlgPesquisa={atualizaDlgPesquisaMontaria} />
+                                <Form.Label id='txTeste' htmlFor="inputMontaria">Montaria</Form.Label>
+                                <InputConverter idBtn={"botaoMontaria"} descricao={evolIdMont.montDescricao} atualizaDlgPesquisa={atualizaDlgPesquisaMontaria} />
                             </Col>
                         </Row>
                         <Row>
@@ -316,9 +467,27 @@ function cadastroFichaEvol() {
                             </Col>
                             <Col md="3">
                                 <Form.Label htmlFor="inputClima">Clima</Form.Label>
-                                <Form.Control value={evolClima} maxLength={1}
-                                    onChange={(e) => setEvolClima(e.target.value)}
-                                    type="text" id="clima" />
+                                <Form.Select id='clima' required value={evolClima}
+                                    onChange={(e) => setEvolClima(e.target.value)}>
+                                    <option>Selecione</option>
+                                    <option value="V">Ventando</option>
+                                    <option value="E">Ensolarado</option>
+                                    <option value="N">Nublado</option>
+                                    <option value="H">Chuvoso</option>
+                                    <option value="F">Frio</option>
+                                    <option value="C">Calor</option>
+                                </Form.Select>
+                            </Col>
+                            <Col md="3">
+                                <Form.Label htmlFor="decubito">Decubito</Form.Label>
+                                <Form.Select id='decubito' required value={evolClima}
+                                    onChange={(e) => setEvolDecubito(e.target.value)}>
+                                    <option>Selecione</option>
+                                    <option value="C">Clássica</option>
+                                    <option value="L">Laterais</option>
+                                    <option value="I">Invertido</option>
+                                    <option value="V">Ventral</option>
+                                </Form.Select>
                             </Col>
                         </Row>
                         <Row>
@@ -377,14 +546,6 @@ function cadastroFichaEvol() {
                             </Col>
                         </Row>
                         <Row>
-                            <Col>
-                                <Form.Label htmlFor="decubito">Decubito</Form.Label>
-                                <Form.Control value={evolDecubito} maxLength={1}
-                                    onChange={(e) => setEvolDecubito(e.target.value)}
-                                    type="text" id="decubito" />
-                            </Col>
-                        </Row>
-                        <Row>
                             <Col md="6">
                                 <Form.Label htmlFor="compAni">Comportamento do Animal</Form.Label>
                                 <Form.Control value={evolCompAni} maxLength={30}
@@ -401,23 +562,26 @@ function cadastroFichaEvol() {
                         </Row>
                         <br />
                         <Row>
-                            <Col md="6">
+                            <Col>
                                 <Card>
                                     <div className='marginLeft'>
                                         <b>Animais</b>
                                         <Col md="2">
-                                            <Button variant="primary" className='btn-success btnMarginTop' onClick={atualizaDlgPesquisaAnimal}>Adicionar</Button>
+                                            <Button id='btnAnimal' variant="primary" className='btn-success btnMarginTop' onClick={atualizaDlgPesquisaAnimal}>Adicionar</Button>
                                         </Col>
                                         <TablePaginada data={evolAniSelecionado} rowsPerPage={5} selecionaLinha={false} removeAnimalSelecionado={removeAnimalSelecionado} />
                                     </div>
                                 </Card>
                             </Col>
-                            <Col md="6">
+                        </Row>
+                        <br />
+                        <Row>
+                            <Col>
                                 <Card>
                                     <div className='marginLeft'>
                                         <b>Picadeiros</b>
                                         <Col md="2">
-                                            <Button variant="primary" className='btn-success btnMarginTop' onClick={atualizaDlgPesquisaPicadeiro}>Adicionar</Button>
+                                            <Button id='btnPicadeiro' variant="primary" className='btn-success btnMarginTop' onClick={atualizaDlgPesquisaPicadeiro}>Adicionar</Button>
                                         </Col>
                                         <TablePicadeiroPaginada data={evolPicSelecionado} rowsPerPage={5} selecionaLinha={false} removeItemSelecionado={removePicadeiroSelecionado} />
                                     </div>
@@ -426,25 +590,42 @@ function cadastroFichaEvol() {
                         </Row>
                         <br />
                         <Row>
-                            <Col md="6">
+                            <Col>
                                 <Card>
                                     <div className='marginLeft'>
                                         <b>Praticantes</b>
                                         <Col md="2">
-                                            <Button variant="primary" className='btn-success btnMarginTop' onClick={atualizaDlgPesquisaPraticante}>Adicionar</Button>
+                                            <Button id='btnPraticante' variant="primary" className='btn-success btnMarginTop' onClick={atualizaDlgPesquisaPraticante}>Adicionar</Button>
                                         </Col>
                                         <TablePraticantesPaginada data={evolPratSelecionado} rowsPerPage={5} selecionaLinha={false} removePraticanteSelecionado={removePraticanteSelecionado} />
                                     </div>
                                 </Card>
                             </Col>
-                            <Col md="6">
+                        </Row>
+                        <br />
+                        <Row>
+                            <Col>
                                 <Card>
                                     <div className='marginLeft'>
-                                        <b>Funcionarios</b>
+                                        <b>Funcionários</b>
                                         <Col md="2">
-                                            <Button variant="primary" className='btn-success btnMarginTop' onClick={atualizaDlgPesquisaFuncionario}>Adicionar</Button>
+                                            <Button id='btnFuncionario' variant="primary" className='btn-success btnMarginTop' onClick={atualizaDlgPesquisaFuncionario}>Adicionar</Button>
                                         </Col>
                                         <TableFuncionariosPaginada data={evolFuncSelecionado} rowsPerPage={5} selecionaLinha={false} removeItemSelecionado={removeFuncionarioSelecionado} />
+                                    </div>
+                                </Card>
+                            </Col>
+                        </Row>
+                        <br />
+                        <Row>
+                            <Col>
+                                <Card>
+                                    <div className='marginLeft'>
+                                        <b>Atividades e Materiais</b>
+                                        <Col md="2">
+                                            <Button id='btnAtiv' variant="primary" className='btn-success btnMarginTop' onClick={() => setAbrirAtividadeMaterial(true)}>Adicionar</Button>
+                                        </Col>
+                                        <TableAtivMatPaginada />
                                     </div>
                                 </Card>
                             </Col>
@@ -471,6 +652,41 @@ function cadastroFichaEvol() {
                 }
                 {abrirPesquisaFuncionario &&
                     <PesquisaFuncionario setValores={setListFuncionario} valores={listFuncionario} atualizaItemSelecionado={atualizaFuncionarioSelecionado} setAbrirPesquisa={setAbrirPesquisaFuncionario} />
+                }
+                {abrirAtividadeMaterial &&
+                    <>
+                        <Modal className='modal-xl' show={true}>
+                            <Modal.Header><b>Pesquisa de Atividade e Material</b></Modal.Header>
+                            <Modal.Body>
+                                <Container>
+                                    <Form>
+                                        <Row>
+                                            <Col md="6">
+                                                <Form.Label>Atividade</Form.Label>
+                                                <InputConverter descricao={ativMaterialAtiv.atvDescricao} atualizaDlgPesquisa={atualizaDlgPesquisaAtividade} />
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col md="6">
+                                                <Form.Label>Material</Form.Label>
+                                                <InputConverter descricao={ativMaterialMat.matDescricao} atualizaDlgPesquisa={atualizaDlgPesquisaMaterial} />
+                                            </Col>
+                                        </Row>
+                                    </Form>
+                                </Container>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="primary" className='btn-success' onClick={atualizaAtividadeMaterial}>Adicionar</Button>
+                                <Button variant="primary" className='btn-danger' onClick={() => setAbrirAtividadeMaterial(false)}>Fechar</Button>
+                            </Modal.Footer>
+                        </Modal >
+                    </>
+                }
+                {abrirPesquisaAtividade &&
+                    <PesquisaAtividade setValores={setListAtividade} valores={listAtividade} atualizaItemSelecionado={atualizaAtividadeSelecionada} setAbrirPesquisa={setAbrirPesquisaAtividade} />
+                }
+                {abrirPesquisaMaterial &&
+                    <PesquisaMaterial setValores={setListMaterial} valores={listMaterial} atualizaItemSelecionado={atualizaMaterialSelecionado} setAbrirPesquisa={setAbrirPesquisaMaterial} />
                 }
                 <Footer />
             </div >

@@ -44,6 +44,7 @@ const LinhaTabela = ({ item, atualizaItemSelecionado }) => {
         </td>
     </tr>
 }
+
 function pesquisaAtividade({ setValores, valores, atualizaItemSelecionado, setAbrirPesquisa }) {
     const [atvIdPesquisa, setAtvIdPesquisa] = useState("");
     const [atvDescricaoPesquisa, setAtvDescricaoPesquisa] = useState("");

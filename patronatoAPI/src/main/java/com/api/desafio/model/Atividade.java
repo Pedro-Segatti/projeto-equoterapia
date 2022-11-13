@@ -1,5 +1,7 @@
 package com.api.desafio.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -71,11 +73,11 @@ public class Atividade implements Serializable {
     public void setAtvDuracao(Integer atvDuracao) {
         this.atvDuracao = atvDuracao;
     }
-
+    @JsonIgnore
     public List<FichaEvolAtividadeMaterial> getFichaEvolAtividadeMaterialList() {
         return fichaEvolAtividadeMaterialList;
     }
-
+    @JsonIgnore
     public void setFichaEvolAtividadeMaterialList(List<FichaEvolAtividadeMaterial> fichaEvolAtividadeMaterialList) {
         this.fichaEvolAtividadeMaterialList = fichaEvolAtividadeMaterialList;
     }
