@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Col, Row, Container } from 'react-bootstrap';
 import Toolbar from '../toolbar';
-import { registroSalvo, registroExcluido } from "../../utilitario/mensagemUtil";
+import { registroSalvo, registroExcluido, mensagemCustomizada } from "../../utilitario/mensagemUtil";
 import { ReactNotifications } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import { api } from "../../utilitario/baseComunicacao";
@@ -78,6 +78,11 @@ function cadastroBairro() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if(cidade.cidNome === ""){
+            mensagemCustomizada("Selecione uma Cidade","warning");
+            document.getElementById("btnCidade").focus();
+            return;
+        }
         enviaJsonGravar();
         limparCamposFormulario();
     }
@@ -110,7 +115,7 @@ function cadastroBairro() {
                         <Row>
                             <Col md="6">
                             <Form.Label>Cidade</Form.Label>
-                                <InputConverter descricao={cidade.cidNome} atualizaDlgPesquisa={atualizaDlgPesquisaCidade} />
+                                <InputConverter idBtn={"btnCidade"} descricao={cidade.cidNome} atualizaDlgPesquisa={atualizaDlgPesquisaCidade} />
                             </Col>
                         </Row>
                         <br />
