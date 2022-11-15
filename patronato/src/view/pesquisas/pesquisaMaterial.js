@@ -5,22 +5,23 @@ import { BsPencilSquare } from "react-icons/bs";
 import { Form, Col, Row, Container, Modal, Button, Table } from 'react-bootstrap';
 import { api } from "../../utilitario/baseComunicacao";
 
-export const TablePaginada = ({ data, rowsPerPage, selecionaLinha, atualizaItemSelecionado }) => {
+export const TablePaginada = ({ data, rowsPerPage, atualizaItemSelecionado }) => {
     const [pagina, setPage] = useState(1);
     const { slice, range } = useTable(data, pagina, rowsPerPage);
+
     return (
         <>
             <Table size="sm">
                 <thead>
                     <tr>
                         <th>Codigo</th>
-                        <th>Nome</th>
+                        <th>Descricao</th>
                         <th className='center'>Ação</th>
                     </tr>
                 </thead>
                 <tbody>
                     {
-                        slice.map(item => <LinhaTabela key={item.barId} item={item} selecionaLinha={selecionaLinha} atualizaItemSelecionado={atualizaItemSelecionado} />)
+                        slice.map(item => <LinhaTabela key={item.matId} item={item} atualizaItemSelecionado={atualizaItemSelecionado} />)
                     }
                 </tbody>
             </Table>
@@ -30,40 +31,47 @@ export const TablePaginada = ({ data, rowsPerPage, selecionaLinha, atualizaItemS
 };
 
 const LinhaTabela = ({ item, atualizaItemSelecionado }) => {
-    const { barId, barNome } = item;
+    const { matId, matDescricao } = item;
     const selecionarItem = e => atualizaItemSelecionado(item);
 
     return <tr>
-        <td width={'80px'}>{barId}</td>
-        <td>{barNome}</td>
+        <td width={'80px'}>{matId}</td>
+        <td>{matDescricao}</td>
         <td width={'80px'} className='center'>
             <Button className='btn-success' onClick={selecionarItem}><BsPencilSquare /></Button>
         </td>
     </tr>
 }
 
-function pesquisaBairro({ setValores, valores, atualizaItemSelecionado, setAbrirPesquisa }) {
-    const [barNome, setBarNome] = useState("");
+function pesquisaMaterial({ setValores, valores, atualizaItemSelecionado, setAbrirPesquisa }) {
+    const [matIdPesquisa, setMatIdPesquisa] = useState("");
+    const [matDescricaoPesquisa, setMatDescricaoPesquisa] = useState("");
 
     const buscaRegistros = async () => {
-        setValores(await (await api.get("/pesquisaBairro?barNome="+barNome)).data);
+        setValores(await (await api.get("/pesquisaMaterial?matId=" + matIdPesquisa + "&matDescricao=" + matDescricaoPesquisa)).data);
         setAbrirPesquisa(true);
     }
 
-    const pesquisaBairro = () => {
+    const pesquisaMaterial = () => {
         return (
             <>
                 <Modal className='modal-xl' show={true}>
-                    <Modal.Header><b>Pesquisa de Bairro</b></Modal.Header>
+                    <Modal.Header><b>Pesquisa de Materiais</b></Modal.Header>
                     <Modal.Body>
                         <Container>
                             <Form>
                                 <Row>
+                                    <Col md="2">
+                                        <Form.Label>Código</Form.Label>
+                                        <Form.Control type="text" id="idPesquisa"
+                                            value={matIdPesquisa}
+                                            onChange={(e) => setMatIdPesquisa(e.target.value)} />
+                                    </Col>
                                     <Col md="6">
-                                        <Form.Label>Nome</Form.Label>
+                                        <Form.Label>Descrição</Form.Label>
                                         <Form.Control type="text" id="descricaoPesquisa"
-                                            initi={barNome}
-                                            onChange={(e) => setBarNome(e.target.value)} />
+                                            initi={matDescricaoPesquisa}
+                                            onChange={(e) => setMatDescricaoPesquisa(e.target.value)} />
                                     </Col>
                                 </Row>
                                 <div className='right'>
@@ -71,15 +79,15 @@ function pesquisaBairro({ setValores, valores, atualizaItemSelecionado, setAbrir
                                 </div>
                             </Form>
                         </Container>
-                        <TablePaginada data={valores} rowsPerPage={10} selecionaLinha={true} atualizaItemSelecionado={atualizaItemSelecionado} />
+                        <TablePaginada data={valores} rowsPerPage={5} selecionaLinha={true} atualizaItemSelecionado={atualizaItemSelecionado} />
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="primary" className='btn-danger' onClick={() => setAbrirPesquisa(false)}>Fechar</Button>
                     </Modal.Footer>
-                </Modal>
+                </Modal >
             </>
         )
     }
-    return pesquisaBairro();
+    return pesquisaMaterial();
 }
-export default pesquisaBairro;
+export default pesquisaMaterial;

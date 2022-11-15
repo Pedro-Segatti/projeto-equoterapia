@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface LogradouroCrud extends CrudRepository<Logradouro,Integer> {
     Logradouro findLogradouroByLogId(Integer logId);
-    @Query("SELECT l FROM Logradouro l WHERE (:logDescricao is null or :logDescricao = '' or l.logDescricao = :logDescricao)")
+    @Query("SELECT l FROM Logradouro l WHERE (:logDescricao is null or :logDescricao = '' or l.logDescricao like %:logDescricao%)")
     List<Logradouro> findLogradouroByLogDescricao(@Param("logDescricao")  String logDescricao);
 }

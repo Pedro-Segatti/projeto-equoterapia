@@ -29,8 +29,8 @@ public class CargoService {
         return new ResponseEntity<Cargo>(cargo, HttpStatus.OK);
     }
 
-    public ResponseEntity<List<Cargo>> pesquisa() {
-        List<Cargo> cargos =  (List<Cargo>) cc.findAll();
+    public ResponseEntity<List<Cargo>> pesquisa(Integer carId, String carDescricao) {
+        List<Cargo> cargos =  (List<Cargo>) cc.findByIdAndDescricao(carId,carDescricao);
         return new ResponseEntity<List<Cargo>>(cargos, HttpStatus.OK);
     }
 }

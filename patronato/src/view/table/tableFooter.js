@@ -13,13 +13,13 @@ const TableFooter = ({ range, setPage, page, slice }) => {
     return (
         <div className={`${styles.tableFooter} center`}>
             {range.length > 0 &&
-            <Button key={1} disabled={page <= 1} className={'btnPaginacao'}
+            <Button key={-1} disabled={page <= 1} className={'btnPaginacao'}
                 onClick={() => setPage(1)}>
                 <BsChevronDoubleLeft />
             </Button>
             }
             {range.length > 0 &&
-            <Button key={1} disabled={page <= 1} className={'btnPaginacao'}
+            <Button key={0} disabled={page <= 1} className={'btnPaginacao'}
                 onClick={() => setPage(page - 1)}>
                 <BsChevronCompactLeft />
             </Button>
@@ -35,13 +35,13 @@ const TableFooter = ({ range, setPage, page, slice }) => {
                 )
             ))}
             {range.length > 0 &&
-            <Button key={1} disabled={page >= range.length} className={'btnPaginacao'}
+            <Button key={99999} disabled={page >= range.length} className={'btnPaginacao'}
                 onClick={() => setPage(page + 1)}>
                 <BsChevronCompactRight />
             </Button>
             }
             {range.length > 0 &&
-            <Button key={1} disabled={page >= range.length} className={'btnPaginacao'}
+            <Button key={100000} disabled={page >= range.length} className={'btnPaginacao'}
                 onClick={() => setPage(range.length)}> 
                 <BsChevronDoubleRight />
             </Button>

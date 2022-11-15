@@ -29,8 +29,8 @@ public class MaterialService {
         return new ResponseEntity<Material>(material, HttpStatus.OK);
     }
 
-    public ResponseEntity<List<Material>> pesquisa() {
-        List<Material> material =  (List<Material>) mc.findAll();
+    public ResponseEntity<List<Material>> pesquisa(Integer matId, String matDescricao) {
+        List<Material> material = mc.findByIdAndDescricao(matId,matDescricao);
         return new ResponseEntity<List<Material>>(material, HttpStatus.OK);
     }
 

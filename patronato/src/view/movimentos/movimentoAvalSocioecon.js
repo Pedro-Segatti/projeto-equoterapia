@@ -3,7 +3,7 @@ import { Form, Col, Row, Container } from 'react-bootstrap';
 import Toolbar from '../toolbar';
 import PesquisaAvalSocioEcon from "../pesquisas/pesquisaAvalSocioecon";
 import PesquisaPraticantes from "../pesquisas/pesquisaPraticantes";
-import { registroSalvo, registroExcluido } from "../../utilitario/mensagemUtil";
+import { registroSalvo, registroExcluido, mensagemCustomizada } from "../../utilitario/mensagemUtil";
 import { ReactNotifications } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import { api } from "../../utilitario/baseComunicacao";
@@ -32,7 +32,7 @@ function movimentoAvalSocioecon() {
     }
 
     const atualizaDlgPesquisaPraticantes = async () => {
-        setList(await (await api.get("/pesquisaPraticantes")).data);
+        setListPraticantes(await (await api.get("/pesquisaPraticantes")).data);
         setAbrirPesquisaPraticante(true);
     }
 
@@ -84,6 +84,11 @@ function movimentoAvalSocioecon() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if(praticante.pessoa.pesNome === ""){
+            mensagemCustomizada("Selecione um Praticante","warning");
+            document.getElementById("btnPraticante").focus();
+            return;
+        }
         enviaJsonGravar();
         limparCamposFormulario();
     }
@@ -108,7 +113,7 @@ function movimentoAvalSocioecon() {
                         <Row>
                             <Col md="6">
                                 <Form.Label htmlFor="aseId">Praticante</Form.Label>
-                                <InputConverter descricao={praticante.pessoa.pesNome} atualizaDlgPesquisa={atualizaDlgPesquisaPraticantes} />
+                                <InputConverter idBtn={"btnPraticante"} descricao={praticante.pessoa.pesNome} atualizaDlgPesquisa={atualizaDlgPesquisaPraticantes} />
                             </Col>
                         </Row>
                         <Row>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Col, Row, Container } from 'react-bootstrap';
 import Toolbar from '../toolbar';
-import { registroSalvo, registroExcluido } from "../../utilitario/mensagemUtil";
+import { registroSalvo, registroExcluido, mensagemCustomizada } from "../../utilitario/mensagemUtil";
 import { ReactNotifications } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import { api } from "../../utilitario/baseComunicacao";
@@ -25,12 +25,12 @@ function cadastroLogradouro() {
     const [bairro, setBairro] = useState({"barNome":""});
 
     const atualizaDlgPesquisa = async () => {
-        setList(await (await api.get("/pesquisaLogradouros")).data);
+        setList(await (await api.get("/pesquisaLogradouros?logDesc=")).data);
         setAbrirPesquisa(true);
     }
 
     const atualizaDlgPesquisaBairro = async () => {
-        setList(await (await api.get("/pesquisaBairro")).data);
+        setListBairro(await (await api.get("/pesquisaBairro?barNome=")).data);
         setAbrirPesquisaBairro(true);
     }
 
@@ -82,6 +82,11 @@ function cadastroLogradouro() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if(bairro.barNome === ""){
+            mensagemCustomizada("Selecione um Bairro","warning");
+            document.getElementById("btnBairro").focus();
+            return;
+        }
         enviaJsonGravar();
         limparCamposFormulario();
     }
@@ -122,7 +127,7 @@ function cadastroLogradouro() {
                         <Row>
                             <Col md="6">
                             <Form.Label>Bairro</Form.Label>
-                                <InputConverter descricao={bairro.barNome} atualizaDlgPesquisa={atualizaDlgPesquisaBairro} />
+                                <InputConverter idBtn={"btnBairro"} descricao={bairro.barNome} atualizaDlgPesquisa={atualizaDlgPesquisaBairro} />
                             </Col>
                         </Row>
                         <br />

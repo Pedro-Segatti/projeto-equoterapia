@@ -1,5 +1,9 @@
 package com.api.desafio.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -30,6 +34,7 @@ public class FichaEvolAtividadeMaterial implements Serializable {
     private Atividade atividade;
     @JoinColumn(name = "FXAT_ID_FICHA", referencedColumnName = "EVOL_ID")
     @ManyToOne(optional = false)
+    @JsonBackReference
     private FichaEvolucao fichaEvolucao;
     @JoinColumn(name = "FXAT_ID_MATERIAL", referencedColumnName = "MAT_ID")
     @ManyToOne(optional = false)
@@ -57,11 +62,9 @@ public class FichaEvolAtividadeMaterial implements Serializable {
     public void setAtividade(Atividade atividade) {
         this.atividade = atividade;
     }
-
     public FichaEvolucao getFichaEvolucao() {
         return fichaEvolucao;
     }
-
     public void setFichaEvolucao(FichaEvolucao fichaEvolucao) {
         this.fichaEvolucao = fichaEvolucao;
     }

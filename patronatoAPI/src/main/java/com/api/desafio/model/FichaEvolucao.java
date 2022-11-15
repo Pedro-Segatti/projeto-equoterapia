@@ -1,6 +1,9 @@
 package com.api.desafio.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.io.Serializable;
 import java.util.List;
@@ -73,6 +76,7 @@ public class FichaEvolucao implements Serializable {
         @JoinColumn(name = "FXA_ID_ANIMAL", referencedColumnName = "ANI_ID")})
     @ManyToMany
     private List<Animal> animalList;
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fichaEvolucao")
     private List<FichaEvolAtividadeMaterial> fichaEvolAtividadeMaterialList;
 

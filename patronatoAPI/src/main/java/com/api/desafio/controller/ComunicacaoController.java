@@ -60,6 +60,8 @@ public class ComunicacaoController {
     @Autowired
     private ResponsavelService responsavelService;
     @Autowired
+    private FuncionarioService funcionarioService;
+    @Autowired
     private DocumentosService documentosService;
     @Autowired
     private PraticanteResponsavelService praticanteResponsavelService;
@@ -141,7 +143,7 @@ public class ComunicacaoController {
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaAtividade")
     public ResponseEntity<List<Atividade>> pesquisaAtividade(@RequestParam (required=false) Integer atvId,@RequestParam (required=false) String atvDescricao ){
-        return atividadeService.pesquisa();
+        return atividadeService.pesquisa(atvId,atvDescricao);
     }
 
     @CrossOrigin(origins = "*")
@@ -164,7 +166,7 @@ public class ComunicacaoController {
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaCargo")
     public ResponseEntity<List<Cargo>> pesquisaCargo(@RequestParam (required=false) Integer carId,@RequestParam (required=false) String carDescricao ){
-        return cargoService.pesquisa();
+        return cargoService.pesquisa(carId,carDescricao);
     }
 
     @CrossOrigin(origins = "*")
@@ -187,7 +189,7 @@ public class ComunicacaoController {
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaMaterial")
     public ResponseEntity<List<Material>> pesquisaMaterial(@RequestParam (required=false) Integer matId,@RequestParam (required=false) String matDescricao ){
-        return materialService.pesquisa();
+        return materialService.pesquisa(matId,matDescricao);
     }
 
     @CrossOrigin(origins = "*")
@@ -210,7 +212,7 @@ public class ComunicacaoController {
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaPicadeiro")
     public ResponseEntity<List<Picadeiro>> pesquisaPicadeiro(@RequestParam (required=false) Integer picId,@RequestParam (required=false) String picDescricao ){
-        return picadeiroService.pesquisa();
+        return picadeiroService.pesquisa(picId,picDescricao);
     }
 
 
@@ -432,9 +434,15 @@ public class ComunicacaoController {
     }
 
     @CrossOrigin(origins = "*")
+    @GetMapping("/pesquisaFuncionario")
+    public ResponseEntity<List<Funcionario>> pesquisaFuncionario(@RequestParam (required=false) String pesCpf,@RequestParam (required=false) String pesNome){
+        return funcionarioService.pesquisaFuncionario(pesCpf, pesNome);
+    }
+
+    @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaLogradouros")
     public ResponseEntity<List<Logradouro>> pesquisaLogradouros(@RequestParam (required=false) String logDesc) {
-        List<Logradouro> logradouros = (List<Logradouro>) logradouroService.getLogradouroByDescricao(logDesc);
+        List<Logradouro> logradouros = logradouroService.getLogradouroByDescricao(logDesc);
         return new ResponseEntity<List<Logradouro>>(logradouros, HttpStatus.OK);
 
     }
