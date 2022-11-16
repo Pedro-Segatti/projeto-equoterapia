@@ -63,6 +63,8 @@ public class ComunicacaoController {
     private FuncionarioService funcionarioService;
     @Autowired
     private DocumentosService documentosService;
+    @Autowired
+    private AvalFisioterService avalFisioterService;
 
     @CrossOrigin(origins = "*")
     @GetMapping("/login")
@@ -235,6 +237,29 @@ public class ComunicacaoController {
     @GetMapping("/pesquisaFichaEvol")
     public ResponseEntity<List<FichaEvolucao>> pesquisaFichaEvol(@RequestParam (required=false) Integer evolId ){
         return fichaEvolService.pesquisa(evolId);
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/cadastraAvalFisioter")
+    public ResponseEntity<?> cadastrarAvalFisioter(@RequestBody AvalFisioter avalFisioter){
+        return avalFisioterService.salva(avalFisioter);
+    }
+
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/removeAvalFisioter")
+    public ResponseEntity<AvalFisioter> removeAvalFisioter(@RequestParam Integer aftId){
+        try{
+            avalFisioterService.remove(aftId);
+            return new ResponseEntity<>(new AvalFisioter(), HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(new AvalFisioter(), HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/pesquisaAvalFisioter")
+    public ResponseEntity<List<AvalFisioter>> pesquisaAvalFisioter(@RequestParam (required=false) Integer aftId ){
+        return avalFisioterService.pesquisa();
     }
 
     @CrossOrigin(origins = "*")

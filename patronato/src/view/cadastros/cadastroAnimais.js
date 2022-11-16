@@ -25,7 +25,7 @@ function cadastroAnimais() {
     var [list, setList] = useState('[]');
 
     const atualizaDlgPesquisa = async () => {
-        setList(await (await api.get("/pesquisaAnimal")).data);
+        setList(await (await api.get("/pesquisaAnimal?aniId=&aniNome=")).data);
         setAbrirPesquisa(true);
     }
 

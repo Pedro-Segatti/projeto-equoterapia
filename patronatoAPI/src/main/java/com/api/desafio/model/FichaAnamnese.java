@@ -17,7 +17,7 @@ import javax.persistence.Table;
  * @author Pedro
  */
 @Entity
-@Table(name = "FICHA_ANAMNESE")
+@Table(name = "ficha_anamnese")
 public class FichaAnamnese implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -30,44 +30,44 @@ public class FichaAnamnese implements Serializable {
     private Boolean amnPaisCasados;
     @Lob
     @Column(name = "AMN_REAC_SEPARACAO")
-    private byte[] amnReacSeparacao;
+    private String amnReacSeparacao;
     @Lob
     @Column(name = "AMN_MORADIA")
-    private byte[] amnMoradia;
+    private String amnMoradia;
     @Column(name = "AMN_POSSUI_IRMAO")
     private Boolean amnPossuiIrmao;
     @Lob
     @Column(name = "AMN_INFOS_IRMAO")
-    private byte[] amnInfosIrmao;
+    private String amnInfosIrmao;
     @Column(name = "AMN_ADOTADO")
     private Boolean amnAdotado;
     @Column(name = "AMN_CIENCIA_ADOCAO")
     private Boolean amnCienciaAdocao;
     @Lob
     @Column(name = "AMN_REAC_ADOCAO")
-    private byte[] amnReacAdocao;
+    private String amnReacAdocao;
     @Lob
     @Column(name = "AMN_HIP_DIAG")
-    private byte[] amnHipDiag;
+    private String amnHipDiag;
     @Lob
     @Column(name = "AMN_MOTIVO_EQUO")
-    private byte[] amnMotivoEquo;
+    private String amnMotivoEquo;
     @Lob
     @Column(name = "AMN_EXPEC_TRAT")
-    private byte[] amnExpecTrat;
+    private String amnExpecTrat;
     @Column(name = "AMN_TP_GEST")
     private String amnTpGest;
     @Lob
     @Column(name = "AMN_SAUDE_MAE_GESTACAO")
-    private byte[] amnSaudeMaeGestacao;
+    private String amnSaudeMaeGestacao;
     @Lob
     @Column(name = "AMN_ACONT_GESTACAO")
-    private byte[] amnAcontGestacao;
+    private String amnAcontGestacao;
     @Column(name = "AMN_TP_PARTO")
     private String amnTpParto;
     @Lob
     @Column(name = "AMN_PARTO_OBS")
-    private byte[] amnPartoObs;
+    private String amnPartoObs;
     @Column(name = "AMN_AMARELAO")
     private Boolean amnAmarelao;
     @Column(name = "AMN_FEBRE")
@@ -78,7 +78,7 @@ public class FichaAnamnese implements Serializable {
     private Integer amnTempoIncubadora;
     @Lob
     @Column(name = "AMN_REAC_PAIS_FAM")
-    private byte[] amnReacPaisFam;
+    private String amnReacPaisFam;
     @Column(name = "AMN_TP_AMAMENTACAO")
     private String amnTpAmamentacao;
     @Column(name = "AMN_DIF_ESFINCTER")
@@ -89,7 +89,7 @@ public class FichaAnamnese implements Serializable {
     private Boolean amnPertNot;
     @Lob
     @Column(name = "AMN_PERT_OBS")
-    private byte[] amnPertObs;
+    private String amnPertObs;
     @Column(name = "AMN_DORME_SOZ")
     private Boolean amnDormeSoz;
     @Column(name = "AMN_DORME_PAIS")
@@ -98,7 +98,7 @@ public class FichaAnamnese implements Serializable {
     private Boolean amnDivQuarto;
     @Lob
     @Column(name = "AMN_DIV_QUARTO_OBS")
-    private byte[] amnDivQuartoObs;
+    private String amnDivQuartoObs;
     @Column(name = "AMN_HABIT_ESPEC")
     private Boolean amnHabitEspec;
     @Column(name = "AMN_ENGATINHA")
@@ -111,30 +111,30 @@ public class FichaAnamnese implements Serializable {
     private Boolean amnCorre;
     @Lob
     @Column(name = "AMN_TONICIDADE")
-    private byte[] amnTonicidade;
+    private String amnTonicidade;
     @Lob
     @Column(name = "AMN_EQUILIBRIO")
-    private byte[] amnEquilibrio;
+    private String amnEquilibrio;
     @Lob
     @Column(name = "AMN_LATERALIZACAO")
-    private byte[] amnLateralizacao;
+    private String amnLateralizacao;
     @Lob
     @Column(name = "AMN_NOCAO_CORP")
-    private byte[] amnNocaoCorp;
+    private String amnNocaoCorp;
     @Lob
     @Column(name = "AMN_EST_ESP_CORP")
-    private byte[] amnEstEspCorp;
+    private String amnEstEspCorp;
     @Lob
     @Column(name = "AMN_PRAXIA_GLOBAL")
-    private byte[] amnPraxiaGlobal;
+    private String amnPraxiaGlobal;
     @Lob
     @Column(name = "AMN_PRAXIA_FINA")
-    private byte[] amnPraxiaFina;
+    private String amnPraxiaFina;
     @Column(name = "AMN_DESV_NORMAL")
     private Boolean amnDesvNormal;
     @Lob
     @Column(name = "AMN_DESV_FAT_REL")
-    private byte[] amnDesvFatRel;
+    private String amnDesvFatRel;
     @Column(name = "AMN_LV_FALA_COMP")
     private Boolean amnLvFalaComp;
     @Column(name = "AMN_LV_APENAS_PAL")
@@ -163,10 +163,10 @@ public class FichaAnamnese implements Serializable {
     private Integer amnIdadeRetFral;
     @JoinColumn(name = "AMN_ID_FUNCIONARIO", referencedColumnName = "FUNC_ID")
     @ManyToOne(optional = false)
-    private Funcionario funcionario;
+    private Funcionario amnIdFuncionario;
     @JoinColumn(name = "AMN_ID_PRATICANTE", referencedColumnName = "PRAT_ID")
     @ManyToOne(optional = false)
-    private Praticante praticante;
+    private Praticante amnIdPraticante;
 
     public FichaAnamnese() {
     }
@@ -191,19 +191,19 @@ public class FichaAnamnese implements Serializable {
         this.amnPaisCasados = amnPaisCasados;
     }
 
-    public byte[] getAmnReacSeparacao() {
+    public String getAmnReacSeparacao() {
         return amnReacSeparacao;
     }
 
-    public void setAmnReacSeparacao(byte[] amnReacSeparacao) {
+    public void setAmnReacSeparacao(String amnReacSeparacao) {
         this.amnReacSeparacao = amnReacSeparacao;
     }
 
-    public byte[] getAmnMoradia() {
+    public String getAmnMoradia() {
         return amnMoradia;
     }
 
-    public void setAmnMoradia(byte[] amnMoradia) {
+    public void setAmnMoradia(String amnMoradia) {
         this.amnMoradia = amnMoradia;
     }
 
@@ -215,11 +215,11 @@ public class FichaAnamnese implements Serializable {
         this.amnPossuiIrmao = amnPossuiIrmao;
     }
 
-    public byte[] getAmnInfosIrmao() {
+    public String getAmnInfosIrmao() {
         return amnInfosIrmao;
     }
 
-    public void setAmnInfosIrmao(byte[] amnInfosIrmao) {
+    public void setAmnInfosIrmao(String amnInfosIrmao) {
         this.amnInfosIrmao = amnInfosIrmao;
     }
 
@@ -239,35 +239,35 @@ public class FichaAnamnese implements Serializable {
         this.amnCienciaAdocao = amnCienciaAdocao;
     }
 
-    public byte[] getAmnReacAdocao() {
+    public String getAmnReacAdocao() {
         return amnReacAdocao;
     }
 
-    public void setAmnReacAdocao(byte[] amnReacAdocao) {
+    public void setAmnReacAdocao(String amnReacAdocao) {
         this.amnReacAdocao = amnReacAdocao;
     }
 
-    public byte[] getAmnHipDiag() {
+    public String getAmnHipDiag() {
         return amnHipDiag;
     }
 
-    public void setAmnHipDiag(byte[] amnHipDiag) {
+    public void setAmnHipDiag(String amnHipDiag) {
         this.amnHipDiag = amnHipDiag;
     }
 
-    public byte[] getAmnMotivoEquo() {
+    public String getAmnMotivoEquo() {
         return amnMotivoEquo;
     }
 
-    public void setAmnMotivoEquo(byte[] amnMotivoEquo) {
+    public void setAmnMotivoEquo(String amnMotivoEquo) {
         this.amnMotivoEquo = amnMotivoEquo;
     }
 
-    public byte[] getAmnExpecTrat() {
+    public String getAmnExpecTrat() {
         return amnExpecTrat;
     }
 
-    public void setAmnExpecTrat(byte[] amnExpecTrat) {
+    public void setAmnExpecTrat(String amnExpecTrat) {
         this.amnExpecTrat = amnExpecTrat;
     }
 
@@ -279,19 +279,19 @@ public class FichaAnamnese implements Serializable {
         this.amnTpGest = amnTpGest;
     }
 
-    public byte[] getAmnSaudeMaeGestacao() {
+    public String getAmnSaudeMaeGestacao() {
         return amnSaudeMaeGestacao;
     }
 
-    public void setAmnSaudeMaeGestacao(byte[] amnSaudeMaeGestacao) {
+    public void setAmnSaudeMaeGestacao(String amnSaudeMaeGestacao) {
         this.amnSaudeMaeGestacao = amnSaudeMaeGestacao;
     }
 
-    public byte[] getAmnAcontGestacao() {
+    public String getAmnAcontGestacao() {
         return amnAcontGestacao;
     }
 
-    public void setAmnAcontGestacao(byte[] amnAcontGestacao) {
+    public void setAmnAcontGestacao(String amnAcontGestacao) {
         this.amnAcontGestacao = amnAcontGestacao;
     }
 
@@ -303,11 +303,11 @@ public class FichaAnamnese implements Serializable {
         this.amnTpParto = amnTpParto;
     }
 
-    public byte[] getAmnPartoObs() {
+    public String getAmnPartoObs() {
         return amnPartoObs;
     }
 
-    public void setAmnPartoObs(byte[] amnPartoObs) {
+    public void setAmnPartoObs(String amnPartoObs) {
         this.amnPartoObs = amnPartoObs;
     }
 
@@ -343,11 +343,11 @@ public class FichaAnamnese implements Serializable {
         this.amnTempoIncubadora = amnTempoIncubadora;
     }
 
-    public byte[] getAmnReacPaisFam() {
+    public String getAmnReacPaisFam() {
         return amnReacPaisFam;
     }
 
-    public void setAmnReacPaisFam(byte[] amnReacPaisFam) {
+    public void setAmnReacPaisFam(String amnReacPaisFam) {
         this.amnReacPaisFam = amnReacPaisFam;
     }
 
@@ -383,11 +383,11 @@ public class FichaAnamnese implements Serializable {
         this.amnPertNot = amnPertNot;
     }
 
-    public byte[] getAmnPertObs() {
+    public String getAmnPertObs() {
         return amnPertObs;
     }
 
-    public void setAmnPertObs(byte[] amnPertObs) {
+    public void setAmnPertObs(String amnPertObs) {
         this.amnPertObs = amnPertObs;
     }
 
@@ -415,11 +415,11 @@ public class FichaAnamnese implements Serializable {
         this.amnDivQuarto = amnDivQuarto;
     }
 
-    public byte[] getAmnDivQuartoObs() {
+    public String getAmnDivQuartoObs() {
         return amnDivQuartoObs;
     }
 
-    public void setAmnDivQuartoObs(byte[] amnDivQuartoObs) {
+    public void setAmnDivQuartoObs(String amnDivQuartoObs) {
         this.amnDivQuartoObs = amnDivQuartoObs;
     }
 
@@ -463,59 +463,59 @@ public class FichaAnamnese implements Serializable {
         this.amnCorre = amnCorre;
     }
 
-    public byte[] getAmnTonicidade() {
+    public String getAmnTonicidade() {
         return amnTonicidade;
     }
 
-    public void setAmnTonicidade(byte[] amnTonicidade) {
+    public void setAmnTonicidade(String amnTonicidade) {
         this.amnTonicidade = amnTonicidade;
     }
 
-    public byte[] getAmnEquilibrio() {
+    public String getAmnEquilibrio() {
         return amnEquilibrio;
     }
 
-    public void setAmnEquilibrio(byte[] amnEquilibrio) {
+    public void setAmnEquilibrio(String amnEquilibrio) {
         this.amnEquilibrio = amnEquilibrio;
     }
 
-    public byte[] getAmnLateralizacao() {
+    public String getAmnLateralizacao() {
         return amnLateralizacao;
     }
 
-    public void setAmnLateralizacao(byte[] amnLateralizacao) {
+    public void setAmnLateralizacao(String amnLateralizacao) {
         this.amnLateralizacao = amnLateralizacao;
     }
 
-    public byte[] getAmnNocaoCorp() {
+    public String getAmnNocaoCorp() {
         return amnNocaoCorp;
     }
 
-    public void setAmnNocaoCorp(byte[] amnNocaoCorp) {
+    public void setAmnNocaoCorp(String amnNocaoCorp) {
         this.amnNocaoCorp = amnNocaoCorp;
     }
 
-    public byte[] getAmnEstEspCorp() {
+    public String getAmnEstEspCorp() {
         return amnEstEspCorp;
     }
 
-    public void setAmnEstEspCorp(byte[] amnEstEspCorp) {
+    public void setAmnEstEspCorp(String amnEstEspCorp) {
         this.amnEstEspCorp = amnEstEspCorp;
     }
 
-    public byte[] getAmnPraxiaGlobal() {
+    public String getAmnPraxiaGlobal() {
         return amnPraxiaGlobal;
     }
 
-    public void setAmnPraxiaGlobal(byte[] amnPraxiaGlobal) {
+    public void setAmnPraxiaGlobal(String amnPraxiaGlobal) {
         this.amnPraxiaGlobal = amnPraxiaGlobal;
     }
 
-    public byte[] getAmnPraxiaFina() {
+    public String getAmnPraxiaFina() {
         return amnPraxiaFina;
     }
 
-    public void setAmnPraxiaFina(byte[] amnPraxiaFina) {
+    public void setAmnPraxiaFina(String amnPraxiaFina) {
         this.amnPraxiaFina = amnPraxiaFina;
     }
 
@@ -527,11 +527,11 @@ public class FichaAnamnese implements Serializable {
         this.amnDesvNormal = amnDesvNormal;
     }
 
-    public byte[] getAmnDesvFatRel() {
+    public String getAmnDesvFatRel() {
         return amnDesvFatRel;
     }
 
-    public void setAmnDesvFatRel(byte[] amnDesvFatRel) {
+    public void setAmnDesvFatRel(String amnDesvFatRel) {
         this.amnDesvFatRel = amnDesvFatRel;
     }
 
@@ -639,20 +639,20 @@ public class FichaAnamnese implements Serializable {
         this.amnIdadeRetFral = amnIdadeRetFral;
     }
 
-    public Funcionario getFuncionario() {
-        return funcionario;
+    public Funcionario getAmnIdFuncionario() {
+        return amnIdFuncionario;
     }
 
-    public void setFuncionario(Funcionario funcionario) {
-        this.funcionario = funcionario;
+    public void setAmnIdFuncionario(Funcionario amnIdFuncionario) {
+        this.amnIdFuncionario = amnIdFuncionario;
     }
 
-    public Praticante getPraticante() {
-        return praticante;
+    public Praticante getAmnIdPraticante() {
+        return amnIdPraticante;
     }
 
-    public void setPraticante(Praticante praticante) {
-        this.praticante = praticante;
+    public void setAmnIdPraticante(Praticante amnIdPraticante) {
+        this.amnIdPraticante = amnIdPraticante;
     }
 
     @Override
@@ -677,7 +677,7 @@ public class FichaAnamnese implements Serializable {
 
     @Override
     public String toString() {
-        return "com.api.desafio.model.FichaAnamnese[ amnId=" + amnId + " ]";
+        return "com.mycompany.mavenproject1.FichaAnamnese[ amnId=" + amnId + " ]";
     }
 
 }
