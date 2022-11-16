@@ -65,6 +65,8 @@ public class ComunicacaoController {
     private DocumentosService documentosService;
     @Autowired
     private AvalFisioterService avalFisioterService;
+    @Autowired
+    private PraticanteResponsavelService praticanteResponsavelService;
 
     @CrossOrigin(origins = "*")
     @GetMapping("/login")
@@ -342,6 +344,10 @@ public class ComunicacaoController {
 
         JsonElement documentos = jsonConvertido.get("documentosList");
         inserirNovoDocumento(documentos, novoPraticante);
+
+        JsonElement responsaveis = jsonConvertido.get("responsaveis");
+        inserirNovoResponsavel(responsaveis, novoPraticante);
+
         novoPraticante = praticanteService.salva(novoPraticante);
 
         return new ResponseEntity<Praticante>(novoPraticante, HttpStatus.OK);
@@ -365,6 +371,9 @@ public class ComunicacaoController {
         JsonElement documentos = jsonConvertido.get("documentosList");
         inserirNovoDocumento(documentos, praticanteExistente);
 
+        JsonElement responsaveis = jsonConvertido.get("responsaveis");
+        inserirNovoResponsavel(responsaveis, praticanteExistente);
+
         praticanteExistente = praticanteService.salva(praticanteExistente);
 
         return new ResponseEntity<Praticante>(praticanteExistente, HttpStatus.OK);
@@ -387,6 +396,23 @@ public class ComunicacaoController {
         }
     }
 
+    private void inserirNovoResponsavel(JsonElement responsaveis, Praticante praticante){
+        if(!responsaveis.isJsonNull()){
+            JsonArray responsaveisArray = responsaveis.getAsJsonArray();
+            int tamanhoResponsaveis = responsaveisArray.size();
+
+            for (int i = 0; i < tamanhoResponsaveis; i++){
+                PraticanteResponsavel pxr = new PraticanteResponsavel();
+                JsonElement pxrId = responsaveisArray.get(i).getAsJsonObject().get("pxrId");
+                pxr.setPxrId(!pxrId.isJsonNull() ? pxrId.getAsInt() : null);
+                pxr.setPraticante(praticante);
+                pxr.setResponsavel(new Gson().fromJson(responsaveisArray.get(i).getAsJsonObject().get("responsavel"), Responsavel.class));
+                pxr.setPxrTipoResp(responsaveisArray.get(i).getAsJsonObject().get("pxrTipoResp").getAsString());
+                praticante.getResponsaveis().add(pxr);
+            }
+        }
+    }
+
     @CrossOrigin(origins = "*")
     @DeleteMapping("/removerDocumento")
     public ResponseEntity<Documentos> pesquisaPraticantes(@RequestParam (required=false) Integer docId){
@@ -395,6 +421,17 @@ public class ComunicacaoController {
             return new ResponseEntity<>(new Documentos(), HttpStatus.OK);
         }catch(Exception e){
             return new ResponseEntity<>(new Documentos(), HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/removerResponsavelSelecionado")
+    public ResponseEntity<PraticanteResponsavel> removerResponsavelSelecionado(@RequestParam (required=false) Integer pxrId){
+        try{
+            praticanteResponsavelService.remove(pxrId);
+            return new ResponseEntity<>(new PraticanteResponsavel(), HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(new PraticanteResponsavel(), HttpStatus.FORBIDDEN);
         }
     }
 

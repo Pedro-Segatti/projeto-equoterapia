@@ -43,14 +43,9 @@ public class Praticante implements Serializable {
     private Integer pratPeso;
     @ManyToMany(mappedBy = "praticanteList")
     private List<FichaEvolucao> fichaEvolucaoList;
-    @JoinTable(name = "praticante_responsavel", joinColumns = {
-        @JoinColumn(name = "PXR_ID_PRAT", referencedColumnName = "PRAT_ID")}, inverseJoinColumns = {
-        @JoinColumn(name = "PXR_ID_RESP", referencedColumnName = "RESP_ID")})
-    @ManyToMany
-    private List<Responsavel> responsavelList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "amnIdPraticante")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "praticante")
     private List<FichaAnamnese> fichaAnamneseList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "aftIdPraticante")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "praticante")
     private List<AvalFisioter> avalFisioterList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "axpIdPraticante")
     private List<AgendamentoPraticante> agendamentoPraticanteList;
@@ -58,6 +53,8 @@ public class Praticante implements Serializable {
     private List<Documentos> documentosList = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "praticante")
     private List<AvalSocioecon> avalSocioeconList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "praticante")
+    private List<PraticanteResponsavel> responsaveis;
 
     public Praticante() {
     }
@@ -96,14 +93,6 @@ public class Praticante implements Serializable {
 
     public void setFichaEvolucaoList(List<FichaEvolucao> fichaEvolucaoList) {
         this.fichaEvolucaoList = fichaEvolucaoList;
-    }
-    @JsonIgnore
-    public List<Responsavel> getResponsavelList() {
-        return responsavelList;
-    }
-
-    public void setResponsavelList(List<Responsavel> responsavelList) {
-        this.responsavelList = responsavelList;
     }
     @JsonIgnore
     public List<FichaAnamnese> getFichaAnamneseList() {
@@ -150,6 +139,14 @@ public class Praticante implements Serializable {
 
     public void setPessoa(Pessoa pessoa) {
         this.pessoa = pessoa;
+    }
+
+    public List<PraticanteResponsavel> getResponsaveis() {
+        return responsaveis;
+    }
+
+    public void setResponsaveis(List<PraticanteResponsavel> responsaveis) {
+        this.responsaveis = responsaveis;
     }
 
     @Override

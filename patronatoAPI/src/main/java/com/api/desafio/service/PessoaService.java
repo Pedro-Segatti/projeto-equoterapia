@@ -1,13 +1,14 @@
 package com.api.desafio.service;
 
 import com.api.desafio.crudFiles.PessoaCrud;
-import com.api.desafio.model.*;
+import com.api.desafio.model.Logradouro;
+import com.api.desafio.model.Pais;
+import com.api.desafio.model.Pessoa;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+
 import javax.transaction.Transactional;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
