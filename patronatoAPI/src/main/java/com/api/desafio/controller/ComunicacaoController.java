@@ -220,8 +220,8 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastraFichaEvol")
-    public ResponseEntity<?> cadastrarFichaEvol(@RequestBody FichaEvolucao fichaEvolucao){
-        return fichaEvolService.salva(fichaEvolucao);
+    public ResponseEntity<FichaEvolucao> cadastrarFichaEvol(@RequestBody FichaEvolucao fichaEvolucao){
+         return fichaEvolService.salva(fichaEvolucao);
     }
 
     @CrossOrigin(origins = "*")

@@ -238,8 +238,8 @@ function cadastroFichaEvol() {
         }
     }
 
-    const enviaJsonGravar = () => {
-        const json = {
+    const enviaJsonGravar = async () => {
+        var json = {
             "evolId": evolId,
             "evolClima": evolClima,
             "evolHumor": evolHumor,
@@ -261,8 +261,9 @@ function cadastroFichaEvol() {
             "picadeiroList": evolPicSelecionado.map(picadeiro => (picadeiro)),
             "praticanteList": evolPratSelecionado.map(praticante => (praticante)),
             "funcionarioList": evolFuncSelecionado.map(funcionario => (funcionario)),
-            "fichaEvolAtividadeMaterialList": []
+            "fichaEvolAtividadeMaterialList":[]
         };
+        json = await (await (await api.post("/cadastraFichaEvol", json)).data);
         if (listAtividadeMaterial.length > 0) {
             listAtividadeMaterial.forEach(atvm => {
                 if (atvm.fxatId === "") {
@@ -270,7 +271,6 @@ function cadastroFichaEvol() {
                 }
             });
             json.fichaEvolAtividadeMaterialList = listAtividadeMaterial;
-            console.log(json);
         }
         api.post("/cadastraFichaEvol", json);
         registroSalvo();

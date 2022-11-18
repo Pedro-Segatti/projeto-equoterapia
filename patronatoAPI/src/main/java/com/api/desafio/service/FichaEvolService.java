@@ -19,12 +19,8 @@ public class FichaEvolService {
     @Autowired
     private FichaEvolucaoCrud fec;
 
-    public ResponseEntity<?> salva(FichaEvolucao evolucao) {
-        fec.save(evolucao);
-        ResponseModel rm = new ResponseModel();
-        rm.setMensagem("Ficha de evolução cadastrada com sucesso!");
-        rm.setOcorrencias(null);
-        return new ResponseEntity<ResponseModel>(rm, HttpStatus.OK);
+    public ResponseEntity<FichaEvolucao> salva(FichaEvolucao evolucao) {
+        return new ResponseEntity<FichaEvolucao>(fec.save(evolucao), HttpStatus.OK);
     }
 
     public FichaEvolucao remove(Integer evolId) {

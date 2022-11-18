@@ -77,7 +77,7 @@ public class FichaEvolucao implements Serializable {
     @ManyToMany
     private List<Animal> animalList;
     @JsonManagedReference
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fichaEvolucao")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fichaEvolucao", orphanRemoval = true, fetch = FetchType.EAGER)
     private List<FichaEvolAtividadeMaterial> fichaEvolAtividadeMaterialList;
 
     public FichaEvolucao() {
