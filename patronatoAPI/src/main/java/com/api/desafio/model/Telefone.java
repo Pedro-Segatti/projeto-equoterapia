@@ -1,5 +1,7 @@
 package com.api.desafio.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -60,6 +62,7 @@ public class Telefone implements Serializable {
         this.telNumero = telNumero;
     }
 
+    @JsonIgnore
     public Pessoa getPessoa() {
         return pessoa;
     }

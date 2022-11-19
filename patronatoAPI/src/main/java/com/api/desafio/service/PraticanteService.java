@@ -48,6 +48,5 @@ public class PraticanteService {
         }catch(Exception e){
             e.printStackTrace();
         }
-
     }
 }
