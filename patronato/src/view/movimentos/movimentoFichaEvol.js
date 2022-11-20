@@ -94,6 +94,7 @@ function cadastroFichaEvol() {
     const [evolClima, setEvolClima] = useState("");
     const [evolHumor, setEvolHumor] = useState("");
     const [evolAtenc, setEvolAtenc] = useState("");
+    const [evolData, setEvolData] = useState("");
     const [evolAuton, setEvolAuton] = useState("");
     const [evolEstereotipia, setEvolEstereotipia] = useState("");
     const [evolPost, setEvolPost] = useState("");
@@ -118,6 +119,7 @@ function cadastroFichaEvol() {
         setEvolClima(item.evolClima || '');
         setEvolHumor(item.evolHumor || '');
         setEvolAtenc(item.evolAtenc || '');
+        setEvolData(item.evolData || '');
         setEvolAuton(item.evolAuton || '');
         setEvolEstereotipia(item.evolEstereotipia || '');
         setEvolPost(item.evolPost || '');
@@ -244,6 +246,7 @@ function cadastroFichaEvol() {
             "evolClima": evolClima,
             "evolHumor": evolHumor,
             "evolAtenc": evolAtenc,
+            "evolData": evolData,
             "evolAuton": evolAuton,
             "evolEstereotipia": evolEstereotipia,
             "evolPost": evolPost,
@@ -344,6 +347,7 @@ function cadastroFichaEvol() {
         setEvolAndAni("");
         setEvolClima("");
         setEvolAtenc("");
+        setEvolData("");
         setEvolAuton("");
         setEvolEstereotipia("");
         setEvolPost("");
@@ -424,6 +428,12 @@ function cadastroFichaEvol() {
                             <Col md="2">
                                 <Form.Label htmlFor="inputId">Código</Form.Label>
                                 <Form.Control value={evolId} type="text" id="id" disabled />
+                            </Col>
+                            <Col md="2">
+                                <Form.Label htmlFor="inputData">Data da evolução</Form.Label>
+                                <Form.Control value={evolData}
+                                              onChange={(e) => setEvolData(e.target.value)}
+                                              type="date" id="inputDate" required />
                             </Col>
                         </Row>
                         <Row>

@@ -85,6 +85,7 @@ function movimentoAvalFisioter() {
 
     const atualizaItemSelecionado = (item) => {
         setAftId(item.aftId);
+        setAftData(item.aftData)
         setAftQueixa(item.aftQueixa);
         setAftDiagClin(item.aftDiagClin);
         setAftAnamnese(item.aftAnamnese);
@@ -150,6 +151,7 @@ function movimentoAvalFisioter() {
     const enviaJsonGravar = () => {
         const json = {
             "aftId": aftId,
+            "aftData": aftData,
             "aftQueixa": aftQueixa,
             "aftDiagClin": aftDiagClin,
             "aftAnamnese": aftAnamnese,
@@ -192,7 +194,6 @@ function movimentoAvalFisioter() {
             "aftSistResp": aftSistResp,
             "aftSistCirc": aftSistCirc,
             "aftParecerFisio": aftParecerFisio,
-            "aftData": aftData,
             "aftIdPraticante": aftIdPraticante,
             "aftIdFuncionario": aftIdFuncionario,
             "aftIdMedico": aftIdMedico,
@@ -216,6 +217,7 @@ function movimentoAvalFisioter() {
 
     const limparCamposFormulario = (item) => {
         setAftId("");
+        setAftData("");
         setAftQueixa("");
         setAftDiagClin("");
         setAftAnamnese("");
@@ -304,6 +306,12 @@ function movimentoAvalFisioter() {
                             <Col md="2">
                                 <Form.Label>Código</Form.Label>
                                 <Form.Control value={aftId} type="text" disabled />
+                            </Col>
+                            <Col md="2">
+                                <Form.Label htmlFor="inputData">Data da Avaliação</Form.Label>
+                                <Form.Control value={aftData}
+                                              onChange={(e) => aftData(e.target.value)}
+                                              type="date" id="inputDate" required />
                             </Col>
                         </Row>
                         <Row>

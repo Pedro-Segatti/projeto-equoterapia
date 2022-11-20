@@ -17,7 +17,7 @@ public class DataConfiguration {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setUrl("jdbc:mysql://localhost:3306/patronato");
         dataSource.setUsername("root");
-        dataSource.setPassword("root");
+        dataSource.setPassword("m4n5mn45");
         return dataSource;
     }
 
