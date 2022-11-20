@@ -27,3 +27,11 @@ export const cadastrarPraticante = async (jsonPraticante) => {
 export const atualizarPraticante = async (json) => {
     return api.post("/atualizarPraticante", json);
 };
+
+export const cadastrarResponsavel = async (jsonResponsavel) => {
+    return await api.post("/cadastrarResponsavel", jsonResponsavel);
+};
+
+export const atualizarResponsavel = async (json) => {
+    return api.post("/atualizarResponsavel", json);
+};

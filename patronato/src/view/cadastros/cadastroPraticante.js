@@ -430,6 +430,7 @@ const cadastroPraticante = () => {
             <ReactNotifications />
             <Container>
                 <Form onSubmit={handleSubmit}>
+                <br />
                     <Row>
                         <h3>Cadastro de Praticantes</h3>
                     </Row>
@@ -527,8 +528,6 @@ const cadastroPraticante = () => {
                         </Col>
                     </Row>
 
-                    <br />
-
                     <Row>
                         <Col md="6">
                             <Form.Label htmlFor="inputLogradouro">Logradouro</Form.Label>
@@ -567,7 +566,7 @@ const cadastroPraticante = () => {
                             </Card>
                         </Col>
                     </Row>
-
+                    <br />
                     <Row>
                         <Col md="6">
                             <Card>
