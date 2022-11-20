@@ -65,6 +65,8 @@ public class ComunicacaoController {
     private AvalFisioterService avalFisioterService;
     @Autowired
     private PraticanteResponsavelService praticanteResponsavelService;
+    @Autowired
+    private TelefoneService telefoneService;
 
     @CrossOrigin(origins = "*")
     @GetMapping("/login")
@@ -383,6 +385,9 @@ public class ComunicacaoController {
         JsonElement documentos = jsonConvertido.get("documentosList");
         inserirNovoDocumento(documentos, praticanteExistente);
 
+        JsonElement telefones = jsonConvertido.get("telefones");
+        inserirNovoTelefone(telefones, praticanteExistente.getPessoa());
+
         JsonElement responsaveis = jsonConvertido.get("responsaveis");
         inserirNovoResponsavel(responsaveis, praticanteExistente);
 
@@ -425,14 +430,41 @@ public class ComunicacaoController {
         }
     }
 
+    private void inserirNovoTelefone(JsonElement telefones, Pessoa pessoa){
+        if(!telefones.isJsonNull()){
+            JsonArray telefonesArray = telefones.getAsJsonArray();
+            int tamanhoTels = telefonesArray.size();
+
+            for (int i = 0; i < tamanhoTels; i++){
+                Telefone tel = new Telefone();
+                JsonElement telId = telefonesArray.get(i).getAsJsonObject().get("telId");
+                tel.setTelId(!telId.isJsonNull() ? telId.getAsInt() : null);
+                tel.setPessoa(pessoa);
+                tel.setTelNumero(telefonesArray.get(i).getAsJsonObject().get("telNumero").getAsString());
+                pessoa.getTelefoneList().add(tel);
+            }
+        }
+    }
+
     @CrossOrigin(origins = "*")
     @DeleteMapping("/removerDocumento")
-    public ResponseEntity<Documentos> pesquisaPraticantes(@RequestParam (required=false) Integer docId){
+    public ResponseEntity<Documentos> removerDocumento(@RequestParam (required=false) Integer docId){
         try{
             documentosService.remove(docId);
             return new ResponseEntity<>(new Documentos(), HttpStatus.OK);
         }catch(Exception e){
             return new ResponseEntity<>(new Documentos(), HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/removerTelefone")
+    public ResponseEntity<Telefone> removerTelefone(@RequestParam (required=false) Integer telId){
+        try{
+            telefoneService.remove(telId);
+            return new ResponseEntity<>(new Telefone(), HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(new Telefone(), HttpStatus.FORBIDDEN);
         }
     }
 
