@@ -169,7 +169,6 @@ public class Pessoa implements Serializable {
     public void setPesEmail2(String pesEmail2) {
         this.pesEmail2 = pesEmail2;
     }
-    @JsonIgnore
     public List<Telefone> getTelefoneList() {
         return telefoneList;
     }

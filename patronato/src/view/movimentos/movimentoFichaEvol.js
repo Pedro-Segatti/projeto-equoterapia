@@ -94,6 +94,7 @@ function cadastroFichaEvol() {
     const [evolClima, setEvolClima] = useState("");
     const [evolHumor, setEvolHumor] = useState("");
     const [evolAtenc, setEvolAtenc] = useState("");
+    const [evolData, setEvolData] = useState("");
     const [evolAuton, setEvolAuton] = useState("");
     const [evolEstereotipia, setEvolEstereotipia] = useState("");
     const [evolPost, setEvolPost] = useState("");
@@ -118,6 +119,7 @@ function cadastroFichaEvol() {
         setEvolClima(item.evolClima || '');
         setEvolHumor(item.evolHumor || '');
         setEvolAtenc(item.evolAtenc || '');
+        setEvolData(item.evolData || '');
         setEvolAuton(item.evolAuton || '');
         setEvolEstereotipia(item.evolEstereotipia || '');
         setEvolPost(item.evolPost || '');
@@ -140,12 +142,12 @@ function cadastroFichaEvol() {
     }
 
     const atualizaAtividadeMaterial = () => {
-        if(ativMaterialAtiv.atvDescricao === ""){
-            mensagemCustomizada("Selecione uma atividade","warning");
+        if (ativMaterialAtiv.atvDescricao === "") {
+            mensagemCustomizada("Selecione uma atividade", "warning");
             return;
         }
-        if(ativMaterialMat.matDescricao === ""){
-            mensagemCustomizada("Selecione um material","warning");
+        if (ativMaterialMat.matDescricao === "") {
+            mensagemCustomizada("Selecione um material", "warning");
             return;
         }
         const fichaEvolAtividadeMaterial = {
@@ -244,6 +246,7 @@ function cadastroFichaEvol() {
             "evolClima": evolClima,
             "evolHumor": evolHumor,
             "evolAtenc": evolAtenc,
+            "evolData": evolData,
             "evolAuton": evolAuton,
             "evolEstereotipia": evolEstereotipia,
             "evolPost": evolPost,
@@ -263,7 +266,9 @@ function cadastroFichaEvol() {
             "funcionarioList": evolFuncSelecionado.map(funcionario => (funcionario)),
             "fichaEvolAtividadeMaterialList":[]
         };
-        json = await (await (await api.post("/cadastraFichaEvol", json)).data);
+        if(evolId === ""){
+            json = await (await (await api.post("/cadastraFichaEvol", json)).data);
+        }
         if (listAtividadeMaterial.length > 0) {
             listAtividadeMaterial.forEach(atvm => {
                 if (atvm.fxatId === "") {
@@ -272,7 +277,7 @@ function cadastroFichaEvol() {
             });
             json.fichaEvolAtividadeMaterialList = listAtividadeMaterial;
         }
-        api.post("/cadastraFichaEvol", json);
+        await api.post("/cadastraFichaEvol", json);
         registroSalvo();
     }
 
@@ -344,6 +349,7 @@ function cadastroFichaEvol() {
         setEvolAndAni("");
         setEvolClima("");
         setEvolAtenc("");
+        setEvolData("");
         setEvolAuton("");
         setEvolEstereotipia("");
         setEvolPost("");
@@ -371,37 +377,37 @@ function cadastroFichaEvol() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (evolIdMont.montDescricao === "") {
-            mensagemCustomizada("Selecione uma montaria","warning");
+            mensagemCustomizada("Selecione uma montaria", "warning");
             document.getElementById("botaoMontaria").focus();
             return;
         }
         if (evolClima === "") {
-            mensagemCustomizada("Selecione um clima","warning");
+            mensagemCustomizada("Selecione um clima", "warning");
             document.getElementById("clima").focus();
             return;
         }
         if (evolAniSelecionado.length < 1) {
-            mensagemCustomizada("Selecione ao menos um animal","warning");
+            mensagemCustomizada("Selecione ao menos um animal", "warning");
             document.getElementById("btnAnimal").focus();
             return;
         }
         if (evolPicSelecionado.length < 1) {
-            mensagemCustomizada("Selecione ao menos um Picadeiro","warning");
+            mensagemCustomizada("Selecione ao menos um Picadeiro", "warning");
             document.getElementById("btnPicadeiro").focus();
             return;
         }
         if (evolPratSelecionado.length < 1) {
-            mensagemCustomizada("Selecione ao menos um Praticante","warning");
+            mensagemCustomizada("Selecione ao menos um Praticante", "warning");
             document.getElementById("btnPraticante").focus();
             return;
         }
         if (evolFuncSelecionado.length < 1) {
-            mensagemCustomizada("Selecione ao menos um funcionário","warning");
+            mensagemCustomizada("Selecione ao menos um funcionário", "warning");
             document.getElementById("btnFuncionario").focus();
             return;
         }
         if (listAtividadeMaterial.length < 1) {
-            mensagemCustomizada("Selecione ao menos uma atividade e material","warning");
+            mensagemCustomizada("Selecione ao menos uma atividade e material", "warning");
             document.getElementById("btnAtiv").focus();
             return;
         }
@@ -424,6 +430,12 @@ function cadastroFichaEvol() {
                             <Col md="2">
                                 <Form.Label htmlFor="inputId">Código</Form.Label>
                                 <Form.Control value={evolId} type="text" id="id" disabled />
+                            </Col>
+                            <Col md="2">
+                                <Form.Label htmlFor="inputData">Data da evolução</Form.Label>
+                                <Form.Control value={evolData}
+                                              onChange={(e) => setEvolData(e.target.value)}
+                                              type="date" id="inputDate" required />
                             </Col>
                         </Row>
                         <Row>

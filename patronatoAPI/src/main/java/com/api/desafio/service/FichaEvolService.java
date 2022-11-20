@@ -33,4 +33,8 @@ public class FichaEvolService {
         List<FichaEvolucao> evolucao = (List<FichaEvolucao>) fec.findAll();
         return new ResponseEntity<List<FichaEvolucao>>(evolucao, HttpStatus.OK);
     }
+
+    public FichaEvolucao pesquisaPorCodigo(Integer evolId) {
+        return fec.findById(evolId).orElse(null);
+    }
 }

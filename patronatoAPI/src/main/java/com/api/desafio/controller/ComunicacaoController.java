@@ -21,15 +21,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Base64;
-import java.util.Date;
 import java.util.List;
 
 @RestController
 public class ComunicacaoController {
 
+    @Autowired
+    private FichaEvolAtividadeMaterialService evolAtividadeMaterial;
     @Autowired
     private AnimalService animalService;
     @Autowired
@@ -68,6 +66,8 @@ public class ComunicacaoController {
     private AvalFisioterService avalFisioterService;
     @Autowired
     private PraticanteResponsavelService praticanteResponsavelService;
+    @Autowired
+    private TelefoneService telefoneService;
 
     @CrossOrigin(origins = "*")
     @GetMapping("/login")
@@ -222,6 +222,20 @@ public class ComunicacaoController {
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastraFichaEvol")
     public ResponseEntity<FichaEvolucao> cadastrarFichaEvol(@RequestBody FichaEvolucao fichaEvolucao){
+        if(fichaEvolucao.getEvolId() != null){
+            FichaEvolucao evol = fichaEvolService.pesquisaPorCodigo(fichaEvolucao.getEvolId());
+            for (FichaEvolAtividadeMaterial oldEv : evol.getFichaEvolAtividadeMaterialList()){
+                boolean possui = false;
+                for (FichaEvolAtividadeMaterial newEv : fichaEvolucao.getFichaEvolAtividadeMaterialList()){
+                    if(oldEv.equals(newEv) && newEv.getFxatId() != null){
+                        possui = true;
+                    }
+                }
+                if(!possui){
+                    evolAtividadeMaterial.remove(oldEv.getFxatId());
+                }
+            }
+        }
          return fichaEvolService.salva(fichaEvolucao);
     }
 
@@ -372,6 +386,9 @@ public class ComunicacaoController {
         JsonElement documentos = jsonConvertido.get("documentosList");
         inserirNovoDocumento(documentos, praticanteExistente);
 
+        JsonElement telefones = jsonConvertido.get("telefones");
+        inserirNovoTelefone(telefones, praticanteExistente.getPessoa());
+
         JsonElement responsaveis = jsonConvertido.get("responsaveis");
         inserirNovoResponsavel(responsaveis, praticanteExistente);
 
@@ -414,14 +431,41 @@ public class ComunicacaoController {
         }
     }
 
+    private void inserirNovoTelefone(JsonElement telefones, Pessoa pessoa){
+        if(!telefones.isJsonNull()){
+            JsonArray telefonesArray = telefones.getAsJsonArray();
+            int tamanhoTels = telefonesArray.size();
+
+            for (int i = 0; i < tamanhoTels; i++){
+                Telefone tel = new Telefone();
+                JsonElement telId = telefonesArray.get(i).getAsJsonObject().get("telId");
+                tel.setTelId(!telId.isJsonNull() ? telId.getAsInt() : null);
+                tel.setPessoa(pessoa);
+                tel.setTelNumero(telefonesArray.get(i).getAsJsonObject().get("telNumero").getAsString());
+                pessoa.getTelefoneList().add(tel);
+            }
+        }
+    }
+
     @CrossOrigin(origins = "*")
     @DeleteMapping("/removerDocumento")
-    public ResponseEntity<Documentos> pesquisaPraticantes(@RequestParam (required=false) Integer docId){
+    public ResponseEntity<Documentos> removerDocumento(@RequestParam (required=false) Integer docId){
         try{
             documentosService.remove(docId);
             return new ResponseEntity<>(new Documentos(), HttpStatus.OK);
         }catch(Exception e){
             return new ResponseEntity<>(new Documentos(), HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/removerTelefone")
+    public ResponseEntity<Telefone> removerTelefone(@RequestParam (required=false) Integer telId){
+        try{
+            telefoneService.remove(telId);
+            return new ResponseEntity<>(new Telefone(), HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(new Telefone(), HttpStatus.FORBIDDEN);
         }
     }
 

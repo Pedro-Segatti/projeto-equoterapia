@@ -67,6 +67,8 @@ const cadastroPraticante = () => {
     const [listResponsveisSelecionados, setListResponsveisSelecionados] = useState([]);
     const [abrirPesquisaResponsaveis, setAbrirPesquisaResponsaveis] = useState(false);
 
+    const [listTelefones, setListTelefones] = useState([]);
+
     const criarDocumento = (e) => {
         const jsonItem = {
             "docId": null,
@@ -91,6 +93,16 @@ const cadastroPraticante = () => {
         }
     }
 
+    const criarTelefone = (e) => {
+        const jsonItem = {
+            "telId": null,
+            "telNumero": "",
+            "telIdPessoa": ""
+        }
+
+        setListTelefones(tel => [...tel, jsonItem]);
+    }
+
     const atualizaDlgPesquisaResponsaveis = async () => {
         setListResponsveis(await (await api.get("/pesquisaResponsavel?pesCpf=" + null + "&pesNome=" + null)).data);
         setAbrirPesquisaResponsaveis(true);
@@ -112,7 +124,9 @@ const cadastroPraticante = () => {
         item.pxrTipoResp = grauPar;
     }
 
-
+    const atualizaTelefone = (item, telefone) => {
+        item.telNumero = telefone;
+    }
 
     const convertBase64ToFile = (base64String, fileName) => {
         let arr = base64String.split(',');
@@ -181,6 +195,30 @@ const cadastroPraticante = () => {
         }
     }
 
+    const removeTelefoneSelecionado = async (e) => {
+        try {
+            if (e.telId == null) {
+                setListTelefones(current =>
+                    current.filter(tel => {
+                        return tel.telId !== e.telId;
+                    }),
+                );
+            } else {
+                const response = await (await api.delete("/removerTelefone?telId=" + e.telId));
+                if (response.status === HTTP_STATUS.OK) {
+                    setListTelefones(current =>
+                        current.filter(tel => {
+                            return tel.telId !== e.telId;
+                        }),
+                    );
+                    mensagemCustomizada("Telefone Excluído com Sucesso", "success");
+                }
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     const atualizaDlgPesquisa = async () => {
         setList(await (await api.get("/pesquisaPraticantes")).data);
         setAbrirPesquisa(true);
@@ -229,6 +267,7 @@ const cadastroPraticante = () => {
         setAbrirPesquisa(false);
         setListDocumentos(item.documentosList);
         setListResponsveisSelecionados(item.responsaveis);
+        setListTelefones(item.pessoa.telefoneList);
     }
 
     const limparCamposFormulario = () => {
@@ -250,6 +289,7 @@ const cadastroPraticante = () => {
         setPesLogDescricao("");
         setListDocumentos([]);
         setListResponsveisSelecionados([]);
+        setListTelefones([])
     }
 
     const handleSubmit = async (e) => {
@@ -270,7 +310,8 @@ const cadastroPraticante = () => {
                 "pratAltura": pratAltura,
                 "pratPeso": pratPeso,
                 "documentosList": listDocumentos,
-                "responsaveis": listResponsveisSelecionados
+                "responsaveis": listResponsveisSelecionados,
+                "telefones": listTelefones
             }
 
             return jsonPraticante;
@@ -423,6 +464,48 @@ const cadastroPraticante = () => {
         </tr>
     }
 
+    const TabelaTelefones = ({ data, rowsPerPage, removeResp }) => {
+        const [pagina, setPage] = useState(1);
+        const { slice, range } = useTable(data, pagina, rowsPerPage);
+        return (
+            <>
+                <Table size="sm">
+                    <thead>
+                        <tr>
+                            <th>Número</th>
+                            <th className='center'>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            slice.map(item => <LinhaTabelaTelefones key={item.telId} item={item} removeTelefoneSelecionado={removeTelefoneSelecionado} />)
+                        }
+                    </tbody>
+                </Table>
+                <TableFooter range={range} slice={slice} setPage={setPage} page={pagina} />
+            </>
+        );
+    };
+
+    const LinhaTabelaTelefones = ({ item, removeTelefoneSelecionado }) => {
+        const [telNumero, setTelNumero] = useState(item.telNumero);
+
+        const removerItem = e => removeTelefoneSelecionado(item);
+
+        console.log(item);
+
+        return <tr>
+            <td width={'100px'}>
+                <Form.Control value={telNumero}
+                    onChange={(e) => setTelNumero(e.target.value)}
+                    as={IMaskInput} inputMode="numeric" id="inputTel" mask="(00) 0 0000-0000" maxLength="16" required onComplete={atualizaTelefone(item, telNumero)}/>
+            </td>
+            <td width={'80px'} className='center'>
+                <Button className='btn-danger' onClick={removerItem}><BsFillTrashFill /></Button>
+            </td>
+        </tr>
+    }
+
 
     return (
         <div>
@@ -452,7 +535,7 @@ const cadastroPraticante = () => {
                         </Col>
                     </Row>
                     <Row>
-                        <Col md="6">
+                        <Col md="12">
                             <Form.Label htmlFor="inputNome">Nome</Form.Label>
                             <Form.Control value={pesNome}
                                 onChange={(e) => setPesNome(e.target.value)}
@@ -460,13 +543,13 @@ const cadastroPraticante = () => {
                         </Col>
                     </Row>
                     <Row>
-                        <Col md="3">
+                        <Col md="6">
                             <Form.Label htmlFor="inputDate">Data de Nascimento</Form.Label>
                             <Form.Control value={pesDataNasc}
                                 onChange={(e) => setPesDataNasc(e.target.value)}
                                 type="date" id="inputDate" required />
                         </Col>
-                        <Col md="3">
+                        <Col md="6">
                             <Form.Label htmlFor="inputCpf">CPF</Form.Label>
                             <Form.Control id="inputCpf" type="text" maxLength='14' as={IMaskInput} inputMode="numeric"
                                 mask="000.000.000-00" placeholder='Digite aqui o seu CPF...' required value={pesCpf} onChange={(l) => setPesCpf(l.target.value)} />
@@ -474,7 +557,7 @@ const cadastroPraticante = () => {
                     </Row>
 
                     <Row>
-                        <Col md="3">
+                        <Col md="6">
                             <Form.Label htmlFor="inputSexo">Sexo</Form.Label>
                             <Form.Select id='inputSexo' required
                                 value={pesSexo}
@@ -484,7 +567,7 @@ const cadastroPraticante = () => {
                                 <option value="M">Masculino</option>
                             </Form.Select>
                         </Col>
-                        <Col md="3">
+                        <Col md="6">
                             <Form.Label htmlFor="inputNacionalidade">Nacionalidade</Form.Label>
                             <Form.Select id='inputNacionalidade' required
                                 value={pesNacionalidade}
@@ -495,7 +578,7 @@ const cadastroPraticante = () => {
                         </Col>
                     </Row>
                     <Row>
-                        <Col md="6">
+                        <Col md="12">
                             <Form.Label htmlFor="inputEmailP">Email Principal</Form.Label>
                             <Form.Control value={pesEmail1}
                                 onChange={(e) => setPesEmail1(e.target.value)}
@@ -503,7 +586,7 @@ const cadastroPraticante = () => {
                         </Col>
                     </Row>
                     <Row>
-                        <Col md="6">
+                        <Col md="12">
                             <Form.Label htmlFor="inputEmailS">Email Secundário</Form.Label>
                             <Form.Control value={pesEmail2}
                                 onChange={(e) => setPesEmail2(e.target.value)}
@@ -511,7 +594,7 @@ const cadastroPraticante = () => {
                         </Col>
                     </Row>
                     <Row>
-                        <Col md="3">
+                        <Col md="6">
                             <Form.Label htmlFor="inputPratAltura">Altura (cm)</Form.Label>
                             <div >
                                 <Form.Control value={pratAltura}
@@ -520,7 +603,7 @@ const cadastroPraticante = () => {
                             </div>
                         </Col>
 
-                        <Col md="3">
+                        <Col md="6">
                             <Form.Label htmlFor="inputPratPeso">Peso (g)</Form.Label>
                             <Form.Control value={pratPeso}
                                 onChange={(e) => setPratPeso(e.target.value)}
@@ -539,7 +622,7 @@ const cadastroPraticante = () => {
                             <Form.Label htmlFor="inputEndNum">Número</Form.Label>
                             <Form.Control value={pesEndNum} type="text" id="inputEndNum" onChange={(e) => setPesEndNum(e.target.value)} required />
                         </Col>
-                        <Col md="4">
+                        <Col md="10">
                             <Form.Label htmlFor="inputEndCompl">Complemento</Form.Label>
                             <Form.Control value={pesEndCompl}
                                 onChange={(e) => setPesEndCompl(e.target.value)}
@@ -550,14 +633,38 @@ const cadastroPraticante = () => {
                     <br />
 
                     <Row>
-                        <Col md="6">
+                        <Col md="12">
                             <Card>
                                 <div className='marginLeft'>
                                     <Row>
-                                        <Col md="6">
+                                        <Col md="12">
+                                            <b>Telefones</b>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col md="12">
+                                            <Button variant="primary" className='btn-success btnMarginTop' onClick={criarTelefone}>Adicionar</Button>
+                                        </Col>
+                                    </Row>
+                                    <TabelaTelefones data={listTelefones} rowsPerPage={5} selecionaLinha={false} removeResp={removeTelefoneSelecionado} />
+                                </div>
+                            </Card>
+                        </Col>
+                    </Row>
+
+                    <br />
+
+                    <Row>
+                        <Col md="12">
+                            <Card>
+                                <div className='marginLeft'>
+                                    <Row>
+                                        <Col md="12">
                                             <b>Responsáveis</b>
                                         </Col>
-                                        <Col md="2">
+                                    </Row>
+                                    <Row>
+                                        <Col md="12">
                                             <Button variant="primary" className='btn-success btnMarginTop' onClick={atualizaDlgPesquisaResponsaveis}>Adicionar</Button>
                                         </Col>
                                     </Row>
@@ -566,16 +673,21 @@ const cadastroPraticante = () => {
                             </Card>
                         </Col>
                     </Row>
+
                     <br />
+
                     <Row>
-                        <Col md="6">
+                        <Col md="12">
                             <Card>
                                 <div className='marginLeft'>
                                     <Row>
-                                        <Col md="6">
+                                        <Col md="12">
                                             <b>Documentos</b>
                                         </Col>
-                                        <Col md="2">
+                                    </Row>
+
+                                    <Row>
+                                        <Col md="12">
                                             <Form.Control type="file" id="inputDoc" accept="image/*, application/pdf" onChange={criarDocumento} />
                                             <Form.Label htmlFor="inputDoc" className='label-input-file-pqn'>Anexar Documento</Form.Label>
                                         </Col>
