@@ -38,7 +38,7 @@ const Menu = () => {
               <NavDropdown.Item href="/cadastroAnimais">Animais</NavDropdown.Item>
               <NavDropdown.Item href="/cadastroPraticantes">Praticantes</NavDropdown.Item>
               <NavDropdown.Item href="/cadastroAtividade">Atividades</NavDropdown.Item>
-              <NavDropdown.Item href="/cadastroMaterial">Materiais de Encilhamento</NavDropdown.Item>
+              <NavDropdown.Item href="/cadastroMaterial">Materiais</NavDropdown.Item>
               <NavDropdown.Item href="/cadastroPicadeiro">Picadeiro</NavDropdown.Item>
               <NavDropdown.Item href="/cadastroCargo">Cargos</NavDropdown.Item>
               <NavDropdown.Item href="/cadastroMontaria">Montaria</NavDropdown.Item>

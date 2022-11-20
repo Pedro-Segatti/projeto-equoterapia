@@ -105,7 +105,7 @@ function cadastroAnimais() {
                             </Col>
                         </Row>
                         <Row>
-                            <Col md="6">
+                            <Col md="12">
                                 <Form.Label htmlFor="inputNome">Nome</Form.Label>
                                 <Form.Control value={aniNome} maxLength={60}
                                     onChange={(e) => setAniNome(e.target.value)}
@@ -113,13 +113,13 @@ function cadastroAnimais() {
                             </Col>
                         </Row>
                         <Row>
-                            <Col md="3">
+                            <Col md="6">
                                 <Form.Label htmlFor="inputIdade">Idade</Form.Label>
                                 <Form.Control value={aniIdade} min={1} max={200}
                                     onChange={(e) => setAniIdade(e.target.value)}
                                     type="number" id="idade" />
                             </Col>
-                            <Col md="3">
+                            <Col md="6">
                                 <Form.Label htmlFor="inputPorte">Porte</Form.Label>
                                 <Form.Select aria-label="Default select example" id='porte' required
                                     value={aniPorte}
@@ -132,7 +132,7 @@ function cadastroAnimais() {
                             </Col>
                         </Row>
                         <Row>
-                            <Col md="6">
+                            <Col md="12">
                                 <Form.Label htmlFor="inputComportamento">Comportamento</Form.Label>
                                 <Form.Control type="text" id="comportamento"
                                     value={aniComportamento} maxLength={60}
@@ -140,7 +140,7 @@ function cadastroAnimais() {
                             </Col>
                         </Row>
                         <Row>
-                            <Col md="6">
+                            <Col md="12">
                                 <Form.Label htmlFor="inputAndadura">Andadura</Form.Label>
                                 <Form.Control type="text" id="andadura"
                                     value={aniAndadura} maxLength={60}

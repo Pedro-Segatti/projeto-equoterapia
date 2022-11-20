@@ -130,7 +130,7 @@ function cadastroCargo() {
                             </Col>
                         </Row>
                         <Row>
-                            <Col md="6">
+                            <Col md="12">
                                 <Form.Label htmlFor="inputDescricao">Descrição</Form.Label>
                                 <Form.Control value={carDescricao} maxLength={100}
                                     onChange={(e) => setCarDescricao(e.target.value)}

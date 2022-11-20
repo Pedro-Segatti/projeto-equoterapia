@@ -82,7 +82,7 @@ function cadastroMaterial() {
                             </Col>
                         </Row>
                         <Row>
-                            <Col md="6">
+                            <Col md="12">
                                 <Form.Label htmlFor="inputDescricao">Descrição</Form.Label>
                                 <Form.Control value={matDescricao} maxLength={60}
                                     onChange={(e) => setMatDescricao(e.target.value)}

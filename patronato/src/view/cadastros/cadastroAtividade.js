@@ -86,7 +86,7 @@ function cadastroAtividade() {
                             </Col>
                         </Row>
                         <Row>
-                            <Col md="6">
+                            <Col md="12">
                                 <Form.Label htmlFor="inputDescricao">Descrição</Form.Label>
                                 <Form.Control value={atvDescricao} maxLength={100}
                                     onChange={(e) => setAtvDescricao(e.target.value)}
@@ -94,7 +94,7 @@ function cadastroAtividade() {
                             </Col>
                         </Row>
                         <Row>
-                            <Col md="3">
+                            <Col md="6">
                                 <Form.Label htmlFor="inputDuracao">Duração (min)</Form.Label>
                                 <Form.Control value={atvDuracao} min={1} max={1000}
                                     onChange={(e) => setAtvDuracao(e.target.value)}

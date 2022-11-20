@@ -105,7 +105,7 @@ function cadastroBairro() {
                             </Col>
                         </Row>
                         <Row>
-                            <Col md="6">
+                            <Col md="12">
                                 <Form.Label htmlFor="bairro">Nome</Form.Label>
                                 <Form.Control value={barNome} maxLength={100}
                                     onChange={(e) => setBarNome(e.target.value)}
