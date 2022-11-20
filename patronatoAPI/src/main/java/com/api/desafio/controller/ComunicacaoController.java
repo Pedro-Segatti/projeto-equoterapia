@@ -20,15 +20,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Base64;
-import java.util.Date;
 import java.util.List;
 
 @RestController
 public class ComunicacaoController {
 
+    @Autowired
+    private FichaEvolAtividadeMaterialService evolAtividadeMaterial;
     @Autowired
     private AnimalService animalService;
     @Autowired
@@ -221,6 +219,20 @@ public class ComunicacaoController {
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastraFichaEvol")
     public ResponseEntity<FichaEvolucao> cadastrarFichaEvol(@RequestBody FichaEvolucao fichaEvolucao){
+        if(fichaEvolucao.getEvolId() != null){
+            FichaEvolucao evol = fichaEvolService.pesquisaPorCodigo(fichaEvolucao.getEvolId());
+            for (FichaEvolAtividadeMaterial oldEv : evol.getFichaEvolAtividadeMaterialList()){
+                boolean possui = false;
+                for (FichaEvolAtividadeMaterial newEv : fichaEvolucao.getFichaEvolAtividadeMaterialList()){
+                    if(oldEv.equals(newEv) && newEv.getFxatId() != null){
+                        possui = true;
+                    }
+                }
+                if(!possui){
+                    evolAtividadeMaterial.remove(oldEv.getFxatId());
+                }
+            }
+        }
          return fichaEvolService.salva(fichaEvolucao);
     }
 
