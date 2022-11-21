@@ -23,10 +23,9 @@ public class FichaEvolService {
         return new ResponseEntity<FichaEvolucao>(fec.save(evolucao), HttpStatus.OK);
     }
 
-    public FichaEvolucao remove(Integer evolId) {
+    public void remove(Integer evolId) {
         FichaEvolucao evolucao = fec.findById(evolId).orElse(null);
         fec.delete(evolucao);
-        return evolucao;
     }
 
     public ResponseEntity<List<FichaEvolucao>> pesquisa(Integer evolId) {

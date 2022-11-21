@@ -74,7 +74,7 @@ function pesquisaFuncionario({ setValores, valores, atualizaItemSelecionado, set
         return (
             <>
                 <Modal className='modal-xl' show={true}>
-                    <Modal.Header><b>Pesquisa de Funcionarios</b></Modal.Header>
+                    <Modal.Header><b>Pesquisa de Funcionários</b></Modal.Header>
                     <Modal.Body>
                         <Container>
                             <Form>

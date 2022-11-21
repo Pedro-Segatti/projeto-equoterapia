@@ -45,6 +45,7 @@ public class Praticante implements Serializable {
     private List<FichaEvolucao> fichaEvolucaoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "amnIdPraticante")
     private List<FichaAnamnese> fichaAnamneseList;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "aftIdPraticante")
     private List<AvalFisioter> avalFisioterList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "praticante")

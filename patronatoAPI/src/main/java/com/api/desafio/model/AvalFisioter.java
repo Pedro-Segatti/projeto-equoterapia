@@ -1,21 +1,10 @@
 package com.api.desafio.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import java.util.List;
+import javax.persistence.*;
 
 /**
  *
@@ -123,6 +112,8 @@ public class AvalFisioter implements Serializable {
     private String aftMtrVesteSoz;
     @Column(name = "AFT_MTR_CONT_ESFINCT")
     private String aftMtrContEsfinct;
+    @Column(name = "AFT_MTR_COMENT")
+    private String aftMtrComent;
     @Column(name = "AFT_FMUSC_MMSS")
     private String aftFmuscMmss;
     @Column(name = "AFT_FMUSC_MMII")
@@ -141,6 +132,8 @@ public class AvalFisioter implements Serializable {
     private Boolean aftPreenPalmar;
     @Column(name = "AFT_PREEN_PINCA")
     private Boolean aftPreenPinca;
+    @Column(name = "AFT_PREEN_OBS")
+    private String aftPreenObs;
     @Column(name = "AFT_MOV_PASSIVA")
     private String aftMovPassiva;
     @Column(name = "AFT_MOV_RESPIRA")
@@ -175,6 +168,8 @@ public class AvalFisioter implements Serializable {
     @JoinColumn(name = "AFT_ID_PRATICANTE", referencedColumnName = "PRAT_ID")
     @ManyToOne(optional = false)
     private Praticante aftIdPraticante;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "avalFisioter", orphanRemoval = true)
+    private List<AnexoAft> anexosList = new ArrayList<>();
 
     public AvalFisioter() {
     }
@@ -495,6 +490,14 @@ public class AvalFisioter implements Serializable {
         this.aftMtrContEsfinct = aftMtrContEsfinct;
     }
 
+    public String getAftMtrComent() {
+        return aftMtrComent;
+    }
+
+    public void setAftMtrComent(String aftMtrComent) {
+        this.aftMtrComent = aftMtrComent;
+    }
+
     public String getAftFmuscMmss() {
         return aftFmuscMmss;
     }
@@ -557,6 +560,22 @@ public class AvalFisioter implements Serializable {
 
     public void setAftPreenPinca(Boolean aftPreenPinca) {
         this.aftPreenPinca = aftPreenPinca;
+    }
+
+    public String getAftPreenObs() {
+        return aftPreenObs;
+    }
+
+    public void setAftPreenObs(String aftPreenObs) {
+        this.aftPreenObs = aftPreenObs;
+    }
+
+    public List<AnexoAft> getAnexosList() {
+        return anexosList;
+    }
+
+    public void setAnexosList(List<AnexoAft> anexosList) {
+        this.anexosList = anexosList;
     }
 
     public String getAftMovPassiva() {

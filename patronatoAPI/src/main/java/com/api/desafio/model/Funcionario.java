@@ -52,6 +52,7 @@ public class Funcionario implements Serializable {
     private List<Cargo> cargoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "amnIdFuncionario")
     private List<FichaAnamnese> fichaAnamneseList;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "aftIdFuncionario")
     private List<AvalFisioter> avalFisioterList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "axfIdFuncionario")

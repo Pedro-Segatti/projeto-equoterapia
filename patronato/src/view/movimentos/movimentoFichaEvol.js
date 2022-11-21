@@ -492,7 +492,7 @@ function cadastroFichaEvol() {
                             </Col>
                             <Col md="3">
                                 <Form.Label htmlFor="decubito">Decubito</Form.Label>
-                                <Form.Select id='decubito' required value={evolClima}
+                                <Form.Select id='decubito' required value={evolDecubito}
                                     onChange={(e) => setEvolDecubito(e.target.value)}>
                                     <option>Selecione</option>
                                     <option value="C">Clássica</option>
