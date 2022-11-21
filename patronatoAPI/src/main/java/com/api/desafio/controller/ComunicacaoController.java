@@ -10,6 +10,7 @@ import com.api.desafio.service.AnimalService;
 import com.api.desafio.service.AvalSocioeconService;
 import com.api.desafio.service.FichaEvolService;
 import com.api.desafio.service.PessoaService;
+import com.api.desafio.service.ResponsavelService;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -509,6 +510,43 @@ public class ComunicacaoController {
         }
     }
 
+///////////////////////////////////////////
+    @CrossOrigin(origins = "*")
+    @PostMapping("/cadastrarResponsavel")
+    public ResponseEntity<?> cadastrarResponsavel(@RequestBody String jsonResponsavel){
+        JsonObject jsonConvertido = new Gson().fromJson(jsonResponsavel, JsonObject.class);
+        Responsavel novoResponsavel = new Responsavel();
+
+        JsonElement idPessoa = jsonConvertido.get("pessoaId");
+        if(idPessoa.isJsonNull()){
+            return new ResponseEntity<Responsavel>(novoResponsavel, HttpStatus.FORBIDDEN);
+        }
+
+        Pessoa pes = pessoaService.getPessoaByPesId(idPessoa.getAsInt());
+        novoResponsavel.setPessoa(pes);
+        novoResponsavel.setRespProfissao(jsonConvertido.get("respProfissao").getAsString());
+        novoResponsavel = responsavelService.salva(novoResponsavel);
+
+        return new ResponseEntity<Responsavel>(novoResponsavel, HttpStatus.OK);
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/atualizarResponsavel")
+    public ResponseEntity<?> atualizarResponsavel(@RequestBody String jsonResponsavel){
+        JsonObject jsonConvertido = new Gson().fromJson(jsonResponsavel, JsonObject.class);
+        Responsavel responsavelExistente = responsavelService.getResponsavelById(jsonConvertido.get("respId").getAsInt());
+
+        if(responsavelExistente == null){
+            return new ResponseEntity<Responsavel>(responsavelExistente, HttpStatus.FORBIDDEN);
+        }
+
+        responsavelExistente.setRespProfissao(jsonConvertido.get("respProfissao").getAsString());
+
+        responsavelExistente = responsavelService.salva(responsavelExistente);
+
+        return new ResponseEntity<Responsavel>(responsavelExistente, HttpStatus.OK);
+    }
+
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaMedico")
     public ResponseEntity<List<Medico>> pesquisaMedico(@RequestParam (required=false) String pesCpf,@RequestParam (required=false) String pesNome){
@@ -520,6 +558,19 @@ public class ComunicacaoController {
     public ResponseEntity<List<Responsavel>> pesquisaResponsavel(@RequestParam (required=false) String pesCpf,@RequestParam (required=false) String pesNome){
         return responsavelService.pesquisaResponsavel(pesCpf, pesNome);
     }
+
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/removeResponsavel")
+    public ResponseEntity<Responsavel> removeResponsavel(@RequestParam Integer respId){
+        try{
+            Responsavel responsavel = responsavelService.remove(respId);
+            return new ResponseEntity<>(new Responsavel(), HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(new Responsavel(), HttpStatus.FORBIDDEN);
+        }
+    }
+
+//////////////////////////////////////////////////////
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaFuncionario")

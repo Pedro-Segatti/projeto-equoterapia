@@ -18,6 +18,7 @@ function movimentoAvalSocioecon() {
 
     //Variáveis de cadastro
     const [aseId, setAseId] = useState("");
+    const [aseData, setAseData] = useState("");
     const [aseObsContFam, setAseObsContFam] = useState("");
     const [aseObsMedicamentos, setAseObsMedicamentos] = useState("");
     const [praticante, setPraticante] = useState({"pessoa":{"pesNome":""}});
@@ -43,6 +44,7 @@ function movimentoAvalSocioecon() {
 
     const atualizaItemSelecionado = (item) => {
         setAseId(item.aseId);
+        setAseData(item.aseData);
         setAseObsContFam(item.aseObsContFam);
         setAseObsMedicamentos(item.aseObsMedicamentos);
         setPraticante(item.praticante);
@@ -52,6 +54,7 @@ function movimentoAvalSocioecon() {
     const enviaJsonGravar = () => {
         const json = {
             "aseId": aseId,
+            "aseData": aseData,
             "aseObsContFam": aseObsContFam,
             "aseObsMedicamentos": aseObsMedicamentos,
             "praticante": praticante
@@ -77,6 +80,7 @@ function movimentoAvalSocioecon() {
 
     const limparCamposFormulario = () => {
         setAseId("");
+        setAseData("");
         setAseObsContFam("");
         setAseObsMedicamentos("");
         setPraticante({"pessoa":{"pesNome":""}});
@@ -108,6 +112,12 @@ function movimentoAvalSocioecon() {
                             <Col md="2">
                                 <Form.Label htmlFor="aseId">Código</Form.Label>
                                 <Form.Control value={aseId} type="text" id="id" disabled />
+                            </Col>
+                            <Col md="2">
+                                <Form.Label htmlFor="inputData">Data da Avaliação</Form.Label>
+                                <Form.Control value={aseData}
+                                              onChange={(e) => aseData(e.target.value)}
+                                              type="date" id="inputDate" required />
                             </Col>
                         </Row>
                         <Row>
