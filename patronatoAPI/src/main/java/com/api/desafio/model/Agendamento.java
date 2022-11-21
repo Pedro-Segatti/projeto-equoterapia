@@ -1,19 +1,11 @@
 package com.api.desafio.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 /**
  *
@@ -35,8 +27,9 @@ public class Agendamento implements Serializable {
     @Basic(optional = false)
     @Column(name = "AGD_DESCRICAO")
     private String agdDescricao;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "axpIdAgendamento")
-    private List<AgendamentoPraticante> agendamentoPraticanteList;
+    @JoinColumn(name = "AGD_ID_PRATICANTE", referencedColumnName = "PRAT_ID")
+    @ManyToOne(optional = false)
+    private Praticante praticante;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "axmIdAgendamento")
     private List<AgendamentoMaterial> agendamentoMaterialList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "axfIdAgendamento")
@@ -81,12 +74,12 @@ public class Agendamento implements Serializable {
         this.agdDescricao = agdDescricao;
     }
 
-    public List<AgendamentoPraticante> getAgendamentoPraticanteList() {
-        return agendamentoPraticanteList;
+    public Praticante getPraticante() {
+        return praticante;
     }
 
-    public void setAgendamentoPraticanteList(List<AgendamentoPraticante> agendamentoPraticanteList) {
-        this.agendamentoPraticanteList = agendamentoPraticanteList;
+    public void setPraticante(Praticante praticante) {
+        this.praticante = praticante;
     }
 
     public List<AgendamentoMaterial> getAgendamentoMaterialList() {

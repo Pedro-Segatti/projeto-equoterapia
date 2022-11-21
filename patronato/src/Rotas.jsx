@@ -22,6 +22,8 @@ import CadastroLogradouro from "./view/cadastros/cadastroLogradouro";
 import MovimentoFichaEvol from "./view/movimentos/movimentoFichaEvol";
 import MovimentoAvalFisioter from "./view/movimentos/movimentoAvalFisioter";
 import MovimentoAvalSocioecon from "./view/movimentos/movimentoAvalSocioecon";
+import MovimentoAgendamentoSessao from "./view/movimentos/movimentoAgendamentoSessao";
+
 import Carregando from "./view/carregando";
 
 import { AuthContext, AuthProvider } from "./contexts/autenticacao";
@@ -58,6 +60,7 @@ const Rotas = () => {
                     <Route exact path="/cadastroMontaria" element={<Private><CadastroMontaria /></Private>} />
                     <Route exact path="/cadastroBairro" element={<Private><CadastroBairro /></Private>} />
                     <Route exact path="/cadastroLogradouro" element={<Private><CadastroLogradouro /></Private>} />
+                    <Route exact path="/movimentoAgendamentoSessao" element={<Private><MovimentoAgendamentoSessao /></Private>} />
                     <Route exact path="/movimentoFichaEvol" element={<Private><MovimentoFichaEvol /></Private>} />
                     <Route exact path="/movimentoAvalSocioecon" element={<Private><MovimentoAvalSocioecon /></Private>} />
                     <Route exact path="/movimentoAvalFisioter" element={<Private><MovimentoAvalFisioter /></Private>} />

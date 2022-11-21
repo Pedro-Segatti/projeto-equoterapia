@@ -20,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -67,6 +68,8 @@ public class ComunicacaoController {
     private PraticanteResponsavelService praticanteResponsavelService;
     @Autowired
     private TelefoneService telefoneService;
+    @Autowired
+    private AgendamentoService agendamentoService;
 
     @CrossOrigin(origins = "*")
     @GetMapping("/login")
@@ -283,6 +286,35 @@ public class ComunicacaoController {
     public ResponseEntity<?> cadastrarAvalSocioEcon(@RequestBody AvalSocioecon avalSocioEcon){
         return avalSocioeconService.salva(avalSocioEcon);
     }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/cadastrarAgendamento")
+    public ResponseEntity<?> cadastrarAgendamento(@RequestBody Agendamento agendamento){
+        agendamento = agendamentoService.salva(agendamento);
+        if(agendamento != null){
+            return new ResponseEntity<>(agendamento, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(new Agendamento(), HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/removerAgendamento")
+    public ResponseEntity<?> removerAgendamento(@RequestParam Integer agdId){
+        try{
+            agendamentoService.remove(agdId);
+            return new ResponseEntity<>(new Agendamento(), HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(new Agendamento(), HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/pesquisaAgendamentos")
+    public ResponseEntity<List<Agendamento>> pesquisaAgendamentos(@RequestParam (required=false) Integer pratId, @RequestParam (required=false) Date agdData){
+        return agendamentoService.pesquisaAgendamentos(pratId, agdData);
+    }
+
     @CrossOrigin(origins = "*")
     @DeleteMapping("/removeAvalSocioEcon")
     public ResponseEntity<AvalSocioecon> removerAvalSocioEcon(@RequestParam Integer aseId){

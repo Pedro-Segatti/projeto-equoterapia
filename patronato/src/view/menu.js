@@ -47,6 +47,7 @@ const Menu = () => {
             </NavDropdown>
 
             <NavDropdown title="Movimentos" id="basic-nav-dropdown">
+              <NavDropdown.Item href="/movimentoAgendamentoSessao">Agendamento de Sessão</NavDropdown.Item>
               <NavDropdown.Item href="/movimentoFichaEvol">Ficha de Evolução</NavDropdown.Item>
               <NavDropdown.Item href="/movimentoAvalSocioecon">Avaliação Socioeconômica</NavDropdown.Item>
               <NavDropdown.Item href="/movimentoAvalFisioter">Avaliação Fisioterápica</NavDropdown.Item>

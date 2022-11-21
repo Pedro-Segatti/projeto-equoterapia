@@ -47,8 +47,6 @@ public class Praticante implements Serializable {
     private List<FichaAnamnese> fichaAnamneseList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "aftIdPraticante")
     private List<AvalFisioter> avalFisioterList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "axpIdPraticante")
-    private List<AgendamentoPraticante> agendamentoPraticanteList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "praticante")
     private List<Documentos> documentosList = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "praticante")
@@ -109,14 +107,6 @@ public class Praticante implements Serializable {
 
     public void setAvalFisioterList(List<AvalFisioter> avalFisioterList) {
         this.avalFisioterList = avalFisioterList;
-    }
-    @JsonIgnore
-    public List<AgendamentoPraticante> getAgendamentoPraticanteList() {
-        return agendamentoPraticanteList;
-    }
-
-    public void setAgendamentoPraticanteList(List<AgendamentoPraticante> agendamentoPraticanteList) {
-        this.agendamentoPraticanteList = agendamentoPraticanteList;
     }
     public List<Documentos> getDocumentosList() {
         return documentosList;
