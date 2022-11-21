@@ -34,4 +34,9 @@ public class AvalFisioterService {
         List<AvalFisioter> avalFisioter = (List<AvalFisioter>) afc.findAll();
         return new ResponseEntity<List<AvalFisioter>>(avalFisioter, HttpStatus.OK);
     }
+
+    public AvalFisioter pesquisaPeloCodigo(Integer id) {
+        return afc.findById(id).orElse(null);
+    }
+
 }

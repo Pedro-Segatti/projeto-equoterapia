@@ -63,12 +63,12 @@ button {
   font-size: 12px !important;
 }
 
-.btnMarginTop{
+.btnMarginTop {
   margin-top: 5px;
   margin-right: 5px;
 }
 
-.textArea{
+.textArea {
   height: 70px;
 }
 
@@ -77,8 +77,13 @@ button {
   height: 35px;
 }
 
-.alturaLogin{
+.alturaLogin {
   height: auto !important;
+}
+
+.icone {
+  margin-left: 5px;
+  margin-bottom: -2px;
 }
 
 @media(max-width: 1000px) {
@@ -133,7 +138,7 @@ button {
     margin-bottom: -10px;
   }
 
-  .marginLeft{
+  .marginLeft {
     margin-left: 5px !important;
   }
 }
@@ -141,6 +146,7 @@ button {
 input[type="file"] {
   display: none;
 }
+
 .label-input-file {
   padding: 20px 10px;
   width: 300px;
@@ -175,13 +181,14 @@ input[type="file"] {
   justify-content: center;
 }
 
-#imgPrat{
+#imgPrat {
   max-height: 200px;
   max-width: 300px;
   border-radius: 8px;
   border: 2px solid #B48F69;
 }
 
-img, svg {
+img,
+svg {
   vertical-align: baseline !important;
 }

@@ -20,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -59,6 +60,10 @@ public class ComunicacaoController {
     private ResponsavelService responsavelService;
     @Autowired
     private FuncionarioService funcionarioService;
+    @Autowired
+    private MedicoService medicoService;
+    @Autowired
+    private AnexoAftService anexoAftService;
     @Autowired
     private DocumentosService documentosService;
     @Autowired
@@ -258,6 +263,14 @@ public class ComunicacaoController {
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastraAvalFisioter")
     public ResponseEntity<?> cadastrarAvalFisioter(@RequestBody AvalFisioter avalFisioter){
+        for (AnexoAft anex: avalFisioter.getAnexosList()) {
+            if (anex.getAvalFisioter() == null) {
+                anex.setAvalFisioter(avalFisioter);
+            }
+        }
+        Date date = avalFisioter.getAftData();
+        date.setTime(date.getTime() + ((4 * 60 * 60)*1000));
+        avalFisioter.setAftData(date);
         return avalFisioterService.salva(avalFisioter);
     }
 
@@ -494,6 +507,12 @@ public class ComunicacaoController {
         }catch(Exception e){
             return new ResponseEntity<>(new Praticante(), HttpStatus.FORBIDDEN);
         }
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/pesquisaMedico")
+    public ResponseEntity<List<Medico>> pesquisaMedico(@RequestParam (required=false) String pesCpf,@RequestParam (required=false) String pesNome){
+        return medicoService.pesquisaMedico(pesCpf, pesNome);
     }
 
     @CrossOrigin(origins = "*")

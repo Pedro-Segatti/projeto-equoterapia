@@ -21,7 +21,7 @@ export const TableFuncionariosPaginada = ({ data, rowsPerPage, selecionaLinha, a
                 </thead>
                 <tbody>
                     {
-                        slice.map(item => <LinhaTabela key={item.funcId} item={item} selecionaLinha={selecionaLinha} atualizaItemSelecionado={atualizaItemSelecionado} removeItemSelecionado={removeItemSelecionado} />)
+                        slice.map(item => <LinhaTabela key={item.medId} item={item} selecionaLinha={selecionaLinha} atualizaItemSelecionado={atualizaItemSelecionado} removeItemSelecionado={removeItemSelecionado} />)
                     }
                 </tbody>
             </Table>
@@ -31,13 +31,13 @@ export const TableFuncionariosPaginada = ({ data, rowsPerPage, selecionaLinha, a
 };
 
 const LinhaTabela = ({ item, selecionaLinha, atualizaItemSelecionado, removeItemSelecionado }) => {
-    const { funcId } = item;
+    const { medId } = item;
     const { pesNome, pesCpf } = item.pessoa;
     const selecionarItem = e => atualizaItemSelecionado(item);
     const removerItem = e => removeItemSelecionado(item);
 
     return <tr>
-        <td width={'80px'}>{funcId}</td>
+        <td width={'80px'}>{medId}</td>
         <td width={'100px'}>{pesNome}</td>
         <td width={'100px'}>{pesCpf}</td>
         {selecionaLinha &&
@@ -50,16 +50,15 @@ const LinhaTabela = ({ item, selecionaLinha, atualizaItemSelecionado, removeItem
                 <Button className='btn-danger' onClick={removerItem}><BsXLg /></Button>
             </td>
         }
-
     </tr>
 }
 
-function pesquisaFuncionario({ setValores, valores, atualizaItemSelecionado, setAbrirPesquisa }) {
+function pesquisaMedico({ setValores, valores, atualizaItemSelecionado, setAbrirPesquisa }) {
     const [pesNomePesquisa, setPesNomePesquisa] = useState("");
     const [pesCpfPesquisa, setPesCpfPesquisa] = useState("");
 
     const buscaRegistros = async () => {
-        setValores(await (await api.get("/pesquisaFuncionario?pesCpf=" + pesCpfPesquisa + "&pesNome=" + pesNomePesquisa)).data);
+        setValores(await (await api.get("/pesquisaMedico?pesCpf=" + pesCpfPesquisa + "&pesNome=" + pesNomePesquisa)).data);
         setAbrirPesquisa(true);
     }
 
@@ -70,11 +69,11 @@ function pesquisaFuncionario({ setValores, valores, atualizaItemSelecionado, set
         buscaRegistros();
     }
 
-    const pesquisaFuncionario = () => {
+    const pesquisaMedico = () => {
         return (
             <>
                 <Modal className='modal-xl' show={true}>
-                    <Modal.Header><b>Pesquisa de Funcionários</b></Modal.Header>
+                    <Modal.Header><b>Pesquisa de Médicos</b></Modal.Header>
                     <Modal.Body>
                         <Container>
                             <Form>
@@ -107,6 +106,6 @@ function pesquisaFuncionario({ setValores, valores, atualizaItemSelecionado, set
             </>
         )
     }
-    return pesquisaFuncionario();
+    return pesquisaMedico();
 }
-export default pesquisaFuncionario;
+export default pesquisaMedico;
