@@ -404,6 +404,9 @@ public class ComunicacaoController {
         JsonElement documentos = jsonConvertido.get("documentosList");
         inserirNovoDocumento(documentos, novoPraticante);
 
+        JsonElement telefones = jsonConvertido.get("telefones");
+        inserirNovoTelefone(telefones, novoPraticante.getPessoa());
+
         JsonElement responsaveis = jsonConvertido.get("responsaveis");
         inserirNovoResponsavel(responsaveis, novoPraticante);
 
