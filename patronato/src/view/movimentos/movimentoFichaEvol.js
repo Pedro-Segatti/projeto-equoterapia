@@ -349,7 +349,7 @@ function cadastroFichaEvol() {
         setEvolAndAni("");
         setEvolClima("");
         setEvolAtenc("");
-        setEvolData("");
+        setEvolData(Date().now);
         setEvolAuton("");
         setEvolEstereotipia("");
         setEvolPost("");

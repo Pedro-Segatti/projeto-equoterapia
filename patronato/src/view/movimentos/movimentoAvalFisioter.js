@@ -1,28 +1,17 @@
 import React, { useState } from 'react';
-import { Form, Col, Row, Container, Card, Table, Button } from 'react-bootstrap';
-import { BsFillTrashFill, BsDownload } from "react-icons/bs";
-import useTable from '../table/useTable';
-import TableFooter from '../table/tableFooter';
+import { Form, Col, Row, Container } from 'react-bootstrap';
 import Toolbar from '../toolbar';
-import PesquisaAvalFisioter from "../pesquisas/pesquisaAvalFisioter";
-import PesquisaPraticantes from "../pesquisas/pesquisaPraticantes";
-import PesquisaFuncionario from "../pesquisas/pesquisaFuncionario";
-import PesquisaMedico from "../pesquisas/pesquisaMedico";
-import { BsInfoCircleFill } from "react-icons/bs";
-import { registroSalvo } from "../../utilitario/mensagemUtil";
-import { ReactNotifications } from 'react-notifications-component';
-import 'react-notifications-component/dist/theme.css';
+import PesquisaAvalSocioEcon from "../pesquisas/pesquisaAvalSocioecon";
+
+import { registroSalvo } from "../../utilitario/mensagemUtil"
+import { ReactNotifications } from 'react-notifications-component'
+import 'react-notifications-component/dist/theme.css'
 import { api } from "../../utilitario/baseComunicacao";
-import Menu from "../menu";
-import Footer from "../footer";
-import InputConverter from "../inputConverter";
-import { saveAs } from 'file-saver';
+import Menu from "../menu"
+import Footer from "../footer"
 
 function movimentoAvalFisioter() {
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
-    const [abrirPesquisaPraticante, setAbrirPesquisaPraticante] = useState(false);
-    const [abrirPesquisaFuncionario, setAbrirPesquisaFuncionario] = useState(false);
-    const [abrirPesquisaMedico, setAbrirPesquisaMedico] = useState(false);
 
     //Variáveis de cadastro
     const [aftId, setAftId] = useState("");
@@ -44,9 +33,6 @@ function movimentoAvalFisioter() {
     const [aftSenseTatil, setAftSenseTatil] = useState(false);
     const [aftSenseDolo, setAftSenseDolo] = useState(false);
     const [aftSenseTerm, setAftSenseTerm] = useState(false);
-    const selecionaSenseTatil = () => setAftSenseTatil(!aftSenseTatil)
-    const selecionaSenseDolo = () => setAftSenseDolo(!aftSenseDolo)
-    const selecionaSenseTerm = () => setAftSenseTerm(!aftSenseTerm)
     const [aftSenseObs, setAftSenseObs] = useState("");
     const [aftEquiEstDin, setAftEquiEstDin] = useState("");
     const [aftAmotoHipe, setAftAmotoHipe] = useState(false);
@@ -56,13 +42,6 @@ function movimentoAvalFisioter() {
     const [aftAmotoContEsp, setAftAmotoContEsp] = useState(false);
     const [aftAmotoDefAtx, setAftAmotoDefAtx] = useState(false);
     const [aftAmotoClonus, setAftAmotoClonus] = useState(false);
-    const selecionaAmotoHipe = () => setAftAmotoHipe(!aftAmotoHipe)
-    const selecionaAmotoHipo = () => setAftAmotoHipo(!aftAmotoHipo)
-    const selecionaAmotoCor = () => setAftAmotoCor(!aftAmotoCor)
-    const selecionaAmotoAte = () => setAftAmotoAte(!aftAmotoAte)
-    const selecionaAmotoContEsp = () => setAftAmotoContEsp(!aftAmotoContEsp)
-    const selecionaAmotoDefAtx = () => setAftAmotoDefAtx(!aftAmotoDefAtx)
-    const selecionaAmotoClonus = () => setAftAmotoClonus(!aftAmotoClonus)
     const [aftAmotoObs, setAftAmotoObs] = useState("");
     const [aftMarLocAtu, setAftMarLocAtu] = useState("");
     const [aftAvalPostSolCav, setAftAvalPostSolCav] = useState("");
@@ -74,7 +53,6 @@ function movimentoAvalFisioter() {
     const [aftMtrNegMembro, setAftMtrNegMembro] = useState("");
     const [aftMtrVesteSoz, setAftMtrVesteSoz] = useState("");
     const [aftMtrContEsfinct, setAftMtrContEsfinct] = useState("");
-    const [aftMtrComent, setAftMtrComent] = useState("");
     const [aftFmuscMmss, setAftFmuscMmss] = useState("");
     const [aftFmuscMmii, setAftFmuscMmii] = useState("");
     const [aftFmuscTronco, setAftFmuscTronco] = useState("");
@@ -83,9 +61,6 @@ function movimentoAvalFisioter() {
     const [aftCmotoDinObs, setAftCmotoDinObs] = useState("");
     const [aftPreenPalmar, setAftPreenPalmar] = useState(false);
     const [aftPreenPinca, setAftPreenPinca] = useState(false);
-    const [aftPreenObs, setAftPreenObs] = useState("");
-    const selecionaPreenPalmar = () => setAftPreenPalmar(!aftPreenPalmar)
-    const selecionaPreenPinca = () => setAftPreenPinca(!aftPreenPinca)
     const [aftMovPassiva, setAftMovPassiva] = useState("");
     const [aftMovRespira, setAftMovRespira] = useState("");
     const [aftMovDegluti, setAftMovDegluti] = useState("");
@@ -95,18 +70,13 @@ function movimentoAvalFisioter() {
     const [aftSistResp, setAftSistResp] = useState("");
     const [aftSistCirc, setAftSistCirc] = useState("");
     const [aftParecerFisio, setAftParecerFisio] = useState("");
-    const [aftData, setAftData] = useState("");
-    const [anexosList, setAnexosList] = useState([]);
-
+    const [aftData, setAftData] = useState(Date.now());
     const [aftIdFuncionario, setAftIdFuncionario] = useState({ "pessoa": { "pesNome": "" } });
     const [aftIdPraticante, setAftIdPraticante] = useState({ "pessoa": { "pesNome": "" } });
     const [aftIdMedico, setAftIdMedico] = useState({ "pessoa": { "pesNome": "" } });
 
     //variáveis da dialog de pesquisa
     var [list, setList] = useState([]);
-    var [listPraticantes, setListPraticantes] = useState([]);
-    var [listFuncionarios, setListFuncionarios] = useState([]);
-    var [listMedicos, setListMedicos] = useState([]);
 
     const atualizaDlgPesquisa = async () => {
         setList(await (await api.get("/pesquisaAvalFisioter")).data);
@@ -141,7 +111,6 @@ function movimentoAvalFisioter() {
         setAftMtrNegMembro(item.aftMtrNegMembro);
         setAftMtrVesteSoz(item.aftMtrVesteSoz);
         setAftMtrContEsfinct(item.aftMtrContEsfinct);
-        setAftMtrComent(item.aftMtrComent);
         setAftFmuscMmss(item.aftFmuscMmss);
         setAftFmuscMmii(item.aftFmuscMmii);
         setAftFmuscTronco(item.aftFmuscTronco);
@@ -150,7 +119,6 @@ function movimentoAvalFisioter() {
         setAftCmotoDinObs(item.aftCmotoDinObs);
         setAftPreenPalmar(item.aftPreenPalmar);
         setAftPreenPinca(item.aftPreenPinca);
-        setAftPreenObs(item.aftPreenObs);
         setAftMovPassiva(item.aftMovPassiva);
         setAftMovRespira(item.aftMovDegluti);
         setAftMovDegluti(item.aftMovDegluti);
@@ -177,7 +145,6 @@ function movimentoAvalFisioter() {
         setAftDiagFisioFunc(item.aftDiagFisioFunc);
         setAftMedicamentos(item.aftMedicamentos);
         setAftSinVit(item.aftSinVit);
-        setAnexosList(item.anexosList);
         setAbrirPesquisa(false);
     }
 
@@ -192,7 +159,7 @@ function movimentoAvalFisioter() {
             "aftExameFis": aftExameFis,
             "aftRefPrimTend": aftRefPrimTend,
             "aftSenseTatil": aftSenseTatil,
-            "tSenseDolo": aftSenseDolo,
+            "aftSenseDolo": aftSenseDolo,
             "aftSenseTerm": aftSenseTerm,
             "aftSenseObs": aftSenseObs,
             "aftAmotoHipe": aftAmotoHipe,
@@ -210,7 +177,6 @@ function movimentoAvalFisioter() {
             "aftMtrNegMembro": aftMtrNegMembro,
             "aftMtrVesteSoz": aftMtrVesteSoz,
             "aftMtrContEsfinct": aftMtrContEsfinct,
-            "aftMtrComent": aftMtrComent,
             "aftFmuscMmss": aftFmuscMmss,
             "aftFmuscMmii": aftFmuscMmii,
             "aftFmuscTronco": aftFmuscTronco,
@@ -219,7 +185,6 @@ function movimentoAvalFisioter() {
             "aftCmotoDinObs": aftCmotoDinObs,
             "aftPreenPalmar": aftPreenPalmar,
             "aftPreenPinca": aftPreenPinca,
-            "aftPreenObs": aftPreenObs,
             "aftMovPassiva": aftMovPassiva,
             "aftMovRespira": aftMovRespira,
             "aftMovDegluti": aftMovDegluti,
@@ -244,14 +209,13 @@ function movimentoAvalFisioter() {
             "aftDiagFisioFunc": aftDiagFisioFunc,
             "aftDesMotoNeuroCtronc": aftDesMotoNeuroCtronc,
             "aftDesMotoNeuroCcerv": aftDesMotoNeuroCcerv,
-            "aftDesMotoNeuroRolou": aftDesMotoNeuroRolou,
-            "anexosList": anexosList
+            "aftDesMotoNeuroRolou": aftDesMotoNeuroRolou
         };
         api.post("/cadastraAvalFisioter", json);
         registroSalvo();
     }
 
-    const limparCamposFormulario = () => {
+    const limparCamposFormulario = (item) => {
         setAftId("");
         setAftData("");
         setAftQueixa("");
@@ -259,7 +223,7 @@ function movimentoAvalFisioter() {
         setAftAnamnese("");
         setAftRotTerapia("");
         setAftExameFis("");
-        setAftRefPrimTend("");
+        setAftRefPrimTend("");        
         setAftSenseTatil(false);
         setAftSenseDolo(false);
         setAftSenseTerm(false);
@@ -279,7 +243,6 @@ function movimentoAvalFisioter() {
         setAftMtrNegMembro("");
         setAftMtrVesteSoz("");
         setAftMtrContEsfinct("");
-        setAftMtrComent("");
         setAftFmuscMmss("");
         setAftFmuscMmii("");
         setAftFmuscTronco("");
@@ -288,7 +251,6 @@ function movimentoAvalFisioter() {
         setAftCmotoDinObs("");
         setAftPreenPalmar(false);
         setAftPreenPinca(false);
-        setAftPreenObs("");
         setAftMovPassiva("");
         setAftMovRespira("");
         setAftMovDegluti("");
@@ -298,7 +260,7 @@ function movimentoAvalFisioter() {
         setAftSistResp("");
         setAftSistCirc("");
         setAftParecerFisio("");
-        setAftData("");
+        setAftData(Date().now);
         setAftIdMedico({ "pessoa": { "pesNome": "" } });
         setAftIdFuncionario({ "pessoa": { "pesNome": "" } });
         setAftIdPraticante({ "pessoa": { "pesNome": "" } });
@@ -314,132 +276,13 @@ function movimentoAvalFisioter() {
         setAftDesMotoNeuroCcerv("");
         setAftDiagFisioFunc("");
         setAftMedicamentos("");
-        setAnexosList([]);
         setAftSinVit("");
+
         setAbrirPesquisa(false);
     }
 
     const enviaJsonRemove = () => {
         api.delete("/removeAvalFisioter?aftId=" + aftId);
-    }
-
-    const atualizaDlgPesquisaPraticantes = async () => {
-        setListPraticantes(await (await api.get("/pesquisaPraticantes")).data);
-        setAbrirPesquisaPraticante(true);
-    }
-
-    const atualizaDlgPesquisaFuncionarios = async () => {
-        setListFuncionarios(await (await api.get("/pesquisaFuncionario?pesCpf=&pesNome=")).data);
-        setAbrirPesquisaFuncionario(true);
-    }
-
-    const atualizaDlgPesquisaMedicos = async () => {
-        setListMedicos(await (await api.get("/pesquisaMedico?pesCpf=&pesNome=")).data);
-        setAbrirPesquisaMedico(true);
-    }
-
-    const atualizaMedicoSelecionado = async (item) => {
-        await setAftIdMedico(item);
-        setAbrirPesquisaMedico(false);
-    }
-
-    const atualizaPraticanteSelecionado = async (item) => {
-        await setAftIdPraticante(item);
-        setAbrirPesquisaPraticante(false);
-    }
-
-    const atualizaFuncionarioSelecionado = async (item) => {
-        await setAftIdFuncionario(item);
-        setAbrirPesquisaFuncionario(false);
-    }
-
-    const convertBase64ToFile = (base64String, fileName) => {
-        let arr = base64String.split(',');
-        let mime = arr[0].match(/:(.*?);/)[1];
-        let bstr = atob(arr[1]);
-        let n = bstr.length;
-        let uint8Array = new Uint8Array(n);
-        while (n--) {
-            uint8Array[n] = bstr.charCodeAt(n);
-        }
-        let file = new File([uint8Array], fileName, { type: mime });
-        return file;
-    }
-
-    const baixarArquivo = (e) => {
-        let file = convertBase64ToFile(e.aaftExamComp, e.aaftDescricao);
-        saveAs(file, e.aaftDescricao);
-    }
-
-    const removeDocumentoSelecionado = (item) => {
-        var array = [...anexosList];
-        var index = array.indexOf(item);
-        if (index !== -1) {
-            array.splice(index, 1);
-            setAnexosList(array);
-        }
-    }
-
-    const criarAnexo = (e) => {
-        const jsonItem = {
-            "aaftId": null,
-            "aaftDescricao": "",
-            "aaftExamComp": "",
-            "avalFisioter": ""
-        }
-
-        try {
-            const reader = new FileReader();
-            reader.onload = () => {
-                if (reader.readyState === 2) {
-                    jsonItem.aaftExamComp = reader.result;
-                    jsonItem.aaftDescricao = e.target.files[0].name;
-                    setAnexosList(doc => [...doc, jsonItem]);
-                }
-            }
-            reader.readAsDataURL(e.target.files[0]);
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    const TabelaDocumentos = ({ data, rowsPerPage, removeDocumentoSelecionado }) => {
-        const [pagina, setPage] = useState(1);
-        const { slice, range } = useTable(data, pagina, rowsPerPage);
-        return (
-            <>
-                <Table size="sm">
-                    <thead>
-                        <tr>
-                            <th>Descrição</th>
-                            <th className='center'>Ação</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            slice.map(item => <LinhaTabelaDocumentos key={item.aaftDescricao} item={item} removeDocumentoSelecionado={removeDocumentoSelecionado} />)
-                        }
-                    </tbody>
-                </Table>
-                <TableFooter range={range} slice={slice} setPage={setPage} page={pagina} />
-            </>
-        );
-    };
-
-    const LinhaTabelaDocumentos = ({ item, removeDocumentoSelecionado }) => {
-        const { aaftDescricao } = item;
-
-        const removerItem = e => removeDocumentoSelecionado(item);
-        const baixarItem = e => baixarArquivo(item);
-
-        return <tr>
-            <td width={'100px'}>{aaftDescricao}</td>
-
-            <td width={'80px'} className='center'>
-                <Button className='btn-succes' onClick={baixarItem}><BsDownload /></Button>
-                <Button className='btn-danger' onClick={removerItem}><BsFillTrashFill /></Button>
-            </td>
-        </tr>
     }
 
     const handleSubmit = async (e) => {
@@ -452,8 +295,8 @@ function movimentoAvalFisioter() {
         return (
             <div>
                 <Menu />
-                <ReactNotifications />
-                <Container>
+                <Container className="vh-100">
+                    <ReactNotifications />
                     <Form onSubmit={handleSubmit}>
                         <br />
                         <Row>
@@ -465,35 +308,10 @@ function movimentoAvalFisioter() {
                                 <Form.Control value={aftId} type="text" disabled />
                             </Col>
                             <Col md="2">
-                                <Form.Label htmlFor="inputData">Data da Avaliação</Form.Label>
+                                <Form.Label htmlFor="inputDate">Data da avaliação</Form.Label>
                                 <Form.Control value={aftData}
-                                              onChange={(e) => aftData(e.target.value)}
+                                              onChange={(e) => setAftData(e.target.value)}
                                               type="date" id="inputDate" required />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md="2">
-                                <Form.Label>Data</Form.Label>
-                                <Form.Control value={aftData} type="date" required
-                                    onChange={(e) => setAftData(e.target.value)} />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md="6">
-                                <Form.Label>Praticante</Form.Label>
-                                <InputConverter idBtn={"botaoPraticante"} descricao={aftIdPraticante.pessoa.pesNome} atualizaDlgPesquisa={atualizaDlgPesquisaPraticantes} />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md="6">
-                                <Form.Label>Funcionário</Form.Label>
-                                <InputConverter idBtn={"botaoFuncionario"} descricao={aftIdFuncionario.pessoa.pesNome} atualizaDlgPesquisa={atualizaDlgPesquisaFuncionarios} />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md="6">
-                                <Form.Label>Médico</Form.Label>
-                                <InputConverter idBtn={"botaoMedico"} descricao={aftIdMedico.pessoa.pesNome} atualizaDlgPesquisa={atualizaDlgPesquisaMedicos} />
                             </Col>
                         </Row>
                         <Row>
@@ -520,392 +338,41 @@ function movimentoAvalFisioter() {
                             <Col md="6">
                                 <Form.Label>Rotina Diária/Terapias/ Avd’s:</Form.Label>
                                 <Form.Control value={aftRotTerapia}
-                                    onChange={(e) => setAftRotTerapia(e.target.value)}
-                                    type="text" as="textarea" className='textArea' />
+                                              onChange={(e) => setAftRotTerapia(e.target.value)}
+                                              type="text" as="textarea" className='textArea' />
                             </Col>
                         </Row>
                         <Row>
+
                             <Col md="6">
                                 <Form.Label>Exame Físico</Form.Label>
-                                <BsInfoCircleFill className='icone' title='Inspeção: (pele, cicatriz, ulcera, edema, deformidades, secreções)
-                                Palpação / Trofismo muscular: (tipo de dor, contratura, ºC, nódulos, crepitação, prótese)' />
                                 <Form.Control value={aftExameFis}
                                     onChange={(e) => setAftExameFis(e.target.value)}
                                     type="text" as="textarea" className='textArea' />
                             </Col>
                             <Col md="6">
-                                <Form.Label>Estereotipias/Reflexos Primitivos e Tendíneos:</Form.Label>
+                                <Form.Label>Estereotipias/Reflexos Primitivos E Tendíneos:</Form.Label>
                                 <Form.Control value={aftRefPrimTend}
-                                    onChange={(e) => setAftRefPrimTend(e.target.value)}
-                                    type="text" as="textarea" className='textArea' />
+                                              onChange={(e) => setAftRefPrimTend(e.target.value)}
+                                              type="text" as="textarea" className='textArea' />
                             </Col>
                         </Row>
                         <Row>
-                            <Form.Label>Desenvolvimento Motor/Neuropsicomotor:</Form.Label>
-                            <Col md="3">
-                                <Form.Label>Controle cervical:</Form.Label>
-                                <Form.Control value={aftDesMotoNeuroCcerv}
-                                    onChange={(e) => setAftDesMotoNeuroCcerv(e.target.value)}
-                                    type="text" maxLength={20} />
-                                <Form.Label>Controle de tronco:</Form.Label>
-                                <Form.Control value={aftDesMotoNeuroCtronc}
-                                    onChange={(e) => setAftDesMotoNeuroCtronc(e.target.value)}
-                                    type="text" maxLength={20} />
-                                <Form.Label>Rolou:</Form.Label>
-                                <Form.Control value={aftDesMotoNeuroRolou}
-                                    onChange={(e) => setAftDesMotoNeuroRolou(e.target.value)}
-                                    type="text" maxLength={20} />
+                            <Col>
+                                <Form.Label>Inspeção: (pele, cicatriz, ulcera, edema, deformidades,secreções)</Form.Label>
+                                <Form.Label>Palpação/ Trofismo muscular: (tipo de dor, contratura, ºC, nódulos, crepitação, prótese):</Form.Label>
                             </Col>
-                            <Col md="3">
-                                <Form.Label>Engatinhou:</Form.Label>
-                                <Form.Control value={aftDesMotoNeuroEngat}
-                                    onChange={(e) => setAftDesMotoNeuroEngat(e.target.value)}
-                                    type="text" maxLength={20} />
-                                <Form.Label>Andou:</Form.Label>
-                                <Form.Control value={aftDesMotoNeuroAnd}
-                                    onChange={(e) => setAftDesMotoNeuroAnd(e.target.value)}
-                                    type="text" maxLength={20} />
-                            </Col>
-                            <Col md="6">
-                                <Form.Label>Observação</Form.Label>
-                                <Form.Control value={aftDesMotoNeuroObs}
-                                    onChange={(e) => setAftDesMotoNeuroObs(e.target.value)}
-                                    type="text" as="textarea" className='textArea' />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md="6">
-                                <Form.Label>Sensibilidade:</Form.Label>
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaSenseTatil}
-                                    type="checkbox" label="Tátil" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaSenseTerm}
-                                    type="checkbox" label="Térmica" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaSenseDolo}
-                                    type="checkbox" label="Dolorosa" />
-                            </Col>
-                            <Col md="6">
-                                <Form.Label>Observação:</Form.Label>
-                                <Form.Control value={aftSenseObs}
-                                    onChange={(e) => setAftSenseObs(e.target.value)}
-                                    type="text" as="textarea" className='textArea' />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md="6">
-                                <Form.Label>Equilibrio Estático/Dinâmico:</Form.Label>
-                                <BsInfoCircleFill className='icone' title=' (sustentação sentado, em pé, com e sem apoio, apoio unipodal - cabeça, tronco), engatinhar, marcha, saltar com pés juntos, desviar obstáculos' />
-                                <Form.Control value={aftExameFis}
-                                    onChange={(e) => setAftExameFis(e.target.value)}
-                                    type="text" as="textarea" className='textArea' />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Form.Label>Alteração Motora:</Form.Label>
-                            <Col md="3">
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaAmotoCor}
-                                    type="checkbox" label="Coréia" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaAmotoHipe}
-                                    type="checkbox" label="Hipertonia" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaAmotoAte}
-                                    type="checkbox" label="Atetose" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaAmotoContEsp}
-                                    type="checkbox" label="Contratura Espasticidade" />
-                            </Col>
-                            <Col md="3">
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaAmotoDefAtx}
-                                    type="checkbox" label="Ataxia" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaAmotoClonus}
-                                    type="checkbox" label="Clônus" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaAmotoHipo}
-                                    type="checkbox" label="Hipotonia" />
-                            </Col>
-                            <Col md="6">
-                                <Form.Label>Observação:</Form.Label>
-                                <Form.Control value={aftAmotoObs}
-                                    onChange={(e) => setAftAmotoObs(e.target.value)}
-                                    type="text" as="textarea" className='textArea' />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md="6">
-                                <Form.Label>Marcha/Locomoção Atual:</Form.Label>
-                                <Form.Control value={aftMarLocAtu}
-                                    onChange={(e) => setAftMarLocAtu(e.target.value)}
-                                    type="text" as="textarea" className='textArea' />
-                            </Col>
-                            <Col md="6">
-                                <Form.Label>Avaliação Postural Solo/Cavalo:</Form.Label>
-                                <Form.Control value={aftAvalPostSolCav}
-                                    onChange={(e) => setAftAvalPostSolCav(e.target.value)}
-                                    type="text" as="textarea" className='textArea' />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Form.Label>Motricidade:</Form.Label>
-                            <Col md="3">
-                                <Form.Label>Alcance de objetos</Form.Label>
-                                <Form.Select required value={aftMtrAlcObj}
-                                    onChange={(e) => setAftMtrAlcObj(e.target.value)}>
-                                    <option>Selecione</option>
-                                    <option value="P">Presente</option>
-                                    <option value="A">Ausente</option>
-                                    <option value="N">Normal</option>
-                                    <option value="A">Anormal</option>
-                                </Form.Select>
-                                <Form.Label> Alimenta-se</Form.Label>
-                                <Form.Select required value={aftMtrAlimen}
-                                    onChange={(e) => setAftMtrAlimen(e.target.value)}>
-                                    <option>Selecione</option>
-                                    <option value="P">Presente</option>
-                                    <option value="A">Ausente</option>
-                                    <option value="N">Normal</option>
-                                    <option value="A">Anormal</option>
-                                </Form.Select>
-                                <Form.Label>Preensão de objetos</Form.Label>
-                                <Form.Select required value={aftMtrPreenObj}
-                                    onChange={(e) => setAftMtrPreenObj(e.target.value)}>
-                                    <option>Selecione</option>
-                                    <option value="P">Presente</option>
-                                    <option value="A">Ausente</option>
-                                    <option value="N">Normal</option>
-                                    <option value="A">Anormal</option>
-                                </Form.Select>
-                                <Form.Label>Higieniza-se</Form.Label>
-                                <Form.Select required value={aftMtrHigieni}
-                                    onChange={(e) => setAftMtrHigieni(e.target.value)}>
-                                    <option>Selecione</option>
-                                    <option value="P">Presente</option>
-                                    <option value="A">Ausente</option>
-                                    <option value="N">Normal</option>
-                                    <option value="A">Anormal</option>
-                                </Form.Select>
-                            </Col>
-                            <Col md="3">
-                                <Form.Label>Uso bimanual</Form.Label>
-                                <Form.Select required value={aftMtrUsoBimanual}
-                                    onChange={(e) => setAftMtrUsoBimanual(e.target.value)}>
-                                    <option>Selecione</option>
-                                    <option value="P">Presente</option>
-                                    <option value="A">Ausente</option>
-                                    <option value="N">Normal</option>
-                                    <option value="A">Anormal</option>
-                                </Form.Select>
-                                <Form.Label>Negligência de membro</Form.Label>
-                                <Form.Select required value={aftMtrNegMembro}
-                                    onChange={(e) => setAftMtrNegMembro(e.target.value)}>
-                                    <option>Selecione</option>
-                                    <option value="P">Presente</option>
-                                    <option value="A">Ausente</option>
-                                    <option value="N">Normal</option>
-                                    <option value="A">Anormal</option>
-                                </Form.Select>
-                                <Form.Label>Veste-se</Form.Label>
-                                <Form.Select required value={aftMtrVesteSoz}
-                                    onChange={(e) => setAftMtrVesteSoz(e.target.value)}>
-                                    <option>Selecione</option>
-                                    <option value="P">Presente</option>
-                                    <option value="A">Ausente</option>
-                                    <option value="N">Normal</option>
-                                    <option value="A">Anormal</option>
-                                </Form.Select>
-                                <Form.Label>Controle de esfíncteres</Form.Label>
-                                <Form.Select required value={aftMtrContEsfinct}
-                                    onChange={(e) => setAftMtrContEsfinct(e.target.value)}>
-                                    <option>Selecione</option>
-                                    <option value="P">Presente</option>
-                                    <option value="A">Ausente</option>
-                                    <option value="N">Normal</option>
-                                    <option value="A">Anormal</option>
-                                </Form.Select>
-                            </Col>
-                            <Col md="6">
-                                <Form.Label>Comentários:</Form.Label>
-                                <Form.Control value={aftMtrComent}
-                                    onChange={(e) => setAftMtrComent(e.target.value)}
-                                    type="text" as="textarea" className='textArea' />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Form.Label>Testes: Goniometria (ADM) / Força Muscular:</Form.Label>
-                            <Col md="3">
-                                <Form.Label>MMII</Form.Label>
-                                <Form.Select required value={aftFmuscMmii}
-                                    onChange={(e) => setAftFmuscMmii(e.target.value)}>
-                                    <option>Selecione</option>
-                                    <option value="P">Presente</option>
-                                    <option value="A">Ausente</option>
-                                    <option value="N">Normal</option>
-                                    <option value="A">Anormal</option>
-                                </Form.Select>
-                                <Form.Label>MMSS</Form.Label>
-                                <Form.Select required value={aftFmuscMmss}
-                                    onChange={(e) => setAftFmuscMmss(e.target.value)}>
-                                    <option>Selecione</option>
-                                    <option value="P">Presente</option>
-                                    <option value="A">Ausente</option>
-                                    <option value="N">Normal</option>
-                                    <option value="A">Anormal</option>
-                                </Form.Select>
-                                <Form.Label>Cervical/Tronco</Form.Label>
-                                <Form.Select required value={aftFmuscTronco}
-                                    onChange={(e) => setAftFmuscTronco(e.target.value)}>
-                                    <option>Selecione</option>
-                                    <option value="P">Presente</option>
-                                    <option value="A">Ausente</option>
-                                    <option value="N">Normal</option>
-                                    <option value="A">Anormal</option>
-                                </Form.Select>
-                            </Col>
-                            <Col md="3"></Col>
-                            <Col md="6">
-                                <Form.Label>Observação:</Form.Label>
-                                <Form.Control value={aftFmuscObs}
-                                    onChange={(e) => setAftFmuscObs(e.target.value)}
-                                    type="text" as="textarea" className='textArea' />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Form.Label>Coordenação Motora:</Form.Label>
-                            <Col md="6">
-                                <Form.Label>Estática:</Form.Label>
-                                <BsInfoCircleFill className='icone' title='(sustentação cabeça, tronco, podal, unipodal)' />
-                                <Form.Control value={aftCmotoEstObs}
-                                    onChange={(e) => setAftCmotoEstObs(e.target.value)}
-                                    type="text" as="textarea" className='textArea' />
-                            </Col>
-                            <Col md="6">
-                                <Form.Label>Dinâmica:</Form.Label>
-                                <BsInfoCircleFill className='icone' title='(engatinhar, marchar, saltar pés juntos, desviar obstáculos, correr, etc)' />
-                                <Form.Control value={aftCmotoDinObs}
-                                    onChange={(e) => setAftCmotoDinObs(e.target.value)}
-                                    type="text" as="textarea" className='textArea' />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Form.Label>Preensão:</Form.Label>
-                            <Col md="6">
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaPreenPalmar}
-                                    type="checkbox" label="Palmar" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaPreenPinca}
-                                    type="checkbox" label="Pinça" />
-                            </Col>
-                            <Col md="6">
-                                <Form.Label>Observação:</Form.Label>
-                                <Form.Control value={aftPreenObs}
-                                    onChange={(e) => setAftPreenObs(e.target.value)}
-                                    type="text" as="textarea" className='textArea' />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Form.Label>Movimentação:</Form.Label>
-                            <Col md="3">
-                                <Form.Label>Passiva:</Form.Label>
-                                <Form.Control value={aftMovPassiva} maxLength={20}
-                                    onChange={(e) => setAftMovPassiva(e.target.value)}
-                                    type="text" />
-                                <Form.Label>Respiração:</Form.Label>
-                                <Form.Control value={aftMovRespira} maxLength={20}
-                                    onChange={(e) => setAftMovRespira(e.target.value)}
-                                    type="text" />
-                            </Col>
-                            <Col md="3">
-                                <Form.Label>Deglutição:</Form.Label>
-                                <Form.Control value={aftMovDegluti} maxLength={20}
-                                    onChange={(e) => setAftMovDegluti(e.target.value)}
-                                    type="text" />
-                                <Form.Label>Mastigação:</Form.Label>
-                                <Form.Control value={aftMovMastig} maxLength={20}
-                                    onChange={(e) => setAftMovMastig(e.target.value)}
-                                    type="text" />
+                            <Col>
 
                             </Col>
-                            <Col md="3">
-                                <Form.Label>Controle Esfincter:</Form.Label>
-                                <Form.Control value={aftMovContEsfinct} maxLength={20}
-                                    onChange={(e) => setAftMovContEsfinct(e.target.value)}
-                                    type="text" />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md="6">
-                                <Form.Label>Quadro Cognitivo / Fala / Linguagem:</Form.Label>
-                                <BsInfoCircleFill className='icone' title='(afasia, verbal, gestual , escrita, leitura)' />
-                                <Form.Control value={aftQuadCognitivo}
-                                    onChange={(e) => setAftQuadCognitivo(e.target.value)}
-                                    type="text" as="textarea" className='textArea' />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md="6">
-                                <Form.Label>Sistema Respiratório:</Form.Label>
-                                <Form.Control value={aftSistResp}
-                                    onChange={(e) => setAftSistResp(e.target.value)}
-                                    type="text" as="textarea" className='textArea' />
-                            </Col>
-                            <Col md="6">
-                                <Form.Label>Sistema Circulatório:</Form.Label>
-                                <Form.Control value={aftSistCirc}
-                                    onChange={(e) => setAftSistCirc(e.target.value)}
-                                    type="text" as="textarea" className='textArea' />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md="6">
-                                <Form.Label>Parecer Fisioterápico/Outras Observações:</Form.Label>
-                                <Form.Control value={aftParecerFisio}
-                                    onChange={(e) => setAftParecerFisio(e.target.value)}
-                                    type="text" as="textarea" className='textArea' />
-                            </Col>
-                        </Row>
-                        <br/>
-                        <Row>
-                            <Col md="12">
-                                <Card>
-                                    <div className='marginLeft'>
-                                        <Row>
-                                            <Col md="12">
-                                                <b>Documentos</b>
-                                            </Col>
-                                        </Row>
 
-                                        <Row>
-                                            <Col md="12">
-                                                <Form.Control type="file" id="inputDoc" accept="image/*, application/pdf" onChange={criarAnexo} />
-                                                <Form.Label htmlFor="inputDoc" className='label-input-file-pqn'>Anexar Documento</Form.Label>
-                                            </Col>
-                                        </Row>
-                                        <TabelaDocumentos data={anexosList} rowsPerPage={5} removeDocumentoSelecionado={removeDocumentoSelecionado} />
-                                    </div>
-                                </Card>
-                            </Col>
                         </Row>
                         <br />
                         <Toolbar jsonRemove={enviaJsonRemove} abrirPesquisa={atualizaDlgPesquisa} />
                     </Form>
                 </Container>
                 {abrirPesquisa &&
-                    <PesquisaAvalFisioter setValores={setList} valores={list} atualizaItemSelecionado={atualizaItemSelecionado} setAbrirPesquisa={setAbrirPesquisa} />
-                }
-                {abrirPesquisaPraticante &&
-                    <PesquisaPraticantes setValores={setListPraticantes} valores={listPraticantes} atualizaItemSelecionado={atualizaPraticanteSelecionado} setAbrirPesquisa={setAbrirPesquisaPraticante} />
-                }
-                {abrirPesquisaFuncionario &&
-                    <PesquisaFuncionario setValores={setListFuncionarios} valores={listFuncionarios} atualizaItemSelecionado={atualizaFuncionarioSelecionado} setAbrirPesquisa={setAbrirPesquisaFuncionario} />
-                }
-                {abrirPesquisaMedico &&
-                    <PesquisaMedico setValores={setListMedicos} valores={listMedicos} atualizaItemSelecionado={atualizaMedicoSelecionado} setAbrirPesquisa={setAbrirPesquisaMedico} />
+                    <PesquisaAvalSocioEcon setValores={setList} valores={list} atualizaItemSelecionado={atualizaItemSelecionado} setAbrirPesquisa={setAbrirPesquisa} />
                 }
                 <Footer />
             </div >

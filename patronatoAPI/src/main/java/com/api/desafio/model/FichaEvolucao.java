@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 
@@ -19,8 +20,13 @@ public class FichaEvolucao implements Serializable {
     @Basic(optional = false)
     @Column(name = "EVOL_ID")
     private Integer evolId;
+
     @Column(name = "EVOL_CLIMA")
     private String evolClima;
+
+    @Column(name = "EVOL_DATA")
+    @Temporal(TemporalType.DATE)
+    private Date evolData;
     @Column(name = "EVOL_HUMOR")
     private String evolHumor;
     @Column(name = "EVOL_ATENC")
@@ -102,6 +108,10 @@ public class FichaEvolucao implements Serializable {
     public void setEvolClima(String evolClima) {
         this.evolClima = evolClima;
     }
+
+    public Date getEvolData() {return evolData;}
+
+    public void setEvolData(Date evolData) {this.evolData = evolData;}
 
     public String getEvolHumor() {
         return evolHumor;

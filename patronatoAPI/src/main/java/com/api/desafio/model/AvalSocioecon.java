@@ -1,17 +1,8 @@
 package com.api.desafio.model;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import java.util.Date;
+import javax.persistence.*;
 
 /**
  *
@@ -27,6 +18,10 @@ public class AvalSocioecon implements Serializable {
     @Basic(optional = false)
     @Column(name = "ASE_ID")
     private Integer aseId;
+
+    @Column(name = "ASE_DATA")
+    @Temporal(TemporalType.DATE)
+    private Date aseData;
     @Basic(optional = false)
     @Lob
     @Column(name = "ASE_OBS_CONT_FAM")
@@ -46,8 +41,9 @@ public class AvalSocioecon implements Serializable {
         this.aseId = aseId;
     }
 
-    public AvalSocioecon(Integer aseId, String aseObsContFam, String aseObsMedicamentos) {
+    public AvalSocioecon(Integer aseId, Date aseDate, String aseObsContFam, String aseObsMedicamentos) {
         this.aseId = aseId;
+        this.aseData = aseDate;
         this.aseObsContFam = aseObsContFam;
         this.aseObsMedicamentos = aseObsMedicamentos;
     }
@@ -59,6 +55,10 @@ public class AvalSocioecon implements Serializable {
     public void setAseId(Integer aseId) {
         this.aseId = aseId;
     }
+
+    public Date getAseData() {return aseData;}
+
+    public void setAseData(Date aseData) {this.aseData = aseData;}
 
     public String getAseObsContFam() {
         return aseObsContFam;

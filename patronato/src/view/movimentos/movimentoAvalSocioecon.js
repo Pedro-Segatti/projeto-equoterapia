@@ -114,9 +114,9 @@ function movimentoAvalSocioecon() {
                                 <Form.Control value={aseId} type="text" id="id" disabled />
                             </Col>
                             <Col md="2">
-                                <Form.Label htmlFor="inputData">Data da Avaliação</Form.Label>
+                                <Form.Label htmlFor="inputDate">Data da Avaliação</Form.Label>
                                 <Form.Control value={aseData}
-                                              onChange={(e) => aseData(e.target.value)}
+                                              onChange={(e) => setAseData(e.target.value)}
                                               type="date" id="inputDate" required />
                             </Col>
                         </Row>
