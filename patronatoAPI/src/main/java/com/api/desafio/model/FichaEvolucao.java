@@ -1,9 +1,6 @@
 package com.api.desafio.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -26,6 +23,7 @@ public class FichaEvolucao implements Serializable {
 
     @Column(name = "EVOL_DATA")
     @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date evolData;
     @Column(name = "EVOL_HUMOR")
     private String evolHumor;

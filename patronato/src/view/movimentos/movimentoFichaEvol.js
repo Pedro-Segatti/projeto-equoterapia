@@ -266,6 +266,7 @@ function cadastroFichaEvol() {
             "funcionarioList": evolFuncSelecionado.map(funcionario => (funcionario)),
             "fichaEvolAtividadeMaterialList": []
         };
+        console.log(json);
         if (evolId === "") {
             json = await (await (await api.post("/cadastraFichaEvol", json)).data);
         }
@@ -364,6 +365,7 @@ function cadastroFichaEvol() {
         setEvolCompAni("");
         setEvolAndAni("");
         setEvolIdMont("");
+        setEvolData("");
         setEvolAniSelecionado([]);
         setEvolPicSelecionado([]);
         setEvolPratSelecionado([]);
