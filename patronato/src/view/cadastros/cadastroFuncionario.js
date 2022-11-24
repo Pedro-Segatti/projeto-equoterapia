@@ -1,30 +1,31 @@
 import React, { useState } from 'react';
-import { Form, Col, Row, Container, Table, Button, Card} from 'react-bootstrap';
+import { Form, Col, Row, Container, Card, Table, Button } from 'react-bootstrap';
 import { BsFillTrashFill } from "react-icons/bs";
 import TableFooter from '../table/tableFooter';
 import useTable from '../table/useTable';
 import Toolbar from '../toolbar';
 import { IMaskInput } from 'react-imask';
-import { registroSalvo, pessoaDuplicada, semRegistros, registroExcluido, mensagemCustomizada} from "../../utilitario/mensagemUtil"
+import { registroSalvo, pessoaDuplicada, semRegistros, registroExcluido, mensagemCustomizada } from "../../utilitario/mensagemUtil"
 import { ReactNotifications } from 'react-notifications-component'
 import { criarPessoa, atualizarPessoa } from "../../utilitario/patronatoUtil";
-import { cadastrarResponsavel, atualizarResponsavel} from "../../utilitario/baseComunicacao";
+import { cadastrarFuncionario, atualizarFuncionario } from "../../utilitario/baseComunicacao";
 import { api } from "../../utilitario/baseComunicacao";
 import HTTP_STATUS from "../../utilitario/httpStatus";
-import PesquisaResponsaveis from "../pesquisas/pesquisaResponsavel";
 import PesquisaLogradouros from "../pesquisas/pesquisaLogradouro";
-
+import PesquisaFuncionario from "../pesquisas/pesquisaFuncionario";
 import InputConverter from "../inputConverter";
 
 
 import Menu from "../menu"
 import Footer from "../footer"
 
-const cadastroResponsavel = () => {
+const cadastroFuncionario = () => {
 
-    const [respId, setRespId] = useState("");
-    const [respProfissao, setRespProfissao] = useState("");
-
+    const [funcId, setFuncId] = useState("");
+    const [funcDataAdmissao, setFuncDataAdmissao] = useState("");
+    const [funcDataDesligamento, setFuncDataDesligamento] = useState("");
+    const [funcPis, setFuncPis] = useState("");
+    const [funcCnh, setFuncCnh] = useState("");
 
     const [pesNome, setPesNome] = useState("");
     const [pesCpf, setPesCpf] = useState("");
@@ -32,7 +33,6 @@ const cadastroResponsavel = () => {
     const [pesDataNasc, setPesDataNasc] = useState("");
     const [pesEndNum, setPesEndNum] = useState("");
     const [pesEndCompl, setPesEndCompl] = useState("");
-    const [pesNacionalidade, setPesNacionalidade] = useState("");
     const [pesEmail1, setPesEmail1] = useState("");
     const [pesEmail2, setPesEmail2] = useState("");
     const [pesLogId, setPesLogId] = useState("");
@@ -84,7 +84,7 @@ const cadastroResponsavel = () => {
     }
 
     const atualizaDlgPesquisa = async () => {
-        setList(await (await api.get("/pesquisaResponsavel")).data);
+        setList(await (await api.get("/pesquisaFuncionario")).data);
         setAbrirPesquisa(true);
     }
 
@@ -99,9 +99,9 @@ const cadastroResponsavel = () => {
         setAbrirPesquisaLogradouro(false);
     }
 
-    const removerResponsavel= async () => {
+    const removerFuncionario = async () => {
         try {
-            const response = await (await api.delete("/removeResponsavel?respId=" + respId));
+            const response = await (await api.delete("/removeFuncionario?funcId=" + funcId));
             if (response.status === HTTP_STATUS.OK) {
                 registroExcluido();
                 limparCamposFormulario();
@@ -112,18 +112,20 @@ const cadastroResponsavel = () => {
     }
 
     const atualizaItemSelecionado = (item) => {
-        setRespId(item.respId);
+        setFuncId(item.funcId);
         setPesNome(item.pessoa.pesNome);
         setPesCpf(item.pessoa.pesCpf);
         setPesSexo(item.pessoa.pesSexo);
         setPesDataNasc(item.pessoa.pesDataNasc);
         setPesEndNum(item.pessoa.pesEndNum);
         setPesEndCompl(item.pessoa.pesEndCompl);
-        setPesNacionalidade(item.pessoa.pesNacionalidade.paiIso);
         setPesEmail1(item.pessoa.pesEmail1);
         setPesEmail2(item.pessoa.pesEmail2);
         setPesLogId(1);
-        setRespProfissao(item.respProfissao);
+        setFuncDataAdmissao(item.funcDataAdmissao);
+        setFuncDataDesligamento(item.funcDataDesligamento);
+        setFuncPis(item.funcPis);
+        setFuncCnh(item.funcCnh);
         setPesLogId(item.pessoa.logradouro.logId);
         setPesLogDescricao(item.pessoa.logradouro.logDescricao);
         setAbrirPesquisa(false);
@@ -131,18 +133,20 @@ const cadastroResponsavel = () => {
     }
 
     const limparCamposFormulario = () => {
-        setRespId("");
+        setFuncId("");
         setPesNome("");
         setPesCpf("");
         setPesSexo("");
         setPesDataNasc("");
         setPesEndNum("");
         setPesEndCompl("");
-        setPesNacionalidade("");
         setPesEmail1("");
         setPesEmail2("");
         setPesLogId("");
-        setRespProfissao("");
+        setFuncDataAdmissao("");
+        setFuncDataDesligamento("");
+        setFuncPis("");
+        setFuncCnh("");
         setPesLogId("");
         setPesLogDescricao("");
         setListTelefones([])
@@ -152,38 +156,41 @@ const cadastroResponsavel = () => {
         e.preventDefault();
 
         const cadastraPessoa = async () => {
-            return await criarPessoa(pesNome, pesCpf, pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pesNacionalidade, pesEmail1, pesEmail2, pesLogId);
+            return await criarPessoa(pesNome, pesCpf, pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pesEmail1, pesEmail2, pesLogId);
         }
 
         const atualizaPessoa = async () => {
-            return await atualizarPessoa(pesNome, pesCpf, pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pesNacionalidade, pesEmail1, pesEmail2, pesLogId);
+            return await atualizarPessoa(pesNome, pesCpf, pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pesEmail1, pesEmail2, pesLogId);
         }
 
-        const montaJsonResponsavel = (idPessoa) => {
-            const jsonResponsavel = {
-                "respId": respId,
+        const montaJsonFuncionario = (idPessoa) => {
+            const jsonFuncionario = {
+                "funcId": funcId,
                 "pessoaId": idPessoa,
-                "respProfissao": respProfissao,
+                "funcDataAdmissao": funcDataAdmissao,
+                "funcDataDesligamento": funcDataDesligamento,
+                "funcPis": funcPis,
+                "funcCnh": funcCnh,
                 "telefones": listTelefones
             }
 
-            return jsonResponsavel;
+            return jsonFuncionario;
         }
 
-        const cadastraResponsavel = async (idPessoa) => {
-            return await cadastrarResponsavel(montaJsonResponsavel(idPessoa));
+        const cadastraFuncionario = async (idPessoa) => {
+            return await cadastrarFuncionario(montaJsonFuncionario(idPessoa));
         }
 
-        const atualizaResponsavel = async () => {
-            return await atualizarResponsavel(montaJsonResponsavel(null));
+        const atualizaFuncionario = async () => {
+            return await atualizarFuncionario(montaJsonFuncionario(null));
         }
 
         const atualizarRegistros = async () => {
             try {
                 const responseAttPessoa = await atualizaPessoa();
-                const responseAttResponsavel = await atualizaResponsavel();
+                const responseAttFuncionario = await atualizaFuncionario();
 
-                if (responseAttPessoa.status === HTTP_STATUS.OK && responseAttResponsavel.status === HTTP_STATUS.OK) {
+                if (responseAttPessoa.status === HTTP_STATUS.OK && responseAttFuncionario.status === HTTP_STATUS.OK) {
                     registroSalvo();
                     limparCamposFormulario();
                 }
@@ -196,12 +203,12 @@ const cadastroResponsavel = () => {
 
         }
 
-        const criarPessoaEResponsavel = async () => {
+        const criarPessoaEFuncionario = async () => {
             try {
                 const response = await cadastraPessoa();
                 if (response.status === HTTP_STATUS.OK) {
-                    const responseResponsavel = await cadastraResponsavel(response.data.pesId);
-                    if (responseResponsavel.status === HTTP_STATUS.OK) {
+                    const responseFuncionario = await cadastraFuncionario(response.data.pesId);
+                    if (responseFuncionario.status === HTTP_STATUS.OK) {
                         registroSalvo();
                         limparCamposFormulario();
                     }
@@ -218,8 +225,8 @@ const cadastroResponsavel = () => {
             }
         }
 
-        if (respId === "") {
-            criarPessoaEResponsavel();
+        if (funcId === "") {
+            criarPessoaEFuncionario();
         } else {
             atualizarRegistros();
         }
@@ -274,23 +281,28 @@ const cadastroResponsavel = () => {
             <ReactNotifications />
             <Container>
                 <Form onSubmit={handleSubmit}>
-                    <br />
+                <br />
                     <Row>
-                        <h3>Cadastro de Responsáveis</h3>
+                        <h3>Cadastro de Funcionário</h3>
                     </Row>
 
                     <Row>
                         <Col md="2">
                             <Form.Label htmlFor="inputId">Código</Form.Label>
-                            <Form.Control value={respId} type="text" id="inputId" disabled />
+                            <Form.Control value={funcId} type="text" id="inputId" disabled />
                         </Col>
                     </Row>
                     <Row>
-                        <Col md="12">
+                        <Col md="8">
                             <Form.Label htmlFor="inputNome">Nome</Form.Label>
                             <Form.Control value={pesNome}
                                 onChange={(e) => setPesNome(e.target.value)}
                                 type="text" id="inputNome" required />
+                        </Col>
+                        <Col md="4">
+                            <Form.Label htmlFor="inputCpf">CPF</Form.Label>
+                            <Form.Control id="inputCpf" type="text" maxLength='14' as={IMaskInput} inputMode="numeric"
+                                mask="000.000.000-00" placeholder='Digite aqui o seu CPF...' required value={pesCpf} onChange={(l) => setPesCpf(l.target.value)} />
                         </Col>
                     </Row>
                     <Row>
@@ -301,14 +313,6 @@ const cadastroResponsavel = () => {
                                 type="date" id="inputDate" required />
                         </Col>
                         <Col md="6">
-                            <Form.Label htmlFor="inputCpf">CPF</Form.Label>
-                            <Form.Control id="inputCpf" type="text" maxLength='14' as={IMaskInput} inputMode="numeric"
-                                mask="000.000.000-00" placeholder='Digite aqui o seu CPF...' required value={pesCpf} onChange={(l) => setPesCpf(l.target.value)} />
-                        </Col>
-                    </Row>
-
-                    <Row>
-                        <Col md="6">
                             <Form.Label htmlFor="inputSexo">Sexo</Form.Label>
                             <Form.Select id='inputSexo' required
                                 value={pesSexo}
@@ -318,11 +322,33 @@ const cadastroResponsavel = () => {
                                 <option value="M">Masculino</option>
                             </Form.Select>
                         </Col>
+                    </Row>
+                    <Row>
                         <Col md="6">
-                            <Form.Label htmlFor="inputRespProfissao">Profissao</Form.Label>
-                            <Form.Control value={respProfissao}
-                                onChange={(e) => setRespProfissao(e.target.value)}
-                                type="text" id="inputRespProfissao" required />
+                            <Form.Label htmlFor="inputDate">Data de Admissão</Form.Label>
+                            <Form.Control value={funcDataAdmissao}
+                                onChange={(e) => setFuncDataAdmissao(e.target.value)}
+                                type="date" id="inputDate" required />
+                        </Col>
+                        <Col md="6">
+                            <Form.Label htmlFor="inputDate">Data de Desligamento</Form.Label>
+                            <Form.Control value={funcDataDesligamento}
+                                onChange={(e) => setFuncDataDesligamento(e.target.value)}
+                                type="date" id="inputDate" required />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md="6">
+                            <Form.Label htmlFor="inputPis">Número PIS</Form.Label>
+                            <Form.Control value={funcPis}
+                                onChange={(e) => setFuncPis(e.target.value)}
+                                type="text" id="inputPis" required />
+                        </Col>
+                        <Col md="6">
+                            <Form.Label htmlFor="inputCnh">Número CNH</Form.Label>
+                            <Form.Control value={funcCnh}
+                                onChange={(e) => setFuncCnh(e.target.value)}
+                                type="text" id="inputCnh" />
                         </Col>
                     </Row>
                     <Row>
@@ -341,7 +367,6 @@ const cadastroResponsavel = () => {
                                 type="text" id="inputEmailS" />
                         </Col>
                     </Row>
-
                     <Row>
                         <Col md="6">
                             <Form.Label htmlFor="inputLogradouro">Logradouro</Form.Label>
@@ -349,11 +374,11 @@ const cadastroResponsavel = () => {
                         </Col>
                     </Row>
                     <Row>
-                        <Col md="4">
+                        <Col md="2">
                             <Form.Label htmlFor="inputEndNum">Número</Form.Label>
                             <Form.Control value={pesEndNum} type="text" id="inputEndNum" onChange={(e) => setPesEndNum(e.target.value)} required />
                         </Col>
-                        <Col md="8">
+                        <Col md="10">
                             <Form.Label htmlFor="inputEndCompl">Complemento</Form.Label>
                             <Form.Control value={pesEndCompl}
                                 onChange={(e) => setPesEndCompl(e.target.value)}
@@ -385,19 +410,20 @@ const cadastroResponsavel = () => {
 
                     <br />
 
-                    <Toolbar abrirPesquisa={atualizaDlgPesquisa} jsonRemove={removerResponsavel} />
+                    <Toolbar abrirPesquisa={atualizaDlgPesquisa} jsonRemove={removerFuncionario} />
                 </Form>
             </Container>
 
             {abrirPesquisa &&
-                <PesquisaResponsaveis setValores={setList} valores={list} atualizaItemSelecionado={atualizaItemSelecionado} setAbrirPesquisa={setAbrirPesquisa} />
+                <PesquisaFuncionario setValores={setList} valores={list} atualizaItemSelecionado={atualizaItemSelecionado} setAbrirPesquisa={setAbrirPesquisa} />
             }
 
             {abrirPesquisaLogradouro &&
                 <PesquisaLogradouros setValores={setListLogradouro} valores={listLogradouro} atualizaItemSelecionado={atualizaLogradouroSelecionado} setAbrirPesquisa={setAbrirPesquisaLogradouro} />
             }
+
             <Footer />
         </div>
     );
 };
-export default cadastroResponsavel;
+export default cadastroFuncionario;
