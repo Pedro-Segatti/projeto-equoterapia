@@ -9,7 +9,7 @@ import PesquisaPraticantes from "../pesquisas/pesquisaPraticantes";
 import PesquisaFuncionario from "../pesquisas/pesquisaFuncionario";
 import PesquisaMedico from "../pesquisas/pesquisaMedico";
 import { BsInfoCircleFill } from "react-icons/bs";
-import { registroSalvo } from "../../utilitario/mensagemUtil";
+import { registroSalvo, mensagemCustomizada } from "../../utilitario/mensagemUtil";
 import { ReactNotifications } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import { api } from "../../utilitario/baseComunicacao";
@@ -442,6 +442,21 @@ function movimentoAvalFisioter() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (aftIdPraticante.pessoa.pesNome === "") {
+            mensagemCustomizada("Selecione um praticante", "warning");
+            document.getElementById("botaoPraticante").focus();
+            return;
+        }
+        if (aftIdFuncionario.pessoa.pesNome === "") {
+            mensagemCustomizada("Selecione um funcionário", "warning");
+            document.getElementById("botaoFuncionario").focus();
+            return;
+        }
+        if (aftIdMedico.pessoa.pesNome === "") {
+            mensagemCustomizada("Selecione um médico", "warning");
+            document.getElementById("botaoMedico").focus();
+            return;
+        }
         enviaJsonGravar();
         limparCamposFormulario();
     }
@@ -861,7 +876,7 @@ function movimentoAvalFisioter() {
                                     type="text" as="textarea" className='textArea' />
                             </Col>
                         </Row>
-                        <br/>
+                        <br />
                         <Row>
                             <Col md="12">
                                 <Card>

@@ -264,9 +264,9 @@ function cadastroFichaEvol() {
             "picadeiroList": evolPicSelecionado.map(picadeiro => (picadeiro)),
             "praticanteList": evolPratSelecionado.map(praticante => (praticante)),
             "funcionarioList": evolFuncSelecionado.map(funcionario => (funcionario)),
-            "fichaEvolAtividadeMaterialList":[]
+            "fichaEvolAtividadeMaterialList": []
         };
-        if(evolId === ""){
+        if (evolId === "") {
             json = await (await (await api.post("/cadastraFichaEvol", json)).data);
         }
         if (listAtividadeMaterial.length > 0) {
@@ -431,11 +431,13 @@ function cadastroFichaEvol() {
                                 <Form.Label htmlFor="inputId">Código</Form.Label>
                                 <Form.Control value={evolId} type="text" id="id" disabled />
                             </Col>
+                        </Row>
+                        <Row>
                             <Col md="2">
                                 <Form.Label htmlFor="inputData">Data da evolução</Form.Label>
                                 <Form.Control value={evolData}
-                                              onChange={(e) => setEvolData(e.target.value)}
-                                              type="date" id="inputDate" required />
+                                    onChange={(e) => setEvolData(e.target.value)}
+                                    type="date" id="inputDate" required />
                             </Col>
                         </Row>
                         <Row>
