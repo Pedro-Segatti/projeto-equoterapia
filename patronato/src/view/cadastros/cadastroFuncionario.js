@@ -334,7 +334,7 @@ const cadastroFuncionario = () => {
                             <Form.Label htmlFor="inputDate">Data de Desligamento</Form.Label>
                             <Form.Control value={funcDataDesligamento}
                                 onChange={(e) => setFuncDataDesligamento(e.target.value)}
-                                type="date" id="inputDate" required />
+                                type="date" id="inputDate" />
                         </Col>
                     </Row>
                     <Row>
