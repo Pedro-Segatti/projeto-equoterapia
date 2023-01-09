@@ -56,7 +56,7 @@ public class Pessoa implements Serializable {
     @Column(name = "PES_EMAIL2")
     @Basic(optional = true)
     private String pesEmail2;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoa", orphanRemoval = true)
     private List<Telefone> telefoneList;
     @JoinColumn(name = "PES_ID_LOG", referencedColumnName = "LOG_ID")
     @ManyToOne(optional = false)

@@ -225,6 +225,12 @@ public class ComunicacaoController {
         return picadeiroService.pesquisa(picId,picDescricao);
     }
 
+    @CrossOrigin(origins = "*")
+    @GetMapping("/pesquisaPais")
+    public Pais pesquisaPicadeiro(@RequestParam String paiIso){
+        return paisService.getPaisByIso(paiIso);
+    }
+
 
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastraFichaEvol")
@@ -586,6 +592,29 @@ public class ComunicacaoController {
     @GetMapping("/pesquisaMedico")
     public ResponseEntity<List<Medico>> pesquisaMedico(@RequestParam (required=false) String pesCpf,@RequestParam (required=false) String pesNome){
         return medicoService.pesquisaMedico(pesCpf, pesNome);
+    }
+
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/removeMedico")
+    public ResponseEntity<Medico> removeMedico(@RequestParam (required=false) Integer medId){
+        try{
+            medicoService.remove(medId);
+            return new ResponseEntity<>(new Medico(), HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity<>(new Medico(), HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/cadastraMedico")
+    public ResponseEntity<?> cadastrarMedico(@RequestBody Medico medico){
+        for (Telefone telefone: medico.getPessoa().getTelefoneList()) {
+            telefone.setPessoa(medico.getPessoa());
+            telefone.setTelNumero(telefone.getTelNumero().replace(" ", ""));
+        }
+        pessoaService.salva(medico.getPessoa());
+        medicoService.salva(medico);
+        return new ResponseEntity<Medico>(medico, HttpStatus.OK);
     }
 
     @CrossOrigin(origins = "*")

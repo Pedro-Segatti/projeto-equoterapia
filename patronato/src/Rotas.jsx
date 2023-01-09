@@ -14,6 +14,7 @@ import CadastroAnimais from "./view/cadastros/cadastroAnimais";
 import CadastroPraticantes from "./view/cadastros/cadastroPraticante";
 import CadastroResponsavel from "./view/cadastros/cadastroResponsavel";
 import CadastroFuncionario from "./view/cadastros/cadastroFuncionario";
+import CadastroMedico from "./view/cadastros/cadastroMedico";
 import CadastroAtividades from "./view/cadastros/cadastroAtividade";
 import CadastroMateriais from "./view/cadastros/cadastroMaterial";
 import CadastroPicadeiro from "./view/cadastros/cadastroPicadeiro";
@@ -57,6 +58,7 @@ const Rotas = () => {
                     <Route exact path="/cadastroPraticantes" element={<Private><CadastroPraticantes /></Private>} />
                     <Route exact path="/cadastroResponsavel" element={<Private><CadastroResponsavel /></Private>} />
                     <Route exact path="/cadastroFuncionario" element={<Private><CadastroFuncionario /></Private>} />
+                    <Route exact path="/cadastroMedico" element={<Private><CadastroMedico /></Private>} />
                     <Route exact path="/cadastroAtividade" element={<Private><CadastroAtividades /></Private>} />
                     <Route exact path="/cadastroMaterial" element={<Private><CadastroMateriais /></Private>} />
                     <Route exact path="/cadastroPicadeiro" element={<Private><CadastroPicadeiro/></Private>} />
