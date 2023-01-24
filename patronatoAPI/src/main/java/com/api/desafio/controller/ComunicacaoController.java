@@ -15,14 +15,21 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.List;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.*;
 
 @RestController
 public class ComunicacaoController {
@@ -720,5 +727,28 @@ public class ComunicacaoController {
     @GetMapping("/pesquisaCidade")
     public ResponseEntity<List<Cidade>> pesquisaCidade(@RequestParam (required=false) String cidNome){
         return cidadeService.pesquisa(cidNome);
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping(value = "/pdf", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<byte[]> downloadInvoice() throws JRException, IOException {
+
+        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Arrays.asList(), false);
+
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("total", "7000");
+        File file = ResourceUtils.getFile("classpath:relatFuncionario.jrxml");
+        JasperReport compileReport = JasperCompileManager
+                .compileReport(file.getAbsolutePath());
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(compileReport, parameters, new JREmptyDataSource());
+
+        // JasperExportManager.exportReportToPdfFile(jasperPrint,
+        // System.currentTimeMillis() + ".pdf");
+
+        byte data[] = JasperExportManager.exportReportToPdf(jasperPrint);
+//        byte data[] = JasperExportManager.exportReportToPdf(jasperPrint);
+
+        return new ResponseEntity<>(data, HttpStatus.OK);
     }
 }
