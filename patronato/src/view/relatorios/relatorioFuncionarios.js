@@ -3,22 +3,17 @@ import Menu from "../menu";
 import Footer from "../footer";
 import { ReactNotifications } from "react-notifications-component";
 import { Form, Button, Row, Container } from "react-bootstrap";
-import { api } from "../../utilitario/baseComunicacao";
-import { saveAs } from "file-saver";
+import { gerarRelatorio } from "../../utilitario/baseRelatorios";
 
 const relatorioFuncionarios = () => {
-    
-    const baixarArquivo = async () => {
-    const pdf = await api.get("/pdf");
-    var blob = new Blob([pdf.data], { type: 'application/pdf' });
-    var url = URL.createObjectURL(blob);
-    window.open(url);
-   // saveAs(pdf.data, "relatorio_de_funcionarios.pdf");
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    baixarArquivo();
+    const json = {
+      "nomeRelatorio" : "relatFuncionario",
+      "nomeFuncionario" : "Jorge"
+    }
+    gerarRelatorio("Relatorio_de_funcionarios",json);
   };
 
   return (

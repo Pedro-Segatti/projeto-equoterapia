@@ -730,25 +730,21 @@ public class ComunicacaoController {
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping(value = "/pdf", produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<byte[]> downloadInvoice() throws JRException, IOException {
-
+    @GetMapping(value = "/pdf")
+    public ResponseEntity<byte[]> gerarRelatorios(@RequestParam (required=false) String jsonParams) throws JRException, IOException {
         JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Arrays.asList(), false);
 
+        JsonObject jsonConvertido = new Gson().fromJson(jsonParams, JsonObject.class);
+        String nomeRelatorio = jsonConvertido.get("nomeRelatorio").getAsString();
+
+        JasperReport compileReport = JasperCompileManager.compileReport(new FileInputStream("src/main/resources/relatorios/" + nomeRelatorio + ".jrxml"));
+
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("total", "7000");
-        File file = ResourceUtils.getFile("classpath:relatFuncionario.jrxml");
-        JasperReport compileReport = JasperCompileManager
-                .compileReport(file.getAbsolutePath());
-
+        for(Map.Entry<String,JsonElement> valor : jsonConvertido.entrySet()){
+            parameters.put(valor.getKey().toString(), valor.getValue().getAsString());
+        }
         JasperPrint jasperPrint = JasperFillManager.fillReport(compileReport, parameters, new JREmptyDataSource());
-
-        // JasperExportManager.exportReportToPdfFile(jasperPrint,
-        // System.currentTimeMillis() + ".pdf");
-
         byte data[] = JasperExportManager.exportReportToPdf(jasperPrint);
-//        byte data[] = JasperExportManager.exportReportToPdf(jasperPrint);
-
-        return new ResponseEntity<>(data, HttpStatus.OK);
+        return new ResponseEntity<>(Base64.getEncoder().encode(data), HttpStatus.OK);
     }
 }
