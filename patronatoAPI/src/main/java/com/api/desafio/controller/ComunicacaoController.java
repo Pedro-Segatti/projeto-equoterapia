@@ -11,6 +11,7 @@ import com.api.desafio.service.AvalSocioeconService;
 import com.api.desafio.service.FichaEvolService;
 import com.api.desafio.service.PessoaService;
 import com.api.desafio.service.ResponsavelService;
+import com.api.desafio.utils.RelatorioUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
@@ -730,21 +732,9 @@ public class ComunicacaoController {
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping(value = "/pdf")
-    public ResponseEntity<byte[]> gerarRelatorios(@RequestParam (required=false) String jsonParams) throws JRException, IOException {
-        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(Arrays.asList(), false);
-
-        JsonObject jsonConvertido = new Gson().fromJson(jsonParams, JsonObject.class);
-        String nomeRelatorio = jsonConvertido.get("nomeRelatorio").getAsString();
-
-        JasperReport compileReport = JasperCompileManager.compileReport(new FileInputStream("src/main/resources/relatorios/" + nomeRelatorio + ".jrxml"));
-
-        Map<String, Object> parameters = new HashMap<>();
-        for(Map.Entry<String,JsonElement> valor : jsonConvertido.entrySet()){
-            parameters.put(valor.getKey().toString(), valor.getValue().getAsString());
-        }
-        JasperPrint jasperPrint = JasperFillManager.fillReport(compileReport, parameters, new JREmptyDataSource());
-        byte data[] = JasperExportManager.exportReportToPdf(jasperPrint);
-        return new ResponseEntity<>(Base64.getEncoder().encode(data), HttpStatus.OK);
+    @PutMapping( "/relatorioFuncionarios")
+    public ResponseEntity<byte[]> gerarRelatorioFuncionarios(@RequestBody String jsonParams) {
+        List<Funcionario> funcionarios = funcionarioService.pesquisaFuncionario("","").getBody();
+        return RelatorioUtil.gerarRelatorios(jsonParams, funcionarios);
     }
 }

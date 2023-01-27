@@ -10,10 +10,16 @@ const relatorioFuncionarios = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const json = {
-      "nomeRelatorio" : "relatFuncionario",
-      "nomeFuncionario" : "Jorge"
+      "nomeRelatorio" : 'relatFuncionario',
+      "parametros": {
+      "nomeFuncionario" : 'Jorge'
+      },
+      "filtros": {
+        "teste" : "teste"
+      }
+
     }
-    gerarRelatorio("Relatorio_de_funcionarios",json);
+    gerarRelatorio("relatorioFuncionarios","Relatorio_de_funcionarios",json);
   };
 
   return (
