@@ -309,7 +309,7 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastrarAgendamento")
-    public ResponseEntity<?> cadastrarAgendamento(@RequestBody Agendamento agendamento){
+    public ResponseEntity<Agendamento> cadastrarAgendamento(@RequestBody Agendamento agendamento){
         agendamento = agendamentoService.salva(agendamento);
         if(agendamento != null){
             return new ResponseEntity<>(agendamento, HttpStatus.OK);
@@ -720,5 +720,11 @@ public class ComunicacaoController {
     @GetMapping("/pesquisaCidade")
     public ResponseEntity<List<Cidade>> pesquisaCidade(@RequestParam (required=false) String cidNome){
         return cidadeService.pesquisa(cidNome);
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/pesquisaAgendamentosAtivos")
+    public ResponseEntity<List<Agendamento>> pesquisaAgendamentosAtivos(){
+        return agendamentoService.pesquisaAgendamentosAtivos();
     }
 }

@@ -1,7 +1,7 @@
 package com.api.desafio.service;
 
 import com.api.desafio.crudFiles.AgendamentoCrud;
-import com.api.desafio.model.*;
+import com.api.desafio.model.Agendamento;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +29,11 @@ public class AgendamentoService {
 
     public ResponseEntity<List<Agendamento>> pesquisaAgendamentos(Integer pratId, Date agdData) {
         List<Agendamento> agendamentos = agendamentoCrud.findByPratIdAndAgdData(pratId, agdData);
+        return new ResponseEntity<List<Agendamento>>(agendamentos, HttpStatus.OK);
+    }
+
+    public ResponseEntity<List<Agendamento>> pesquisaAgendamentosAtivos() {
+        List<Agendamento> agendamentos = agendamentoCrud.findAtivos();
         return new ResponseEntity<List<Agendamento>>(agendamentos, HttpStatus.OK);
     }
 }
