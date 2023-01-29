@@ -10,10 +10,10 @@ import InputConverter from "../inputConverter";
 import { api } from "../../utilitario/baseComunicacao";
 import PesquisaPraticantes from '../pesquisas/pesquisaPraticantes';
 import PesquisaAgendamentos from '../pesquisas/pesquisaAgendamentos';
-
+import { dataApiFormatada, dataFormatadaAnoMesDia, horaFormatada } from '../../utilitario/dateUtil';
 
 const movimentoAgendamentoSessao = () => {
-    const [agdId, setAgdId] = useState(null);
+    const [agdId, setAgdId] = useState("");
     const [agdData, setAgdData] = useState("");
     const [agdHora, setAgdHora] = useState("");
     const [agdPraticante, setAgdPraticante] = useState("");
@@ -29,7 +29,7 @@ const movimentoAgendamentoSessao = () => {
 
     const atualizaAgendamentoSelecionado = (item) => {
         setAgdId(item.agdId)
-        setAgdData(item.agdData)
+        setAgdData(dataFormatadaAnoMesDia(item.agdData))
         setAgdHora(item.agdHora)
         setAgdPraticante(item.praticante);
         setAgdDescricaoPraticante(item.praticante.pessoa.pesNome);
@@ -67,15 +67,13 @@ const movimentoAgendamentoSessao = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         const jsonAgendamento = {
             "agdId": agdId,
-            "agdData": agdData,
-            "agdHora": agdHora,
+            "agdData": dataApiFormatada(agdData),
+            "agdHora": horaFormatada(agdHora),
             "agdDescricao": agdDescricao,
             "praticante": agdPraticante
         }
-
         console.log(jsonAgendamento);
 
         const response = await api.post("/cadastrarAgendamento", jsonAgendamento);
@@ -83,8 +81,6 @@ const movimentoAgendamentoSessao = () => {
             registroSalvo();
             limparCamposFormulario();
         }
-
-
     }
 
     const limparCamposFormulario = () => {
