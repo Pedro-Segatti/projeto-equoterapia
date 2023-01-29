@@ -21,6 +21,7 @@ import useTable from '../table/useTable';
 import { BsXLg } from "react-icons/bs";
 import TableFooter from '../table/tableFooter';
 import HTTP_STATUS from "../../utilitario/httpStatus";
+import dayjs from 'dayjs';
 
 import Menu from "../menu"
 import Footer from "../footer"
@@ -119,7 +120,7 @@ function cadastroFichaEvol() {
         setEvolClima(item.evolClima || '');
         setEvolHumor(item.evolHumor || '');
         setEvolAtenc(item.evolAtenc || '');
-        setEvolData(item.evolData || '');
+        setEvolData(dayjs(item.evolData).format('YYYY-MM-DD') || '');
         setEvolAuton(item.evolAuton || '');
         setEvolEstereotipia(item.evolEstereotipia || '');
         setEvolPost(item.evolPost || '');
@@ -246,7 +247,7 @@ function cadastroFichaEvol() {
             "evolClima": evolClima,
             "evolHumor": evolHumor,
             "evolAtenc": evolAtenc,
-            "evolData": evolData,
+            "evolData": dayjs(evolData),
             "evolAuton": evolAuton,
             "evolEstereotipia": evolEstereotipia,
             "evolPost": evolPost,

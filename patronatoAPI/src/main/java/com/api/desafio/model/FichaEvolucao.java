@@ -23,7 +23,6 @@ public class FichaEvolucao implements Serializable {
 
     @Column(name = "EVOL_DATA")
     @Temporal(TemporalType.DATE)
-    @JsonFormat(pattern="yyyy-MM-dd")
     private Date evolData;
     @Column(name = "EVOL_HUMOR")
     private String evolHumor;
