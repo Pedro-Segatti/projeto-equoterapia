@@ -48,7 +48,7 @@ const Footer = () => {
             <ColumnRigth>
               <p style={{ marginBottom: "0", textAlign: "right", fontSize: "12px" }}><b>Versão:</b> 1.0</p>
               <Link href="https://m.facebook.com/patronatoequoterapia/" target="_blank" style={{ background: "none" }}>
-                <p style={{ marginBottom: "0" }}><b>Os guri e a rafa</b></p>
+                <p style={{ marginBottom: "0" }}><b>Patronato</b></p>
               </Link>
               <p style={{ marginBottom: "0", textAlign: "right", fontSize: "12px" }}>© Copyright 2022. Todos os direitos reservados.</p>
             </ColumnRigth>

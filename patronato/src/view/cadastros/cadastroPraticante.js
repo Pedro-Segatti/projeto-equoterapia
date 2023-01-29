@@ -7,7 +7,7 @@ import Toolbar from '../toolbar';
 import { IMaskInput } from 'react-imask';
 import { registroSalvo, pessoaDuplicada, semRegistros, registroExcluido, mensagemCustomizada } from "../../utilitario/mensagemUtil"
 import { ReactNotifications } from 'react-notifications-component'
-import { criarPessoa, atualizarPessoa } from "../../utilitario/patronatoUtil";
+import { criarPessoa, atualizarPessoa, convertBase64ToFile } from "../../utilitario/patronatoUtil";
 import { cadastrarPraticante, atualizarPraticante } from "../../utilitario/baseComunicacao";
 import { api } from "../../utilitario/baseComunicacao";
 import HTTP_STATUS from "../../utilitario/httpStatus";
@@ -124,19 +124,6 @@ const cadastroPraticante = () => {
 
     const atualizaTelefone = (item, telefone) => {
         item.telNumero = telefone;
-    }
-
-    const convertBase64ToFile = (base64String, fileName) => {
-        let arr = base64String.split(',');
-        let mime = arr[0].match(/:(.*?);/)[1];
-        let bstr = atob(arr[1]);
-        let n = bstr.length;
-        let uint8Array = new Uint8Array(n);
-        while (n--) {
-            uint8Array[n] = bstr.charCodeAt(n);
-        }
-        let file = new File([uint8Array], fileName, { type: mime });
-        return file;
     }
 
     const baixarArquivo = (e) => {

@@ -57,8 +57,7 @@ const Menu = () => {
             </NavDropdown>
 
             <NavDropdown title="Relatórios" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Pacientes</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">Funcionarios</NavDropdown.Item>
+              <NavDropdown.Item href="/relatorioFuncionarios">Funcionarios</NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>

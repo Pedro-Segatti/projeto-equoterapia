@@ -11,18 +11,27 @@ import com.api.desafio.service.AvalSocioeconService;
 import com.api.desafio.service.FichaEvolService;
 import com.api.desafio.service.PessoaService;
 import com.api.desafio.service.ResponsavelService;
+import com.api.desafio.utils.RelatorioUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.List;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.*;
 
 @RestController
 public class ComunicacaoController {
@@ -726,5 +735,12 @@ public class ComunicacaoController {
     @GetMapping("/pesquisaAgendamentosAtivos")
     public ResponseEntity<List<Agendamento>> pesquisaAgendamentosAtivos(){
         return agendamentoService.pesquisaAgendamentosAtivos();
+    }
+
+    @CrossOrigin(origins = "*")
+    @PutMapping( "/relatorioFuncionarios")
+    public ResponseEntity<byte[]> gerarRelatorioFuncionarios(@RequestBody String jsonParams) {
+        List<Funcionario> funcionarios = funcionarioService.pesquisaFuncionario("","").getBody();
+        return RelatorioUtil.gerarRelatorios(jsonParams, funcionarios);
     }
 }
