@@ -192,3 +192,7 @@ img,
 svg {
   vertical-align: baseline !important;
 }
+
+.bold{
+  font-weight: bold;
+}

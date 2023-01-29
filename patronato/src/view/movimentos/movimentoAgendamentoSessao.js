@@ -15,6 +15,7 @@ import PesquisaAgendamentos from '../pesquisas/pesquisaAgendamentos';
 const movimentoAgendamentoSessao = () => {
     const [agdId, setAgdId] = useState(null);
     const [agdData, setAgdData] = useState("");
+    const [agdHora, setAgdHora] = useState("");
     const [agdPraticante, setAgdPraticante] = useState("");
     const [agdDescricaoPraticante, setAgdDescricaoPraticante] = useState("");
     const [agdDescricao, setAgdDescricao] = useState("");
@@ -29,6 +30,7 @@ const movimentoAgendamentoSessao = () => {
     const atualizaAgendamentoSelecionado = (item) => {
         setAgdId(item.agdId)
         setAgdData(item.agdData)
+        setAgdHora(item.agdHora)
         setAgdPraticante(item.praticante);
         setAgdDescricaoPraticante(item.praticante.pessoa.pesNome);
         setAgdDescricao(item.agdDescricao);
@@ -69,6 +71,7 @@ const movimentoAgendamentoSessao = () => {
         const jsonAgendamento = {
             "agdId": agdId,
             "agdData": agdData,
+            "agdHora": agdHora,
             "agdDescricao": agdDescricao,
             "praticante": agdPraticante
         }
@@ -87,6 +90,7 @@ const movimentoAgendamentoSessao = () => {
     const limparCamposFormulario = () => {
         setAgdId("");
         setAgdData("");
+        setAgdHora("");
         setAgdPraticante("");
         setAgdDescricaoPraticante("");
         setAgdDescricao("");
@@ -113,6 +117,12 @@ const movimentoAgendamentoSessao = () => {
                             <Form.Control value={agdData}
                                     onChange={(e) => setAgdData(e.target.value)}
                                     type="date" id="inputDate" required />
+                        </Col>
+                        <Col md="2">
+                            <Form.Label htmlFor="inputHora">Hora</Form.Label>
+                            <Form.Control value={agdHora}
+                                    onChange={(e) => setAgdHora(e.target.value)}
+                                    type="time" id="inputHora" required />
                         </Col>
                     </Row>
 
