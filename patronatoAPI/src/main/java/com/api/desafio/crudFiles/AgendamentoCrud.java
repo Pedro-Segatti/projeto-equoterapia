@@ -15,4 +15,6 @@ public interface AgendamentoCrud extends CrudRepository<Agendamento,Integer> {
     @Query("SELECT a FROM Agendamento a WHERE (:pratId is null or a.praticante.pratId = :pratId) AND (:agdData is null OR a.agdData = :agdData)")
     List<Agendamento> findByPratIdAndAgdData(@Param("pratId") Integer pratId, @Param("agdData") Date agdData);
 
+    @Query("SELECT a FROM Agendamento a WHERE a.agdData >= current_date and a.agdConcluido = false order by a.agdData, a.agdHora desc")
+    List<Agendamento> findAtivos();
 }

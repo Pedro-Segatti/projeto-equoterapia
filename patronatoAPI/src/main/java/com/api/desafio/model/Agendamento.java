@@ -1,5 +1,6 @@
 package com.api.desafio.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.io.Serializable;
@@ -22,11 +23,19 @@ public class Agendamento implements Serializable {
     private Integer agdId;
     @Basic(optional = false)
     @Column(name = "AGD_DATA")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date agdData;
+    @Basic(optional = false)
+    @Column(name = "AGD_HORA")
+    @Temporal(TemporalType.TIME)
+    @JsonFormat(pattern = "HH:mm")
+    private Date agdHora;
     @Basic(optional = false)
     @Column(name = "AGD_DESCRICAO")
     private String agdDescricao;
+    @Basic(optional = false)
+    @Column(name = "AGD_CONCLUIDO")
+    private boolean agdConcluido;
     @JoinColumn(name = "AGD_ID_PRATICANTE", referencedColumnName = "PRAT_ID")
     @ManyToOne(optional = false)
     private Praticante praticante;
@@ -66,12 +75,28 @@ public class Agendamento implements Serializable {
         this.agdData = agdData;
     }
 
+    public Date getAgdHora() {
+        return agdHora;
+    }
+
+    public void setAgdHora(Date agdHora) {
+        this.agdHora = agdHora;
+    }
+
     public String getAgdDescricao() {
         return agdDescricao;
     }
 
     public void setAgdDescricao(String agdDescricao) {
         this.agdDescricao = agdDescricao;
+    }
+
+    public boolean isAgdConcluido() {
+        return agdConcluido;
+    }
+
+    public void setAgdConcluido(boolean agdConcluido) {
+        this.agdConcluido = agdConcluido;
     }
 
     public Praticante getPraticante() {

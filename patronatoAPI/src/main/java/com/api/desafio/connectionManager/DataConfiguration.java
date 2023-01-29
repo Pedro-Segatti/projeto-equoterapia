@@ -15,7 +15,7 @@ public class DataConfiguration {
     @Bean
     public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setUrl("jdbc:mysql://localhost:3306/patronato");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/patronato?useTimezone=true&serverTimezone=America/Sao_Paulo");
         dataSource.setUsername("root");
         dataSource.setPassword("root");
         return dataSource;
