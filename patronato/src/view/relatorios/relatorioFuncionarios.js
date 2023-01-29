@@ -17,7 +17,6 @@ const relatorioFuncionarios = () => {
       "filtros": {
         "teste" : "teste"
       }
-
     }
     gerarRelatorio("relatorioFuncionarios","Relatorio_de_funcionarios",json);
   };

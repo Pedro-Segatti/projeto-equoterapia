@@ -258,7 +258,6 @@ public class ComunicacaoController {
                 }
             }
         }
-        fichaEvolucao.getEvolData().setTime(fichaEvolucao.getEvolData().getTime() + ((4 * 60 * 60)*1000));
          return fichaEvolService.salva(fichaEvolucao);
     }
 
