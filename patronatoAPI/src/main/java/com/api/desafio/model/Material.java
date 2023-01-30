@@ -63,7 +63,7 @@ public class Material implements Serializable {
     public void setMatDescricao(String matDescricao) {
         this.matDescricao = matDescricao;
     }
-
+    @JsonIgnore
     public List<AgendamentoMaterial> getAgendamentoMaterialList() {
         return agendamentoMaterialList;
     }

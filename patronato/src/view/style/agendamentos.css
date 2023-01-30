@@ -1,0 +1,30 @@
+.tabelaAgendamentos{
+    margin-top: 15px;
+    width: 100%;
+}
+
+.tabelaCabecalho{
+    font-size: 22px;
+    background-color: rgba(34, 56, 43);
+    color: white;
+    text-align: center;
+    height: 80px;
+}
+
+.tabelaCabecalho th{
+    vertical-align: middle;
+}
+
+.tabelaLinha{
+    border-bottom: 1px solid rgba(34, 56, 43, 0.4);
+    height: 100px !important;
+    vertical-align: middle;
+    background: white;
+    border-radius: 12px;
+    margin-bottom: 5vh;
+}
+
+.tabelaLinha td{
+    text-align: center;
+    font-size: 18px;
+}
