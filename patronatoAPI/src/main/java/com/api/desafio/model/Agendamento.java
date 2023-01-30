@@ -28,7 +28,6 @@ public class Agendamento implements Serializable {
     @Basic(optional = false)
     @Column(name = "AGD_HORA")
     @Temporal(TemporalType.TIME)
-    @JsonFormat(pattern = "HH:mm")
     private Date agdHora;
     @Basic(optional = false)
     @Column(name = "AGD_DESCRICAO")

@@ -6,6 +6,7 @@ import { BsPencilSquare } from "react-icons/bs";
 import { Form, Col, Row, Container, Modal, Button, Table } from 'react-bootstrap';
 import PesquisaPraticantes from '../pesquisas/pesquisaPraticantes';
 import { api } from "../../utilitario/baseComunicacao";
+import { dataFormatada, dataFormatadaDiaMesAno } from '../../utilitario/dateUtil';
 
 function pesquisaAgendamentos({ setValores, valores, atualizaItemSelecionado, setAbrirPesquisa }) {
     const [listPraticantes, setListPraticantes] = useState([]);
@@ -13,7 +14,7 @@ function pesquisaAgendamentos({ setValores, valores, atualizaItemSelecionado, se
 
     const [idPraticante, setIdPraticante] = useState("");
     const [nomePraticante, setNomePraticante] = useState("");
-    const [agdData, setAgdData] = useState(null);
+    const [agdData, setAgdData] = useState("");
 
 
     const atualizaDlgPesquisaPraticante = async () => {
@@ -68,10 +69,9 @@ function pesquisaAgendamentos({ setValores, valores, atualizaItemSelecionado, se
     const LinhaTabela = ({ item, selecionaLinha, atualizaItemSelecionado, removeAgendamentoSelecionado }) => {
         const { agdId, agdData, agdDescricao } = item;
         const selecionarItem = e => atualizaItemSelecionado(item);
-
         return <tr>
             <td width={'80px'}>{agdId}</td>
-            <td width={'80px'}>{agdData}</td>
+            <td width={'80px'}>{dataFormatadaDiaMesAno(agdData)}</td>
             <td>{agdDescricao}</td>
             {selecionaLinha &&
                 <td width={'80px'} className='center'>

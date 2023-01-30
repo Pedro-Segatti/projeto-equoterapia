@@ -1,11 +1,19 @@
-export const dataFormatada = (data) => {
-    var dtFormatada = String(data).split('-');
-    dtFormatada = dtFormatada[2] + "/" + dtFormatada[1] + "/" + dtFormatada[0];
-    return dtFormatada;
+import dayjs from 'dayjs';
+import customParseFormat from "dayjs/plugin/customParseFormat";
+dayjs.extend(customParseFormat);
+
+export const dataFormatadaAnoMesDia = (data) => {
+    return dayjs(data).format('YYYY-MM-DD');
+};
+
+export const dataFormatadaDiaMesAno = (data) => {
+    return dayjs(data).format('DD/MM/YYYY');
 };
 
 export const horaFormatada = (hora) => {
-    var hrFormatada = String(hora).split(':');
-    hrFormatada = hrFormatada[0] + ":" + hrFormatada[1];
-    return hrFormatada;
+    return dayjs(hora,"HH:mm");
+};
+
+export const dataApiFormatada = (data) => {
+    return dayjs(data);
 };
