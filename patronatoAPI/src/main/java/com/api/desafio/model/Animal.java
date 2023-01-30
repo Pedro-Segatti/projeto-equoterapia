@@ -1,5 +1,6 @@
 package com.api.desafio.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
@@ -114,7 +115,7 @@ public class Animal implements Serializable {
     public void setAniAndadura(String aniAndadura) {
         this.aniAndadura = aniAndadura;
     }
-
+    @JsonIgnore
     public List<FichaEvolucao> getFichaEvolucaoList() {
         return fichaEvolucaoList;
     }
@@ -122,7 +123,7 @@ public class Animal implements Serializable {
     public void setFichaEvolucaoList(List<FichaEvolucao> fichaEvolucaoList) {
         this.fichaEvolucaoList = fichaEvolucaoList;
     }
-
+    @JsonIgnore
     public List<AgendamentoAnimal> getAgendamentoAnimalList() {
         return agendamentoAnimalList;
     }

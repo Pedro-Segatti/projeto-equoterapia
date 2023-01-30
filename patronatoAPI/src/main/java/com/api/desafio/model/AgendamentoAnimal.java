@@ -1,5 +1,7 @@
 package com.api.desafio.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -45,11 +47,11 @@ public class AgendamentoAnimal implements Serializable {
     public void setAxaId(Integer axaId) {
         this.axaId = axaId;
     }
-
+    @JsonIgnore
     public Agendamento getAxaIdAgendamento() {
         return axaIdAgendamento;
     }
-
+    @JsonIgnore
     public void setAxaIdAgendamento(Agendamento axaIdAgendamento) {
         this.axaIdAgendamento = axaIdAgendamento;
     }

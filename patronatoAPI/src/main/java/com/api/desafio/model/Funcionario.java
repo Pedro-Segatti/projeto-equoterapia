@@ -145,11 +145,11 @@ public class Funcionario implements Serializable {
     public void setAvalFisioterList(List<AvalFisioter> avalFisioterList) {
         this.avalFisioterList = avalFisioterList;
     }
-
+    @JsonIgnore
     public List<AgendamentoFuncionario> getAgendamentoFuncionarioList() {
         return agendamentoFuncionarioList;
     }
-
+    @JsonIgnore
     public void setAgendamentoFuncionarioList(List<AgendamentoFuncionario> agendamentoFuncionarioList) {
         this.agendamentoFuncionarioList = agendamentoFuncionarioList;
     }
