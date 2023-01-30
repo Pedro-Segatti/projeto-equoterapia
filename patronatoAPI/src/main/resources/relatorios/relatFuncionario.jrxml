@@ -10,45 +10,85 @@
 	<field name="nomeFuncionario" class="java.lang.String">
 		<fieldDescription><![CDATA[pessoa.pesNome]]></fieldDescription>
 	</field>
+	<field name="funcDataAdmissaoFormatada" class="java.lang.String"/>
+	<field name="funcPis" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch"/>
-	</title>
-	<pageHeader>
-		<band height="35" splitType="Stretch"/>
-	</pageHeader>
-	<columnHeader>
-		<band height="80" splitType="Stretch">
+		<band height="54" splitType="Stretch">
 			<staticText>
-				<reportElement x="140" y="16" width="100" height="30" uuid="39a5e841-f6f0-4ac0-b9db-ae165ad5462c"/>
-				<text><![CDATA[Nome do funcionario]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="240" y="16" width="100" height="30" uuid="0b5e557d-226d-49aa-a8d6-dec06941eeb3"/>
-				<textFieldExpression><![CDATA[$F{nomeFuncionario}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="240" y="50" width="100" height="30" uuid="89d6d5a0-28b3-44b0-910c-f5e36f6e3a4f"/>
-				<textFieldExpression><![CDATA[$F{funcId}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="140" y="50" width="100" height="30" uuid="18529f81-20c4-45af-ac57-5174340ba1dd"/>
-				<text><![CDATA[Codigo]]></text>
+				<reportElement x="0" y="0" width="554" height="20" uuid="81753e9c-6770-465e-a4ab-e2b22c3c5cb9"/>
+				<textElement textAlignment="Center">
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[Relatório de Funcionários]]></text>
 			</staticText>
 		</band>
-	</columnHeader>
+	</title>
+	<pageHeader>
+		<band height="16">
+			<staticText>
+				<reportElement x="50" y="0" width="100" height="16" uuid="39a5e841-f6f0-4ac0-b9db-ae165ad5462c"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="50" height="16" uuid="18529f81-20c4-45af-ac57-5174340ba1dd"/>
+				<text><![CDATA[Codigo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="0" width="90" height="16" uuid="df1844cc-073e-43f1-83eb-ab8074e50bfb"/>
+				<text><![CDATA[Dt admissão]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="240" y="0" width="90" height="16" uuid="66ab4f59-5dbc-4d68-a9d4-1f3cd1fb7733"/>
+				<text><![CDATA[PIS]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
 	<detail>
-		<band height="125" splitType="Stretch"/>
+		<band height="16" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="50" height="11" uuid="89d6d5a0-28b3-44b0-910c-f5e36f6e3a4f">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{funcId}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="0" width="100" height="11" uuid="0b5e557d-226d-49aa-a8d6-dec06941eeb3">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomeFuncionario}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="13" width="554" height="1" uuid="fa3850bc-6890-4e25-9617-a44804a7711b"/>
+			</line>
+			<textField>
+				<reportElement x="150" y="0" width="90" height="11" uuid="f4fe6610-c357-4e75-ad39-62939b80e11c"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{funcDataAdmissaoFormatada}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="240" y="0" width="90" height="11" uuid="85ec94be-5f9f-4132-a90c-de9ca2fafe2d"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{funcPis}]]></textFieldExpression>
+			</textField>
+		</band>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
 	<pageFooter>
 		<band height="54" splitType="Stretch"/>
 	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>

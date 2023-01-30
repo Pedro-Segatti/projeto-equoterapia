@@ -1,5 +1,6 @@
 package com.api.desafio.model;
 
+import com.api.desafio.utils.DateUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -159,6 +160,10 @@ public class Funcionario implements Serializable {
 
     public void setPessoa(Pessoa pessoa) {
         this.pessoa = pessoa;
+    }
+
+    public String getFuncDataAdmissaoFormatada(){
+        return DateUtil.dataFormatada(funcDataAdmissao);
     }
 
     @Override
