@@ -17,6 +17,7 @@ import Menu from "../menu";
 import Footer from "../footer";
 import InputConverter from "../inputConverter";
 import { saveAs } from 'file-saver';
+import { dataApiFormatada, dataFormatadaAnoMesDia } from '../../utilitario/dateUtil';
 
 function movimentoAvalFisioter() {
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
@@ -159,7 +160,7 @@ function movimentoAvalFisioter() {
         setAftSistResp(item.aftSistResp);
         setAftSistCirc(item.aftSistCirc);
         setAftParecerFisio(item.aftParecerFisio);
-        setAftData(item.aftData);
+        setAftData(dataFormatadaAnoMesDia(item.aftData));
         setAftIdFuncionario(item.aftIdFuncionario);
         setAftIdPraticante(item.aftIdPraticante);
         setAftIdMedico(item.aftIdMedico);
@@ -227,7 +228,7 @@ function movimentoAvalFisioter() {
             "aftSistResp": aftSistResp,
             "aftSistCirc": aftSistCirc,
             "aftParecerFisio": aftParecerFisio,
-            "aftData": aftData,
+            "aftData": dataApiFormatada(aftData),
             "aftIdPraticante": aftIdPraticante,
             "aftIdFuncionario": aftIdFuncionario,
             "aftIdMedico": aftIdMedico,

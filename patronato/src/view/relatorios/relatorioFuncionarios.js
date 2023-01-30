@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Menu from "../menu";
 import Footer from "../footer";
 import { ReactNotifications } from "react-notifications-component";

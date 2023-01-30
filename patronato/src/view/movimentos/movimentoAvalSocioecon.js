@@ -11,6 +11,7 @@ import Menu from "../menu";
 import Footer from "../footer";
 import HTTP_STATUS from "../../utilitario/httpStatus";
 import InputConverter from "../inputConverter";
+import { dataApiFormatada, dataFormatadaAnoMesDia } from '../../utilitario/dateUtil';
 
 function movimentoAvalSocioecon() {
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
@@ -44,7 +45,7 @@ function movimentoAvalSocioecon() {
 
     const atualizaItemSelecionado = (item) => {
         setAseId(item.aseId);
-        setAseData(item.aseData);
+        setAseData(dataFormatadaAnoMesDia(item.aseData));
         setAseObsContFam(item.aseObsContFam);
         setAseObsMedicamentos(item.aseObsMedicamentos);
         setPraticante(item.praticante);
@@ -54,7 +55,7 @@ function movimentoAvalSocioecon() {
     const enviaJsonGravar = () => {
         const json = {
             "aseId": aseId,
-            "aseData": aseData,
+            "aseData": dataApiFormatada(aseData),
             "aseObsContFam": aseObsContFam,
             "aseObsMedicamentos": aseObsMedicamentos,
             "praticante": praticante

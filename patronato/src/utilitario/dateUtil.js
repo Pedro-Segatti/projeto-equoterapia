@@ -14,6 +14,12 @@ export const horaFormatada = (hora) => {
     return dayjs(hora,"HH:mm");
 };
 
+export const horaFormatadaString = (hora) => {
+    var hrFormatada = String(hora).split(':');
+    hrFormatada = hrFormatada[0] + ":" + hrFormatada[1];
+    return hrFormatada;
+};
+
 export const dataApiFormatada = (data) => {
     return dayjs(data);
 };

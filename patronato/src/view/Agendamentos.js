@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { api } from "../utilitario/baseComunicacao";
-import { dataFormatada, horaFormatada } from "../utilitario/dateUtil";
+import { dataFormatadaDiaMesAno, horaFormatadaString } from "../utilitario/dateUtil";
 import './style/agendamentos.css';
 
 
@@ -22,8 +22,8 @@ const Agendamentos = () => {
     const { pesNome } = item.praticante.pessoa;
 
     return <tr className="tabelaLinha">
-      <td className="bold">{dataFormatada(agdData)}</td>
-      <td>{horaFormatada(agdHora)}</td>
+      <td className="bold">{dataFormatadaDiaMesAno(agdData)}</td>
+      <td>{horaFormatadaString(agdHora)}</td>
       <td>{agdDescricao}</td>
       <td>{pesNome}</td>
       <td>

@@ -6,7 +6,7 @@ import { BsPencilSquare } from "react-icons/bs";
 import { Form, Col, Row, Container, Modal, Button, Table } from 'react-bootstrap';
 import PesquisaPraticantes from '../pesquisas/pesquisaPraticantes';
 import { api } from "../../utilitario/baseComunicacao";
-import { dataFormatada, dataFormatadaDiaMesAno } from '../../utilitario/dateUtil';
+import { dataFormatadaDiaMesAno } from '../../utilitario/dateUtil';
 
 function pesquisaAgendamentos({ setValores, valores, atualizaItemSelecionado, setAbrirPesquisa }) {
     const [listPraticantes, setListPraticantes] = useState([]);
