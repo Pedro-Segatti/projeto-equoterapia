@@ -53,7 +53,6 @@ public class AgendamentoFuncionario implements Serializable {
     public Agendamento getAxfIdAgendamento() {
         return axfIdAgendamento;
     }
-    @JsonIgnore
     public void setAxfIdAgendamento(Agendamento axfIdAgendamento) {
         this.axfIdAgendamento = axfIdAgendamento;
     }

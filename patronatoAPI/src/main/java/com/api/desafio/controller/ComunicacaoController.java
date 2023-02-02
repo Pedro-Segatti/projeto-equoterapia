@@ -11,6 +11,7 @@ import com.api.desafio.service.AvalSocioeconService;
 import com.api.desafio.service.FichaEvolService;
 import com.api.desafio.service.PessoaService;
 import com.api.desafio.service.ResponsavelService;
+import com.api.desafio.utils.ListUtil;
 import com.api.desafio.utils.RelatorioUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -78,33 +79,33 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/login")
-        public ResponseEntity<?> getAuthenticate(@RequestParam String login,@RequestParam String password){
-            if(login == null || login.isEmpty() || password == null || password.isEmpty()){
-                return new ResponseEntity<Pessoa>(new Pessoa(), HttpStatus.BAD_REQUEST);
-            }
+    public ResponseEntity<?> getAuthenticate(@RequestParam String login, @RequestParam String password) {
+        if (login == null || login.isEmpty() || password == null || password.isEmpty()) {
+            return new ResponseEntity<Pessoa>(new Pessoa(), HttpStatus.BAD_REQUEST);
+        }
 
-            Pessoa pessoa = pessoaService.getPessoaByPesCpf(login);
-            if(pessoa == null){
-                return new ResponseEntity<Pessoa>(new Pessoa(), HttpStatus.NOT_FOUND);
-            }
-
-            String encryptPassword = DigestUtils.md5Hex(password);
-            if(pessoa.getPesLoginPassword().equals(encryptPassword)){
-                return new ResponseEntity<Pessoa>(pessoa, HttpStatus.OK);
-            }
-
+        Pessoa pessoa = pessoaService.getPessoaByPesCpf(login);
+        if (pessoa == null) {
             return new ResponseEntity<Pessoa>(new Pessoa(), HttpStatus.NOT_FOUND);
         }
 
+        String encryptPassword = DigestUtils.md5Hex(password);
+        if (pessoa.getPesLoginPassword().equals(encryptPassword)) {
+            return new ResponseEntity<Pessoa>(pessoa, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<Pessoa>(new Pessoa(), HttpStatus.NOT_FOUND);
+    }
+
     @CrossOrigin(origins = "*")
     @GetMapping("/pessoaLogada")
-    public ResponseEntity<?> getPessoaLogada(@RequestParam Integer id){
-        if(id == null){
+    public ResponseEntity<?> getPessoaLogada(@RequestParam Integer id) {
+        if (id == null) {
             return new ResponseEntity<Pessoa>(new Pessoa(), HttpStatus.BAD_REQUEST);
         }
 
         Pessoa pessoa = pessoaService.getPessoaByPesId(id);
-        if(pessoa == null){
+        if (pessoa == null) {
             return new ResponseEntity<Pessoa>(new Pessoa(), HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<Pessoa>(pessoa, HttpStatus.OK);
@@ -112,252 +113,262 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastraAnimal")
-    public ResponseEntity<?> cadastrarAnimal(@RequestBody Animal animal){
+    public ResponseEntity<?> cadastrarAnimal(@RequestBody Animal animal) {
         return animalService.salva(animal);
     }
 
     @CrossOrigin(origins = "*")
     @DeleteMapping("/removeAnimal")
-    public ResponseEntity<Animal> removeAnimal(@RequestParam Integer aniId){
-        try{
+    public ResponseEntity<Animal> removeAnimal(@RequestParam Integer aniId) {
+        try {
             Animal animal = animalService.remove(aniId);
             return new ResponseEntity<>(new Animal(), HttpStatus.OK);
-        }catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(new Animal(), HttpStatus.FORBIDDEN);
         }
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaAnimal")
-    public ResponseEntity<List<Animal>> pesquisaAnimais(@RequestParam (required=false) Integer aniId,@RequestParam (required=false) String aniNome ){
-        return animalService.pesquisaAnimais(aniId,aniNome);
+    public ResponseEntity<List<Animal>> pesquisaAnimais(@RequestParam(required = false) Integer aniId, @RequestParam(required = false) String aniNome) {
+        return animalService.pesquisaAnimais(aniId, aniNome);
     }
 
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastraAtividade")
-    public ResponseEntity<?> cadastrarAtividade(@RequestBody Atividade atividade){
+    public ResponseEntity<?> cadastrarAtividade(@RequestBody Atividade atividade) {
         return atividadeService.salva(atividade);
     }
 
     @CrossOrigin(origins = "*")
     @DeleteMapping("/removeAtividade")
-    public ResponseEntity<?> removeAtividade(@RequestParam Integer atvId){
-        try{
+    public ResponseEntity<?> removeAtividade(@RequestParam Integer atvId) {
+        try {
             atividadeService.remove(atvId);
             return new ResponseEntity<>(new Atividade(), HttpStatus.OK);
-        }catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(new Atividade(), HttpStatus.FORBIDDEN);
         }
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaAtividade")
-    public ResponseEntity<List<Atividade>> pesquisaAtividade(@RequestParam (required=false) Integer atvId,@RequestParam (required=false) String atvDescricao ){
-        return atividadeService.pesquisa(atvId,atvDescricao);
+    public ResponseEntity<List<Atividade>> pesquisaAtividade(@RequestParam(required = false) Integer atvId, @RequestParam(required = false) String atvDescricao) {
+        return atividadeService.pesquisa(atvId, atvDescricao);
     }
 
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastraCargo")
-    public ResponseEntity<?> cadastrarCargo(@RequestBody Cargo cargo){
+    public ResponseEntity<?> cadastrarCargo(@RequestBody Cargo cargo) {
         return cargoService.salva(cargo);
     }
 
     @CrossOrigin(origins = "*")
     @DeleteMapping("/removeCargo")
-    public ResponseEntity<?> removeCargo(@RequestParam Integer carId){
-        try{
+    public ResponseEntity<?> removeCargo(@RequestParam Integer carId) {
+        try {
             cargoService.remove(carId);
             return new ResponseEntity<>(new Cargo(), HttpStatus.OK);
-        }catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(new Cargo(), HttpStatus.FORBIDDEN);
         }
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaCargo")
-    public ResponseEntity<List<Cargo>> pesquisaCargo(@RequestParam (required=false) Integer carId,@RequestParam (required=false) String carDescricao ){
-        return cargoService.pesquisa(carId,carDescricao);
+    public ResponseEntity<List<Cargo>> pesquisaCargo(@RequestParam(required = false) Integer carId, @RequestParam(required = false) String carDescricao) {
+        return cargoService.pesquisa(carId, carDescricao);
     }
 
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastraMaterial")
-    public ResponseEntity<?> cadastrarMaterial(@RequestBody Material material){
+    public ResponseEntity<?> cadastrarMaterial(@RequestBody Material material) {
         return materialService.salva(material);
     }
 
     @CrossOrigin(origins = "*")
     @DeleteMapping("/removeMaterial")
-    public ResponseEntity<?> removeMaterial(@RequestParam Integer matId){
-        try{
+    public ResponseEntity<?> removeMaterial(@RequestParam Integer matId) {
+        try {
             materialService.remove(matId);
             return new ResponseEntity<>(new Material(), HttpStatus.OK);
-        }catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(new Material(), HttpStatus.FORBIDDEN);
         }
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaMaterial")
-    public ResponseEntity<List<Material>> pesquisaMaterial(@RequestParam (required=false) Integer matId,@RequestParam (required=false) String matDescricao ){
-        return materialService.pesquisa(matId,matDescricao);
+    public ResponseEntity<List<Material>> pesquisaMaterial(@RequestParam(required = false) Integer matId, @RequestParam(required = false) String matDescricao) {
+        return materialService.pesquisa(matId, matDescricao);
     }
 
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastraPicadeiro")
-    public ResponseEntity<?> cadastrarPicadeiro(@RequestBody Picadeiro picadeiro){
+    public ResponseEntity<?> cadastrarPicadeiro(@RequestBody Picadeiro picadeiro) {
         return picadeiroService.salva(picadeiro);
     }
 
     @CrossOrigin(origins = "*")
     @DeleteMapping("/removePicadeiro")
-    public ResponseEntity<Picadeiro> removePicadeiro(@RequestParam Integer picId){
-        try{
+    public ResponseEntity<Picadeiro> removePicadeiro(@RequestParam Integer picId) {
+        try {
             picadeiroService.remove(picId);
             return new ResponseEntity<>(new Picadeiro(), HttpStatus.OK);
-        }catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(new Picadeiro(), HttpStatus.FORBIDDEN);
         }
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaPicadeiro")
-    public ResponseEntity<List<Picadeiro>> pesquisaPicadeiro(@RequestParam (required=false) Integer picId,@RequestParam (required=false) String picDescricao ){
-        return picadeiroService.pesquisa(picId,picDescricao);
+    public ResponseEntity<List<Picadeiro>> pesquisaPicadeiro(@RequestParam(required = false) Integer picId, @RequestParam(required = false) String picDescricao) {
+        return picadeiroService.pesquisa(picId, picDescricao);
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaPais")
-    public Pais pesquisaPicadeiro(@RequestParam String paiIso){
+    public Pais pesquisaPicadeiro(@RequestParam String paiIso) {
         return paisService.getPaisByIso(paiIso);
     }
 
 
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastraFichaEvol")
-    public ResponseEntity<FichaEvolucao> cadastrarFichaEvol(@RequestBody FichaEvolucao fichaEvolucao){
-        if(fichaEvolucao.getEvolId() != null){
+    public ResponseEntity<FichaEvolucao> cadastrarFichaEvol(@RequestBody FichaEvolucao fichaEvolucao) {
+        if (fichaEvolucao.getEvolId() != null) {
             FichaEvolucao evol = fichaEvolService.pesquisaPorCodigo(fichaEvolucao.getEvolId());
-            for (FichaEvolAtividadeMaterial oldEv : evol.getFichaEvolAtividadeMaterialList()){
+            for (FichaEvolAtividadeMaterial oldEv : evol.getFichaEvolAtividadeMaterialList()) {
                 boolean possui = false;
-                for (FichaEvolAtividadeMaterial newEv : fichaEvolucao.getFichaEvolAtividadeMaterialList()){
-                    if(oldEv.equals(newEv) && newEv.getFxatId() != null){
+                for (FichaEvolAtividadeMaterial newEv : fichaEvolucao.getFichaEvolAtividadeMaterialList()) {
+                    if (oldEv.equals(newEv) && newEv.getFxatId() != null) {
                         possui = true;
                     }
                 }
-                if(!possui){
+                if (!possui) {
                     evolAtividadeMaterial.remove(oldEv.getFxatId());
                 }
             }
         }
-         return fichaEvolService.salva(fichaEvolucao);
+        return fichaEvolService.salva(fichaEvolucao);
     }
 
     @CrossOrigin(origins = "*")
     @DeleteMapping("/removeFichaEvol")
-    public ResponseEntity<FichaEvolucao> removeFichaEvol(@RequestParam Integer evolId){
-        try{
+    public ResponseEntity<FichaEvolucao> removeFichaEvol(@RequestParam Integer evolId) {
+        try {
             fichaEvolService.remove(evolId);
             return new ResponseEntity<>(new FichaEvolucao(), HttpStatus.OK);
-        }catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(new FichaEvolucao(), HttpStatus.FORBIDDEN);
         }
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaFichaEvol")
-    public ResponseEntity<List<FichaEvolucao>> pesquisaFichaEvol(@RequestParam (required=false) Integer evolId ){
+    public ResponseEntity<List<FichaEvolucao>> pesquisaFichaEvol(@RequestParam(required = false) Integer evolId) {
         return fichaEvolService.pesquisa(evolId);
     }
 
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastraAvalFisioter")
-    public ResponseEntity<?> cadastrarAvalFisioter(@RequestBody AvalFisioter avalFisioter){
-        for (AnexoAft anex: avalFisioter.getAnexosList()) {
+    public ResponseEntity<?> cadastrarAvalFisioter(@RequestBody AvalFisioter avalFisioter) {
+        for (AnexoAft anex : avalFisioter.getAnexosList()) {
             if (anex.getAvalFisioter() == null) {
                 anex.setAvalFisioter(avalFisioter);
             }
         }
         Date date = avalFisioter.getAftData();
-        date.setTime(date.getTime() + ((4 * 60 * 60)*1000));
+        date.setTime(date.getTime() + ((4 * 60 * 60) * 1000));
         avalFisioter.setAftData(date);
         return avalFisioterService.salva(avalFisioter);
     }
 
     @CrossOrigin(origins = "*")
     @DeleteMapping("/removeAvalFisioter")
-    public ResponseEntity<AvalFisioter> removeAvalFisioter(@RequestParam Integer aftId){
-        try{
+    public ResponseEntity<AvalFisioter> removeAvalFisioter(@RequestParam Integer aftId) {
+        try {
             avalFisioterService.remove(aftId);
             return new ResponseEntity<>(new AvalFisioter(), HttpStatus.OK);
-        }catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(new AvalFisioter(), HttpStatus.FORBIDDEN);
         }
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaAvalFisioter")
-    public ResponseEntity<List<AvalFisioter>> pesquisaAvalFisioter(@RequestParam (required=false) Integer aftId ){
+    public ResponseEntity<List<AvalFisioter>> pesquisaAvalFisioter(@RequestParam(required = false) Integer aftId) {
         return avalFisioterService.pesquisa();
     }
 
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastraAvalSocioEcon")
-    public ResponseEntity<?> cadastrarAvalSocioEcon(@RequestBody AvalSocioecon avalSocioEcon){
+    public ResponseEntity<?> cadastrarAvalSocioEcon(@RequestBody AvalSocioecon avalSocioEcon) {
         return avalSocioeconService.salva(avalSocioEcon);
     }
 
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastrarAgendamento")
-    public ResponseEntity<Agendamento> cadastrarAgendamento(@RequestBody Agendamento agendamento){
+    public ResponseEntity<Agendamento> cadastrarAgendamento(@RequestBody Agendamento agendamento) {
+        final Agendamento agd = agendamento;
+        if (ListUtil.isNotEmpty(agendamento.getAgendamentoAnimalList())) {
+            agendamento.getAgendamentoAnimalList().forEach(ani -> ani.setAxaIdAgendamento(agd));
+        }
+        if (ListUtil.isNotEmpty(agendamento.getAgendamentoFuncionarioList())) {
+            agendamento.getAgendamentoFuncionarioList().forEach(func -> func.setAxfIdAgendamento(agd));
+        }
+        if (ListUtil.isNotEmpty(agendamento.getAgendamentoMaterialList())) {
+            agendamento.getAgendamentoMaterialList().forEach(mat -> mat.setAxmIdAgendamento(agd));
+        }
         agendamento = agendamentoService.salva(agendamento);
-        if(agendamento != null){
+        if (agendamento != null) {
             return new ResponseEntity<>(agendamento, HttpStatus.OK);
-        }else{
+        } else {
             return new ResponseEntity<>(new Agendamento(), HttpStatus.FORBIDDEN);
         }
     }
 
     @CrossOrigin(origins = "*")
     @DeleteMapping("/removerAgendamento")
-    public ResponseEntity<?> removerAgendamento(@RequestParam Integer agdId){
-        try{
+    public ResponseEntity<?> removerAgendamento(@RequestParam Integer agdId) {
+        try {
             agendamentoService.remove(agdId);
             return new ResponseEntity<>(new Agendamento(), HttpStatus.OK);
-        }catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(new Agendamento(), HttpStatus.FORBIDDEN);
         }
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaAgendamentos")
-    public ResponseEntity<List<Agendamento>> pesquisaAgendamentos(@RequestParam (required=false) Integer pratId, @RequestParam (required=false) Date agdData){
+    public ResponseEntity<List<Agendamento>> pesquisaAgendamentos(@RequestParam(required = false) Integer pratId, @RequestParam(required = false) Date agdData) {
         return agendamentoService.pesquisaAgendamentos(pratId, agdData);
     }
 
     @CrossOrigin(origins = "*")
     @DeleteMapping("/removeAvalSocioEcon")
-    public ResponseEntity<AvalSocioecon> removerAvalSocioEcon(@RequestParam Integer aseId){
-        try{
+    public ResponseEntity<AvalSocioecon> removerAvalSocioEcon(@RequestParam Integer aseId) {
+        try {
             avalSocioeconService.remove(aseId);
             return new ResponseEntity<>(new AvalSocioecon(), HttpStatus.OK);
-        }catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(new AvalSocioecon(), HttpStatus.FORBIDDEN);
         }
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaAvalSocioEcon")
-    public ResponseEntity<List<AvalSocioecon>> pesquisaAvalSocioEcon(){
+    public ResponseEntity<List<AvalSocioecon>> pesquisaAvalSocioEcon() {
         return avalSocioeconService.pesquisa();
     }
 
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastrarPessoa")
-    public ResponseEntity<?> cadastrarPessoa(@RequestBody String jsonPessoa){
+    public ResponseEntity<?> cadastrarPessoa(@RequestBody String jsonPessoa) {
         JsonObject jsonConvertido = new Gson().fromJson(jsonPessoa, JsonObject.class);
         Pessoa pessoaExistente = pessoaService.getPessoaByPesCpf(jsonConvertido.get("pesCpf").getAsString());
 
-        if(pessoaExistente != null){
+        if (pessoaExistente != null) {
             return new ResponseEntity<Pessoa>(new Pessoa(), HttpStatus.BAD_REQUEST);
         }
 
@@ -374,11 +385,11 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/atualizarPessoa")
-    public ResponseEntity<?> atualizarPessoa(@RequestBody String jsonPessoa){
+    public ResponseEntity<?> atualizarPessoa(@RequestBody String jsonPessoa) {
         JsonObject jsonConvertido = new Gson().fromJson(jsonPessoa, JsonObject.class);
         Pessoa pessoaExistente = pessoaService.getPessoaByPesCpf(jsonConvertido.get("pesCpf").getAsString());
 
-        if(pessoaExistente == null){
+        if (pessoaExistente == null) {
             return new ResponseEntity<Pessoa>(new Pessoa(), HttpStatus.FORBIDDEN);
         }
 
@@ -392,12 +403,12 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastrarPraticante")
-    public ResponseEntity<?> cadastrarPraticante(@RequestBody String jsonPraticante){
+    public ResponseEntity<?> cadastrarPraticante(@RequestBody String jsonPraticante) {
         JsonObject jsonConvertido = new Gson().fromJson(jsonPraticante, JsonObject.class);
         Praticante novoPraticante = new Praticante();
 
         JsonElement idPessoa = jsonConvertido.get("pessoaId");
-        if(idPessoa.isJsonNull()){
+        if (idPessoa.isJsonNull()) {
             return new ResponseEntity<Praticante>(novoPraticante, HttpStatus.FORBIDDEN);
         }
 
@@ -423,11 +434,11 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/atualizarPraticante")
-    public ResponseEntity<?> atualizarPraticante(@RequestBody String jsonPraticante){
+    public ResponseEntity<?> atualizarPraticante(@RequestBody String jsonPraticante) {
         JsonObject jsonConvertido = new Gson().fromJson(jsonPraticante, JsonObject.class);
         Praticante praticanteExistente = praticanteService.getPraticanteById(jsonConvertido.get("pratId").getAsInt());
 
-        if(praticanteExistente == null){
+        if (praticanteExistente == null) {
             return new ResponseEntity<Praticante>(praticanteExistente, HttpStatus.FORBIDDEN);
         }
 
@@ -450,12 +461,12 @@ public class ComunicacaoController {
         return new ResponseEntity<Praticante>(praticanteExistente, HttpStatus.OK);
     }
 
-    private void inserirNovoDocumento(JsonElement documentos, Praticante praticante){
-        if(!documentos.isJsonNull()){
+    private void inserirNovoDocumento(JsonElement documentos, Praticante praticante) {
+        if (!documentos.isJsonNull()) {
             JsonArray documentosArray = documentos.getAsJsonArray();
             int tamanhoDocs = documentosArray.size();
 
-            for (int i = 0; i < tamanhoDocs; i++){
+            for (int i = 0; i < tamanhoDocs; i++) {
                 Documentos docs = new Documentos();
                 JsonElement docId = documentosArray.get(i).getAsJsonObject().get("docId");
                 docs.setDocId(!docId.isJsonNull() ? docId.getAsInt() : null);
@@ -467,12 +478,12 @@ public class ComunicacaoController {
         }
     }
 
-    private void inserirNovoResponsavel(JsonElement responsaveis, Praticante praticante){
-        if(!responsaveis.isJsonNull()){
+    private void inserirNovoResponsavel(JsonElement responsaveis, Praticante praticante) {
+        if (!responsaveis.isJsonNull()) {
             JsonArray responsaveisArray = responsaveis.getAsJsonArray();
             int tamanhoResponsaveis = responsaveisArray.size();
 
-            for (int i = 0; i < tamanhoResponsaveis; i++){
+            for (int i = 0; i < tamanhoResponsaveis; i++) {
                 PraticanteResponsavel pxr = new PraticanteResponsavel();
                 JsonElement pxrId = responsaveisArray.get(i).getAsJsonObject().get("pxrId");
                 pxr.setPxrId(!pxrId.isJsonNull() ? pxrId.getAsInt() : null);
@@ -484,12 +495,12 @@ public class ComunicacaoController {
         }
     }
 
-    private void inserirNovoTelefone(JsonElement telefones, Pessoa pessoa){
-        if(!telefones.isJsonNull()){
+    private void inserirNovoTelefone(JsonElement telefones, Pessoa pessoa) {
+        if (!telefones.isJsonNull()) {
             JsonArray telefonesArray = telefones.getAsJsonArray();
             int tamanhoTels = telefonesArray.size();
 
-            for (int i = 0; i < tamanhoTels; i++){
+            for (int i = 0; i < tamanhoTels; i++) {
                 Telefone tel = new Telefone();
                 JsonElement telId = telefonesArray.get(i).getAsJsonObject().get("telId");
                 tel.setTelId(!telId.isJsonNull() ? telId.getAsInt() : null);
@@ -502,63 +513,63 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @DeleteMapping("/removerDocumento")
-    public ResponseEntity<Documentos> removerDocumento(@RequestParam (required=false) Integer docId){
-        try{
+    public ResponseEntity<Documentos> removerDocumento(@RequestParam(required = false) Integer docId) {
+        try {
             documentosService.remove(docId);
             return new ResponseEntity<>(new Documentos(), HttpStatus.OK);
-        }catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(new Documentos(), HttpStatus.FORBIDDEN);
         }
     }
 
     @CrossOrigin(origins = "*")
     @DeleteMapping("/removerTelefone")
-    public ResponseEntity<Telefone> removerTelefone(@RequestParam (required=false) Integer telId){
-        try{
+    public ResponseEntity<Telefone> removerTelefone(@RequestParam(required = false) Integer telId) {
+        try {
             telefoneService.remove(telId);
             return new ResponseEntity<>(new Telefone(), HttpStatus.OK);
-        }catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(new Telefone(), HttpStatus.FORBIDDEN);
         }
     }
 
     @CrossOrigin(origins = "*")
     @DeleteMapping("/removerResponsavelSelecionado")
-    public ResponseEntity<PraticanteResponsavel> removerResponsavelSelecionado(@RequestParam (required=false) Integer pxrId){
-        try{
+    public ResponseEntity<PraticanteResponsavel> removerResponsavelSelecionado(@RequestParam(required = false) Integer pxrId) {
+        try {
             praticanteResponsavelService.remove(pxrId);
             return new ResponseEntity<>(new PraticanteResponsavel(), HttpStatus.OK);
-        }catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(new PraticanteResponsavel(), HttpStatus.FORBIDDEN);
         }
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaPraticantes")
-    public ResponseEntity<List<Praticante>> pesquisaPraticantes(@RequestParam (required=false) String pesCpf,@RequestParam (required=false) String pesNome){
+    public ResponseEntity<List<Praticante>> pesquisaPraticantes(@RequestParam(required = false) String pesCpf, @RequestParam(required = false) String pesNome) {
         return praticanteService.pesquisaPraticantes(pesCpf, pesNome);
     }
 
     @CrossOrigin(origins = "*")
     @DeleteMapping("/removePraticante")
-    public ResponseEntity<Praticante> removePraticante(@RequestParam (required=false) Integer pratId){
-        try{
+    public ResponseEntity<Praticante> removePraticante(@RequestParam(required = false) Integer pratId) {
+        try {
             praticanteService.remove(pratId);
             return new ResponseEntity<>(new Praticante(), HttpStatus.OK);
-        }catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(new Praticante(), HttpStatus.FORBIDDEN);
         }
     }
 
-///////////////////////////////////////////
+    ///////////////////////////////////////////
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastrarResponsavel")
-    public ResponseEntity<?> cadastrarResponsavel(@RequestBody String jsonResponsavel){
+    public ResponseEntity<?> cadastrarResponsavel(@RequestBody String jsonResponsavel) {
         JsonObject jsonConvertido = new Gson().fromJson(jsonResponsavel, JsonObject.class);
         Responsavel novoResponsavel = new Responsavel();
 
         JsonElement idPessoa = jsonConvertido.get("pessoaId");
-        if(idPessoa.isJsonNull()){
+        if (idPessoa.isJsonNull()) {
             return new ResponseEntity<Responsavel>(novoResponsavel, HttpStatus.FORBIDDEN);
         }
 
@@ -572,11 +583,11 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/atualizarResponsavel")
-    public ResponseEntity<?> atualizarResponsavel(@RequestBody String jsonResponsavel){
+    public ResponseEntity<?> atualizarResponsavel(@RequestBody String jsonResponsavel) {
         JsonObject jsonConvertido = new Gson().fromJson(jsonResponsavel, JsonObject.class);
         Responsavel responsavelExistente = responsavelService.getResponsavelById(jsonConvertido.get("respId").getAsInt());
 
-        if(responsavelExistente == null){
+        if (responsavelExistente == null) {
             return new ResponseEntity<Responsavel>(responsavelExistente, HttpStatus.FORBIDDEN);
         }
 
@@ -589,25 +600,25 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaMedico")
-    public ResponseEntity<List<Medico>> pesquisaMedico(@RequestParam (required=false) String pesCpf,@RequestParam (required=false) String pesNome){
+    public ResponseEntity<List<Medico>> pesquisaMedico(@RequestParam(required = false) String pesCpf, @RequestParam(required = false) String pesNome) {
         return medicoService.pesquisaMedico(pesCpf, pesNome);
     }
 
     @CrossOrigin(origins = "*")
     @DeleteMapping("/removeMedico")
-    public ResponseEntity<Medico> removeMedico(@RequestParam (required=false) Integer medId){
-        try{
+    public ResponseEntity<Medico> removeMedico(@RequestParam(required = false) Integer medId) {
+        try {
             medicoService.remove(medId);
             return new ResponseEntity<>(new Medico(), HttpStatus.OK);
-        }catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(new Medico(), HttpStatus.FORBIDDEN);
         }
     }
 
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastraMedico")
-    public ResponseEntity<?> cadastrarMedico(@RequestBody Medico medico){
-        for (Telefone telefone: medico.getPessoa().getTelefoneList()) {
+    public ResponseEntity<?> cadastrarMedico(@RequestBody Medico medico) {
+        for (Telefone telefone : medico.getPessoa().getTelefoneList()) {
             telefone.setPessoa(medico.getPessoa());
             telefone.setTelNumero(telefone.getTelNumero().replace(" ", ""));
         }
@@ -618,17 +629,17 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaResponsavel")
-    public ResponseEntity<List<Responsavel>> pesquisaResponsavel(@RequestParam (required=false) String pesCpf,@RequestParam (required=false) String pesNome){
+    public ResponseEntity<List<Responsavel>> pesquisaResponsavel(@RequestParam(required = false) String pesCpf, @RequestParam(required = false) String pesNome) {
         return responsavelService.pesquisaResponsavel(pesCpf, pesNome);
     }
 
     @CrossOrigin(origins = "*")
     @DeleteMapping("/removeResponsavel")
-    public ResponseEntity<Responsavel> removeResponsavel(@RequestParam Integer respId){
-        try{
+    public ResponseEntity<Responsavel> removeResponsavel(@RequestParam Integer respId) {
+        try {
             Responsavel responsavel = responsavelService.remove(respId);
             return new ResponseEntity<>(new Responsavel(), HttpStatus.OK);
-        }catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(new Responsavel(), HttpStatus.FORBIDDEN);
         }
     }
@@ -637,13 +648,13 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaFuncionario")
-    public ResponseEntity<List<Funcionario>> pesquisaFuncionario(@RequestParam (required=false) String pesCpf,@RequestParam (required=false) String pesNome){
+    public ResponseEntity<List<Funcionario>> pesquisaFuncionario(@RequestParam(required = false) String pesCpf, @RequestParam(required = false) String pesNome) {
         return funcionarioService.pesquisaFuncionario(pesCpf, pesNome);
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaLogradouros")
-    public ResponseEntity<List<Logradouro>> pesquisaLogradouros(@RequestParam (required=false) String logDesc) {
+    public ResponseEntity<List<Logradouro>> pesquisaLogradouros(@RequestParam(required = false) String logDesc) {
         List<Logradouro> logradouros = logradouroService.getLogradouroByDescricao(logDesc);
         return new ResponseEntity<List<Logradouro>>(logradouros, HttpStatus.OK);
 
@@ -651,16 +662,17 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastraLogradouro")
-    public ResponseEntity<?> cadastrarLogradouro(@RequestBody Logradouro logradouro){
+    public ResponseEntity<?> cadastrarLogradouro(@RequestBody Logradouro logradouro) {
         return logradouroService.salva(logradouro);
     }
+
     @CrossOrigin(origins = "*")
     @DeleteMapping("/removeLogradouro")
-    public ResponseEntity<Logradouro> removerLogradouro(@RequestParam Integer logId){
-        try{
+    public ResponseEntity<Logradouro> removerLogradouro(@RequestParam Integer logId) {
+        try {
             Logradouro logradouro = logradouroService.remove(logId);
             return new ResponseEntity<>(logradouro, HttpStatus.OK);
-        }catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(new Logradouro(), HttpStatus.FORBIDDEN);
         }
 
@@ -670,16 +682,17 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastraMontaria")
-    public ResponseEntity<?> cadastrarMontaria(@RequestBody Montaria montaria){
+    public ResponseEntity<?> cadastrarMontaria(@RequestBody Montaria montaria) {
         return montariaService.salva(montaria);
     }
+
     @CrossOrigin(origins = "*")
     @DeleteMapping("/removeMontaria")
-    public ResponseEntity<Montaria> removerMontaria(@RequestParam Integer montId){
-        try{
+    public ResponseEntity<Montaria> removerMontaria(@RequestParam Integer montId) {
+        try {
             Montaria montaria = montariaService.remove(montId);
             return new ResponseEntity<>(montaria, HttpStatus.OK);
-        }catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(new Montaria(), HttpStatus.FORBIDDEN);
         }
 
@@ -687,7 +700,7 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaMontaria")
-    public ResponseEntity<List<Montaria>> pesquisaMontaria(){
+    public ResponseEntity<List<Montaria>> pesquisaMontaria() {
         return montariaService.pesquisa();
     }
 
@@ -695,42 +708,43 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastraBairro")
-    public ResponseEntity<?> cadastrarBairro(@RequestBody Bairro bairro){
+    public ResponseEntity<?> cadastrarBairro(@RequestBody Bairro bairro) {
         return bairroService.salva(bairro);
     }
+
     @CrossOrigin(origins = "*")
     @DeleteMapping("/removeBairro")
-    public ResponseEntity<Bairro> removerBairro(@RequestParam Integer barId){
-        try{
+    public ResponseEntity<Bairro> removerBairro(@RequestParam Integer barId) {
+        try {
             Bairro bairro = bairroService.remove(barId);
             return new ResponseEntity<>(bairro, HttpStatus.OK);
-        }catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(new Bairro(), HttpStatus.FORBIDDEN);
         }
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaBairro")
-    public ResponseEntity<List<Bairro>> pesquisaBairro(@RequestParam (required=false) String barNome){
+    public ResponseEntity<List<Bairro>> pesquisaBairro(@RequestParam(required = false) String barNome) {
         return bairroService.pesquisa(barNome);
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaCidade")
-    public ResponseEntity<List<Cidade>> pesquisaCidade(@RequestParam (required=false) String cidNome){
+    public ResponseEntity<List<Cidade>> pesquisaCidade(@RequestParam(required = false) String cidNome) {
         return cidadeService.pesquisa(cidNome);
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaAgendamentosAtivos")
-    public ResponseEntity<List<Agendamento>> pesquisaAgendamentosAtivos(){
+    public ResponseEntity<List<Agendamento>> pesquisaAgendamentosAtivos() {
         return agendamentoService.pesquisaAgendamentosAtivos();
     }
 
     @CrossOrigin(origins = "*")
-    @PutMapping( "/relatorioFuncionarios")
+    @PutMapping("/relatorioFuncionarios")
     public ResponseEntity<byte[]> gerarRelatorioFuncionarios(@RequestBody String jsonParams) {
-        List<Funcionario> funcionarios = funcionarioService.pesquisaFuncionario("","").getBody();
+        List<Funcionario> funcionarios = funcionarioService.pesquisaFuncionario("", "").getBody();
         return RelatorioUtil.gerarRelatorios(jsonParams, funcionarios);
     }
 }

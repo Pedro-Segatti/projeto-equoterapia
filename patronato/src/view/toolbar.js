@@ -1,14 +1,10 @@
 import React from "react";
 import { Button } from 'react-bootstrap';
 import { Container, Row, Col } from 'react-bootstrap';
+import { reloadPage } from '../utilitario/patronatoUtil';
 
 
 const Toolbar = ({ jsonRemove, abrirPesquisa }) => {
-  const reloadPage = (e) => {
-    e.preventDefault();
-    window.location.reload(true);
-  };
-
   return (
     <div className="nossoToolbar">
       <br />

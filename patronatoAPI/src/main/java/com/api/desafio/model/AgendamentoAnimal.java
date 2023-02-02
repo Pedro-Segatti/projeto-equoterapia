@@ -51,7 +51,6 @@ public class AgendamentoAnimal implements Serializable {
     public Agendamento getAxaIdAgendamento() {
         return axaIdAgendamento;
     }
-    @JsonIgnore
     public void setAxaIdAgendamento(Agendamento axaIdAgendamento) {
         this.axaIdAgendamento = axaIdAgendamento;
     }

@@ -196,3 +196,11 @@ svg {
 .bold{
   font-weight: bold;
 }
+
+.font-28{
+  font-size: 28px;
+}
+
+.center{
+  text-align: center;
+}

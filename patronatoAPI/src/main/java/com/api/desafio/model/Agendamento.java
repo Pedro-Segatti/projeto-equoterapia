@@ -35,6 +35,8 @@ public class Agendamento implements Serializable {
     @Basic(optional = false)
     @Column(name = "AGD_CONCLUIDO")
     private boolean agdConcluido;
+    @Column(name = "AGD_OBSERVACOES")
+    private String agdObservacoes;
     @JoinColumn(name = "AGD_ID_PRATICANTE", referencedColumnName = "PRAT_ID")
     @ManyToOne(optional = false)
     private Praticante praticante;
@@ -96,6 +98,14 @@ public class Agendamento implements Serializable {
 
     public void setAgdConcluido(boolean agdConcluido) {
         this.agdConcluido = agdConcluido;
+    }
+
+    public String getAgdObservacoes() {
+        return agdObservacoes;
+    }
+
+    public void setAgdObservacoes(String agdObservacoes) {
+        this.agdObservacoes = agdObservacoes;
     }
 
     public Praticante getPraticante() {
