@@ -5,12 +5,18 @@ import Footer from "../footer";
 import { ReactNotifications } from 'react-notifications-component';
 import { registroSalvo, registroExcluido } from "../../utilitario/mensagemUtil"
 import HTTP_STATUS from "../../utilitario/httpStatus";
-import { Form, Col, Row, Container } from 'react-bootstrap';
+import { Form, Col, Row, Container, Card, Button } from 'react-bootstrap';
 import InputConverter from "../inputConverter";
 import { api } from "../../utilitario/baseComunicacao";
 import PesquisaPraticantes from '../pesquisas/pesquisaPraticantes';
 import PesquisaAgendamentos from '../pesquisas/pesquisaAgendamentos';
 import { dataApiFormatada, dataFormatadaAnoMesDia, horaFormatada } from '../../utilitario/dateUtil';
+
+import PesquisaAnimais from "../pesquisas/pesquisaAnimais";
+import PesquisaFuncionario from '../pesquisas/pesquisaFuncionario';
+import PesquisaMaterial from '../pesquisas/pesquisaMaterial';
+import { TablePaginada } from "../pesquisas/pesquisaAnimais";
+import { TableFuncionariosPaginada } from "../pesquisas/pesquisaFuncionario";
 
 const movimentoAgendamentoSessao = () => {
     const [agdId, setAgdId] = useState("");
@@ -19,6 +25,10 @@ const movimentoAgendamentoSessao = () => {
     const [agdPraticante, setAgdPraticante] = useState("");
     const [agdDescricaoPraticante, setAgdDescricaoPraticante] = useState("");
     const [agdDescricao, setAgdDescricao] = useState("");
+    const [agendamentoMaterialList, setAgendamentoMaterialList] = useState([]);
+    const [agendamentoFuncionarioList, setAgendamentoFuncionarioList] = useState([]);
+    const [agendamentoAnimalList, setAgendamentoAnimalList] = useState([]);
+    
 
     const [listPraticantes, setListPraticantes] = useState([]);
     const [abrirPesquisaPraticante, setAbrirPesquisaPraticante] = useState(false);
@@ -26,6 +36,40 @@ const movimentoAgendamentoSessao = () => {
     const [listAgendamentos, setListAgendamentos] = useState([]);
     const [abrirPesquisaAgendamento, setAbrirPesquisaAgendamento] = useState(false);
 
+    const [abrirPesquisaAnimal, setAbrirPesquisaAnimal] = useState(false);
+    const [abrirPesquisaFuncionario, setAbrirPesquisaFuncionario] = useState(false);
+    const [abrirPesquisaMaterial, setAbrirPesquisaMaterial] = useState(false);
+    var [listAnimal, setListAnimal] = useState([]);
+    var [listFuncionario, setListFuncionario] = useState([]);
+    var [listMaterial, setListMaterial] = useState([]);
+
+    const atualizaDlgPesquisaAnimal = async () => {
+        setListAnimal(await (await api.get("/pesquisaAnimal?aniId=&aniNome=")).data);
+        setAbrirPesquisaAnimal(true);
+    }
+
+    const atualizaDlgPesquisaFuncionario = async () => {
+        setListFuncionario(await (await api.get("/pesquisaFuncionario?pesCpf=&pesNome=")).data);
+        setAbrirPesquisaFuncionario(true);
+    }
+
+    const removeAnimalSelecionado = (item) => {
+        var array = [...agendamentoAnimalList];
+        var index = array.indexOf(item);
+        if (index !== -1) {
+            array.splice(index, 1);
+            setAgendamentoAnimalList(array);
+        }
+    }
+
+    const removeFuncionarioSelecionado = (item) => {
+        var array = [...agendamentoFuncionarioList];
+        var index = array.indexOf(item);
+        if (index !== -1) {
+            array.splice(index, 1);
+            setAgendamentoFuncionarioList(array);
+        }
+    }
 
     const atualizaAgendamentoSelecionado = (item) => {
         setAgdId(item.agdId)
@@ -34,7 +78,23 @@ const movimentoAgendamentoSessao = () => {
         setAgdPraticante(item.praticante);
         setAgdDescricaoPraticante(item.praticante.pessoa.pesNome);
         setAgdDescricao(item.agdDescricao);
+        setAgendamentoAnimalList(item.agendamentoAnimalList.map(ani => ani.axaIdAnimal))// todos ficam com id null '-'
         setAbrirPesquisaAgendamento(false);
+    }
+
+    const atualizaAnimalSelecionado = (item) => {
+        setAgendamentoAnimalList(current => [...current, item])
+        setAbrirPesquisaAnimal(false);
+    }
+
+    const atualizaFuncionarioSelecionado = (item) => {
+        setAgendamentoFuncionarioList(current => [...current, item])
+        setAbrirPesquisaFuncionario(false);
+    }
+
+    const atualizaMaterialSelecionado = (item) => {
+        setAgendamentoMaterialList(item)
+        setAbrirPesquisaMaterial(false);
     }
 
     const atualizaDlgPesquisaPraticante = async () => {
@@ -67,19 +127,42 @@ const movimentoAgendamentoSessao = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const jsonAgendamento = {
+        const agendXMaterialList = agendamentoMaterialList.map(mat => `
+            {"axmId": "",
+             "axmIdAgendamento": ${agdId},
+             "axmIdMaterial": ${mat.matId}
+            }`);
+        
+        var jsonAgendamento = {
             "agdId": agdId,
             "agdData": dataApiFormatada(agdData),
             "agdHora": horaFormatada(agdHora),
             "agdDescricao": agdDescricao,
-            "praticante": agdPraticante
+            "praticante": agdPraticante,
+            "agendamentoMaterialList": [],
+            "agendamentoFuncionarioList":[],
+            "agendamentoAnimalList":[]
         }
         console.log(jsonAgendamento);
+        if(agdId === ""){
+            jsonAgendamento = await (await api.post("/cadastrarAgendamento", jsonAgendamento)).data;
+        }
+        const agendXAnimalList = agendamentoAnimalList.map(animal => 
+            {return criaAgendXAnimal(animal, jsonAgendamento.agdId)});
+        jsonAgendamento.agendamentoAnimalList = agendXAnimalList;
 
         const response = await api.post("/cadastrarAgendamento", jsonAgendamento);
         if (response.status === HTTP_STATUS.OK) {
             registroSalvo();
             limparCamposFormulario();
+        }
+    }
+
+    const criaAgendXAnimal = (animal, agendamento) => {
+        return {
+            "axaId": "",
+            "axaIdAgendamento": agendamento,
+            "axaIdAnimal": animal.aniId
         }
     }
 
@@ -96,7 +179,7 @@ const movimentoAgendamentoSessao = () => {
         <div>
             <Menu />
             <ReactNotifications />
-            <Container className="vh-100">
+            <Container>
                 <Form onSubmit={handleSubmit}>
                     <br />
                     <Row>
@@ -137,6 +220,34 @@ const movimentoAgendamentoSessao = () => {
                             <InputConverter descricao={agdDescricaoPraticante} atualizaDlgPesquisa={atualizaDlgPesquisaPraticante} />
                         </Col>
                     </Row>
+                    <br />
+                    <Row>
+                        <Col>
+                            <Card>
+                                <div className='marginLeft'>
+                                    <b>Animais</b>
+                                    <Col md="2">
+                                        <Button id='btnAnimal' variant="primary" className='btn-success btnMarginTop' onClick={atualizaDlgPesquisaAnimal}>Adicionar</Button>
+                                    </Col>
+                                    <TablePaginada data={agendamentoAnimalList} rowsPerPage={5} selecionaLinha={false} removeAnimalSelecionado={removeAnimalSelecionado} />
+                                </div>
+                            </Card>
+                        </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                        <Col>
+                            <Card>
+                                <div className='marginLeft'>
+                                    <b>Funcionários</b>
+                                    <Col md="2">
+                                        <Button id='btnFuncionario' variant="primary" className='btn-success btnMarginTop' onClick={atualizaDlgPesquisaFuncionario}>Adicionar</Button>
+                                    </Col>
+                                    <TableFuncionariosPaginada data={agendamentoFuncionarioList} rowsPerPage={5} selecionaLinha={false} removeItemSelecionado={removeFuncionarioSelecionado} />
+                                </div>
+                            </Card>
+                        </Col>
+                    </Row>
 
                     <Toolbar jsonRemove={removerAgendamento} abrirPesquisa={atualizaDlgPesquisa} />
                 </Form>
@@ -149,7 +260,15 @@ const movimentoAgendamentoSessao = () => {
             {abrirPesquisaAgendamento &&
                 <PesquisaAgendamentos setValores={setListAgendamentos} valores={listAgendamentos} atualizaItemSelecionado={atualizaAgendamentoSelecionado} setAbrirPesquisa={setAbrirPesquisaAgendamento} />
             }
-
+            {abrirPesquisaAnimal &&
+                    <PesquisaAnimais setValores={setListAnimal} valores={listAnimal} atualizaItemSelecionado={atualizaAnimalSelecionado} setAbrirPesquisa={setAbrirPesquisaAnimal} />
+            }
+            {abrirPesquisaFuncionario &&
+                    <PesquisaFuncionario setValores={setListFuncionario} valores={listFuncionario} atualizaItemSelecionado={atualizaFuncionarioSelecionado} setAbrirPesquisa={setAbrirPesquisaFuncionario} />
+            }
+            {abrirPesquisaMaterial &&
+                    <PesquisaMaterial setValores={setListMaterial} valores={listMaterial} atualizaItemSelecionado={atualizaMaterialSelecionado} setAbrirPesquisa={setAbrirPesquisaMaterial} />
+            }
             <Footer />
         </div >
     )

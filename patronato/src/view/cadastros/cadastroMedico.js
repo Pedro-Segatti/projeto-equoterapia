@@ -7,7 +7,7 @@ import Toolbar from '../toolbar';
 import { IMaskInput } from 'react-imask';
 import { registroSalvo, registroExcluido } from "../../utilitario/mensagemUtil"
 import { ReactNotifications } from 'react-notifications-component'
-import { montaJsonPessoa } from "../../utilitario/patronatoUtil";
+import { montaJsonPessoaCompleta } from "../../utilitario/patronatoUtil";
 import { api } from "../../utilitario/baseComunicacao";
 import HTTP_STATUS from "../../utilitario/httpStatus";
 import PesquisaMedico from "../pesquisas/pesquisaMedico";
@@ -119,7 +119,7 @@ const cadastroMedico = () => {
 
     const enviaJsonGravar = async () => {
         const pais = await (await api.get("/pesquisaPais?paiIso=" + pesNacionalidade)).data;
-        const pessoa = montaJsonPessoa(pesId, pesNome, pesCpf, null, pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pais, pesFoto, pesEmail1, pesEmail2, pesLogId, listTelefones);
+        const pessoa = montaJsonPessoaCompleta(pesId, pesNome, pesCpf, null, pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pais, pesFoto, pesEmail1, pesEmail2, pesLogId, listTelefones);
         const json = {
             "medId": medId,
             "pessoa": pessoa

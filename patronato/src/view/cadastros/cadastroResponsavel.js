@@ -94,8 +94,8 @@ const cadastroResponsavel = () => {
     }
 
     const atualizaLogradouroSelecionado = (item) => {
-        setPesLogId(item.logId)
-        setPesLogDescricao(item.logDescricao)
+        setPesLogId(item.logId);
+        setPesLogDescricao(item.logDescricao);
         setAbrirPesquisaLogradouro(false);
     }
 
@@ -122,7 +122,6 @@ const cadastroResponsavel = () => {
         setPesNacionalidade(item.pessoa.pesNacionalidade.paiIso);
         setPesEmail1(item.pessoa.pesEmail1);
         setPesEmail2(item.pessoa.pesEmail2);
-        setPesLogId(1);
         setRespProfissao(item.respProfissao);
         setPesLogId(item.pessoa.logradouro.logId);
         setPesLogDescricao(item.pessoa.logradouro.logDescricao);
@@ -141,7 +140,6 @@ const cadastroResponsavel = () => {
         setPesNacionalidade("");
         setPesEmail1("");
         setPesEmail2("");
-        setPesLogId("");
         setRespProfissao("");
         setPesLogId("");
         setPesLogDescricao("");
@@ -152,11 +150,11 @@ const cadastroResponsavel = () => {
         e.preventDefault();
 
         const cadastraPessoa = async () => {
-            return await criarPessoa(pesNome, pesCpf, pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pesNacionalidade, pesEmail1, pesEmail2, pesLogId);
+            return await criarPessoa(pesNome, pesCpf, pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pesNacionalidade,"", pesEmail1, pesEmail2, pesLogId);
         }
 
         const atualizaPessoa = async () => {
-            return await atualizarPessoa(pesNome, pesCpf, pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pesNacionalidade, pesEmail1, pesEmail2, pesLogId);
+            return await atualizarPessoa(pesNome, pesCpf, pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pesNacionalidade,"", pesEmail1, pesEmail2, pesLogId);
         }
 
         const montaJsonResponsavel = (idPessoa) => {
@@ -252,8 +250,6 @@ const cadastroResponsavel = () => {
         const [telNumero, setTelNumero] = useState(item.telNumero);
 
         const removerItem = e => removeTelefoneSelecionado(item);
-
-        console.log(item);
 
         return <tr>
             <td width={'100px'}>

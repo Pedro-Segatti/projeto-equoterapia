@@ -164,7 +164,6 @@ const cadastroPraticante = () => {
                     }),
                 );
             } else {
-                console.log(e);
                 const response = await (await api.delete("/removerResponsavelSelecionado?pxrId=" + e.pxrId));
                 if (response.status === HTTP_STATUS.OK) {
                     setListResponsveisSelecionados(current =>
@@ -244,7 +243,6 @@ const cadastroPraticante = () => {
         setPesFoto(item.pessoa.pesFoto);
         setPesEmail1(item.pessoa.pesEmail1);
         setPesEmail2(item.pessoa.pesEmail2);
-        setPesLogId(1);
         setPratAltura(item.pratAltura);
         setPratPeso(item.pratPeso);
         setPesLogId(item.pessoa.logradouro.logId);
@@ -301,7 +299,7 @@ const cadastroPraticante = () => {
 
             return jsonPraticante;
         }
-
+        
         const cadastraPraticante = async (idPessoa) => {
             return await cadastrarPraticante(montaJsonPraticante(idPessoa));
         }
@@ -421,8 +419,6 @@ const cadastroPraticante = () => {
     };
 
     const LinhaTabelaResponsaveis = ({ item, removeResp }) => {
-        console.log(item);
-
         const { pesNome } = item.responsavel.pessoa;
         const [pxrTipoResp, setPxrTipoResp] = useState(item.pxrTipoResp);
 
@@ -476,8 +472,6 @@ const cadastroPraticante = () => {
         const [telNumero, setTelNumero] = useState(item.telNumero);
 
         const removerItem = e => removeTelefoneSelecionado(item);
-
-        console.log(item);
 
         return <tr>
             <td width={'100px'}>

@@ -1,5 +1,6 @@
 package com.api.desafio.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.io.Serializable;
@@ -29,6 +30,7 @@ public class AgendamentoFuncionario implements Serializable {
     private Integer axfId;
     @JoinColumn(name = "AXF_ID_AGENDAMENTO", referencedColumnName = "AGD_ID")
     @ManyToOne(optional = false)
+    @JsonBackReference
     private Agendamento axfIdAgendamento;
     @JoinColumn(name = "AXF_ID_FUNCIONARIO", referencedColumnName = "FUNC_ID")
     @ManyToOne(optional = false)

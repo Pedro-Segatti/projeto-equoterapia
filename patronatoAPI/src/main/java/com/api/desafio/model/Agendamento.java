@@ -40,11 +40,11 @@ public class Agendamento implements Serializable {
     @JoinColumn(name = "AGD_ID_PRATICANTE", referencedColumnName = "PRAT_ID")
     @ManyToOne(optional = false)
     private Praticante praticante;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "axmIdAgendamento")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "axmIdAgendamento", orphanRemoval = true)
     private List<AgendamentoMaterial> agendamentoMaterialList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "axfIdAgendamento")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "axfIdAgendamento", orphanRemoval = true)
     private List<AgendamentoFuncionario> agendamentoFuncionarioList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "axaIdAgendamento")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "axaIdAgendamento", orphanRemoval = true)
     private List<AgendamentoAnimal> agendamentoAnimalList;
 
     public Agendamento() {
