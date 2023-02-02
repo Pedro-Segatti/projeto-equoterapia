@@ -1,5 +1,9 @@
 import { cadastrarPessoa, atualizaPessoa } from "./baseComunicacao"
 
+export const reloadPage = () => {
+    window.location.reload(true);
+  };
+
 export const criarPessoa = async (pesNome, pesCpf, pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pesNacionalidade, pesFoto, pesEmail1, pesEmail2, pesLogId) => {
     const json = montaJsonPessoa(pesNome, pesCpf, pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pesNacionalidade, pesFoto, pesEmail1, pesEmail2, pesLogId);
     return await cadastrarPessoa(json);
