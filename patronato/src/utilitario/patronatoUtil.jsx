@@ -10,7 +10,25 @@ export const atualizarPessoa = async (pesNome, pesCpf, pesSexo, pesDataNasc, pes
     return await atualizaPessoa(json);
 }
 
-export const montaJsonPessoa = (pesId, pesNome, pesCpf,pesLoginPassword, pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pesNacionalidade, pesFoto, pesEmail1, pesEmail2, pesLogId, telefoneList) => {
+export const montaJsonPessoa = (pesNome, pesCpf, pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pesNacionalidade, pesFoto, pesEmail1, pesEmail2, pesLogId) => {
+    const unMaskCpf = pesCpf.replace(/[^\d]/g, '');
+    const json = {
+        "pesNome": pesNome,
+        "pesCpf": unMaskCpf,
+        "pesSexo": pesSexo,
+        "pesDataNasc": pesDataNasc,
+        "pesEndNum": pesEndNum,
+        "pesEndCompl": pesEndCompl,
+        "pesNacionalidade": pesNacionalidade,
+        "pesFoto": pesFoto,
+        "pesEmail1": pesEmail1,
+        "pesEmail2": pesEmail2,
+        "pesLogId": pesLogId
+    };
+    return json;
+} 
+
+export const montaJsonPessoaCompleta = (pesId, pesNome, pesCpf,pesLoginPassword, pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pesNacionalidade, pesFoto, pesEmail1, pesEmail2, pesLogId, telefoneList) => {
     const unMaskCpf = pesCpf.replace(/[^\d]/g, '');
     const json = {
         "pesId":pesId,
