@@ -42,18 +42,18 @@ public class Praticante implements Serializable {
     @Column(name = "PRAT_PESO")
     private Integer pratPeso;
     @ManyToMany(mappedBy = "praticanteList")
-    private List<FichaEvolucao> fichaEvolucaoList;
+    private List<FichaEvolucao> fichaEvolucaoList = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "amnIdPraticante")
-    private List<FichaAnamnese> fichaAnamneseList;
+    private List<FichaAnamnese> fichaAnamneseList = new ArrayList<>();
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "aftIdPraticante")
-    private List<AvalFisioter> avalFisioterList;
+    private List<AvalFisioter> avalFisioterList = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "praticante")
     private List<Documentos> documentosList = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "praticante")
-    private List<AvalSocioecon> avalSocioeconList;
+    private List<AvalSocioecon> avalSocioeconList = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "praticante")
-    private List<PraticanteResponsavel> responsaveis;
+    private List<PraticanteResponsavel> responsaveis = new ArrayList<>();
 
     public Praticante() {
     }

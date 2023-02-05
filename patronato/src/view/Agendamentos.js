@@ -105,7 +105,7 @@ const Agendamentos = () => {
 
             <Row>
               <Col md="4">
-                <Card className="card">
+                <Card className="card_agendamento">
                   <Card.Body>
                     <Card.Title>Animais</Card.Title>
                     <Card.Text>

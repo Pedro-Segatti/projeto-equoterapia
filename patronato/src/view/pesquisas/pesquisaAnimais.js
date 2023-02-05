@@ -64,6 +64,13 @@ function pesquisaAnimais({ setValores, valores, atualizaItemSelecionado, setAbri
         setAbrirPesquisa(true);
     }
 
+    const limparPesquisa = () => {
+        setAbrirPesquisa(false);
+        setAniIdPesquisa("");
+        setAniNomePesquisa("");
+        buscaRegistros();
+    }
+
     const pesquisaAnimais = () => {
         return (
             <>
@@ -88,6 +95,7 @@ function pesquisaAnimais({ setValores, valores, atualizaItemSelecionado, setAbri
                                 </Row>
                                 <div className='right'>
                                     <Button className='btnMarginTop' onClick={buscaRegistros}>Pesquisar</Button>
+                                    <Button className='btnMarginTop btn-warning btnToolbar' onClick={limparPesquisa}>Limpar</Button>
                                 </div>
                             </Form>
                         </Container>

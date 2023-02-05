@@ -123,7 +123,7 @@ const cadastroPraticante = () => {
     }
 
     const atualizaTelefone = (item, telefone) => {
-        item.telNumero = telefone;
+        item.telNumero = telefone.replace("(", "").replace(" ", "").replace("-", "");
     }
 
     const baixarArquivo = (e) => {
@@ -515,7 +515,7 @@ const cadastroPraticante = () => {
                     </Row>
                     <Row>
                         <Col md="12">
-                            <Form.Label htmlFor="inputNome">Nome</Form.Label>
+                            <Form.Label htmlFor="inputNome">Nome *</Form.Label>
                             <Form.Control value={pesNome}
                                 onChange={(e) => setPesNome(e.target.value)}
                                 type="text" id="inputNome" required />
@@ -523,13 +523,13 @@ const cadastroPraticante = () => {
                     </Row>
                     <Row>
                         <Col md="6">
-                            <Form.Label htmlFor="inputDate">Data de Nascimento</Form.Label>
+                            <Form.Label htmlFor="inputDate">Data de Nascimento *</Form.Label>
                             <Form.Control value={pesDataNasc}
                                 onChange={(e) => setPesDataNasc(e.target.value)}
                                 type="date" id="inputDate" required />
                         </Col>
                         <Col md="6">
-                            <Form.Label htmlFor="inputCpf">CPF</Form.Label>
+                            <Form.Label htmlFor="inputCpf">CPF *</Form.Label>
                             <Form.Control id="inputCpf" type="text" maxLength='14' as={IMaskInput} inputMode="numeric"
                                 mask="000.000.000-00" placeholder='Digite aqui o seu CPF...' required value={pesCpf} onChange={(l) => setPesCpf(l.target.value)} />
                         </Col>
@@ -537,7 +537,7 @@ const cadastroPraticante = () => {
 
                     <Row>
                         <Col md="6">
-                            <Form.Label htmlFor="inputSexo">Sexo</Form.Label>
+                            <Form.Label htmlFor="inputSexo">Sexo *</Form.Label>
                             <Form.Select id='inputSexo' required
                                 value={pesSexo}
                                 onChange={(e) => setPesSexo(e.target.value)}>
@@ -547,7 +547,7 @@ const cadastroPraticante = () => {
                             </Form.Select>
                         </Col>
                         <Col md="6">
-                            <Form.Label htmlFor="inputNacionalidade">Nacionalidade</Form.Label>
+                            <Form.Label htmlFor="inputNacionalidade">Nacionalidade *</Form.Label>
                             <Form.Select id='inputNacionalidade' required
                                 value={pesNacionalidade}
                                 onChange={(e) => setPesNacionalidade(e.target.value)}>
@@ -558,7 +558,7 @@ const cadastroPraticante = () => {
                     </Row>
                     <Row>
                         <Col md="12">
-                            <Form.Label htmlFor="inputEmailP">Email Principal</Form.Label>
+                            <Form.Label htmlFor="inputEmailP">Email Principal *</Form.Label>
                             <Form.Control value={pesEmail1}
                                 onChange={(e) => setPesEmail1(e.target.value)}
                                 type="text" id="inputEmailP" required />
@@ -574,7 +574,7 @@ const cadastroPraticante = () => {
                     </Row>
                     <Row>
                         <Col md="6">
-                            <Form.Label htmlFor="inputPratAltura">Altura (cm)</Form.Label>
+                            <Form.Label htmlFor="inputPratAltura">Altura (cm) *</Form.Label>
                             <div >
                                 <Form.Control value={pratAltura}
                                     onChange={(e) => setPratAltura(e.target.value)}
@@ -583,7 +583,7 @@ const cadastroPraticante = () => {
                         </Col>
 
                         <Col md="6">
-                            <Form.Label htmlFor="inputPratPeso">Peso (g)</Form.Label>
+                            <Form.Label htmlFor="inputPratPeso">Peso (g) *</Form.Label>
                             <Form.Control value={pratPeso}
                                 onChange={(e) => setPratPeso(e.target.value)}
                                 type="number" id="inputPratPeso" required />
@@ -598,7 +598,7 @@ const cadastroPraticante = () => {
                     </Row>
                     <Row>
                         <Col md="2">
-                            <Form.Label htmlFor="inputEndNum">Número</Form.Label>
+                            <Form.Label htmlFor="inputEndNum">Número *</Form.Label>
                             <Form.Control value={pesEndNum} type="text" id="inputEndNum" onChange={(e) => setPesEndNum(e.target.value)} required />
                         </Col>
                         <Col md="10">

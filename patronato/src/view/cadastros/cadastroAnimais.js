@@ -106,22 +106,22 @@ function cadastroAnimais() {
                         </Row>
                         <Row>
                             <Col md="12">
-                                <Form.Label htmlFor="inputNome">Nome</Form.Label>
+                                <Form.Label htmlFor="inputNome">Nome *</Form.Label>
                                 <Form.Control value={aniNome} maxLength={60}
                                     onChange={(e) => setAniNome(e.target.value)}
-                                    type="text" id="nome" required />
+                                    type="text" id="inputNome" required />
                             </Col>
                         </Row>
                         <Row>
                             <Col md="6">
-                                <Form.Label htmlFor="inputIdade">Idade</Form.Label>
+                                <Form.Label htmlFor="inputIdade">Idade *</Form.Label>
                                 <Form.Control value={aniIdade} min={1} max={200}
                                     onChange={(e) => setAniIdade(e.target.value)}
-                                    type="number" id="idade" />
+                                    type="number" id="inputIdade" required />
                             </Col>
                             <Col md="6">
-                                <Form.Label htmlFor="inputPorte">Porte</Form.Label>
-                                <Form.Select aria-label="Default select example" id='porte' required
+                                <Form.Label htmlFor="inputPorte">Porte *</Form.Label>
+                                <Form.Select aria-label="Default select example" id='inputPorte' required
                                     value={aniPorte}
                                     onChange={(e) => setAniPorte(e.target.value)}>
                                     <option>Selecione</option>
