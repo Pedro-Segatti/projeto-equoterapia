@@ -55,10 +55,10 @@ const Agendamentos = () => {
       <td>{agdDescricao}</td>
       <td>{pesNome}</td>
       <td>
-        {item.agendamentoAnimalList.length > 0 && item.agendamentoAnimalList[0].axaIdAnimal.aniNome}
+        {item.animalList.length > 0 && item.animalList[0].aniNome}
       </td>
       <td>
-        {item.agendamentoFuncionarioList.length > 0 && item.agendamentoFuncionarioList[0].axfIdFuncionario.pessoa.pesNome}
+        {item.funcionarioList.length > 0 && item.funcionarioList[0].pessoa.pesNome}
       </td>
       <td>
         <Button variant="success" onClick={selecionarItem}><BsEyeFill /></Button>
@@ -110,7 +110,7 @@ const Agendamentos = () => {
                     <Card.Title>Animais</Card.Title>
                     <Card.Text>
                       <ListGroup variant="flush">
-                        {existeAgendamento && agendamentoSelecionado.agendamentoAnimalList.map(ani => <ListGroup.Item>{ani.axaIdAnimal.aniNome}</ListGroup.Item>)}
+                        {existeAgendamento && agendamentoSelecionado.animalList.map(ani => <ListGroup.Item>{ani.aniNome}</ListGroup.Item>)}
                       </ListGroup>
                     </Card.Text>
                   </Card.Body>
@@ -123,7 +123,7 @@ const Agendamentos = () => {
                     <Card.Title>Instrutores</Card.Title>
                     <Card.Text>
                       <ListGroup variant="flush">
-                        {existeAgendamento && agendamentoSelecionado.agendamentoFuncionarioList.map(agdFunc => <ListGroup.Item>{agdFunc.axfIdFuncionario.pessoa.pesNome}</ListGroup.Item>)}
+                        {existeAgendamento && agendamentoSelecionado.funcionarioList.map(agdFunc => <ListGroup.Item>{agdFunc.pessoa.pesNome}</ListGroup.Item>)}
                       </ListGroup>
                     </Card.Text>
                   </Card.Body>
@@ -136,7 +136,7 @@ const Agendamentos = () => {
                     <Card.Title>Materiais</Card.Title>
                     <Card.Text>
                       <ListGroup variant="flush">
-                        {existeAgendamento && agendamentoSelecionado.agendamentoMaterialList.map(mat => <ListGroup.Item>{mat.axmIdMaterial.matDescricao}</ListGroup.Item>)}
+                        {existeAgendamento && agendamentoSelecionado.materialList.map(mat => <ListGroup.Item>{mat.matDescricao}</ListGroup.Item>)}
                       </ListGroup>
                     </Card.Text>
                   </Card.Body>
