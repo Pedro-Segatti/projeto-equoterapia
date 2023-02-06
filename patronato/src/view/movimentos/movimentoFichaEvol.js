@@ -267,7 +267,6 @@ function cadastroFichaEvol() {
             "funcionarioList": evolFuncSelecionado.map(funcionario => (funcionario)),
             "fichaEvolAtividadeMaterialList": []
         };
-        console.log(json);
         if (evolId === "") {
             json = await (await (await api.post("/cadastraFichaEvol", json)).data);
         }

@@ -3,7 +3,7 @@ import Toolbar from '../toolbar';
 import Menu from "../menu";
 import Footer from "../footer";
 import { ReactNotifications } from 'react-notifications-component';
-import { registroSalvo, registroExcluido } from "../../utilitario/mensagemUtil"
+import { registroSalvo, registroExcluido, mensagemCustomizada } from "../../utilitario/mensagemUtil"
 import HTTP_STATUS from "../../utilitario/httpStatus";
 import { Form, Col, Row, Container, Card, Button } from 'react-bootstrap';
 import InputConverter from "../inputConverter";
@@ -17,13 +17,13 @@ import PesquisaFuncionario from '../pesquisas/pesquisaFuncionario';
 import PesquisaMaterial from '../pesquisas/pesquisaMaterial';
 import { TablePaginada } from "../pesquisas/pesquisaAnimais";
 import { TableFuncionariosPaginada } from "../pesquisas/pesquisaFuncionario";
+import { TableMaterialPaginada } from "../pesquisas/pesquisaMaterial";
 
 const movimentoAgendamentoSessao = () => {
     const [agdId, setAgdId] = useState("");
     const [agdData, setAgdData] = useState("");
     const [agdHora, setAgdHora] = useState("");
-    const [agdPraticante, setAgdPraticante] = useState("");
-    const [agdDescricaoPraticante, setAgdDescricaoPraticante] = useState("");
+    const [agdPraticante, setAgdPraticante] = useState({ "pessoa": { "pesNome": "" } });
     const [agdDescricao, setAgdDescricao] = useState("");
     const [agendamentoMaterialList, setAgendamentoMaterialList] = useState([]);
     const [agendamentoFuncionarioList, setAgendamentoFuncionarioList] = useState([]);
@@ -71,14 +71,24 @@ const movimentoAgendamentoSessao = () => {
         }
     }
 
+    const removeMaterialSelecionado = (item) => {
+        var array = [...agendamentoMaterialList];
+        var index = array.indexOf(item);
+        if (index !== -1) {
+            array.splice(index, 1);
+            setAgendamentoMaterialList(array);
+        }
+    }
+
     const atualizaAgendamentoSelecionado = (item) => {
         setAgdId(item.agdId)
         setAgdData(dataFormatadaAnoMesDia(item.agdData))
         setAgdHora(item.agdHora)
         setAgdPraticante(item.praticante);
-        setAgdDescricaoPraticante(item.praticante.pessoa.pesNome);
         setAgdDescricao(item.agdDescricao);
-        setAgendamentoAnimalList(item.agendamentoAnimalList.map(ani => ani.axaIdAnimal))// todos ficam com id null '-'
+        setAgendamentoAnimalList(item.animalList);
+        setAgendamentoFuncionarioList(item.funcionarioList);
+        setAgendamentoMaterialList(item.materialList);
         setAbrirPesquisaAgendamento(false);
     }
 
@@ -93,7 +103,7 @@ const movimentoAgendamentoSessao = () => {
     }
 
     const atualizaMaterialSelecionado = (item) => {
-        setAgendamentoMaterialList(item)
+        setAgendamentoMaterialList(current => [...current, item])
         setAbrirPesquisaMaterial(false);
     }
 
@@ -102,9 +112,13 @@ const movimentoAgendamentoSessao = () => {
         setAbrirPesquisaPraticante(true);
     }
 
+    const atualizaDlgPesquisaMaterial = async () => {
+        setListMaterial(await (await api.get("/pesquisaMaterial?matId=&matDescricao=")).data);
+        setAbrirPesquisaMaterial(true);
+    }
+
     const atualizaPraticanteSelecionado = (item) => {
         setAgdPraticante(item)
-        setAgdDescricaoPraticante(item.pessoa.pesNome)
         setAbrirPesquisaPraticante(false);
     }
 
@@ -127,11 +141,27 @@ const movimentoAgendamentoSessao = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const agendXMaterialList = agendamentoMaterialList.map(mat => `
-            {"axmId": "",
-             "axmIdAgendamento": ${agdId},
-             "axmIdMaterial": ${mat.matId}
-            }`);
+
+        if (agdPraticante.pessoa.pesNome === "") {
+            mensagemCustomizada("Selecione um praticante", "warning");
+            document.getElementById("botaoPraticante").focus();
+            return;
+        }
+        if (agendamentoAnimalList.length < 1) {
+            mensagemCustomizada("Selecione ao menos um animal", "warning");
+            document.getElementById("btnAnimal").focus();
+            return;
+        }
+        if (agendamentoFuncionarioList.length < 1) {
+            mensagemCustomizada("Selecione ao menos um Funcionário", "warning");
+            document.getElementById("btnFuncionario").focus();
+            return;
+        }
+        if (agendamentoMaterialList.length < 1) {
+            mensagemCustomizada("Selecione ao menos um Material", "warning");
+            document.getElementById("btnMaterial").focus();
+            return;
+        }
         
         var jsonAgendamento = {
             "agdId": agdId,
@@ -139,17 +169,11 @@ const movimentoAgendamentoSessao = () => {
             "agdHora": horaFormatada(agdHora),
             "agdDescricao": agdDescricao,
             "praticante": agdPraticante,
-            "agendamentoMaterialList": [],
-            "agendamentoFuncionarioList":[],
-            "agendamentoAnimalList":[]
+            "materialList": agendamentoMaterialList,
+            "funcionarioList":agendamentoFuncionarioList,
+            "animalList":agendamentoAnimalList
         }
         console.log(jsonAgendamento);
-        if(agdId === ""){
-            jsonAgendamento = await (await api.post("/cadastrarAgendamento", jsonAgendamento)).data;
-        }
-        const agendXAnimalList = agendamentoAnimalList.map(animal => 
-            {return criaAgendXAnimal(animal, jsonAgendamento.agdId)});
-        jsonAgendamento.agendamentoAnimalList = agendXAnimalList;
 
         const response = await api.post("/cadastrarAgendamento", jsonAgendamento);
         if (response.status === HTTP_STATUS.OK) {
@@ -158,21 +182,15 @@ const movimentoAgendamentoSessao = () => {
         }
     }
 
-    const criaAgendXAnimal = (animal, agendamento) => {
-        return {
-            "axaId": "",
-            "axaIdAgendamento": agendamento,
-            "axaIdAnimal": animal.aniId
-        }
-    }
-
     const limparCamposFormulario = () => {
         setAgdId("");
         setAgdData("");
         setAgdHora("");
-        setAgdPraticante("");
-        setAgdDescricaoPraticante("");
+        setAgdPraticante({ "pessoa": { "pesNome": "" } });
         setAgdDescricao("");
+        setAgendamentoMaterialList([]);
+        setAgendamentoFuncionarioList([]);
+        setAgendamentoAnimalList([]);
     }
 
     return (
@@ -217,7 +235,7 @@ const movimentoAgendamentoSessao = () => {
                     <Row>
                         <Col md="6">
                             <Form.Label htmlFor="inputLPraticante">Praticante</Form.Label>
-                            <InputConverter descricao={agdDescricaoPraticante} atualizaDlgPesquisa={atualizaDlgPesquisaPraticante} />
+                            <InputConverter idBtn={"botaoPraticante"} descricao={agdPraticante.pessoa.pesNome} atualizaDlgPesquisa={atualizaDlgPesquisaPraticante} />
                         </Col>
                     </Row>
                     <br />
@@ -248,6 +266,20 @@ const movimentoAgendamentoSessao = () => {
                             </Card>
                         </Col>
                     </Row>
+                    <br />
+                    <Row>
+                        <Col>
+                            <Card>
+                                <div className='marginLeft'>
+                                    <b>Materiais</b>
+                                    <Col md="2">
+                                        <Button id='btnMaterial' variant="primary" className='btn-success btnMarginTop' onClick={atualizaDlgPesquisaMaterial}>Adicionar</Button>
+                                    </Col>
+                                    <TableMaterialPaginada data={agendamentoMaterialList} rowsPerPage={5} selecionaLinha={false} removeItemSelecionado={removeMaterialSelecionado} />
+                                </div>
+                            </Card>
+                        </Col>
+                    </Row>
 
                     <Toolbar jsonRemove={removerAgendamento} abrirPesquisa={atualizaDlgPesquisa} />
                 </Form>
@@ -258,7 +290,7 @@ const movimentoAgendamentoSessao = () => {
             }
 
             {abrirPesquisaAgendamento &&
-                <PesquisaAgendamentos setValores={setListAgendamentos} valores={listAgendamentos} atualizaItemSelecionado={atualizaAgendamentoSelecionado} setAbrirPesquisa={setAbrirPesquisaAgendamento} />
+                    <PesquisaAgendamentos setValores={setListAgendamentos} valores={listAgendamentos} atualizaItemSelecionado={atualizaAgendamentoSelecionado} setAbrirPesquisa={setAbrirPesquisaAgendamento} />
             }
             {abrirPesquisaAnimal &&
                     <PesquisaAnimais setValores={setListAnimal} valores={listAnimal} atualizaItemSelecionado={atualizaAnimalSelecionado} setAbrirPesquisa={setAbrirPesquisaAnimal} />

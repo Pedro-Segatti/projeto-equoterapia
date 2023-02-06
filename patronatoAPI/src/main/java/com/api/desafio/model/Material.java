@@ -4,15 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  *
@@ -31,8 +23,8 @@ public class Material implements Serializable {
     @Basic(optional = false)
     @Column(name = "MAT_DESCRICAO")
     private String matDescricao;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "axmIdMaterial")
-    private List<AgendamentoMaterial> agendamentoMaterialList;
+    @ManyToMany(mappedBy = "materialList")
+    private List<Agendamento> agendamentoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "material")
     private List<FichaEvolAtividadeMaterial> fichaEvolAtividadeMaterialList;
 
@@ -63,14 +55,16 @@ public class Material implements Serializable {
     public void setMatDescricao(String matDescricao) {
         this.matDescricao = matDescricao;
     }
+
     @JsonIgnore
-    public List<AgendamentoMaterial> getAgendamentoMaterialList() {
-        return agendamentoMaterialList;
+    public List<Agendamento> getAgendamentoList() {
+        return agendamentoList;
     }
 
-    public void setAgendamentoMaterialList(List<AgendamentoMaterial> agendamentoMaterialList) {
-        this.agendamentoMaterialList = agendamentoMaterialList;
+    public void setAgendamentoList(List<Agendamento> agendamentoList) {
+        this.agendamentoList = agendamentoList;
     }
+
     @JsonIgnore
     public List<FichaEvolAtividadeMaterial> getFichaEvolAtividadeMaterialList() {
         return fichaEvolAtividadeMaterialList;

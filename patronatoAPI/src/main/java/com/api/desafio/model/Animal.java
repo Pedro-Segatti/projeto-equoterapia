@@ -52,8 +52,8 @@ public class Animal implements Serializable {
         @JoinColumn(name = "FXA_ID_FICHA", referencedColumnName = "EVOL_ID")})
     @ManyToMany
     private List<FichaEvolucao> fichaEvolucaoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "axaIdAnimal")
-    private List<AgendamentoAnimal> agendamentoAnimalList;
+    @ManyToMany(mappedBy = "animalList")
+    private List<Agendamento> agendamentoList;
 
     public Animal() {
     }
@@ -123,13 +123,14 @@ public class Animal implements Serializable {
     public void setFichaEvolucaoList(List<FichaEvolucao> fichaEvolucaoList) {
         this.fichaEvolucaoList = fichaEvolucaoList;
     }
+
     @JsonIgnore
-    public List<AgendamentoAnimal> getAgendamentoAnimalList() {
-        return agendamentoAnimalList;
+    public List<Agendamento> getAgendamentoList() {
+        return agendamentoList;
     }
 
-    public void setAgendamentoAnimalList(List<AgendamentoAnimal> agendamentoAnimalList) {
-        this.agendamentoAnimalList = agendamentoAnimalList;
+    public void setAgendamentoList(List<Agendamento> agendamentoList) {
+        this.agendamentoList = agendamentoList;
     }
 
     @Override

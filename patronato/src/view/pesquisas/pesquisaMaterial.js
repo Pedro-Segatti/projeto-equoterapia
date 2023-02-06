@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import TableFooter from '../table/tableFooter';
 import useTable from '../table/useTable';
-import { BsPencilSquare } from "react-icons/bs";
+import { BsPencilSquare, BsXLg } from "react-icons/bs";
 import { Form, Col, Row, Container, Modal, Button, Table } from 'react-bootstrap';
 import { api } from "../../utilitario/baseComunicacao";
 
-export const TablePaginada = ({ data, rowsPerPage, atualizaItemSelecionado }) => {
+export const TableMaterialPaginada = ({ data, rowsPerPage, atualizaItemSelecionado, selecionaLinha, removeItemSelecionado }) => {
     const [pagina, setPage] = useState(1);
     const { slice, range } = useTable(data, pagina, rowsPerPage);
 
@@ -21,8 +21,7 @@ export const TablePaginada = ({ data, rowsPerPage, atualizaItemSelecionado }) =>
                 </thead>
                 <tbody>
                     {
-                        slice.map(item => <LinhaTabela key={item.matId} item={item} atualizaItemSelecionado={atualizaItemSelecionado} />)
-                    }
+                        slice.map(item => <LinhaTabela key={item.matId} item={item} atualizaItemSelecionado={atualizaItemSelecionado} selecionaLinha={selecionaLinha} removeItemSelecionado={removeItemSelecionado} />)                    }
                 </tbody>
             </Table>
             <TableFooter range={range} slice={slice} setPage={setPage} page={pagina} />
@@ -30,16 +29,24 @@ export const TablePaginada = ({ data, rowsPerPage, atualizaItemSelecionado }) =>
     );
 };
 
-const LinhaTabela = ({ item, atualizaItemSelecionado }) => {
+const LinhaTabela = ({ item, atualizaItemSelecionado, selecionaLinha, removeItemSelecionado }) => {
     const { matId, matDescricao } = item;
     const selecionarItem = e => atualizaItemSelecionado(item);
+    const removerItem = e => removeItemSelecionado(item);
 
     return <tr>
         <td width={'80px'}>{matId}</td>
         <td>{matDescricao}</td>
-        <td width={'80px'} className='center'>
-            <Button className='btn-success' onClick={selecionarItem}><BsPencilSquare /></Button>
-        </td>
+        {selecionaLinha &&
+            <td width={'80px'} className='center'>
+                <Button className='btn-success' onClick={selecionarItem}><BsPencilSquare /></Button>
+            </td>
+        }
+        {!selecionaLinha &&
+            <td width={'80px'} className='center'>
+                <Button className='btn-danger' onClick={removerItem}><BsXLg /></Button>
+            </td>
+        }
     </tr>
 }
 
@@ -79,7 +86,7 @@ function pesquisaMaterial({ setValores, valores, atualizaItemSelecionado, setAbr
                                 </div>
                             </Form>
                         </Container>
-                        <TablePaginada data={valores} rowsPerPage={5} selecionaLinha={true} atualizaItemSelecionado={atualizaItemSelecionado} />
+                        <TableMaterialPaginada data={valores} rowsPerPage={5} selecionaLinha={true} atualizaItemSelecionado={atualizaItemSelecionado} />
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="primary" className='btn-danger' onClick={() => setAbrirPesquisa(false)}>Fechar</Button>

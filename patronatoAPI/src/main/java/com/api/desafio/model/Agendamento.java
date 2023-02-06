@@ -18,7 +18,6 @@ public class Agendamento implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "AGD_ID")
     private Integer agdId;
     @Basic(optional = false)
@@ -40,12 +39,21 @@ public class Agendamento implements Serializable {
     @JoinColumn(name = "AGD_ID_PRATICANTE", referencedColumnName = "PRAT_ID")
     @ManyToOne(optional = false)
     private Praticante praticante;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "axmIdAgendamento", orphanRemoval = true)
-    private List<AgendamentoMaterial> agendamentoMaterialList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "axfIdAgendamento", orphanRemoval = true)
-    private List<AgendamentoFuncionario> agendamentoFuncionarioList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "axaIdAgendamento", orphanRemoval = true)
-    private List<AgendamentoAnimal> agendamentoAnimalList;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "AGENDAMENTO_MATERIAL",
+            joinColumns = @JoinColumn(name = "AXM_ID_AGENDAMENTO"),
+            inverseJoinColumns = @JoinColumn(name = "AXM_ID_MATERIAL"))
+    private List<Material> materialList;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "AGENDAMENTO_FUNCIONARIO",
+                joinColumns = @JoinColumn(name = "AXF_ID_AGENDAMENTO"),
+                inverseJoinColumns = @JoinColumn(name = "AXF_ID_FUNCIONARIO"))
+    private List<Funcionario> funcionarioList;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "AGENDAMENTO_ANIMAL",
+            joinColumns = @JoinColumn(name = "AXA_ID_AGENDAMENTO"),
+            inverseJoinColumns = @JoinColumn(name = "AXA_ID_ANIMAL"))
+    private List<Animal> animalList;
 
     public Agendamento() {
     }
@@ -116,28 +124,28 @@ public class Agendamento implements Serializable {
         this.praticante = praticante;
     }
 
-    public List<AgendamentoMaterial> getAgendamentoMaterialList() {
-        return agendamentoMaterialList;
+    public List<Material> getMaterialList() {
+        return materialList;
     }
 
-    public void setAgendamentoMaterialList(List<AgendamentoMaterial> agendamentoMaterialList) {
-        this.agendamentoMaterialList = agendamentoMaterialList;
+    public void setMaterialList(List<Material> materialList) {
+        this.materialList = materialList;
     }
 
-    public List<AgendamentoFuncionario> getAgendamentoFuncionarioList() {
-        return agendamentoFuncionarioList;
+    public List<Funcionario> getFuncionarioList() {
+        return funcionarioList;
     }
 
-    public void setAgendamentoFuncionarioList(List<AgendamentoFuncionario> agendamentoFuncionarioList) {
-        this.agendamentoFuncionarioList = agendamentoFuncionarioList;
+    public void setFuncionarioList(List<Funcionario> funcionarioList) {
+        this.funcionarioList = funcionarioList;
     }
 
-    public List<AgendamentoAnimal> getAgendamentoAnimalList() {
-        return agendamentoAnimalList;
+    public List<Animal> getAnimalList() {
+        return animalList;
     }
 
-    public void setAgendamentoAnimalList(List<AgendamentoAnimal> agendamentoAnimalList) {
-        this.agendamentoAnimalList = agendamentoAnimalList;
+    public void setAnimalList(List<Animal> animalList) {
+        this.animalList = animalList;
     }
 
     @Override

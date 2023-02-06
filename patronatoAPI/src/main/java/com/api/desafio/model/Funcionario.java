@@ -33,7 +33,6 @@ public class Funcionario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "FUNC_ID")
     private Integer funcId;
     @Basic(optional = false)
@@ -56,8 +55,8 @@ public class Funcionario implements Serializable {
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "aftIdFuncionario")
     private List<AvalFisioter> avalFisioterList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "axfIdFuncionario")
-    private List<AgendamentoFuncionario> agendamentoFuncionarioList;
+    @ManyToMany(mappedBy = "funcionarioList")
+    private List<Agendamento> agendamentoList;
     @JoinColumn(name = "FUNC_ID_PESSOA", referencedColumnName = "PES_ID")
     @ManyToOne(optional = false)
     private Pessoa pessoa;
@@ -145,13 +144,14 @@ public class Funcionario implements Serializable {
     public void setAvalFisioterList(List<AvalFisioter> avalFisioterList) {
         this.avalFisioterList = avalFisioterList;
     }
+
     @JsonIgnore
-    public List<AgendamentoFuncionario> getAgendamentoFuncionarioList() {
-        return agendamentoFuncionarioList;
+    public List<Agendamento> getAgendamentoList() {
+        return agendamentoList;
     }
     @JsonIgnore
-    public void setAgendamentoFuncionarioList(List<AgendamentoFuncionario> agendamentoFuncionarioList) {
-        this.agendamentoFuncionarioList = agendamentoFuncionarioList;
+    public void setAgendamentoList(List<Agendamento> agendamentoList) {
+        this.agendamentoList = agendamentoList;
     }
 
     public Pessoa getPessoa() {

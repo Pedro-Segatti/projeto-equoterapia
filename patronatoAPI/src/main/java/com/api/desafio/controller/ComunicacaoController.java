@@ -310,16 +310,6 @@ public class ComunicacaoController {
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastrarAgendamento")
     public ResponseEntity<Agendamento> cadastrarAgendamento(@RequestBody Agendamento agendamento) {
-        final Agendamento agd = agendamento;
-        if (ListUtil.isNotEmpty(agendamento.getAgendamentoAnimalList())) {
-            agendamento.getAgendamentoAnimalList().forEach(ani -> ani.setAxaIdAgendamento(agd));
-        }
-        if (ListUtil.isNotEmpty(agendamento.getAgendamentoFuncionarioList())) {
-            agendamento.getAgendamentoFuncionarioList().forEach(func -> func.setAxfIdAgendamento(agd));
-        }
-        if (ListUtil.isNotEmpty(agendamento.getAgendamentoMaterialList())) {
-            agendamento.getAgendamentoMaterialList().forEach(mat -> mat.setAxmIdAgendamento(agd));
-        }
         agendamento = agendamentoService.salva(agendamento);
         if (agendamento != null) {
             return new ResponseEntity<>(agendamento, HttpStatus.OK);
