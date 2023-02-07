@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
 import { Form, Col, Row, Container, Card, Table, Button } from 'react-bootstrap';
 import { BsFillTrashFill } from "react-icons/bs";
 import TableFooter from '../table/tableFooter';
 import useTable from '../table/useTable';
 import Toolbar from '../toolbar';
 import { IMaskInput } from 'react-imask';
-import { registroSalvo, pessoaDuplicada, semRegistros, registroExcluido, mensagemCustomizada } from "../../utilitario/mensagemUtil"
+import { registroSalvo, pessoaDuplicada, registroExcluido, mensagemCustomizada } from "../../utilitario/mensagemUtil"
 import { ReactNotifications } from 'react-notifications-component'
-import { criarPessoa, atualizarPessoa } from "../../utilitario/patronatoUtil";
-import { cadastrarFuncionario, atualizarFuncionario } from "../../utilitario/baseComunicacao";
+import { montaJsonPessoaCompleta } from "../../utilitario/patronatoUtil";
+import { cadastrarFuncionario } from "../../utilitario/baseComunicacao";
 import { api } from "../../utilitario/baseComunicacao";
 import HTTP_STATUS from "../../utilitario/httpStatus";
 import PesquisaLogradouros from "../pesquisas/pesquisaLogradouro";
@@ -27,6 +27,7 @@ const cadastroFuncionario = () => {
     const [funcPis, setFuncPis] = useState("");
     const [funcCnh, setFuncCnh] = useState("");
 
+    const [pesId, setPesId] = useState("");
     const [pesNome, setPesNome] = useState("");
     const [pesCpf, setPesCpf] = useState("");
     const [pesSexo, setPesSexo] = useState("");
@@ -37,13 +38,21 @@ const cadastroFuncionario = () => {
     const [pesEmail2, setPesEmail2] = useState("");
     const [pesLogId, setPesLogId] = useState("");
     const [pesLogDescricao, setPesLogDescricao] = useState("");
+    const [pesNacionalidade, setPesNacionalidade] = useState({});
 
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
     const [abrirPesquisaLogradouro, setAbrirPesquisaLogradouro] = useState(false);
     const [list, setList] = useState([]);
     const [listLogradouro, setListLogradouro] = useState([]);
+    const [listPaises, setListPaises] = useState([]);
 
     const [listTelefones, setListTelefones] = useState([]);
+
+    useEffect(()=>{
+        api.get("/buscaListaPaises").then(response => {
+            setListPaises(response.data)
+          })
+      }, [])
 
     const criarTelefone = (e) => {
         const jsonItem = {
@@ -112,6 +121,7 @@ const cadastroFuncionario = () => {
     }
 
     const atualizaItemSelecionado = (item) => {
+        setPesId(item.pessoa.pesId)
         setFuncId(item.funcId);
         setPesNome(item.pessoa.pesNome);
         setPesCpf(item.pessoa.pesCpf);
@@ -121,15 +131,15 @@ const cadastroFuncionario = () => {
         setPesEndCompl(item.pessoa.pesEndCompl);
         setPesEmail1(item.pessoa.pesEmail1);
         setPesEmail2(item.pessoa.pesEmail2);
-        setPesLogId(1);
         setFuncDataAdmissao(item.funcDataAdmissao);
         setFuncDataDesligamento(item.funcDataDesligamento);
         setFuncPis(item.funcPis);
         setFuncCnh(item.funcCnh);
         setPesLogId(item.pessoa.logradouro.logId);
         setPesLogDescricao(item.pessoa.logradouro.logDescricao);
-        setAbrirPesquisa(false);
         setListTelefones(item.pessoa.telefoneList);
+        setPesNacionalidade(item.pessoa.pesNacionalidade.paiIso);
+        setAbrirPesquisa(false);
     }
 
     const limparCamposFormulario = () => {
@@ -142,7 +152,6 @@ const cadastroFuncionario = () => {
         setPesEndCompl("");
         setPesEmail1("");
         setPesEmail2("");
-        setPesLogId("");
         setFuncDataAdmissao("");
         setFuncDataDesligamento("");
         setFuncPis("");
@@ -155,80 +164,37 @@ const cadastroFuncionario = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const cadastraPessoa = async () => {
-            return await criarPessoa(pesNome, pesCpf, pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pesEmail1, pesEmail2, pesLogId);
-        }
-
-        const atualizaPessoa = async () => {
-            return await atualizarPessoa(pesNome, pesCpf, pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pesEmail1, pesEmail2, pesLogId);
-        }
-
-        const montaJsonFuncionario = (idPessoa) => {
+        const montaJsonFuncionario = async () => {  
+            const jsonPessoa = await montaJsonPessoaCompleta(pesId,pesNome,pesCpf,"",pesSexo,pesDataNasc,pesEndNum,pesEndCompl,pesNacionalidade, "", pesEmail1, pesEmail2, pesLogId, listTelefones);
             const jsonFuncionario = {
                 "funcId": funcId,
-                "pessoaId": idPessoa,
                 "funcDataAdmissao": funcDataAdmissao,
                 "funcDataDesligamento": funcDataDesligamento,
                 "funcPis": funcPis,
                 "funcCnh": funcCnh,
-                "telefones": listTelefones
+                "pessoa": jsonPessoa
             }
-
             return jsonFuncionario;
         }
 
-        const cadastraFuncionario = async (idPessoa) => {
-            return await cadastrarFuncionario(montaJsonFuncionario(idPessoa));
+        const cadastraFuncionario = async () => {
+            return await cadastrarFuncionario(await montaJsonFuncionario());
         }
 
-        const atualizaFuncionario = async () => {
-            return await atualizarFuncionario(montaJsonFuncionario(null));
-        }
-
-        const atualizarRegistros = async () => {
-            try {
-                const responseAttPessoa = await atualizaPessoa();
-                const responseAttFuncionario = await atualizaFuncionario();
-
-                if (responseAttPessoa.status === HTTP_STATUS.OK && responseAttFuncionario.status === HTTP_STATUS.OK) {
-                    registroSalvo();
-                    limparCamposFormulario();
-                }
-            } catch (error) {
-                if (error.response.status === HTTP_STATUS.FORBIDDEN) {
-                    console.log(error);
-                    semRegistros();
-                }
+        try {
+            const responseFuncionario = await cadastraFuncionario();
+            if (responseFuncionario.status === HTTP_STATUS.OK) {
+                registroSalvo();
+                limparCamposFormulario();
+            }
+        } catch (error) {
+            if (error.response.status === HTTP_STATUS.BAD_REQUEST) {
+                pessoaDuplicada();
             }
 
-        }
-
-        const criarPessoaEFuncionario = async () => {
-            try {
-                const response = await cadastraPessoa();
-                if (response.status === HTTP_STATUS.OK) {
-                    const responseFuncionario = await cadastraFuncionario(response.data.pesId);
-                    if (responseFuncionario.status === HTTP_STATUS.OK) {
-                        registroSalvo();
-                        limparCamposFormulario();
-                    }
-                }
-            } catch (error) {
-                if (error.response.status === HTTP_STATUS.BAD_REQUEST) {
-                    atualizaPessoa();
-                    pessoaDuplicada();
-                }
-
-                if (error.response.status === HTTP_STATUS.FORBIDDEN) {
-                    console.log(error);
-                }
+            if (error.response.status === HTTP_STATUS.FORBIDDEN) {
+                console.log(error);
             }
-        }
-
-        if (funcId === "") {
-            criarPessoaEFuncionario();
-        } else {
-            atualizarRegistros();
         }
     };
 
@@ -259,8 +225,6 @@ const cadastroFuncionario = () => {
         const [telNumero, setTelNumero] = useState(item.telNumero);
 
         const removerItem = e => removeTelefoneSelecionado(item);
-
-        console.log(item);
 
         return <tr>
             <td width={'100px'}>
@@ -322,6 +286,18 @@ const cadastroFuncionario = () => {
                                 <option value="M">Masculino</option>
                             </Form.Select>
                         </Col>
+                    </Row>
+                    <Row>
+                    <Col md="6">
+                            <Form.Label htmlFor="inputNacionalidade">Nacionalidade *</Form.Label>
+                            <Form.Select id='inputNacionalidade' required
+                                value={pesNacionalidade}
+                                onChange={(e) => setPesNacionalidade(e.target.value)}>
+                                {
+                                    listPaises.map(pais => <option key={pais.paiIso} value={pais.paiIso}>{pais.paiNome}</option>)
+                                }
+                            </Form.Select>
+                    </Col>
                     </Row>
                     <Row>
                         <Col md="6">

@@ -1,4 +1,4 @@
-import { cadastrarPessoa, atualizaPessoa } from "./baseComunicacao"
+import { cadastrarPessoa, atualizaPessoa, api } from "./baseComunicacao"
 
 export const reloadPage = () => {
     window.location.reload(true);
@@ -32,8 +32,9 @@ export const montaJsonPessoa = (pesNome, pesCpf, pesSexo, pesDataNasc, pesEndNum
     return json;
 } 
 
-export const montaJsonPessoaCompleta = (pesId, pesNome, pesCpf,pesLoginPassword, pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pesNacionalidade, pesFoto, pesEmail1, pesEmail2, pesLogId, telefoneList) => {
+export const montaJsonPessoaCompleta = async (pesId, pesNome, pesCpf,pesLoginPassword, pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pesNacionalidade, pesFoto, pesEmail1, pesEmail2, pesLogId, telefoneList) => {
     const unMaskCpf = pesCpf.replace(/[^\d]/g, '');
+    const nacionalidade = await api.get("/pesquisaPais?paiIso=" + pesNacionalidade);
     const json = {
         "pesId":pesId,
         "pesNome": pesNome,
@@ -43,7 +44,7 @@ export const montaJsonPessoaCompleta = (pesId, pesNome, pesCpf,pesLoginPassword,
         "pesDataNasc": pesDataNasc,
         "pesEndNum": pesEndNum,
         "pesEndCompl": pesEndCompl,
-        "pesNacionalidade": pesNacionalidade,
+        "pesNacionalidade": nacionalidade.data,
         "pesFoto": pesFoto,
         "pesEmail1": pesEmail1,
         "pesEmail2": pesEmail2,

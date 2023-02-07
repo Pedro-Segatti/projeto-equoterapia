@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Component
 @Transactional
@@ -18,6 +19,10 @@ public class PaisService {
 
     public Pais getPaisByIso(String paiIso){
         return paisCrud.findByPaiIso(paiIso);
+    }
+
+    public List<Pais> getPaises(){
+        return (List<Pais>) paisCrud.findAll();
     }
 
 }

@@ -232,6 +232,12 @@ public class ComunicacaoController {
         return paisService.getPaisByIso(paiIso);
     }
 
+    @CrossOrigin(origins = "*")
+    @GetMapping("/buscaListaPaises")
+    public List<Pais> pesquisaListaPaises() {
+        List<Pais> paises = paisService.getPaises();
+        return paises;
+    }
 
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastraFichaEvol")
@@ -634,12 +640,18 @@ public class ComunicacaoController {
         }
     }
 
-//////////////////////////////////////////////////////
-
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaFuncionario")
     public ResponseEntity<List<Funcionario>> pesquisaFuncionario(@RequestParam(required = false) String pesCpf, @RequestParam(required = false) String pesNome) {
         return funcionarioService.pesquisaFuncionario(pesCpf, pesNome);
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/cadastrarFuncionario")
+    public ResponseEntity<Funcionario> cadastrarFuncionario(@RequestBody Funcionario funcionario) {
+        funcionario.getPessoa().getTelefoneList().forEach(tel -> tel.setPessoa(funcionario.getPessoa()));
+        pessoaService.salva(funcionario.getPessoa());
+        return new ResponseEntity<Funcionario>(funcionarioService.salva(funcionario),HttpStatus.OK);
     }
 
     @CrossOrigin(origins = "*")
