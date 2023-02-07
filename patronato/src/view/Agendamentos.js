@@ -118,7 +118,7 @@ const Agendamentos = () => {
               </Col>
 
               <Col md="4">
-                <Card className="card">
+                <Card className="card_agendamento">
                   <Card.Body>
                     <Card.Title>Instrutores</Card.Title>
                     <Card.Text>
@@ -131,7 +131,7 @@ const Agendamentos = () => {
               </Col>
 
               <Col md="4">
-                <Card className="card">
+                <Card className="card_agendamento">
                   <Card.Body>
                     <Card.Title>Materiais</Card.Title>
                     <Card.Text>
