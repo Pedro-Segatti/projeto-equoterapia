@@ -1,4 +1,4 @@
-import React, { useState, useEffect  } from 'react';
+import React, { useState  } from 'react';
 import { Form, Col, Row, Container, Card, Table, Button } from 'react-bootstrap';
 import { BsFillTrashFill } from "react-icons/bs";
 import TableFooter from '../table/tableFooter';
@@ -13,11 +13,11 @@ import { api } from "../../utilitario/baseComunicacao";
 import HTTP_STATUS from "../../utilitario/httpStatus";
 import PesquisaLogradouros from "../pesquisas/pesquisaLogradouro";
 import PesquisaFuncionario from "../pesquisas/pesquisaFuncionario";
-import InputConverter from "../inputConverter";
-
+import InputConverter from "../componentes/inputConverter";
 
 import Menu from "../menu"
 import Footer from "../footer"
+import SelectNacionalidade from '../componentes/selectMenuNacionalidade';
 
 const cadastroFuncionario = () => {
 
@@ -30,29 +30,21 @@ const cadastroFuncionario = () => {
     const [pesId, setPesId] = useState("");
     const [pesNome, setPesNome] = useState("");
     const [pesCpf, setPesCpf] = useState("");
-    const [pesSexo, setPesSexo] = useState("");
+    const [pesSexo, setPesSexo] = useState("S");
     const [pesDataNasc, setPesDataNasc] = useState("");
     const [pesEndNum, setPesEndNum] = useState("");
     const [pesEndCompl, setPesEndCompl] = useState("");
     const [pesEmail1, setPesEmail1] = useState("");
     const [pesEmail2, setPesEmail2] = useState("");
-    const [pesLogId, setPesLogId] = useState("");
-    const [pesLogDescricao, setPesLogDescricao] = useState("");
-    const [pesNacionalidade, setPesNacionalidade] = useState({});
+    const [pesLogId, setPesLogId] = useState({"logDescricao": ""});
+    const [pesNacionalidade, setPesNacionalidade] = useState("BRA");
 
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
     const [abrirPesquisaLogradouro, setAbrirPesquisaLogradouro] = useState(false);
     const [list, setList] = useState([]);
     const [listLogradouro, setListLogradouro] = useState([]);
-    const [listPaises, setListPaises] = useState([]);
 
     const [listTelefones, setListTelefones] = useState([]);
-
-    useEffect(()=>{
-        api.get("/buscaListaPaises").then(response => {
-            setListPaises(response.data)
-          })
-      }, [])
 
     const criarTelefone = (e) => {
         const jsonItem = {
@@ -103,8 +95,7 @@ const cadastroFuncionario = () => {
     }
 
     const atualizaLogradouroSelecionado = (item) => {
-        setPesLogId(item.logId)
-        setPesLogDescricao(item.logDescricao)
+        setPesLogId(item)
         setAbrirPesquisaLogradouro(false);
     }
 
@@ -127,18 +118,17 @@ const cadastroFuncionario = () => {
         setPesCpf(item.pessoa.pesCpf);
         setPesSexo(item.pessoa.pesSexo);
         setPesDataNasc(item.pessoa.pesDataNasc);
-        setPesEndNum(item.pessoa.pesEndNum);
-        setPesEndCompl(item.pessoa.pesEndCompl);
-        setPesEmail1(item.pessoa.pesEmail1);
-        setPesEmail2(item.pessoa.pesEmail2);
-        setFuncDataAdmissao(item.funcDataAdmissao);
-        setFuncDataDesligamento(item.funcDataDesligamento);
-        setFuncPis(item.funcPis);
-        setFuncCnh(item.funcCnh);
-        setPesLogId(item.pessoa.logradouro.logId);
-        setPesLogDescricao(item.pessoa.logradouro.logDescricao);
-        setListTelefones(item.pessoa.telefoneList);
-        setPesNacionalidade(item.pessoa.pesNacionalidade.paiIso);
+        setPesEndNum(item.pessoa.pesEndNum || '');
+        setPesEndCompl(item.pessoa.pesEndCompl || '');
+        setPesEmail1(item.pessoa.pesEmail1 || '');
+        setPesEmail2(item.pessoa.pesEmail2 || '');
+        setFuncDataAdmissao(item.funcDataAdmissao || '');
+        setFuncDataDesligamento(item.funcDataDesligamento || '');
+        setFuncPis(item.funcPis || '');
+        setFuncCnh(item.funcCnh || '');
+        setPesLogId(item.pessoa.logradouro || '');
+        setListTelefones(item.pessoa.telefoneList || []);
+        setPesNacionalidade(item.pessoa.pesNacionalidade.paiIso || '');
         setAbrirPesquisa(false);
     }
 
@@ -146,7 +136,7 @@ const cadastroFuncionario = () => {
         setFuncId("");
         setPesNome("");
         setPesCpf("");
-        setPesSexo("");
+        setPesSexo("S");
         setPesDataNasc("");
         setPesEndNum("");
         setPesEndCompl("");
@@ -156,13 +146,24 @@ const cadastroFuncionario = () => {
         setFuncDataDesligamento("");
         setFuncPis("");
         setFuncCnh("");
-        setPesLogId("");
-        setPesLogDescricao("");
-        setListTelefones([])
+        setPesLogId({"logDescricao": ""});
+        setListTelefones([]);
+        setPesNacionalidade("BRA");
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if(pesSexo === "S"){
+            mensagemCustomizada("Selecione um sexo", "warning");
+            document.getElementById("inputSexo").focus();
+            return;
+        }
+        if(pesLogId.logDescricao === ""){
+            mensagemCustomizada("Selecione um logradouro", "warning");
+            document.getElementById("btnLogradouro").focus();
+            return;
+        }
 
         const montaJsonFuncionario = async () => {  
             const jsonPessoa = await montaJsonPessoaCompleta(pesId,pesNome,pesCpf,"",pesSexo,pesDataNasc,pesEndNum,pesEndCompl,pesNacionalidade, "", pesEmail1, pesEmail2, pesLogId, listTelefones);
@@ -259,7 +260,7 @@ const cadastroFuncionario = () => {
                     <Row>
                         <Col md="8">
                             <Form.Label htmlFor="inputNome">Nome</Form.Label>
-                            <Form.Control value={pesNome}
+                            <Form.Control value={pesNome} maxLength="60"
                                 onChange={(e) => setPesNome(e.target.value)}
                                 type="text" id="inputNome" required />
                         </Col>
@@ -281,7 +282,7 @@ const cadastroFuncionario = () => {
                             <Form.Select id='inputSexo' required
                                 value={pesSexo}
                                 onChange={(e) => setPesSexo(e.target.value)}>
-                                <option>Selecione</option>
+                                <option value="S">Selecione</option>
                                 <option value="F">Feminino</option>
                                 <option value="M">Masculino</option>
                             </Form.Select>
@@ -289,14 +290,7 @@ const cadastroFuncionario = () => {
                     </Row>
                     <Row>
                     <Col md="6">
-                            <Form.Label htmlFor="inputNacionalidade">Nacionalidade *</Form.Label>
-                            <Form.Select id='inputNacionalidade' required
-                                value={pesNacionalidade}
-                                onChange={(e) => setPesNacionalidade(e.target.value)}>
-                                {
-                                    listPaises.map(pais => <option key={pais.paiIso} value={pais.paiIso}>{pais.paiNome}</option>)
-                                }
-                            </Form.Select>
+                            <SelectNacionalidade pesNacionalidade={pesNacionalidade} setPesNacionalidade={setPesNacionalidade} />
                     </Col>
                     </Row>
                     <Row>
@@ -316,13 +310,13 @@ const cadastroFuncionario = () => {
                     <Row>
                         <Col md="6">
                             <Form.Label htmlFor="inputPis">Número PIS</Form.Label>
-                            <Form.Control value={funcPis}
+                            <Form.Control value={funcPis} maxLength='15'
                                 onChange={(e) => setFuncPis(e.target.value)}
-                                type="text" id="inputPis" required />
+                                type="text" id="inputPis" />
                         </Col>
                         <Col md="6">
                             <Form.Label htmlFor="inputCnh">Número CNH</Form.Label>
-                            <Form.Control value={funcCnh}
+                            <Form.Control value={funcCnh} maxLength='11'
                                 onChange={(e) => setFuncCnh(e.target.value)}
                                 type="text" id="inputCnh" />
                         </Col>
@@ -330,7 +324,7 @@ const cadastroFuncionario = () => {
                     <Row>
                         <Col md="12">
                             <Form.Label htmlFor="inputEmailP">Email Principal</Form.Label>
-                            <Form.Control value={pesEmail1}
+                            <Form.Control value={pesEmail1} maxLength="100"
                                 onChange={(e) => setPesEmail1(e.target.value)}
                                 type="text" id="inputEmailP" required />
                         </Col>
@@ -338,7 +332,7 @@ const cadastroFuncionario = () => {
                     <Row>
                         <Col md="12">
                             <Form.Label htmlFor="inputEmailS">Email Secundário</Form.Label>
-                            <Form.Control value={pesEmail2}
+                            <Form.Control value={pesEmail2} maxLength="100"
                                 onChange={(e) => setPesEmail2(e.target.value)}
                                 type="text" id="inputEmailS" />
                         </Col>
@@ -346,17 +340,17 @@ const cadastroFuncionario = () => {
                     <Row>
                         <Col md="6">
                             <Form.Label htmlFor="inputLogradouro">Logradouro</Form.Label>
-                            <InputConverter descricao={pesLogDescricao} atualizaDlgPesquisa={atualizaDlgPesquisaLogradouro} />
+                            <InputConverter idBtn="btnLogradouro" descricao={pesLogId.logDescricao} atualizaDlgPesquisa={atualizaDlgPesquisaLogradouro} />
                         </Col>
                     </Row>
                     <Row>
                         <Col md="2">
                             <Form.Label htmlFor="inputEndNum">Número</Form.Label>
-                            <Form.Control value={pesEndNum} type="text" id="inputEndNum" onChange={(e) => setPesEndNum(e.target.value)} required />
+                            <Form.Control maxLength="6" value={pesEndNum} type="text" id="inputEndNum" onChange={(e) => setPesEndNum(e.target.value)} required />
                         </Col>
                         <Col md="10">
                             <Form.Label htmlFor="inputEndCompl">Complemento</Form.Label>
-                            <Form.Control value={pesEndCompl}
+                            <Form.Control value={pesEndCompl} maxLength="100"
                                 onChange={(e) => setPesEndCompl(e.target.value)}
                                 type="text" id="inputEndCompl" />
                         </Col>

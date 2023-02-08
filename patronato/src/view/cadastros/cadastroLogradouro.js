@@ -10,7 +10,7 @@ import Footer from "../footer";
 import HTTP_STATUS from "../../utilitario/httpStatus";
 import PesquisaLogradouros from "../pesquisas/pesquisaLogradouro";
 import PesquisaBairro from "../pesquisas/pesquisaBairro";
-import InputConverter from "../inputConverter";
+import InputConverter from "../componentes/inputConverter";
 
 function cadastroLogradouro() {
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);

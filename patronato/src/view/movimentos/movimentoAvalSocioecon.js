@@ -10,7 +10,7 @@ import { api } from "../../utilitario/baseComunicacao";
 import Menu from "../menu";
 import Footer from "../footer";
 import HTTP_STATUS from "../../utilitario/httpStatus";
-import InputConverter from "../inputConverter";
+import InputConverter from "../componentes/inputConverter";
 import { dataApiFormatada, dataFormatadaAnoMesDia } from '../../utilitario/dateUtil';
 
 function movimentoAvalSocioecon() {

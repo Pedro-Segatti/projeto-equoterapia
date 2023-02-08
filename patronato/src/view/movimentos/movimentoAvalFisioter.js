@@ -15,7 +15,7 @@ import 'react-notifications-component/dist/theme.css';
 import { api } from "../../utilitario/baseComunicacao";
 import Menu from "../menu";
 import Footer from "../footer";
-import InputConverter from "../inputConverter";
+import InputConverter from '../componentes/inputConverter';
 import { saveAs } from 'file-saver';
 import { dataApiFormatada, dataFormatadaAnoMesDia } from '../../utilitario/dateUtil';
 

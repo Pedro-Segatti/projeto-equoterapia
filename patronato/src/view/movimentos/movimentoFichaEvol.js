@@ -16,7 +16,7 @@ import PesquisaPraticantes from '../pesquisas/pesquisaPraticantes';
 import PesquisaFuncionario from '../pesquisas/pesquisaFuncionario';
 import PesquisaAtividade from '../pesquisas/pesquisaAtividade';
 import PesquisaMaterial from '../pesquisas/pesquisaMaterial';
-import InputConverter from "../inputConverter";
+import InputConverter from '../componentes/inputConverter';
 import useTable from '../table/useTable';
 import { BsXLg } from "react-icons/bs";
 import TableFooter from '../table/tableFooter';

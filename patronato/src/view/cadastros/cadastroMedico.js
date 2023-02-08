@@ -12,7 +12,7 @@ import { api } from "../../utilitario/baseComunicacao";
 import HTTP_STATUS from "../../utilitario/httpStatus";
 import PesquisaMedico from "../pesquisas/pesquisaMedico";
 import PesquisaLogradouros from "../pesquisas/pesquisaLogradouro";
-import InputConverter from "../inputConverter";
+import InputConverter from "../componentes/inputConverter";
 
 import Menu from "../menu"
 import Footer from "../footer"

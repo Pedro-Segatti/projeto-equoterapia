@@ -14,7 +14,7 @@ import HTTP_STATUS from "../../utilitario/httpStatus";
 import PesquisaPraticantes from "../pesquisas/pesquisaPraticantes";
 import PesquisaLogradouros from "../pesquisas/pesquisaLogradouro";
 import PesquisaResponsaveis from "../pesquisas/pesquisaResponsavel";
-import InputConverter from "../inputConverter";
+import InputConverter from "../componentes/inputConverter";
 import { saveAs } from 'file-saver';
 
 
