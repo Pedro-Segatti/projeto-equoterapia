@@ -558,10 +558,10 @@ const cadastroPraticante = () => {
                     </Row>
                     <Row>
                         <Col md="12">
-                            <Form.Label htmlFor="inputEmailP">Email Principal *</Form.Label>
+                            <Form.Label htmlFor="inputEmailP">Email Principal</Form.Label>
                             <Form.Control value={pesEmail1}
                                 onChange={(e) => setPesEmail1(e.target.value)}
-                                type="text" id="inputEmailP" required />
+                                type="text" id="inputEmailP" />
                         </Col>
                     </Row>
                     <Row>
@@ -583,7 +583,7 @@ const cadastroPraticante = () => {
                         </Col>
 
                         <Col md="6">
-                            <Form.Label htmlFor="inputPratPeso">Peso (g) *</Form.Label>
+                            <Form.Label htmlFor="inputPratPeso">Peso (kg) *</Form.Label>
                             <Form.Control value={pratPeso}
                                 onChange={(e) => setPratPeso(e.target.value)}
                                 type="number" id="inputPratPeso" required />
@@ -592,7 +592,7 @@ const cadastroPraticante = () => {
 
                     <Row>
                         <Col md="6">
-                            <Form.Label htmlFor="inputLogradouro">Logradouro</Form.Label>
+                            <Form.Label htmlFor="inputLogradouro">Logradouro *</Form.Label>
                             <InputConverter descricao={pesLogDescricao} atualizaDlgPesquisa={atualizaDlgPesquisaLogradouro} />
                         </Col>
                     </Row>

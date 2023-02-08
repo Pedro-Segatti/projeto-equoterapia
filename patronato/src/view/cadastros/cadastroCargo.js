@@ -158,7 +158,7 @@ function cadastroCargo() {
                                                     onChange={(e) => setCarIdPesquisa(e.target.value)} />
                                             </Col>
                                             <Col md="6">
-                                                <Form.Label>Descrição</Form.Label>
+                                                <Form.Label>Descrição *</Form.Label>
                                                 <Form.Control type="text" id="descricaoPesquisa"
                                                     initi={carDescricaoPesquisa}
                                                     onChange={(e) => setCarDescricaoPesquisa(e.target.value)} />
