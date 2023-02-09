@@ -160,6 +160,10 @@ input[type="file"] {
   border-radius: 8px;
 }
 
+#colunaData{
+  width: 150px;
+}
+
 .label-input-file-pqn {
   padding: 5px 10px;
   width: 200px;
