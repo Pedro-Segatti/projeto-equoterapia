@@ -21,9 +21,10 @@ function cadastroMontaria() {
     var [list, setList] = useState('[]');
 
     const atualizaDlgPesquisa = async () => {
-        setList(await (await api.get("/pesquisaMontaria")).data);
+        setList(await (await api.get("/pesquisaMontaria?montId=&montDescricao=")).data);
         setAbrirPesquisa(true);
     }
+
 
     const atualizaItemSelecionado = (item) => {
         setMontId(item.montId);
