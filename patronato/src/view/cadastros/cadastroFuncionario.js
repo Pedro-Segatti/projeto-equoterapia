@@ -264,21 +264,25 @@ const cadastroFuncionario = () => {
                                 onChange={(e) => setPesNome(e.target.value)}
                                 type="text" id="inputNome" required />
                         </Col>
-                        <Col md="4">
-                            <Form.Label htmlFor="inputCpf">CPF</Form.Label>
-                            <Form.Control id="inputCpf" type="text" maxLength='14' as={IMaskInput} inputMode="numeric"
-                                mask="000.000.000-00" placeholder='Digite aqui o seu CPF...' required value={pesCpf} onChange={(l) => setPesCpf(l.target.value)} />
-                        </Col>
+                        
                     </Row>
                     <Row>
                         <Col md="6">
-                            <Form.Label htmlFor="inputDate">Data de Nascimento</Form.Label>
+                            <Form.Label htmlFor="inputDate">Data de Nascimento *</Form.Label>
                             <Form.Control value={pesDataNasc}
                                 onChange={(e) => setPesDataNasc(e.target.value)}
                                 type="date" id="inputDate" required />
                         </Col>
                         <Col md="6">
-                            <Form.Label htmlFor="inputSexo">Sexo</Form.Label>
+                            <Form.Label htmlFor="inputCpf">CPF *</Form.Label>
+                            <Form.Control id="inputCpf" type="text" maxLength='14' as={IMaskInput} inputMode="numeric"
+                                mask="000.000.000-00" placeholder='Digite aqui o seu CPF...' required value={pesCpf} onChange={(l) => setPesCpf(l.target.value)} />
+                        </Col>
+                        
+                    </Row>
+                    <Row>
+                    <Col md="6">
+                            <Form.Label htmlFor="inputSexo">Sexo *</Form.Label>
                             <Form.Select id='inputSexo' required
                                 value={pesSexo}
                                 onChange={(e) => setPesSexo(e.target.value)}>
@@ -286,11 +290,9 @@ const cadastroFuncionario = () => {
                                 <option value="F">Feminino</option>
                                 <option value="M">Masculino</option>
                             </Form.Select>
-                        </Col>
-                    </Row>
-                    <Row>
+                    </Col>
                     <Col md="6">
-                            <SelectNacionalidade pesNacionalidade={pesNacionalidade} setPesNacionalidade={setPesNacionalidade} />
+                        <SelectNacionalidade pesNacionalidade={pesNacionalidade} setPesNacionalidade={setPesNacionalidade} />
                     </Col>
                     </Row>
                     <Row>
@@ -298,7 +300,7 @@ const cadastroFuncionario = () => {
                             <Form.Label htmlFor="inputDate">Data de Admissão</Form.Label>
                             <Form.Control value={funcDataAdmissao}
                                 onChange={(e) => setFuncDataAdmissao(e.target.value)}
-                                type="date" id="inputDate" required />
+                                type="date" id="inputDate" />
                         </Col>
                         <Col md="6">
                             <Form.Label htmlFor="inputDate">Data de Desligamento</Form.Label>
@@ -326,7 +328,7 @@ const cadastroFuncionario = () => {
                             <Form.Label htmlFor="inputEmailP">Email Principal</Form.Label>
                             <Form.Control value={pesEmail1} maxLength="100"
                                 onChange={(e) => setPesEmail1(e.target.value)}
-                                type="text" id="inputEmailP" required />
+                                type="text" id="inputEmailP"  />
                         </Col>
                     </Row>
                     <Row>
@@ -339,14 +341,14 @@ const cadastroFuncionario = () => {
                     </Row>
                     <Row>
                         <Col md="6">
-                            <Form.Label htmlFor="inputLogradouro">Logradouro</Form.Label>
-                            <InputConverter idBtn="btnLogradouro" descricao={pesLogId.logDescricao} atualizaDlgPesquisa={atualizaDlgPesquisaLogradouro} />
+                            <Form.Label htmlFor="inputLogradouro">Logradouro *</Form.Label>
+                            <InputConverter descricao={pesLogId.logDescricao} atualizaDlgPesquisa={atualizaDlgPesquisaLogradouro} />
                         </Col>
                     </Row>
                     <Row>
                         <Col md="2">
-                            <Form.Label htmlFor="inputEndNum">Número</Form.Label>
-                            <Form.Control maxLength="6" value={pesEndNum} type="text" id="inputEndNum" onChange={(e) => setPesEndNum(e.target.value)} required />
+                            <Form.Label htmlFor="inputEndNum">Número *</Form.Label>
+                            <Form.Control value={pesEndNum} type="text" id="inputEndNum" onChange={(e) => setPesEndNum(e.target.value)} required />
                         </Col>
                         <Col md="10">
                             <Form.Label htmlFor="inputEndCompl">Complemento</Form.Label>

@@ -85,7 +85,7 @@ function cadastroMontaria() {
                         </Row>
                         <Row>
                             <Col md="12">
-                                <Form.Label htmlFor="inputDescricao">Descrição</Form.Label>
+                                <Form.Label htmlFor="inputDescricao">Descrição *</Form.Label>
                                 <Form.Control value={montDescricao} maxLength={50}
                                     onChange={(e) => setMontDescricao(e.target.value)}
                                     type="text" id="descricao" required />
