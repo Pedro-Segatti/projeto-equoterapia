@@ -10,7 +10,7 @@ import Footer from "../footer";
 import HTTP_STATUS from "../../utilitario/httpStatus";
 import PesquisaLogradouros from "../pesquisas/pesquisaLogradouro";
 import PesquisaBairro from "../pesquisas/pesquisaBairro";
-import InputConverter from "../inputConverter";
+import InputConverter from "../componentes/inputConverter";
 
 function cadastroLogradouro() {
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
@@ -110,7 +110,7 @@ function cadastroLogradouro() {
                         </Row>
                         <Row>
                             <Col md="12">
-                                <Form.Label htmlFor="log">Descricao</Form.Label>
+                                <Form.Label htmlFor="log">Descricao *</Form.Label>
                                 <Form.Control value={logDescricao} maxLength={100}
                                     onChange={(e) => setLogDescricao(e.target.value)}
                                     type="text" id="log" required />
@@ -118,7 +118,7 @@ function cadastroLogradouro() {
                         </Row>
                         <Row>
                             <Col md="6">
-                                <Form.Label htmlFor="log">CEP</Form.Label>
+                                <Form.Label htmlFor="log">CEP *</Form.Label>
                                 <Form.Control value={logCep} maxLength={8}
                                     onChange={(e) => setLogCep(e.target.value)}
                                     type="text" id="log" required />

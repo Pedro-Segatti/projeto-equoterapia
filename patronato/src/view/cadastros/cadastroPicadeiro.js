@@ -83,7 +83,7 @@ function cadastroPicadeiro() {
                         </Row>
                         <Row>
                             <Col md="12">
-                                <Form.Label htmlFor="inputDescricao">Descrição</Form.Label>
+                                <Form.Label htmlFor="inputDescricao">Descrição *</Form.Label>
                                 <Form.Control value={picDescricao} maxLength={50}
                                     onChange={(e) => setPicDescricao(e.target.value)}
                                     type="text" id="descricao" required />

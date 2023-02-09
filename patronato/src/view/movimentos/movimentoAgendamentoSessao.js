@@ -6,7 +6,7 @@ import { ReactNotifications } from 'react-notifications-component';
 import { registroSalvo, registroExcluido, mensagemCustomizada } from "../../utilitario/mensagemUtil"
 import HTTP_STATUS from "../../utilitario/httpStatus";
 import { Form, Col, Row, Container, Card, Button } from 'react-bootstrap';
-import InputConverter from "../inputConverter";
+import InputConverter from '../componentes/inputConverter';
 import { api } from "../../utilitario/baseComunicacao";
 import PesquisaPraticantes from '../pesquisas/pesquisaPraticantes';
 import PesquisaAgendamentos from '../pesquisas/pesquisaAgendamentos';

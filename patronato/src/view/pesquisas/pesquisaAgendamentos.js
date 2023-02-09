@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import TableFooter from '../table/tableFooter';
 import useTable from '../table/useTable';
-import InputConverter from "../inputConverter";
+import InputConverter from '../componentes/inputConverter';
 import { BsPencilSquare } from "react-icons/bs";
 import { Form, Col, Row, Container, Modal, Button, Table } from 'react-bootstrap';
 import PesquisaPraticantes from '../pesquisas/pesquisaPraticantes';

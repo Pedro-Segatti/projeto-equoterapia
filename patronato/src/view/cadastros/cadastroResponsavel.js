@@ -14,7 +14,7 @@ import HTTP_STATUS from "../../utilitario/httpStatus";
 import PesquisaResponsaveis from "../pesquisas/pesquisaResponsavel";
 import PesquisaLogradouros from "../pesquisas/pesquisaLogradouro";
 
-import InputConverter from "../inputConverter";
+import InputConverter from '../componentes/inputConverter';
 
 
 import Menu from "../menu"
@@ -283,7 +283,7 @@ const cadastroResponsavel = () => {
                     </Row>
                     <Row>
                         <Col md="12">
-                            <Form.Label htmlFor="inputNome">Nome</Form.Label>
+                            <Form.Label htmlFor="inputNome">Nome *</Form.Label>
                             <Form.Control value={pesNome}
                                 onChange={(e) => setPesNome(e.target.value)}
                                 type="text" id="inputNome" required />
@@ -291,13 +291,13 @@ const cadastroResponsavel = () => {
                     </Row>
                     <Row>
                         <Col md="6">
-                            <Form.Label htmlFor="inputDate">Data de Nascimento</Form.Label>
+                            <Form.Label htmlFor="inputDate">Data de Nascimento *</Form.Label>
                             <Form.Control value={pesDataNasc}
                                 onChange={(e) => setPesDataNasc(e.target.value)}
                                 type="date" id="inputDate" required />
                         </Col>
                         <Col md="6">
-                            <Form.Label htmlFor="inputCpf">CPF</Form.Label>
+                            <Form.Label htmlFor="inputCpf">CPF *</Form.Label>
                             <Form.Control id="inputCpf" type="text" maxLength='14' as={IMaskInput} inputMode="numeric"
                                 mask="000.000.000-00" placeholder='Digite aqui o seu CPF...' required value={pesCpf} onChange={(l) => setPesCpf(l.target.value)} />
                         </Col>
@@ -305,7 +305,7 @@ const cadastroResponsavel = () => {
 
                     <Row>
                         <Col md="6">
-                            <Form.Label htmlFor="inputSexo">Sexo</Form.Label>
+                            <Form.Label htmlFor="inputSexo">Sexo *</Form.Label>
                             <Form.Select id='inputSexo' required
                                 value={pesSexo}
                                 onChange={(e) => setPesSexo(e.target.value)}>
@@ -315,7 +315,7 @@ const cadastroResponsavel = () => {
                             </Form.Select>
                         </Col>
                         <Col md="6">
-                            <Form.Label htmlFor="inputRespProfissao">Profissao</Form.Label>
+                            <Form.Label htmlFor="inputRespProfissao">Profissao *</Form.Label>
                             <Form.Control value={respProfissao}
                                 onChange={(e) => setRespProfissao(e.target.value)}
                                 type="text" id="inputRespProfissao" required />
@@ -326,7 +326,7 @@ const cadastroResponsavel = () => {
                             <Form.Label htmlFor="inputEmailP">Email Principal</Form.Label>
                             <Form.Control value={pesEmail1}
                                 onChange={(e) => setPesEmail1(e.target.value)}
-                                type="text" id="inputEmailP" required />
+                                type="text" id="inputEmailP" />
                         </Col>
                     </Row>
                     <Row>
@@ -340,13 +340,13 @@ const cadastroResponsavel = () => {
 
                     <Row>
                         <Col md="6">
-                            <Form.Label htmlFor="inputLogradouro">Logradouro</Form.Label>
+                            <Form.Label htmlFor="inputLogradouro">Logradouro *</Form.Label>
                             <InputConverter descricao={pesLogDescricao} atualizaDlgPesquisa={atualizaDlgPesquisaLogradouro} />
                         </Col>
                     </Row>
                     <Row>
                         <Col md="4">
-                            <Form.Label htmlFor="inputEndNum">Número</Form.Label>
+                            <Form.Label htmlFor="inputEndNum">Número *</Form.Label>
                             <Form.Control value={pesEndNum} type="text" id="inputEndNum" onChange={(e) => setPesEndNum(e.target.value)} required />
                         </Col>
                         <Col md="8">
