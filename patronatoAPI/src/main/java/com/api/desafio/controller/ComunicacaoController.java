@@ -400,38 +400,22 @@ public class ComunicacaoController {
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastrarPraticante")
     public ResponseEntity<Praticante> cadastrarPraticante(@RequestBody Praticante praticante) {
-        Pessoa pessoa = pessoaService.salva(praticante.getPessoa());
-        pessoa.getTelefoneList().forEach(tel -> tel.setPessoa(praticante.getPessoa()));
-        return new ResponseEntity<Praticante>(praticanteService.salva(praticante),HttpStatus.OK);
-    }
+        boolean adicionando = praticante.getPratId() == null;
 
-    @CrossOrigin(origins = "*")
-    @PostMapping("/atualizarPraticante")
-    public ResponseEntity<?> atualizarPraticante(@RequestBody String jsonPraticante) {
-        JsonObject jsonConvertido = new Gson().fromJson(jsonPraticante, JsonObject.class);
-        Praticante praticanteExistente = praticanteService.getPraticanteById(jsonConvertido.get("pratId").getAsInt());
-
-        if (praticanteExistente == null) {
-            return new ResponseEntity<Praticante>(praticanteExistente, HttpStatus.FORBIDDEN);
+        Pessoa pessoa = null;
+        if (adicionando) {
+            pessoa = pessoaService.getPessoaByPesCpf(praticante.getPessoa().getPesCpf());
+            if (pessoa != null) {
+                return new ResponseEntity<Praticante>(new Praticante(), HttpStatus.BAD_REQUEST);
+            }
         }
 
-        praticanteExistente.setPratAltura(jsonConvertido.get("pratAltura").getAsInt());
-        praticanteExistente.setPratPeso(jsonConvertido.get("pratPeso").getAsInt());
+        praticante.getPessoa().getTelefoneList().forEach(tel -> tel.setPessoa(praticante.getPessoa()));
+        praticante.getResponsaveis().forEach(resp -> resp.setPraticante(praticante));
+        praticante.getDocumentosList().forEach(doc -> doc.setPraticante(praticante));
 
-        praticanteExistente = praticanteService.salva(praticanteExistente);
-
-        JsonElement documentos = jsonConvertido.get("documentosList");
-        inserirNovoDocumento(documentos, praticanteExistente);
-
-        JsonElement telefones = jsonConvertido.get("telefones");
-        inserirNovoTelefone(telefones, praticanteExistente.getPessoa());
-
-        JsonElement responsaveis = jsonConvertido.get("responsaveis");
-        inserirNovoResponsavel(responsaveis, praticanteExistente);
-
-        praticanteExistente = praticanteService.salva(praticanteExistente);
-
-        return new ResponseEntity<Praticante>(praticanteExistente, HttpStatus.OK);
+        pessoa = pessoaService.salva(praticante.getPessoa());
+        return new ResponseEntity<Praticante>(praticanteService.salva(praticante),HttpStatus.OK);
     }
 
     private void inserirNovoDocumento(JsonElement documentos, Praticante praticante) {
@@ -624,7 +608,7 @@ public class ComunicacaoController {
     }
 
     @CrossOrigin(origins = "*")
-    @PostMapping("/cadastrarFuncionario")
+    @PostMapping("/ uncionario")
     public ResponseEntity<Funcionario> cadastrarFuncionario(@RequestBody Funcionario funcionario) {
         funcionario.getPessoa().getTelefoneList().forEach(tel -> tel.setPessoa(funcionario.getPessoa()));
         pessoaService.salva(funcionario.getPessoa());

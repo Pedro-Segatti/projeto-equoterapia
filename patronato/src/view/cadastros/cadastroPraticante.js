@@ -284,7 +284,6 @@ const cadastroPraticante = () => {
             const jsonPessoa = await montaJsonPessoaCompleta(pesId,pesNome,pesCpf,"",pesSexo,pesDataNasc,pesEndNum,pesEndCompl,pesNacionalidade, "", pesEmail1, pesEmail2, pesLogId, listTelefones);
             const jsonPraticante = {
                 "pratId": pratId,
-                "pessoaId": pesId,
                 "pratAltura": pratAltura,
                 "pratPeso": pratPeso,
                 "pessoa": jsonPessoa,
@@ -292,11 +291,14 @@ const cadastroPraticante = () => {
                 "responsaveis": listResponsveisSelecionados,
                 "telefones": listTelefones
             }
+
+            console.log(jsonPraticante);
+
             return jsonPraticante;
         }        
         
-        const cadastraPraticante = async (idPessoa) => {
-            return await cadastrarPraticante(montaJsonPraticante(idPessoa));
+        const cadastraPraticante = async () => {
+            return await cadastrarPraticante(await montaJsonPraticante());
         }
 
         try {
