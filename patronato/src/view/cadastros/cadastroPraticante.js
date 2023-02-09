@@ -5,10 +5,10 @@ import TableFooter from '../table/tableFooter';
 import useTable from '../table/useTable';
 import Toolbar from '../toolbar';
 import { IMaskInput } from 'react-imask';
-import { registroSalvo, pessoaDuplicada, semRegistros, registroExcluido, mensagemCustomizada } from "../../utilitario/mensagemUtil"
+import { registroSalvo, pessoaDuplicada, registroExcluido, mensagemCustomizada } from "../../utilitario/mensagemUtil"
 import { ReactNotifications } from 'react-notifications-component'
-import { criarPessoa, atualizarPessoa, convertBase64ToFile } from "../../utilitario/patronatoUtil";
-import { cadastrarPraticante, atualizarPraticante } from "../../utilitario/baseComunicacao";
+import { montaJsonPessoaCompleta, convertBase64ToFile } from "../../utilitario/patronatoUtil";
+import { cadastrarPraticante } from "../../utilitario/baseComunicacao";
 import { api } from "../../utilitario/baseComunicacao";
 import HTTP_STATUS from "../../utilitario/httpStatus";
 import PesquisaPraticantes from "../pesquisas/pesquisaPraticantes";
@@ -41,7 +41,7 @@ const cadastroPraticante = () => {
     const [pratAltura, setPratAltura] = useState("");
     const [pratPeso, setPratPeso] = useState("");
 
-
+    const [pesId, setPesId] = useState("");
     const [pesNome, setPesNome] = useState("");
     const [pesCpf, setPesCpf] = useState("");
     const [pesSexo, setPesSexo] = useState("");
@@ -232,6 +232,7 @@ const cadastroPraticante = () => {
     }
 
     const atualizaItemSelecionado = (item) => {
+        setPesId(item.pessoa.pesId);
         setPratId(item.pratId);
         setPesNome(item.pessoa.pesNome);
         setPesCpf(item.pessoa.pesCpf);
@@ -254,6 +255,7 @@ const cadastroPraticante = () => {
     }
 
     const limparCamposFormulario = () => {
+        setPesId("");
         setPratId("");
         setPesNome("");
         setPesCpf("");
@@ -278,80 +280,39 @@ const cadastroPraticante = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const cadastraPessoa = async () => {
-            return await criarPessoa(pesNome, pesCpf, pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pesNacionalidade, pesFoto, pesEmail1, pesEmail2, pesLogId);
-        }
-
-        const atualizaPessoa = async () => {
-            return await atualizarPessoa(pesNome, pesCpf, pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pesNacionalidade, pesFoto, pesEmail1, pesEmail2, pesLogId);
-        }
-
-        const montaJsonPraticante = (idPessoa) => {
+        const montaJsonPraticante = async () => {  
+            const jsonPessoa = await montaJsonPessoaCompleta(pesId,pesNome,pesCpf,"",pesSexo,pesDataNasc,pesEndNum,pesEndCompl,pesNacionalidade, "", pesEmail1, pesEmail2, pesLogId, listTelefones);
             const jsonPraticante = {
                 "pratId": pratId,
-                "pessoaId": idPessoa,
+                "pessoaId": pesId,
                 "pratAltura": pratAltura,
                 "pratPeso": pratPeso,
+                "pessoa": jsonPessoa,
                 "documentosList": listDocumentos,
                 "responsaveis": listResponsveisSelecionados,
                 "telefones": listTelefones
             }
-
             return jsonPraticante;
-        }
+        }        
         
         const cadastraPraticante = async (idPessoa) => {
             return await cadastrarPraticante(montaJsonPraticante(idPessoa));
         }
 
-        const atualizaPraticante = async () => {
-            return await atualizarPraticante(montaJsonPraticante(null));
-        }
-
-        const atualizarRegistros = async () => {
-            try {
-                const responseAttPessoa = await atualizaPessoa();
-                const responseAttPraticante = await atualizaPraticante();
-
-                if (responseAttPessoa.status === HTTP_STATUS.OK && responseAttPraticante.status === HTTP_STATUS.OK) {
-                    registroSalvo();
-                    limparCamposFormulario();
-                }
-            } catch (error) {
-                if (error.response.status === HTTP_STATUS.FORBIDDEN) {
-                    console.log(error);
-                    semRegistros();
-                }
+        try {
+            const responsePratricante = await cadastraPraticante();
+            if (responsePratricante.status === HTTP_STATUS.OK) {
+                registroSalvo();
+                limparCamposFormulario();
+            }
+        } catch (error) {
+            if (error.response.status === HTTP_STATUS.BAD_REQUEST) {
+                pessoaDuplicada();
             }
 
-        }
-
-        const criarPessoaEPraticante = async () => {
-            try {
-                const response = await cadastraPessoa();
-                if (response.status === HTTP_STATUS.OK) {
-                    const responsePraticante = await cadastraPraticante(response.data.pesId);
-                    if (responsePraticante.status === HTTP_STATUS.OK) {
-                        registroSalvo();
-                        limparCamposFormulario();
-                    }
-                }
-            } catch (error) {
-                if (error.response.status === HTTP_STATUS.BAD_REQUEST) {
-                    atualizaPessoa();
-                    pessoaDuplicada();
-                }
-
-                if (error.response.status === HTTP_STATUS.FORBIDDEN) {
-                    console.log(error);
-                }
+            if (error.response.status === HTTP_STATUS.FORBIDDEN) {
+                console.log(error);
             }
-        }
-
-        if (pratId === "") {
-            criarPessoaEPraticante();
-        } else {
-            atualizarRegistros();
         }
     };
 
