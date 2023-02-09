@@ -396,9 +396,10 @@ const cadastroPraticante = () => {
                     <option>Selecione</option>
                     <option value="M">Mãe</option>
                     <option value="P">Pai</option>
+                    <option value="I">Irmão</option>
                     <option value="A">Avó</option>
                     <option value="O">Avô</option>
-                    <option value="I">Irmão</option>
+                    <option value="N">Outro</option>
                 </Form.Select>
             </td>
 

@@ -663,8 +663,8 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaMontaria")
-    public ResponseEntity<List<Montaria>> pesquisaMontaria() {
-        return montariaService.pesquisa();
+    public ResponseEntity<List<Montaria>> pesquisaMontaria(@RequestParam(required = false) Integer montId, @RequestParam(required = false) String montDescricao) {
+        return montariaService.pesquisa(montId, montDescricao);
     }
 
     //BAIRRO

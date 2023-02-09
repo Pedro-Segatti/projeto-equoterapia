@@ -42,15 +42,17 @@ const LinhaTabela = ({ item, atualizaItemSelecionado }) => {
     </tr>
 }
 
-function pesquisaAnimais({ setValores, valores, atualizaItemSelecionado, setAbrirPesquisa }) {
-    const [montDescricao, setMontDescricao] = useState("");
+function pesquisaMontaria({ setValores, valores, atualizaItemSelecionado, setAbrirPesquisa }) {
+    const [montIdPesquisa, setMontIdPesquisa] = useState("");
+    const [montDescricaoPesquisa, setMontDescricaoPesquisa] = useState("");
 
     const buscaRegistros = async () => {
-        setValores(await (await api.get("/pesquisaMontaria")).data);
+        setValores(await (await api.get("/pesquisaMontaria?montId=" + montIdPesquisa + "&montDescricao=" + montDescricaoPesquisa)).data);
         setAbrirPesquisa(true);
     }
 
-    const pesquisaAnimais = () => {
+
+    const pesquisaMontaria = () => {
         return (
             <>
                 <Modal className='modal-xl' show={true}>
@@ -59,11 +61,17 @@ function pesquisaAnimais({ setValores, valores, atualizaItemSelecionado, setAbri
                         <Container>
                             <Form>
                                 <Row>
+                                    <Col md="2">
+                                        <Form.Label>Código</Form.Label>
+                                        <Form.Control type="text" id="idPesquisa"
+                                            value={montIdPesquisa}
+                                            onChange={(e) => setMontIdPesquisa(e.target.value)} />
+                                    </Col>
                                     <Col md="6">
                                         <Form.Label>Descrição</Form.Label>
                                         <Form.Control type="text" id="descricaoPesquisa"
-                                            initi={montDescricao}
-                                            onChange={(e) => setMontDescricao(e.target.value)} />
+                                            initi={montDescricaoPesquisa}
+                                            onChange={(e) => setMontDescricaoPesquisa(e.target.value)} />
                                     </Col>
                                 </Row>
                                 <div className='right'>
@@ -80,6 +88,6 @@ function pesquisaAnimais({ setValores, valores, atualizaItemSelecionado, setAbri
             </>
         )
     }
-    return pesquisaAnimais();
+    return pesquisaMontaria();
 }
-export default pesquisaAnimais;
+export default pesquisaMontaria;

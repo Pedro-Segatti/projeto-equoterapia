@@ -280,13 +280,19 @@ const cadastroResponsavel = () => {
                             <Form.Label htmlFor="inputId">Código</Form.Label>
                             <Form.Control value={respId} type="text" id="inputId" disabled />
                         </Col>
+                        
                     </Row>
                     <Row>
-                        <Col md="12">
+                        <Col md="8">
                             <Form.Label htmlFor="inputNome">Nome *</Form.Label>
                             <Form.Control value={pesNome}
                                 onChange={(e) => setPesNome(e.target.value)}
                                 type="text" id="inputNome" required />
+                        </Col>
+                        <Col md="4">
+                            <Form.Label htmlFor="inputCpf">CPF *</Form.Label>
+                            <Form.Control id="inputCpf" type="text" maxLength='14' as={IMaskInput} inputMode="numeric"
+                                mask="000.000.000-00" placeholder='Digite aqui o seu CPF...' required value={pesCpf} onChange={(l) => setPesCpf(l.target.value)} />
                         </Col>
                     </Row>
                     <Row>
@@ -297,10 +303,15 @@ const cadastroResponsavel = () => {
                                 type="date" id="inputDate" required />
                         </Col>
                         <Col md="6">
-                            <Form.Label htmlFor="inputCpf">CPF *</Form.Label>
-                            <Form.Control id="inputCpf" type="text" maxLength='14' as={IMaskInput} inputMode="numeric"
-                                mask="000.000.000-00" placeholder='Digite aqui o seu CPF...' required value={pesCpf} onChange={(l) => setPesCpf(l.target.value)} />
+                            <Form.Label htmlFor="inputNacionalidade">Nacionalidade *</Form.Label>
+                            <Form.Select id='inputNacionalidade' required
+                                value={pesNacionalidade}
+                                onChange={(e) => setPesNacionalidade(e.target.value)}>
+                                <option>Selecione</option>
+                                <option value="BRA">Brasileira</option>
+                            </Form.Select>
                         </Col>
+                        
                     </Row>
 
                     <Row>

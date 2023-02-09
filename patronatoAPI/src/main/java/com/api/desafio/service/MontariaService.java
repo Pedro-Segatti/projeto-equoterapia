@@ -2,6 +2,7 @@ package com.api.desafio.service;
 
 import com.api.desafio.crudFiles.MaterialCrud;
 import com.api.desafio.crudFiles.MontariaCrud;
+import com.api.desafio.model.Atividade;
 import com.api.desafio.model.Material;
 import com.api.desafio.model.Montaria;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,8 @@ public class MontariaService {
         return montaria;
     }
 
-    public ResponseEntity<List<Montaria>> pesquisa() {
-        List<Montaria> montaria = (List<Montaria>) mc.findAll();
+    public ResponseEntity<List<Montaria>> pesquisa(Integer montId, String montDescricao) {
+        List<Montaria> montaria = (List<Montaria>) mc.findByIdAndDescricao(montId,montDescricao);
         return new ResponseEntity<List<Montaria>>(montaria, HttpStatus.OK);
     }
 
