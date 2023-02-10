@@ -160,7 +160,7 @@ const cadastroPraticante = () => {
             if (e.pxrId == null) {
                 setListResponsveisSelecionados(current =>
                     current.filter(resp => {
-                        return resp.pxrId !== e.pxrId;
+                        return resp.responsavel.respId !== e.responsavel.respId;
                     }),
                 );
             } else {
@@ -184,7 +184,7 @@ const cadastroPraticante = () => {
             if (e.telId == null) {
                 setListTelefones(current =>
                     current.filter(tel => {
-                        return tel.telId !== e.telId;
+                        return tel.telNumero !== e.telNumero;
                     }),
                 );
             } else {
