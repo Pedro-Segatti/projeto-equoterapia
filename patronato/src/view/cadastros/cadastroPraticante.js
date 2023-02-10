@@ -16,7 +16,7 @@ import PesquisaLogradouros from "../pesquisas/pesquisaLogradouro";
 import PesquisaResponsaveis from "../pesquisas/pesquisaResponsavel";
 import InputConverter from "../componentes/inputConverter";
 import { saveAs } from 'file-saver';
-
+import SelectNacionalidade from '../componentes/selectMenuNacionalidade';
 
 import Menu from "../menu"
 import Footer from "../footer"
@@ -48,7 +48,7 @@ const cadastroPraticante = () => {
     const [pesDataNasc, setPesDataNasc] = useState("");
     const [pesEndNum, setPesEndNum] = useState("");
     const [pesEndCompl, setPesEndCompl] = useState("");
-    const [pesNacionalidade, setPesNacionalidade] = useState("");
+    const [pesNacionalidade, setPesNacionalidade] = useState("BRA");
     const [pesFoto, setPesFoto] = useState("");
     const [pesEmail1, setPesEmail1] = useState("");
     const [pesEmail2, setPesEmail2] = useState("");
@@ -281,7 +281,7 @@ const cadastroPraticante = () => {
         e.preventDefault();
 
         const montaJsonPraticante = async () => {  
-            const jsonPessoa = await montaJsonPessoaCompleta(pesId,pesNome,pesCpf,"",pesSexo,pesDataNasc,pesEndNum,pesEndCompl,pesNacionalidade, "", pesEmail1, pesEmail2, pesLogId, listTelefones);
+            const jsonPessoa = await montaJsonPessoaCompleta(pesId,pesNome,pesCpf,"",pesSexo,pesDataNasc,pesEndNum,pesEndCompl,pesNacionalidade, pesFoto, pesEmail1, pesEmail2, pesLogId, listTelefones);
             const jsonPraticante = {
                 "pratId": pratId,
                 "pratAltura": pratAltura,
@@ -291,8 +291,6 @@ const cadastroPraticante = () => {
                 "responsaveis": listResponsveisSelecionados,
                 "telefones": listTelefones
             }
-
-            console.log(jsonPraticante);
 
             return jsonPraticante;
         }        
@@ -464,7 +462,10 @@ const cadastroPraticante = () => {
                     <Row>
                         <Col md="12">
                             <div className='fotoPraticante'>
-                                <Image id="imgPrat" src={pesFoto}></Image>
+                                <a onClick={() => setPesFoto("")}>
+                                    <Image id="imgPrat" src={pesFoto}></Image>
+                                </a>
+
                                 <Form.Control type="file" id="inputFoto" accept="image/png, image/jpg, image/jpeg" onChange={showPreview} />
                                 <Form.Label htmlFor="inputFoto" className='label-input-file'>Selecione a Foto do Praticante</Form.Label>
                             </div>
@@ -511,13 +512,7 @@ const cadastroPraticante = () => {
                             </Form.Select>
                         </Col>
                         <Col md="6">
-                            <Form.Label htmlFor="inputNacionalidade">Nacionalidade *</Form.Label>
-                            <Form.Select id='inputNacionalidade' required
-                                value={pesNacionalidade}
-                                onChange={(e) => setPesNacionalidade(e.target.value)}>
-                                <option>Selecione</option>
-                                <option value="BRA">Brasileira</option>
-                            </Form.Select>
+                            <SelectNacionalidade pesNacionalidade={pesNacionalidade} setPesNacionalidade={setPesNacionalidade} />
                         </Col>
                     </Row>
                     <Row>

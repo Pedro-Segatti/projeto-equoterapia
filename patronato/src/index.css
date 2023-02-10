@@ -208,3 +208,7 @@ svg {
 .center{
   text-align: center;
 }
+
+#imgPrat:hover{
+  opacity: 0.4;
+}
