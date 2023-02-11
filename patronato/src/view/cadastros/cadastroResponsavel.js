@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
-import { Form, Col, Row, Container, Table, Button, Card} from 'react-bootstrap';
-import { BsFillTrashFill } from "react-icons/bs";
-import TableFooter from '../table/tableFooter';
-import useTable from '../table/useTable';
+import { Form, Col, Row, Container } from 'react-bootstrap';
 import Toolbar from '../toolbar';
 import { IMaskInput } from 'react-imask';
-import { registroSalvo, pessoaDuplicada, semRegistros, registroExcluido, mensagemCustomizada} from "../../utilitario/mensagemUtil"
+import { registroSalvo, pessoaDuplicada, registroExcluido} from "../../utilitario/mensagemUtil"
 import { ReactNotifications } from 'react-notifications-component'
-import { criarPessoa, atualizarPessoa } from "../../utilitario/patronatoUtil";
-import { cadastrarResponsavel, atualizarResponsavel} from "../../utilitario/baseComunicacao";
+import { montaJsonPessoaCompleta } from "../../utilitario/patronatoUtil";
+import { cadastrarResponsavel } from "../../utilitario/baseComunicacao";
 import { api } from "../../utilitario/baseComunicacao";
 import HTTP_STATUS from "../../utilitario/httpStatus";
 import PesquisaResponsaveis from "../pesquisas/pesquisaResponsavel";
 import PesquisaLogradouros from "../pesquisas/pesquisaLogradouro";
+import SelectNacionalidade from '../componentes/selectMenuNacionalidade';
+import TabelaTelefones from '../componentes/tabelaTelefones';
 
 import InputConverter from '../componentes/inputConverter';
-
 
 import Menu from "../menu"
 import Footer from "../footer"
@@ -25,14 +23,14 @@ const cadastroResponsavel = () => {
     const [respId, setRespId] = useState("");
     const [respProfissao, setRespProfissao] = useState("");
 
-
+    const [pesId, setPesId] = useState("");
     const [pesNome, setPesNome] = useState("");
     const [pesCpf, setPesCpf] = useState("");
     const [pesSexo, setPesSexo] = useState("");
     const [pesDataNasc, setPesDataNasc] = useState("");
     const [pesEndNum, setPesEndNum] = useState("");
     const [pesEndCompl, setPesEndCompl] = useState("");
-    const [pesNacionalidade, setPesNacionalidade] = useState("");
+    const [pesNacionalidade, setPesNacionalidade] = useState("BRA");
     const [pesEmail1, setPesEmail1] = useState("");
     const [pesEmail2, setPesEmail2] = useState("");
     const [pesLogId, setPesLogId] = useState("");
@@ -44,44 +42,6 @@ const cadastroResponsavel = () => {
     const [listLogradouro, setListLogradouro] = useState([]);
 
     const [listTelefones, setListTelefones] = useState([]);
-
-    const criarTelefone = (e) => {
-        const jsonItem = {
-            "telId": null,
-            "telNumero": "",
-            "telIdPessoa": ""
-        }
-
-        setListTelefones(tel => [...tel, jsonItem]);
-    }
-
-    const atualizaTelefone = (item, telefone) => {
-        item.telNumero = telefone;
-    }
-
-    const removeTelefoneSelecionado = async (e) => {
-        try {
-            if (e.telId == null) {
-                setListTelefones(current =>
-                    current.filter(tel => {
-                        return tel.telId !== e.telId;
-                    }),
-                );
-            } else {
-                const response = await (await api.delete("/removerTelefone?telId=" + e.telId));
-                if (response.status === HTTP_STATUS.OK) {
-                    setListTelefones(current =>
-                        current.filter(tel => {
-                            return tel.telId !== e.telId;
-                        }),
-                    );
-                    mensagemCustomizada("Telefone Excluído com Sucesso", "success");
-                }
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }
 
     const atualizaDlgPesquisa = async () => {
         setList(await (await api.get("/pesquisaResponsavel")).data);
@@ -113,6 +73,7 @@ const cadastroResponsavel = () => {
 
     const atualizaItemSelecionado = (item) => {
         setRespId(item.respId);
+        setPesId(item.pessoa.pesId);
         setPesNome(item.pessoa.pesNome);
         setPesCpf(item.pessoa.pesCpf);
         setPesSexo(item.pessoa.pesSexo);
@@ -131,13 +92,14 @@ const cadastroResponsavel = () => {
 
     const limparCamposFormulario = () => {
         setRespId("");
+        setPesId("");
         setPesNome("");
         setPesCpf("");
         setPesSexo("");
         setPesDataNasc("");
         setPesEndNum("");
         setPesEndCompl("");
-        setPesNacionalidade("");
+        setPesNacionalidade("BRA");
         setPesEmail1("");
         setPesEmail2("");
         setRespProfissao("");
@@ -149,120 +111,33 @@ const cadastroResponsavel = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const cadastraPessoa = async () => {
-            return await criarPessoa(pesNome, pesCpf, pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pesNacionalidade,"", pesEmail1, pesEmail2, pesLogId);
-        }
-
-        const atualizaPessoa = async () => {
-            return await atualizarPessoa(pesNome, pesCpf, pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pesNacionalidade,"", pesEmail1, pesEmail2, pesLogId);
-        }
-
-        const montaJsonResponsavel = (idPessoa) => {
+        const montaJsonResponsavel = async () => {
+            const jsonPessoa = await montaJsonPessoaCompleta(pesId,pesNome,pesCpf,"",pesSexo,pesDataNasc,pesEndNum,pesEndCompl,pesNacionalidade, "", pesEmail1, pesEmail2, pesLogId, listTelefones);
             const jsonResponsavel = {
                 "respId": respId,
-                "pessoaId": idPessoa,
+                "pessoa": jsonPessoa,
                 "respProfissao": respProfissao,
                 "telefones": listTelefones
             }
-
             return jsonResponsavel;
         }
 
-        const cadastraResponsavel = async (idPessoa) => {
-            return await cadastrarResponsavel(montaJsonResponsavel(idPessoa));
-        }
-
-        const atualizaResponsavel = async () => {
-            return await atualizarResponsavel(montaJsonResponsavel(null));
-        }
-
-        const atualizarRegistros = async () => {
-            try {
-                const responseAttPessoa = await atualizaPessoa();
-                const responseAttResponsavel = await atualizaResponsavel();
-
-                if (responseAttPessoa.status === HTTP_STATUS.OK && responseAttResponsavel.status === HTTP_STATUS.OK) {
-                    registroSalvo();
-                    limparCamposFormulario();
-                }
-            } catch (error) {
-                if (error.response.status === HTTP_STATUS.FORBIDDEN) {
-                    console.log(error);
-                    semRegistros();
-                }
+        try {
+            const responseResponsavel = await cadastrarResponsavel(await montaJsonResponsavel());
+            if (responseResponsavel.status === HTTP_STATUS.OK) {
+                registroSalvo();
+                limparCamposFormulario();
+            }
+        } catch (error) {
+            if (error.response.status === HTTP_STATUS.BAD_REQUEST) {
+                pessoaDuplicada();
             }
 
-        }
-
-        const criarPessoaEResponsavel = async () => {
-            try {
-                const response = await cadastraPessoa();
-                if (response.status === HTTP_STATUS.OK) {
-                    const responseResponsavel = await cadastraResponsavel(response.data.pesId);
-                    if (responseResponsavel.status === HTTP_STATUS.OK) {
-                        registroSalvo();
-                        limparCamposFormulario();
-                    }
-                }
-            } catch (error) {
-                if (error.response.status === HTTP_STATUS.BAD_REQUEST) {
-                    atualizaPessoa();
-                    pessoaDuplicada();
-                }
-
-                if (error.response.status === HTTP_STATUS.FORBIDDEN) {
-                    console.log(error);
-                }
+            if (error.response.status === HTTP_STATUS.FORBIDDEN) {
+                console.log(error);
             }
         }
-
-        if (respId === "") {
-            criarPessoaEResponsavel();
-        } else {
-            atualizarRegistros();
-        }
     };
-
-    const TabelaTelefones = ({ data, rowsPerPage, removeResp }) => {
-        const [pagina, setPage] = useState(1);
-        const { slice, range } = useTable(data, pagina, rowsPerPage);
-        return (
-            <>
-                <Table size="sm">
-                    <thead>
-                        <tr>
-                            <th>Número</th>
-                            <th className='center'>Ação</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            slice.map(item => <LinhaTabelaTelefones key={item.telId} item={item} removeTelefoneSelecionado={removeTelefoneSelecionado} />)
-                        }
-                    </tbody>
-                </Table>
-                <TableFooter range={range} slice={slice} setPage={setPage} page={pagina} />
-            </>
-        );
-    };
-
-    const LinhaTabelaTelefones = ({ item, removeTelefoneSelecionado }) => {
-        const [telNumero, setTelNumero] = useState(item.telNumero);
-
-        const removerItem = e => removeTelefoneSelecionado(item);
-
-        return <tr>
-            <td width={'100px'}>
-                <Form.Control value={telNumero}
-                    onChange={(e) => setTelNumero(e.target.value)}
-                    as={IMaskInput} inputMode="numeric" id="inputTel" mask="(00) 0 0000-0000" maxLength="16" required onComplete={atualizaTelefone(item, telNumero)}/>
-            </td>
-            <td width={'80px'} className='center'>
-                <Button className='btn-danger' onClick={removerItem}><BsFillTrashFill /></Button>
-            </td>
-        </tr>
-    }
-
 
     return (
         <div>
@@ -303,15 +178,8 @@ const cadastroResponsavel = () => {
                                 type="date" id="inputDate" required />
                         </Col>
                         <Col md="6">
-                            <Form.Label htmlFor="inputNacionalidade">Nacionalidade *</Form.Label>
-                            <Form.Select id='inputNacionalidade' required
-                                value={pesNacionalidade}
-                                onChange={(e) => setPesNacionalidade(e.target.value)}>
-                                <option>Selecione</option>
-                                <option value="BRA">Brasileira</option>
-                            </Form.Select>
+                            <SelectNacionalidade pesNacionalidade={pesNacionalidade} setPesNacionalidade={setPesNacionalidade} />
                         </Col>
-                        
                     </Row>
 
                     <Row>
@@ -371,22 +239,8 @@ const cadastroResponsavel = () => {
                     <br />
 
                     <Row>
-                        <Col md="12">
-                            <Card>
-                                <div className='marginLeft'>
-                                    <Row>
-                                        <Col md="12">
-                                            <b>Telefones</b>
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col md="12">
-                                            <Button variant="primary" className='btn-success btnMarginTop' onClick={criarTelefone}>Adicionar</Button>
-                                        </Col>
-                                    </Row>
-                                    <TabelaTelefones data={listTelefones} rowsPerPage={5} selecionaLinha={false} removeResp={removeTelefoneSelecionado} />
-                                </div>
-                            </Card>
+                    <Col md="12">
+                            <TabelaTelefones listTelefones={listTelefones} setListTelefones={setListTelefones} />
                         </Col>
                     </Row>
 

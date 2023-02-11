@@ -220,7 +220,7 @@ const cadastroPraticante = () => {
         setPesDataNasc("");
         setPesEndNum("");
         setPesEndCompl("");
-        setPesNacionalidade("");
+        setPesNacionalidade("BRA");
         setPesFoto("");
         setPesEmail1("");
         setPesEmail2("");

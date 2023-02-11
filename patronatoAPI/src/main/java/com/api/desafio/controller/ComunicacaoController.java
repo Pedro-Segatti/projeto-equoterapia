@@ -359,45 +359,6 @@ public class ComunicacaoController {
     }
 
     @CrossOrigin(origins = "*")
-    @PostMapping("/cadastrarPessoa")
-    public ResponseEntity<?> cadastrarPessoa(@RequestBody String jsonPessoa) {
-        JsonObject jsonConvertido = new Gson().fromJson(jsonPessoa, JsonObject.class);
-        Pessoa pessoaExistente = pessoaService.getPessoaByPesCpf(jsonConvertido.get("pesCpf").getAsString());
-
-        if (pessoaExistente != null) {
-            return new ResponseEntity<Pessoa>(new Pessoa(), HttpStatus.BAD_REQUEST);
-        }
-
-        Logradouro logradouro = logradouroService.getLogradouroById(jsonConvertido.get("pesLogId").getAsInt());
-        Pais pais = paisService.getPaisByIso(jsonConvertido.get("pesNacionalidade").getAsString());
-
-        Pessoa novaPessoa = new Pessoa();
-        novaPessoa = pessoaService.manipularPessoa(jsonConvertido, novaPessoa, logradouro, pais);
-        novaPessoa.setPesLoginPassword(DigestUtils.md5Hex(novaPessoa.getPesId().toString() + novaPessoa.getPesCpf()));
-        novaPessoa = pessoaService.salva(novaPessoa);
-
-        return new ResponseEntity<Pessoa>(novaPessoa, HttpStatus.OK);
-    }
-
-    @CrossOrigin(origins = "*")
-    @PostMapping("/atualizarPessoa")
-    public ResponseEntity<?> atualizarPessoa(@RequestBody String jsonPessoa) {
-        JsonObject jsonConvertido = new Gson().fromJson(jsonPessoa, JsonObject.class);
-        Pessoa pessoaExistente = pessoaService.getPessoaByPesCpf(jsonConvertido.get("pesCpf").getAsString());
-
-        if (pessoaExistente == null) {
-            return new ResponseEntity<Pessoa>(new Pessoa(), HttpStatus.FORBIDDEN);
-        }
-
-        Logradouro logradouro = logradouroService.getLogradouroById(jsonConvertido.get("pesLogId").getAsInt());
-        Pais pais = paisService.getPaisByIso(jsonConvertido.get("pesNacionalidade").getAsString());
-
-        pessoaExistente = pessoaService.manipularPessoa(jsonConvertido, pessoaExistente, logradouro, pais);
-
-        return new ResponseEntity<Pessoa>(pessoaExistente, HttpStatus.OK);
-    }
-
-    @CrossOrigin(origins = "*")
     @PostMapping("/cadastrarPraticante")
     public ResponseEntity<Praticante> cadastrarPraticante(@RequestBody Praticante praticante) {
         boolean adicionando = praticante.getPratId() == null;
@@ -414,7 +375,7 @@ public class ComunicacaoController {
         praticante.getResponsaveis().forEach(resp -> resp.setPraticante(praticante));
         praticante.getDocumentosList().forEach(doc -> doc.setPraticante(praticante));
 
-        pessoa = pessoaService.salva(praticante.getPessoa());
+        pessoaService.salva(praticante.getPessoa());
         return new ResponseEntity<Praticante>(praticanteService.salva(praticante),HttpStatus.OK);
     }
 
@@ -521,38 +482,21 @@ public class ComunicacaoController {
     ///////////////////////////////////////////
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastrarResponsavel")
-    public ResponseEntity<?> cadastrarResponsavel(@RequestBody String jsonResponsavel) {
-        JsonObject jsonConvertido = new Gson().fromJson(jsonResponsavel, JsonObject.class);
-        Responsavel novoResponsavel = new Responsavel();
+    public ResponseEntity<Responsavel> cadastrarResponsavel(@RequestBody Responsavel responsavel) {
+        boolean adicionando = responsavel.getRespId() == null;
 
-        JsonElement idPessoa = jsonConvertido.get("pessoaId");
-        if (idPessoa.isJsonNull()) {
-            return new ResponseEntity<Responsavel>(novoResponsavel, HttpStatus.FORBIDDEN);
+        Pessoa pessoa = null;
+        if (adicionando) {
+            pessoa = pessoaService.getPessoaByPesCpf(responsavel.getPessoa().getPesCpf());
+            if (pessoa != null) {
+                return new ResponseEntity<Responsavel>(new Responsavel(), HttpStatus.BAD_REQUEST);
+            }
         }
 
-        Pessoa pes = pessoaService.getPessoaByPesId(idPessoa.getAsInt());
-        novoResponsavel.setPessoa(pes);
-        novoResponsavel.setRespProfissao(jsonConvertido.get("respProfissao").getAsString());
-        novoResponsavel = responsavelService.salva(novoResponsavel);
+        responsavel.getPessoa().getTelefoneList().forEach(tel -> tel.setPessoa(responsavel.getPessoa()));
 
-        return new ResponseEntity<Responsavel>(novoResponsavel, HttpStatus.OK);
-    }
-
-    @CrossOrigin(origins = "*")
-    @PostMapping("/atualizarResponsavel")
-    public ResponseEntity<?> atualizarResponsavel(@RequestBody String jsonResponsavel) {
-        JsonObject jsonConvertido = new Gson().fromJson(jsonResponsavel, JsonObject.class);
-        Responsavel responsavelExistente = responsavelService.getResponsavelById(jsonConvertido.get("respId").getAsInt());
-
-        if (responsavelExistente == null) {
-            return new ResponseEntity<Responsavel>(responsavelExistente, HttpStatus.FORBIDDEN);
-        }
-
-        responsavelExistente.setRespProfissao(jsonConvertido.get("respProfissao").getAsString());
-
-        responsavelExistente = responsavelService.salva(responsavelExistente);
-
-        return new ResponseEntity<Responsavel>(responsavelExistente, HttpStatus.OK);
+        pessoaService.salva(responsavel.getPessoa());
+        return new ResponseEntity<Responsavel>(responsavelService.salva(responsavel),HttpStatus.OK);
     }
 
     @CrossOrigin(origins = "*")
