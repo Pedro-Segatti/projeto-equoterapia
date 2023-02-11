@@ -26,7 +26,7 @@ const TabelaTelefones = ({ listTelefones, setListTelefones }) => {
 }
 
 const atualizaTelefone = (item, telefone) => {
-    item.telNumero = telefone;
+    item.telNumero = telefone.replace("(", "").replace(" ", "").replace("-", "");
 }
 
 const LinhaTabelaTelefones = ({ item, removeTelefoneSelecionado, index }) => {
@@ -38,7 +38,7 @@ const LinhaTabelaTelefones = ({ item, removeTelefoneSelecionado, index }) => {
       <td width={'100px'}>
           <Form.Control value={telNumero}
               onChange={(e) => setTelNumero(e.target.value)}
-              as={IMaskInput} inputMode="numeric" id="inputTel" mask="(00)00000-0000" maxLength="16" required onComplete={atualizaTelefone(item, telNumero)}/>
+              as={IMaskInput} inputMode="numeric" id="inputTel" mask="(00)00000-0000" maxLength="16" required onComplete={atualizaTelefone(item, telNumero)} autocomplete="off"/>
       </td>
       <td width={'80px'} className='center'>
           <Button className='btn-danger' onClick={removerItem}><BsFillTrashFill /></Button>
