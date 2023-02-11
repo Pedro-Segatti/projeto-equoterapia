@@ -342,6 +342,11 @@ const cadastroPraticante = () => {
         const { pesNome } = item.responsavel.pessoa;
         const [pxrTipoResp, setPxrTipoResp] = useState(item.pxrTipoResp);
 
+        const atualizaItem = (itemSelecionado) => {
+            item.pxrTipoResp = itemSelecionado;
+            setPxrTipoResp(itemSelecionado);
+        }
+
         const removerItem = e => removeResp(item);
 
         return <tr>
@@ -349,7 +354,7 @@ const cadastroPraticante = () => {
             <td width={'100px'}>
                 <Form.Select required
                     value={pxrTipoResp}
-                    onChange={(e) => setPxrTipoResp(e.target.value)}>
+                    onChange={(e) => atualizaItem(e.target.value)}>
                     <option>Selecione</option>
                     <option value="M">Mãe</option>
                     <option value="P">Pai</option>
