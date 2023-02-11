@@ -173,7 +173,8 @@ const cadastroPraticante = () => {
     }
 
     const atualizaLogradouroSelecionado = (item) => {
-        setPesLogId(item.logId)
+        setPesLogId(item.logId);
+        setPesLogDescricao(item.logDescricao);
         setAbrirPesquisaLogradouro(false);
     }
 
@@ -202,6 +203,7 @@ const cadastroPraticante = () => {
         setPesFoto(item.pessoa.pesFoto || '');
         setPesEmail1(item.pessoa.pesEmail1 || '');
         setPesEmail2(item.pessoa.pesEmail2 || '');
+        setPesLogDescricao(item.pessoa.logradouro.logDescricao);
         setPratAltura(item.pratAltura || '');
         setPratPeso(item.pratPeso || '');
         setPesLogId(item.pessoa.logradouro.logId || '');

@@ -379,56 +379,6 @@ public class ComunicacaoController {
         return new ResponseEntity<Praticante>(praticanteService.salva(praticante),HttpStatus.OK);
     }
 
-    private void inserirNovoDocumento(JsonElement documentos, Praticante praticante) {
-        if (!documentos.isJsonNull()) {
-            JsonArray documentosArray = documentos.getAsJsonArray();
-            int tamanhoDocs = documentosArray.size();
-
-            for (int i = 0; i < tamanhoDocs; i++) {
-                Documentos docs = new Documentos();
-                JsonElement docId = documentosArray.get(i).getAsJsonObject().get("docId");
-                docs.setDocId(!docId.isJsonNull() ? docId.getAsInt() : null);
-                docs.setPraticante(praticante);
-                docs.setDocDescricao(documentosArray.get(i).getAsJsonObject().get("docDescricao").getAsString());
-                docs.setDocDocumento(documentosArray.get(i).getAsJsonObject().get("docDocumento").getAsString());
-                praticante.getDocumentosList().add(docs);
-            }
-        }
-    }
-
-    private void inserirNovoResponsavel(JsonElement responsaveis, Praticante praticante) {
-        if (!responsaveis.isJsonNull()) {
-            JsonArray responsaveisArray = responsaveis.getAsJsonArray();
-            int tamanhoResponsaveis = responsaveisArray.size();
-
-            for (int i = 0; i < tamanhoResponsaveis; i++) {
-                PraticanteResponsavel pxr = new PraticanteResponsavel();
-                JsonElement pxrId = responsaveisArray.get(i).getAsJsonObject().get("pxrId");
-                pxr.setPxrId(!pxrId.isJsonNull() ? pxrId.getAsInt() : null);
-                pxr.setPraticante(praticante);
-                pxr.setResponsavel(new Gson().fromJson(responsaveisArray.get(i).getAsJsonObject().get("responsavel"), Responsavel.class));
-                pxr.setPxrTipoResp(responsaveisArray.get(i).getAsJsonObject().get("pxrTipoResp").getAsString());
-                praticante.getResponsaveis().add(pxr);
-            }
-        }
-    }
-
-    private void inserirNovoTelefone(JsonElement telefones, Pessoa pessoa) {
-        if (!telefones.isJsonNull()) {
-            JsonArray telefonesArray = telefones.getAsJsonArray();
-            int tamanhoTels = telefonesArray.size();
-
-            for (int i = 0; i < tamanhoTels; i++) {
-                Telefone tel = new Telefone();
-                JsonElement telId = telefonesArray.get(i).getAsJsonObject().get("telId");
-                tel.setTelId(!telId.isJsonNull() ? telId.getAsInt() : null);
-                tel.setPessoa(pessoa);
-                tel.setTelNumero(telefonesArray.get(i).getAsJsonObject().get("telNumero").getAsString());
-                pessoa.getTelefoneList().add(tel);
-            }
-        }
-    }
-
     @CrossOrigin(origins = "*")
     @DeleteMapping("/removerDocumento")
     public ResponseEntity<Documentos> removerDocumento(@RequestParam(required = false) Integer docId) {
