@@ -109,10 +109,6 @@ const cadastroPraticante = () => {
         setAbrirPesquisaResponsaveis(false);
     }
 
-    const atualizaGrauParentesco = (item, grauPar) => {
-        item.pxrTipoResp = grauPar;
-    }
-
     const baixarArquivo = (e) => {
         let file = convertBase64ToFile(e.docDocumento, e.docDescricao);
         saveAs(file, e.docDescricao);
@@ -178,7 +174,6 @@ const cadastroPraticante = () => {
 
     const atualizaLogradouroSelecionado = (item) => {
         setPesLogId(item.logId)
-        setPesLogDescricao(item.logDescricao)
         setAbrirPesquisaLogradouro(false);
     }
 
@@ -197,24 +192,23 @@ const cadastroPraticante = () => {
     const atualizaItemSelecionado = (item) => {
         setPesId(item.pessoa.pesId);
         setPratId(item.pratId);
-        setPesNome(item.pessoa.pesNome);
-        setPesCpf(item.pessoa.pesCpf);
-        setPesSexo(item.pessoa.pesSexo);
-        setPesDataNasc(item.pessoa.pesDataNasc);
-        setPesEndNum(item.pessoa.pesEndNum);
-        setPesEndCompl(item.pessoa.pesEndCompl);
-        setPesNacionalidade(item.pessoa.pesNacionalidade.paiIso);
-        setPesFoto(item.pessoa.pesFoto);
-        setPesEmail1(item.pessoa.pesEmail1);
-        setPesEmail2(item.pessoa.pesEmail2);
-        setPratAltura(item.pratAltura);
-        setPratPeso(item.pratPeso);
-        setPesLogId(item.pessoa.logradouro.logId);
-        setPesLogDescricao(item.pessoa.logradouro.logDescricao);
+        setPesNome(item.pessoa.pesNome || '');
+        setPesCpf(item.pessoa.pesCpf || '');
+        setPesSexo(item.pessoa.pesSexo || '');
+        setPesDataNasc(item.pessoa.pesDataNasc || '');
+        setPesEndNum(item.pessoa.pesEndNum || '');
+        setPesEndCompl(item.pessoa.pesEndCompl || '');
+        setPesNacionalidade(item.pessoa.pesNacionalidade.paiIso || '');
+        setPesFoto(item.pessoa.pesFoto || '');
+        setPesEmail1(item.pessoa.pesEmail1 || '');
+        setPesEmail2(item.pessoa.pesEmail2 || '');
+        setPratAltura(item.pratAltura || '');
+        setPratPeso(item.pratPeso || '');
+        setPesLogId(item.pessoa.logradouro.logId || '');
         setAbrirPesquisa(false);
-        setListDocumentos(item.documentosList);
-        setListResponsveisSelecionados(item.responsaveis);
-        setListTelefones(item.pessoa.telefoneList);
+        setListDocumentos(item.documentosList || []);
+        setListResponsveisSelecionados(item.responsaveis || []);
+        setListTelefones(item.pessoa.telefoneList || []);
     }
 
     const limparCamposFormulario = () => {
@@ -333,7 +327,7 @@ const cadastroPraticante = () => {
                     </thead>
                     <tbody>
                         {
-                            slice.map(item => <LinhaTabelaResponsaveis key={item.respNome} item={item} removeResp={removeResp} />)
+                            slice.map((item,i) => <LinhaTabelaResponsaveis key={item.respNome + i} item={item} removeResp={removeResp} />)
                         }
                     </tbody>
                 </Table>
@@ -353,7 +347,7 @@ const cadastroPraticante = () => {
             <td width={'100px'}>
                 <Form.Select required
                     value={pxrTipoResp}
-                    onChange={(e) => setPxrTipoResp(e.target.value)} onComplete={atualizaGrauParentesco(item, pxrTipoResp)}>
+                    onChange={(e) => setPxrTipoResp(e.target.value)}>
                     <option>Selecione</option>
                     <option value="M">Mãe</option>
                     <option value="P">Pai</option>
@@ -384,9 +378,7 @@ const cadastroPraticante = () => {
                     <Row>
                         <Col md="12">
                             <div className='fotoPraticante'>
-                                <a onClick={() => setPesFoto("")}>
-                                    <Image id="imgPrat" src={pesFoto}></Image>
-                                </a>
+                                <Image id="imgPrat" onClick={() => setPesFoto("")} src={pesFoto}></Image>
 
                                 <Form.Control type="file" id="inputFoto" accept="image/png, image/jpg, image/jpeg" onChange={showPreview} />
                                 <Form.Label htmlFor="inputFoto" className='label-input-file'>Selecione a Foto do Praticante</Form.Label>
