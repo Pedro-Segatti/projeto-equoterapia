@@ -1,8 +1,5 @@
 import React, { useState  } from 'react';
-import { Form, Col, Row, Container, Card, Table, Button } from 'react-bootstrap';
-import { BsFillTrashFill } from "react-icons/bs";
-import TableFooter from '../table/tableFooter';
-import useTable from '../table/useTable';
+import { Form, Col, Row, Container } from 'react-bootstrap';
 import Toolbar from '../toolbar';
 import { IMaskInput } from 'react-imask';
 import { registroSalvo, pessoaDuplicada, registroExcluido, mensagemCustomizada } from "../../utilitario/mensagemUtil"
@@ -18,6 +15,7 @@ import InputConverter from "../componentes/inputConverter";
 import Menu from "../menu"
 import Footer from "../footer"
 import SelectNacionalidade from '../componentes/selectMenuNacionalidade';
+import TabelaTelefones from '../componentes/tabelaTelefones';
 
 const cadastroFuncionario = () => {
 
@@ -45,44 +43,6 @@ const cadastroFuncionario = () => {
     const [listLogradouro, setListLogradouro] = useState([]);
 
     const [listTelefones, setListTelefones] = useState([]);
-
-    const criarTelefone = (e) => {
-        const jsonItem = {
-            "telId": null,
-            "telNumero": "",
-            "telIdPessoa": ""
-        }
-
-        setListTelefones(tel => [...tel, jsonItem]);
-    }
-
-    const atualizaTelefone = (item, telefone) => {
-        item.telNumero = telefone;
-    }
-
-    const removeTelefoneSelecionado = async (e) => {
-        try {
-            if (e.telId == null) {
-                setListTelefones(current =>
-                    current.filter(tel => {
-                        return tel.telId !== e.telId;
-                    }),
-                );
-            } else {
-                const response = await (await api.delete("/removerTelefone?telId=" + e.telId));
-                if (response.status === HTTP_STATUS.OK) {
-                    setListTelefones(current =>
-                        current.filter(tel => {
-                            return tel.telId !== e.telId;
-                        }),
-                    );
-                    mensagemCustomizada("Telefone Excluído com Sucesso", "success");
-                }
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }
 
     const atualizaDlgPesquisa = async () => {
         setList(await (await api.get("/pesquisaFuncionario")).data);
@@ -178,6 +138,7 @@ const cadastroFuncionario = () => {
             return jsonFuncionario;
         }
 
+
         const cadastraFuncionario = async () => {
             return await cadastrarFuncionario(await montaJsonFuncionario());
         }
@@ -189,6 +150,7 @@ const cadastroFuncionario = () => {
                 limparCamposFormulario();
             }
         } catch (error) {
+            console.log(error)
             if (error.response.status === HTTP_STATUS.BAD_REQUEST) {
                 pessoaDuplicada();
             }
@@ -198,47 +160,6 @@ const cadastroFuncionario = () => {
             }
         }
     };
-
-    const TabelaTelefones = ({ data, rowsPerPage, removeResp }) => {
-        const [pagina, setPage] = useState(1);
-        const { slice, range } = useTable(data, pagina, rowsPerPage);
-        return (
-            <>
-                <Table size="sm">
-                    <thead>
-                        <tr>
-                            <th>Número</th>
-                            <th className='center'>Ação</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            slice.map(item => <LinhaTabelaTelefones key={item.telId} item={item} removeTelefoneSelecionado={removeTelefoneSelecionado} />)
-                        }
-                    </tbody>
-                </Table>
-                <TableFooter range={range} slice={slice} setPage={setPage} page={pagina} />
-            </>
-        );
-    };
-
-    const LinhaTabelaTelefones = ({ item, removeTelefoneSelecionado }) => {
-        const [telNumero, setTelNumero] = useState(item.telNumero);
-
-        const removerItem = e => removeTelefoneSelecionado(item);
-
-        return <tr>
-            <td width={'100px'}>
-                <Form.Control value={telNumero}
-                    onChange={(e) => setTelNumero(e.target.value)}
-                    as={IMaskInput} inputMode="numeric" id="inputTel" mask="(00) 0 0000-0000" maxLength="16" required onComplete={atualizaTelefone(item, telNumero)}/>
-            </td>
-            <td width={'80px'} className='center'>
-                <Button className='btn-danger' onClick={removerItem}><BsFillTrashFill /></Button>
-            </td>
-        </tr>
-    }
-
 
     return (
         <div>
@@ -361,21 +282,7 @@ const cadastroFuncionario = () => {
 
                     <Row>
                         <Col md="12">
-                            <Card>
-                                <div className='marginLeft'>
-                                    <Row>
-                                        <Col md="12">
-                                            <b>Telefones</b>
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col md="12">
-                                            <Button variant="primary" className='btn-success btnMarginTop' onClick={criarTelefone}>Adicionar</Button>
-                                        </Col>
-                                    </Row>
-                                    <TabelaTelefones data={listTelefones} rowsPerPage={5} selecionaLinha={false} removeResp={removeTelefoneSelecionado} />
-                                </div>
-                            </Card>
+                            <TabelaTelefones listTelefones={listTelefones} setListTelefones={setListTelefones} />
                         </Col>
                     </Row>
 

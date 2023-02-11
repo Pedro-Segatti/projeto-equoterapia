@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatFuncionario" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c2a95f97-aa24-45d2-98b7-b99a2a71570d">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.report.description" value=""/>
+	<subDataset name="praticanteList" uuid="0a99801a-9c40-490f-92ac-17129de99043">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="nome" class="java.lang.String">
+			<fieldDescription><![CDATA[pessoa.pesNome]]></fieldDescription>
+		</field>
+	</subDataset>
+	<parameter name="nomeFuncionario" class="java.lang.String"/>
+	<parameter name="IMG_PATRONATO" class="java.lang.Object"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="evolData" class="java.util.Date"/>
+	<field name="praticanteList" class="java.util.List"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="554" height="20" uuid="81753e9c-6770-465e-a4ab-e2b22c3c5cb9"/>
+				<textElement textAlignment="Center">
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[Evolução semanal]]></text>
+			</staticText>
+			<image scaleImage="FillFrame">
+				<reportElement x="0" y="0" width="170" height="40" uuid="f4755500-94a9-409f-a37d-4ea830f2daff"/>
+				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.getInstance(DefaultJasperReportsContext.getInstance()).loadAwtImageFromBytes((byte[])$P{IMG_PATRONATO})]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="470" y="0" width="30" height="15" uuid="b43d41bd-f9ad-4634-837f-b391ba9037de">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<text><![CDATA[Data:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="500" y="0" width="54" height="15" uuid="1db84371-6e93-401b-bbc0-aec44069af98">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{evolData}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="50" height="15" uuid="3629536c-0b23-49d9-ab1b-efc02cade67f">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<text><![CDATA[Praticante:]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="50" y="0" width="420" height="15" uuid="e4deea2a-8b78-4eb8-b131-e1f2c4701614">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="praticanteList" uuid="b89e54e2-8a81-48d5-a7a9-04f57c35ccd7">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{praticanteList}) ]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="15" width="420">
+						<textField>
+							<reportElement x="0" y="0" width="420" height="15" uuid="737c4bf1-3a69-4cae-91f1-1d06f5408cc8"/>
+							<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

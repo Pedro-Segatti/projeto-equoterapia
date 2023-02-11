@@ -27,6 +27,7 @@ import MovimentoAvalFisioter from "./view/movimentos/movimentoAvalFisioter";
 import MovimentoAvalSocioecon from "./view/movimentos/movimentoAvalSocioecon";
 import MovimentoAgendamentoSessao from "./view/movimentos/movimentoAgendamentoSessao";
 import RelatorioFuncionarios from "./view/relatorios/relatorioFuncionarios";
+import RelatorioFichaEvolucao from './view/relatorios/relatorioFichaEvolucao';
 
 import Carregando from "./view/carregando";
 
@@ -72,6 +73,7 @@ const Rotas = () => {
                     <Route exact path="/movimentoAvalSocioecon" element={<Private><MovimentoAvalSocioecon /></Private>} />
                     <Route exact path="/movimentoAvalFisioter" element={<Private><MovimentoAvalFisioter /></Private>} />
                     <Route exact path="/relatorioFuncionarios" element={<Private><RelatorioFuncionarios /></Private>} />
+                    <Route exact path="/relatorioFichaEvolucao" element={<Private><RelatorioFichaEvolucao /></Private>} />
                 </Routes>
             </AuthProvider>
         </Router >

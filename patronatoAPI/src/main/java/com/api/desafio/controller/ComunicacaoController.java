@@ -710,4 +710,11 @@ public class ComunicacaoController {
         List<Funcionario> funcionarios = funcionarioService.pesquisaFuncionario("", "").getBody();
         return RelatorioUtil.gerarRelatorios(jsonParams, funcionarios);
     }
+
+    @CrossOrigin(origins = "*")
+    @PutMapping("/relatorioFichaEvolucao")
+    public ResponseEntity<byte[]> gerarRelatorioFichaEvolucao(@RequestBody String jsonParams) {
+        List<FichaEvolucao> fichaEvol = fichaEvolService.pesquisa(0).getBody();
+        return RelatorioUtil.gerarRelatorios(jsonParams, fichaEvol);
+    }
 }

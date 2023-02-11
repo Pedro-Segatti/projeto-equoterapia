@@ -2,7 +2,9 @@
 <!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatFuncionario" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c2a95f97-aa24-45d2-98b7-b99a2a71570d">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.report.description" value=""/>
 	<parameter name="nomeFuncionario" class="java.lang.String"/>
+	<parameter name="IMG_PATRONATO" class="java.lang.Object"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -16,7 +18,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="54" splitType="Stretch">
+		<band height="67" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="554" height="20" uuid="81753e9c-6770-465e-a4ab-e2b22c3c5cb9"/>
 				<textElement textAlignment="Center">
@@ -24,6 +26,10 @@
 				</textElement>
 				<text><![CDATA[Relatório de Funcionários]]></text>
 			</staticText>
+			<image scaleImage="FillFrame">
+				<reportElement x="0" y="0" width="170" height="40" uuid="f4755500-94a9-409f-a37d-4ea830f2daff"/>
+				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.getInstance(DefaultJasperReportsContext.getInstance()).loadAwtImageFromBytes((byte[])$P{IMG_PATRONATO})]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>
