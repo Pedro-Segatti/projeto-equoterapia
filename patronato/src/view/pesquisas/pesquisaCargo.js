@@ -8,7 +8,6 @@ import { api } from "../../utilitario/baseComunicacao";
 export const TablePaginada = ({ data, rowsPerPage, atualizaItemSelecionado }) => {
     const [pagina, setPage] = useState(1);
     const { slice, range } = useTable(data, pagina, rowsPerPage);
-
     return (
         <>
             <Table size="sm">
@@ -16,13 +15,12 @@ export const TablePaginada = ({ data, rowsPerPage, atualizaItemSelecionado }) =>
                     <tr>
                         <th>Codigo</th>
                         <th>Descricao</th>
-                        <th>Duracao</th>
                         <th className='center'>Ação</th>
                     </tr>
                 </thead>
                 <tbody>
                     {
-                        slice.map(item => <LinhaTabela key={item.atvId} item={item} atualizaItemSelecionado={atualizaItemSelecionado} />)
+                        slice.map(item => <LinhaTabela key={item.carId} item={item} atualizaItemSelecionado={atualizaItemSelecionado} />)
                     }
                 </tbody>
             </Table>
@@ -32,40 +30,39 @@ export const TablePaginada = ({ data, rowsPerPage, atualizaItemSelecionado }) =>
 };
 
 const LinhaTabela = ({ item, atualizaItemSelecionado }) => {
-    const { atvId, atvDescricao, atvDuracao } = item;
+    const { carId, carDescricao } = item;
     const selecionarItem = e => atualizaItemSelecionado(item);
 
     return <tr>
-        <td width={'80px'}>{atvId}</td>
-        <td>{atvDescricao}</td>
-        <td width={'100px'}>{atvDuracao}</td>
+        <td width={'80px'}>{carId}</td>
+        <td>{carDescricao}</td>
         <td width={'80px'} className='center'>
             <Button className='btn-success' onClick={selecionarItem}><BsPencilSquare /></Button>
         </td>
     </tr>
 }
 
-function pesquisaAtividade({ setValores, valores, atualizaItemSelecionado, setAbrirPesquisa }) {
-    const [atvIdPesquisa, setAtvIdPesquisa] = useState("");
-    const [atvDescricaoPesquisa, setAtvDescricaoPesquisa] = useState("");
+function pesquisaAnimais({ setValores, valores, atualizaItemSelecionado, setAbrirPesquisa }) {
+    const [carIdPesquisa, setCarIdPesquisa] = useState("");
+    const [carDescricaoPesquisa, setCarDescricaoPesquisa] = useState("");
 
     const buscaRegistros = async () => {
-        setValores(await (await api.get("/pesquisaAtividade?atvId=" + atvIdPesquisa + "&atvDescricao=" + atvDescricaoPesquisa)).data);
+        setValores(await (await api.get("/pesquisaCargo?carId=" + carIdPesquisa + "&carDescricao=" + carDescricaoPesquisa)).data);
         setAbrirPesquisa(true);
     }
 
     const limparPesquisa = () => {
         setAbrirPesquisa(false);
-        setAtvIdPesquisa("");
-        setAtvDescricaoPesquisa("");
+        setCarIdPesquisa("");
+        setCarDescricaoPesquisa("");
         buscaRegistros();
     }
 
-    const pesquisaAtividade = () => {
+    const pesquisaAnimais = () => {
         return (
             <>
                 <Modal className='modal-xl' show={true}>
-                    <Modal.Header><b>Pesquisa de Atividades</b></Modal.Header>
+                    <Modal.Header><b>Pesquisa de Cargos</b></Modal.Header>
                     <Modal.Body>
                         <Container>
                             <Form>
@@ -73,14 +70,14 @@ function pesquisaAtividade({ setValores, valores, atualizaItemSelecionado, setAb
                                     <Col md="2">
                                         <Form.Label>Código</Form.Label>
                                         <Form.Control type="text" id="idPesquisa"
-                                            value={atvIdPesquisa}
-                                            onChange={(e) => setAtvIdPesquisa(e.target.value)} />
+                                            value={carIdPesquisa}
+                                            onChange={(e) => setCarIdPesquisa(e.target.value)} />
                                     </Col>
                                     <Col md="6">
-                                        <Form.Label>Descrição</Form.Label>
+                                        <Form.Label>Descrição *</Form.Label>
                                         <Form.Control type="text" id="descricaoPesquisa"
-                                            initi={atvDescricaoPesquisa}
-                                            onChange={(e) => setAtvDescricaoPesquisa(e.target.value)} />
+                                            initi={carDescricaoPesquisa}
+                                            onChange={(e) => setCarDescricaoPesquisa(e.target.value)} />
                                     </Col>
                                 </Row>
                                 <div className='right'>
@@ -89,15 +86,16 @@ function pesquisaAtividade({ setValores, valores, atualizaItemSelecionado, setAb
                                 </div>
                             </Form>
                         </Container>
-                        <TablePaginada data={valores} rowsPerPage={10} selecionaLinha={true} atualizaItemSelecionado={atualizaItemSelecionado} />
+
+                        <TablePaginada data={valores} rowsPerPage={50} atualizaItemSelecionado={atualizaItemSelecionado} />
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="primary" className='btn-danger' onClick={() => setAbrirPesquisa(false)}>Fechar</Button>
                     </Modal.Footer>
-                </Modal >
+                </Modal>
             </>
         )
     }
-    return pesquisaAtividade();
+    return pesquisaAnimais();
 }
-export default pesquisaAtividade;
+export default pesquisaAnimais;

@@ -414,8 +414,8 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaPraticantes")
-    public ResponseEntity<List<Praticante>> pesquisaPraticantes(@RequestParam(required = false) String pesCpf, @RequestParam(required = false) String pesNome) {
-        return praticanteService.pesquisaPraticantes(pesCpf, pesNome);
+    public ResponseEntity<List<Praticante>> pesquisaPraticantes(@RequestParam(required = false) String pesCpf, @RequestParam(required = false) String pesNome, @RequestParam(required = false) Integer pratId) {
+        return praticanteService.pesquisaPraticantes(pesCpf, pesNome, pratId);
     }
 
     @CrossOrigin(origins = "*")
@@ -451,8 +451,8 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaMedico")
-    public ResponseEntity<List<Medico>> pesquisaMedico(@RequestParam(required = false) String pesCpf, @RequestParam(required = false) String pesNome) {
-        return medicoService.pesquisaMedico(pesCpf, pesNome);
+    public ResponseEntity<List<Medico>> pesquisaMedico(@RequestParam(required = false) String pesCpf, @RequestParam(required = false) String pesNome, @RequestParam(required = false) Integer medId) {
+        return medicoService.pesquisaMedico(pesCpf, pesNome, medId);
     }
 
     @CrossOrigin(origins = "*")
@@ -480,8 +480,8 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaResponsavel")
-    public ResponseEntity<List<Responsavel>> pesquisaResponsavel(@RequestParam(required = false) String pesCpf, @RequestParam(required = false) String pesNome) {
-        return responsavelService.pesquisaResponsavel(pesCpf, pesNome);
+    public ResponseEntity<List<Responsavel>> pesquisaResponsavel(@RequestParam(required = false) String pesCpf, @RequestParam(required = false) String pesNome, @RequestParam(required = false) Integer respId) {
+        return responsavelService.pesquisaResponsavel(pesCpf, pesNome, respId);
     }
 
     @CrossOrigin(origins = "*")
@@ -497,8 +497,8 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaFuncionario")
-    public ResponseEntity<List<Funcionario>> pesquisaFuncionario(@RequestParam(required = false) String pesCpf, @RequestParam(required = false) String pesNome) {
-        return funcionarioService.pesquisaFuncionario(pesCpf, pesNome);
+    public ResponseEntity<List<Funcionario>> pesquisaFuncionario(@RequestParam(required = false) String pesCpf, @RequestParam(required = false) String pesNome, @RequestParam(required = false) Integer funcId) {
+        return funcionarioService.pesquisaFuncionario(pesCpf, pesNome,funcId);
     }
 
     @CrossOrigin(origins = "*")
@@ -511,10 +511,9 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaLogradouros")
-    public ResponseEntity<List<Logradouro>> pesquisaLogradouros(@RequestParam(required = false) String logDesc) {
-        List<Logradouro> logradouros = logradouroService.getLogradouroByDescricao(logDesc);
+    public ResponseEntity<List<Logradouro>> pesquisaLogradouros(@RequestParam(required = false) String logDesc, @RequestParam(required = false) Integer logId) {
+        List<Logradouro> logradouros = logradouroService.getLogradouroByDescricaoAndId(logDesc, logId);
         return new ResponseEntity<List<Logradouro>>(logradouros, HttpStatus.OK);
-
     }
 
     @CrossOrigin(origins = "*")
@@ -582,8 +581,8 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaBairro")
-    public ResponseEntity<List<Bairro>> pesquisaBairro(@RequestParam(required = false) String barNome) {
-        return bairroService.pesquisa(barNome);
+    public ResponseEntity<List<Bairro>> pesquisaBairro(@RequestParam(required = false) String barNome, @RequestParam(required = false) Integer barId) {
+        return bairroService.pesquisa(barNome, barId);
     }
 
     @CrossOrigin(origins = "*")
@@ -601,7 +600,7 @@ public class ComunicacaoController {
     @CrossOrigin(origins = "*")
     @PutMapping("/relatorioFuncionarios")
     public ResponseEntity<byte[]> gerarRelatorioFuncionarios(@RequestBody String jsonParams) {
-        List<Funcionario> funcionarios = funcionarioService.pesquisaFuncionario("", "").getBody();
+        List<Funcionario> funcionarios = funcionarioService.pesquisaFuncionario("", "", null).getBody();
         return RelatorioUtil.gerarRelatorios(jsonParams, funcionarios);
     }
 

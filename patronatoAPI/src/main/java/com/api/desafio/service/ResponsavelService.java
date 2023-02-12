@@ -30,8 +30,8 @@ public class ResponsavelService {
         return pat;
     }
 
-    public ResponseEntity<List<Responsavel>> pesquisaResponsavel(String pesCpf, String pesNome) {
-        List<Responsavel> responsavel = rc.findByCpfAndNome(pesCpf, pesNome);
+    public ResponseEntity<List<Responsavel>> pesquisaResponsavel(String pesCpf, String pesNome, Integer respId) {
+        List<Responsavel> responsavel = rc.findByCpfAndNomeAndId(pesCpf, pesNome, respId);
         return new ResponseEntity<List<Responsavel>>(responsavel, HttpStatus.OK);
     }
 

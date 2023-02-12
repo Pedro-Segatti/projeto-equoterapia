@@ -31,8 +31,8 @@ public class FuncionarioService {
         return pat;
     }
 
-    public ResponseEntity<List<Funcionario>> pesquisaFuncionario(String pesCpf, String pesNome) {
-        List<Funcionario> funcionario = fc.findByCpfAndNome(pesCpf, pesNome);
+    public ResponseEntity<List<Funcionario>> pesquisaFuncionario(String pesCpf, String pesNome, Integer funcId) {
+        List<Funcionario> funcionario = fc.findByCpfAndNomeAndId(pesCpf, pesNome, funcId);
         return new ResponseEntity<List<Funcionario>>(funcionario, HttpStatus.OK);
     }
 

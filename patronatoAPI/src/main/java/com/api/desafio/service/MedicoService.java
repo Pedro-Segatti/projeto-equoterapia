@@ -28,8 +28,8 @@ public class MedicoService {
         med = mc.save(med);
         return med;
     }
-    public ResponseEntity<List<Medico>> pesquisaMedico(String pesCpf, String pesNome) {
-        List<Medico> medicos = mc.findByCpfAndNome(pesCpf, pesNome);
+    public ResponseEntity<List<Medico>> pesquisaMedico(String pesCpf, String pesNome, Integer medId) {
+        List<Medico> medicos = mc.findByCpfAndNomeAndId(pesCpf, pesNome, medId);
         return new ResponseEntity<List<Medico>>(medicos, HttpStatus.OK);
     }
 

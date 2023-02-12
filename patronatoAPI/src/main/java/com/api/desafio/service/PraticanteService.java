@@ -33,8 +33,8 @@ public class PraticanteService {
         return pat;
     }
 
-    public ResponseEntity<List<Praticante>> pesquisaPraticantes(String pesCpf, String pesNome) {
-        List<Praticante> praticantes = praticanteCrud.findByCpfAndNome(pesCpf, pesNome);
+    public ResponseEntity<List<Praticante>> pesquisaPraticantes(String pesCpf, String pesNome, Integer pratId) {
+        List<Praticante> praticantes = praticanteCrud.findByCpfAndNomeAndId(pesCpf, pesNome, pratId);
         return new ResponseEntity<List<Praticante>>(praticantes, HttpStatus.OK);
     }
 

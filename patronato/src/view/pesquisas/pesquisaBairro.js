@@ -4,6 +4,7 @@ import useTable from '../table/useTable';
 import { BsPencilSquare } from "react-icons/bs";
 import { Form, Col, Row, Container, Modal, Button, Table } from 'react-bootstrap';
 import { api } from "../../utilitario/baseComunicacao";
+import { isInputNumber } from "../../utilitario/patronatoUtil";
 
 export const TablePaginada = ({ data, rowsPerPage, selecionaLinha, atualizaItemSelecionado }) => {
     const [pagina, setPage] = useState(1);
@@ -44,10 +45,18 @@ const LinhaTabela = ({ item, atualizaItemSelecionado }) => {
 
 function pesquisaBairro({ setValores, valores, atualizaItemSelecionado, setAbrirPesquisa }) {
     const [barNome, setBarNome] = useState("");
+    const [barId, setBarId] = useState("");
 
     const buscaRegistros = async () => {
-        setValores(await (await api.get("/pesquisaBairro?barNome="+barNome)).data);
+        setValores(await (await api.get("/pesquisaBairro?barNome=" + barNome + "&barId=" + barId)).data);
         setAbrirPesquisa(true);
+    }
+
+    const limparPesquisa = () => {
+        setAbrirPesquisa(false);
+        setBarId("");
+        setBarNome("");
+        buscaRegistros();
     }
 
     const pesquisaBairro = () => {
@@ -59,6 +68,12 @@ function pesquisaBairro({ setValores, valores, atualizaItemSelecionado, setAbrir
                         <Container>
                             <Form>
                                 <Row>
+                                    <Col md="2">
+                                        <Form.Label>Código</Form.Label>
+                                        <Form.Control type="text" id="idPesquisa" onKeyPress={(e) => isInputNumber(e)}
+                                            value={barId}
+                                            onChange={(e) => setBarId(e.target.value)} />
+                                    </Col>
                                     <Col md="6">
                                         <Form.Label>Nome</Form.Label>
                                         <Form.Control type="text" id="descricaoPesquisa"
@@ -68,6 +83,7 @@ function pesquisaBairro({ setValores, valores, atualizaItemSelecionado, setAbrir
                                 </Row>
                                 <div className='right'>
                                     <Button className='btnMarginTop' onClick={buscaRegistros}>Pesquisar</Button>
+                                    <Button className='btnMarginTop btn-warning btnToolbar' onClick={limparPesquisa}>Limpar</Button>
                                 </div>
                             </Form>
                         </Container>

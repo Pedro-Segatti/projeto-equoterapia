@@ -24,8 +24,8 @@ public class LogradouroService {
         return logradouroCrud.findLogradouroByLogId(logId);
     }
 
-    public List<Logradouro> getLogradouroByDescricao(String logDescricao){
-        return logradouroCrud.findLogradouroByLogDescricao(logDescricao);
+    public List<Logradouro> getLogradouroByDescricaoAndId(String logDescricao, Integer logId){
+        return logradouroCrud.findLogradouroByLogDescricaoAndId(logDescricao, logId);
     }
 
     public ResponseEntity<?> salva(Logradouro logradouro) {

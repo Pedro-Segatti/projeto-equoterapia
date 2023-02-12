@@ -66,3 +66,12 @@ export const convertBase64ToFile = (base64String, fileName) => {
     let file = new File([uint8Array], fileName, { type: mime });
     return file;
 }
+
+export function isInputNumber(evt){
+    var ch = String.fromCharCode(evt.which);
+    
+    if(!(/[0-9]/.test(ch))){
+        evt.preventDefault();
+    }
+    
+}

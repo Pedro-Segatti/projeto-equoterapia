@@ -30,8 +30,8 @@ public class BairroService {
         return bairro;
     }
 
-    public ResponseEntity<List<Bairro>> pesquisa(String barNome) {
-        List<Bairro> bairros = (List<Bairro>) bc.findBairroByNome(barNome);
+    public ResponseEntity<List<Bairro>> pesquisa(String barNome, Integer barId) {
+        List<Bairro> bairros = (List<Bairro>) bc.findBairroByNomeAndId(barNome, barId);
         return new ResponseEntity<List<Bairro>>(bairros, HttpStatus.OK);
     }
 }

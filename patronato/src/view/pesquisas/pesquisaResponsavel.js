@@ -4,6 +4,7 @@ import useTable from '../table/useTable';
 import { BsPencilSquare, BsXLg } from "react-icons/bs";
 import { Form, Col, Row, Container, Modal, Button, Table } from 'react-bootstrap';
 import { api } from "../../utilitario/baseComunicacao";
+import { isInputNumber } from "../../utilitario/patronatoUtil";
 
 export const TablePaginada = ({ data, rowsPerPage, selecionaLinha, atualizaItemSelecionado, removeResponsavelSelecionado }) => {
     const [pagina, setPage] = useState(1);
@@ -58,16 +59,18 @@ const LinhaTabela = ({ item, selecionaLinha, atualizaItemSelecionado, removeResp
 }
 
 function pesquisaResponsavel({ setValores, valores, atualizaItemSelecionado, setAbrirPesquisa }) {
+    const [respId, setRespId] = useState("");
     const [pesNomePesquisa, setPesNomePesquisa] = useState("");
     const [pesCpfPesquisa, setPesCpfPesquisa] = useState("");
 
     const buscaRegistros = async () => {
-        setValores(await (await api.get("/pesquisaResponsavel?pesCpf=" + pesCpfPesquisa + "&pesNome=" + pesNomePesquisa)).data);
+        setValores(await (await api.get("/pesquisaResponsavel?pesCpf=" + pesCpfPesquisa + "&pesNome=" + pesNomePesquisa + "&respId=" + respId)).data);
         setAbrirPesquisa(true);
     }
 
     const limparPesquisa = () => {
         setAbrirPesquisa(false);
+        setRespId("");
         setPesNomePesquisa("");
         setPesCpfPesquisa("");
         buscaRegistros();
@@ -77,18 +80,24 @@ function pesquisaResponsavel({ setValores, valores, atualizaItemSelecionado, set
         return (
             <>
                 <Modal className='modal-xl' show={true}>
-                    <Modal.Header><b>Pesquisa de Praticantes</b></Modal.Header>
+                    <Modal.Header><b>Pesquisa de Responsáveis</b></Modal.Header>
                     <Modal.Body>
                         <Container>
                             <Form>
                                 <Row>
+                                    <Col md="2">
+                                        <Form.Label>Código</Form.Label>
+                                        <Form.Control type="text" id="idPesquisa" onKeyPress={(e) => isInputNumber(e)}
+                                            value={respId}
+                                            onChange={(e) => setRespId(e.target.value)} />
+                                    </Col>
                                     <Col md="6">
                                         <Form.Label>Nome</Form.Label>
                                         <Form.Control type="text" id="nomePesquisa"
                                             value={pesNomePesquisa}
                                             onChange={(e) => setPesNomePesquisa(e.target.value)} />
                                     </Col>
-                                    <Col md="6">
+                                    <Col md="4">
                                         <Form.Label>CPF</Form.Label>
                                         <Form.Control type="text" id="cpfPesquisa"
                                             value={pesCpfPesquisa} inputMode="numeric"

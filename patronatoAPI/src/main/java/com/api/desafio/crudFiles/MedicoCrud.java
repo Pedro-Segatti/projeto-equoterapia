@@ -12,7 +12,7 @@ public interface MedicoCrud extends CrudRepository<Medico,Integer> {
 
     public Medico findByMedId(Integer medId);
 
-    @Query("SELECT m FROM Medico m WHERE (:pesCpf is null or :pesCpf = '' or m.pessoa.pesCpf LIKE %:pesCpf%) AND (:pesNome is null OR :pesNome = ''  OR m.pessoa.pesNome LIKE %:pesNome%)")
-    List<Medico> findByCpfAndNome(@Param("pesCpf") String pesCpf, @Param("pesNome") String pesNome);
+    @Query("SELECT m FROM Medico m WHERE (:pesCpf is null or :pesCpf = '' or m.pessoa.pesCpf LIKE %:pesCpf%) AND (:pesNome is null OR :pesNome = ''  OR m.pessoa.pesNome LIKE %:pesNome%) AND (:medId is null OR m.medId = :medId)")
+    List<Medico> findByCpfAndNomeAndId(@Param("pesCpf") String pesCpf, @Param("pesNome") String pesNome, @Param("medId") Integer medId);
 
 }

@@ -12,6 +12,6 @@ public interface FuncionarioCrud extends CrudRepository<Funcionario,Integer> {
 
     public Funcionario findByFuncId(Integer funcId);
 
-    @Query("SELECT f FROM Funcionario f WHERE (:pesCpf is null or :pesCpf = '' or f.pessoa.pesCpf = :pesCpf) AND (:pesNome is null OR :pesNome = ''  OR f.pessoa.pesNome LIKE %:pesNome%)")
-    List<Funcionario> findByCpfAndNome(@Param("pesCpf") String pesCpf, @Param("pesNome") String pesNome);
+    @Query("SELECT f FROM Funcionario f WHERE (:pesCpf is null or :pesCpf = '' or f.pessoa.pesCpf = :pesCpf) AND (:pesNome is null OR :pesNome = ''  OR f.pessoa.pesNome LIKE %:pesNome%) AND (:funcId is null OR :funcId = f.funcId)")
+    List<Funcionario> findByCpfAndNomeAndId(@Param("pesCpf") String pesCpf, @Param("pesNome") String pesNome, @Param("funcId") Integer funcId);
 }

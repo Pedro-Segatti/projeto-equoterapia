@@ -4,6 +4,7 @@ import useTable from '../table/useTable';
 import { BsPencilSquare, BsXLg } from "react-icons/bs";
 import { Form, Col, Row, Container, Modal, Button, Table } from 'react-bootstrap';
 import { api } from "../../utilitario/baseComunicacao";
+import { isInputNumber } from "../../utilitario/patronatoUtil";
 
 export const TablePraticantesPaginada = ({ data, rowsPerPage, selecionaLinha, atualizaItemSelecionado, removePraticanteSelecionado }) => {
     const [pagina, setPage] = useState(1);
@@ -57,18 +58,24 @@ const LinhaTabela = ({ item, selecionaLinha, atualizaItemSelecionado, removePrat
 }
 
 function pesquisaPraticantes({ setValores, valores, atualizaItemSelecionado, setAbrirPesquisa }) {
+    const [pratIdPesquisa, setPratIdPesquisa] = useState("");
     const [pesNomePesquisa, setPesNomePesquisa] = useState("");
     const [pesCpfPesquisa, setPesCpfPesquisa] = useState("");
 
     const buscaRegistros = async () => {
-        setValores(await (await api.get("/pesquisaPraticantes?pesCpf=" + pesCpfPesquisa + "&pesNome=" + pesNomePesquisa)).data);
-        setAbrirPesquisa(true);
+        setValores(await (await api.get("/pesquisaPraticantes?pesCpf=" + pesCpfPesquisa + "&pesNome=" + pesNomePesquisa+ "&pratId=" + pratIdPesquisa)).data);
+        await setAbrirPesquisa(true);
     }
 
-    const limparPesquisa = () => {
+    const limparCampos = () => {
         setAbrirPesquisa(false);
+        setPratIdPesquisa("")
         setPesNomePesquisa("");
         setPesCpfPesquisa("");
+    }
+
+    const limparPesquisa = async ()  => {
+        limparCampos();
         buscaRegistros();
     }
 
@@ -81,13 +88,19 @@ function pesquisaPraticantes({ setValores, valores, atualizaItemSelecionado, set
                         <Container>
                             <Form>
                                 <Row>
+                                    <Col md="2">
+                                        <Form.Label>Código</Form.Label>
+                                        <Form.Control type="text" id="idPesquisa" onKeyPress={(e) => isInputNumber(e)}
+                                            value={pratIdPesquisa}
+                                            onChange={(e) => setPratIdPesquisa(e.target.value)} />
+                                    </Col>
                                     <Col md="6">
                                         <Form.Label>Nome</Form.Label>
                                         <Form.Control type="text" id="nomePesquisa"
                                             value={pesNomePesquisa}
                                             onChange={(e) => setPesNomePesquisa(e.target.value)} />
                                     </Col>
-                                    <Col md="6">
+                                    <Col md="4">
                                         <Form.Label>CPF</Form.Label>
                                         <Form.Control type="text" id="cpfPesquisa"
                                             value={pesCpfPesquisa} inputMode="numeric"

@@ -51,6 +51,12 @@ function pesquisaMontaria({ setValores, valores, atualizaItemSelecionado, setAbr
         setAbrirPesquisa(true);
     }
 
+    const limparPesquisa = () => {
+        setAbrirPesquisa(false);
+        setMontIdPesquisa("");
+        setMontDescricaoPesquisa("");
+        buscaRegistros();
+    }
 
     const pesquisaMontaria = () => {
         return (
@@ -76,6 +82,7 @@ function pesquisaMontaria({ setValores, valores, atualizaItemSelecionado, setAbr
                                 </Row>
                                 <div className='right'>
                                     <Button className='btnMarginTop' onClick={buscaRegistros}>Pesquisar</Button>
+                                    <Button className='btnMarginTop btn-warning btnToolbar' onClick={limparPesquisa}>Limpar</Button>
                                 </div>
                             </Form>
                         </Container>

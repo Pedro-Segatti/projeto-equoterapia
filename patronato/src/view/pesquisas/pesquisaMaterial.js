@@ -59,6 +59,13 @@ function pesquisaMaterial({ setValores, valores, atualizaItemSelecionado, setAbr
         setAbrirPesquisa(true);
     }
 
+    const limparPesquisa = () => {
+        setAbrirPesquisa(false);
+        setMatIdPesquisa("");
+        setMatDescricaoPesquisa("");
+        buscaRegistros();
+    }
+
     const pesquisaMaterial = () => {
         return (
             <>
@@ -83,6 +90,7 @@ function pesquisaMaterial({ setValores, valores, atualizaItemSelecionado, setAbr
                                 </Row>
                                 <div className='right'>
                                     <Button className='btnMarginTop' onClick={buscaRegistros}>Pesquisar</Button>
+                                    <Button className='btnMarginTop btn-warning btnToolbar' onClick={limparPesquisa}>Limpar</Button>
                                 </div>
                             </Form>
                         </Container>

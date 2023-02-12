@@ -11,6 +11,6 @@ public interface ResponsavelCrud extends CrudRepository<Responsavel,Integer> {
 
     public Responsavel findByRespId(Integer respId);
 
-    @Query("SELECT r FROM Responsavel r WHERE (:pesCpf is null or :pesCpf = '' or r.pessoa.pesCpf = :pesCpf) AND (:pesNome is null OR :pesNome = ''  OR r.pessoa.pesNome LIKE %:pesNome%)")
-    List<Responsavel> findByCpfAndNome(@Param("pesCpf") String pesCpf, @Param("pesNome") String pesNome);
+    @Query("SELECT r FROM Responsavel r WHERE (:pesCpf is null or :pesCpf = '' or r.pessoa.pesCpf = :pesCpf) AND (:pesNome is null OR :pesNome = ''  OR r.pessoa.pesNome LIKE %:pesNome%) AND (:respId is null OR r.respId = :respId)")
+    List<Responsavel> findByCpfAndNomeAndId(@Param("pesCpf") String pesCpf, @Param("pesNome") String pesNome, @Param("respId") Integer respId);
 }

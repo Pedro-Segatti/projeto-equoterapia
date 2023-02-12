@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface BairroCrud extends CrudRepository<Bairro,Integer> {
 
-    @Query("SELECT b FROM Bairro b WHERE (:barNome is null or :barNome = '' or b.barNome like %:barNome%)")
-    List<Bairro> findBairroByNome(@Param("barNome")  String barNome);
+    @Query("SELECT b FROM Bairro b WHERE (:barNome is null or :barNome = '' or b.barNome like %:barNome%) AND (:barId is null OR b.barId = :barId)")
+    List<Bairro> findBairroByNomeAndId(@Param("barNome")  String barNome, @Param("barId")  Integer barId);
 }

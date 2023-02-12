@@ -58,6 +58,14 @@ function pesquisaPicadeiro({ setValores, valores, atualizaItemSelecionado, setAb
 
     const buscaRegistros = async () => {
         setValores(await (await api.get("/pesquisaPicadeiro?picId=" + picIdPesquisa + "&picDescricao=" + picDescricaoPesquisa)).data);
+        setAbrirPesquisa(true);
+    }
+
+    const limparPesquisa = () => {
+        setAbrirPesquisa(false);
+        setPicIdPesquisa("");
+        setPicDescricaoPesquisa("");
+        buscaRegistros();
     }
 
     const pesquisaPicadeiro = () => {
@@ -84,6 +92,7 @@ function pesquisaPicadeiro({ setValores, valores, atualizaItemSelecionado, setAb
                                 </Row>
                                 <div className='right'>
                                     <Button className='btnMarginTop' onClick={buscaRegistros}>Pesquisar</Button>
+                                    <Button className='btnMarginTop btn-warning btnToolbar' onClick={limparPesquisa}>Limpar</Button>
                                 </div>
                             </Form>
                         </Container>
