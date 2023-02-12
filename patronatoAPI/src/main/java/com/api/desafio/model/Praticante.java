@@ -41,8 +41,6 @@ public class Praticante implements Serializable {
     private Integer pratAltura;
     @Column(name = "PRAT_PESO")
     private Integer pratPeso;
-    @ManyToMany(mappedBy = "praticanteList")
-    private List<FichaEvolucao> fichaEvolucaoList = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "amnIdPraticante")
     private List<FichaAnamnese> fichaAnamneseList = new ArrayList<>();
     @JsonIgnore
@@ -85,14 +83,7 @@ public class Praticante implements Serializable {
     public void setPratPeso(Integer pratPeso) {
         this.pratPeso = pratPeso;
     }
-    @JsonIgnore
-    public List<FichaEvolucao> getFichaEvolucaoList() {
-        return fichaEvolucaoList;
-    }
 
-    public void setFichaEvolucaoList(List<FichaEvolucao> fichaEvolucaoList) {
-        this.fichaEvolucaoList = fichaEvolucaoList;
-    }
     @JsonIgnore
     public List<FichaAnamnese> getFichaAnamneseList() {
         return fichaAnamneseList;

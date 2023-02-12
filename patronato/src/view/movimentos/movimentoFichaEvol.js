@@ -7,7 +7,6 @@ import 'react-notifications-component/dist/theme.css';
 import PesquisaAnimais from "../pesquisas/pesquisaAnimais";
 import { TablePaginada } from "../pesquisas/pesquisaAnimais";
 import { TablePicadeiroPaginada } from "../pesquisas/pesquisaPicadeiro";
-import { TablePraticantesPaginada } from "../pesquisas/pesquisaPraticantes";
 import { TableFuncionariosPaginada } from "../pesquisas/pesquisaFuncionario";
 import PesquisaFichaEvol from "../pesquisas/pesquisaFichaEvol";
 import PesquisaMontaria from "../pesquisas/pesquisaMontaria";
@@ -112,7 +111,7 @@ function cadastroFichaEvol() {
     const [evolIdMont, setEvolIdMont] = useState({ "montDescricao": "" });
     const [evolAniSelecionado, setEvolAniSelecionado] = useState([]);
     const [evolPicSelecionado, setEvolPicSelecionado] = useState([]);
-    const [evolPratSelecionado, setEvolPratSelecionado] = useState([]);
+    const [evolIdPrat, setEvolIdPrat] = useState({"pessoa": {"pesNome":""}});
     const [evolFuncSelecionado, setEvolFuncSelecionado] = useState([]);
 
     const atualizaEvolSelecionada = (item) => {
@@ -135,7 +134,7 @@ function cadastroFichaEvol() {
         setEvolAndAni(item.evolAndAni || '');
         setEvolAniSelecionado(item.animalList || []);
         setEvolPicSelecionado(item.picadeiroList || []);
-        setEvolPratSelecionado(item.praticanteList || []);
+        setEvolIdPrat(item.evolIdPraticante || {"pessoa": {"pesNome": ""}});
         setEvolFuncSelecionado(item.funcionarioList || []);
         setEvolIdMont(item.evolIdMont || { "montDescricao": "" });
         setListAtividadeMaterial(item.fichaEvolAtividadeMaterialList || []);
@@ -172,7 +171,7 @@ function cadastroFichaEvol() {
     }
 
     const atualizaPraticanteSelecionado = (item) => {
-        setEvolPratSelecionado(current => [...current, item])
+        setEvolIdPrat(item);
         setAbrirPesquisaPraticante(false);
     }
 
@@ -211,15 +210,6 @@ function cadastroFichaEvol() {
         if (index !== -1) {
             array.splice(index, 1);
             setEvolPicSelecionado(array);
-        }
-    }
-
-    const removePraticanteSelecionado = (item) => {
-        var array = [...evolPratSelecionado];
-        var index = array.indexOf(item);
-        if (index !== -1) {
-            array.splice(index, 1);
-            setEvolPratSelecionado(array);
         }
     }
 
@@ -263,7 +253,7 @@ function cadastroFichaEvol() {
             "evolIdMont": evolIdMont,
             "animalList": evolAniSelecionado.map(animal => (animal)),
             "picadeiroList": evolPicSelecionado.map(picadeiro => (picadeiro)),
-            "praticanteList": evolPratSelecionado.map(praticante => (praticante)),
+            "evolIdPraticante": evolIdPrat,
             "funcionarioList": evolFuncSelecionado.map(funcionario => (funcionario)),
             "fichaEvolAtividadeMaterialList": []
         };
@@ -368,7 +358,7 @@ function cadastroFichaEvol() {
         setEvolData("");
         setEvolAniSelecionado([]);
         setEvolPicSelecionado([]);
-        setEvolPratSelecionado([]);
+        setEvolIdPrat({"pessoa": ""});
         setEvolFuncSelecionado([]);
         setEvolIdMont({ "montDescricao": "" });
         setAtivMaterialAtiv({ "atvDescricao": "" });
@@ -381,6 +371,11 @@ function cadastroFichaEvol() {
         if (evolIdMont.montDescricao === "") {
             mensagemCustomizada("Selecione uma montaria", "warning");
             document.getElementById("botaoMontaria").focus();
+            return;
+        }
+        if (evolIdPrat.pessoa.pesNome === "") {
+            mensagemCustomizada("Selecione um Praticante", "warning");
+            document.getElementById("botaoPraticante").focus();
             return;
         }
         if (evolClima === "") {
@@ -396,11 +391,6 @@ function cadastroFichaEvol() {
         if (evolPicSelecionado.length < 1) {
             mensagemCustomizada("Selecione ao menos um Picadeiro", "warning");
             document.getElementById("btnPicadeiro").focus();
-            return;
-        }
-        if (evolPratSelecionado.length < 1) {
-            mensagemCustomizada("Selecione ao menos um Praticante", "warning");
-            document.getElementById("btnPraticante").focus();
             return;
         }
         if (evolFuncSelecionado.length < 1) {
@@ -440,6 +430,12 @@ function cadastroFichaEvol() {
                                 <Form.Control value={evolData}
                                     onChange={(e) => setEvolData(e.target.value)}
                                     type="date" id="inputDate" required />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md="6">
+                                <Form.Label id='txTeste' htmlFor="inputPraticante">Praticante</Form.Label>
+                                <InputConverter idBtn={"botaoPraticante"} descricao={evolIdPrat.pessoa.pesNome} atualizaDlgPesquisa={atualizaDlgPesquisaPraticante} />
                             </Col>
                         </Row>
                         <Row>
@@ -600,20 +596,6 @@ function cadastroFichaEvol() {
                                             <Button id='btnPicadeiro' variant="primary" className='btn-success btnMarginTop' onClick={atualizaDlgPesquisaPicadeiro}>Adicionar</Button>
                                         </Col>
                                         <TablePicadeiroPaginada data={evolPicSelecionado} rowsPerPage={5} selecionaLinha={false} removeItemSelecionado={removePicadeiroSelecionado} />
-                                    </div>
-                                </Card>
-                            </Col>
-                        </Row>
-                        <br />
-                        <Row>
-                            <Col>
-                                <Card>
-                                    <div className='marginLeft'>
-                                        <b>Praticantes</b>
-                                        <Col md="2">
-                                            <Button id='btnPraticante' variant="primary" className='btn-success btnMarginTop' onClick={atualizaDlgPesquisaPraticante}>Adicionar</Button>
-                                        </Col>
-                                        <TablePraticantesPaginada data={evolPratSelecionado} rowsPerPage={5} selecionaLinha={false} removePraticanteSelecionado={removePraticanteSelecionado} />
                                     </div>
                                 </Card>
                             </Col>

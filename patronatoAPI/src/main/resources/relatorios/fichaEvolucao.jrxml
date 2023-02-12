@@ -3,7 +3,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatFuncionario" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c2a95f97-aa24-45d2-98b7-b99a2a71570d">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.report.description" value=""/>
-	<subDataset name="praticanteList" uuid="0a99801a-9c40-490f-92ac-17129de99043">
+	<subDataset name="funcionarioList" uuid="c53e9bb5-9703-4c03-935a-0fb9fe2b7e8f">
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 		<queryString>
 			<![CDATA[]]>
@@ -12,13 +12,202 @@
 			<fieldDescription><![CDATA[pessoa.pesNome]]></fieldDescription>
 		</field>
 	</subDataset>
+	<subDataset name="animalList" uuid="1618eda6-b3a1-4eb3-92da-847cfe579ff8">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="aniNome" class="java.lang.String"/>
+		<field name="aniAndadura" class="java.lang.String"/>
+		<field name="aniComportamento" class="java.lang.String"/>
+	</subDataset>
 	<parameter name="nomeFuncionario" class="java.lang.String"/>
 	<parameter name="IMG_PATRONATO" class="java.lang.Object"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
 	<field name="evolData" class="java.util.Date"/>
-	<field name="praticanteList" class="java.util.List"/>
+	<field name="funcionarioList" class="java.util.List"/>
+	<field name="pratNome" class="java.lang.String">
+		<fieldDescription><![CDATA[evolIdPraticante.pessoa.pesNome]]></fieldDescription>
+	</field>
+	<field name="pratId" class="java.lang.String">
+		<fieldDescription><![CDATA[evolIdPraticante.pratId]]></fieldDescription>
+	</field>
+	<field name="animalList" class="java.util.List"/>
+	<group name="PraticanteGroup">
+		<groupExpression><![CDATA[$F{pratId}]]></groupExpression>
+		<groupHeader>
+			<band height="275">
+				<staticText>
+					<reportElement x="470" y="5" width="30" height="15" uuid="b43d41bd-f9ad-4634-837f-b391ba9037de">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<text><![CDATA[Data:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="500" y="5" width="54" height="15" uuid="1db84371-6e93-401b-bbc0-aec44069af98">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textFieldExpression><![CDATA[$F{evolData}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="5" width="50" height="15" uuid="3629536c-0b23-49d9-ab1b-efc02cade67f">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<text><![CDATA[Praticante:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="50" y="5" width="280" height="15" uuid="6d699b54-148a-413e-b4e3-e02c87cfa401">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textFieldExpression><![CDATA[$F{pratNome}]]></textFieldExpression>
+				</textField>
+				<frame>
+					<reportElement x="0" y="58" width="554" height="30" uuid="1e1b0159-95d7-454c-847e-09eafd9bd1c5"/>
+					<staticText>
+						<reportElement x="0" y="0" width="50" height="15" uuid="cb240e17-de60-48ed-82b1-16eb9231f6e2">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						</reportElement>
+						<text><![CDATA[Animais:]]></text>
+					</staticText>
+					<componentElement>
+						<reportElement stretchType="ContainerHeight" x="50" y="15" width="504" height="15" uuid="5d9301f2-cd90-4a02-9d62-0e7f99742d65">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						</reportElement>
+						<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+							<datasetRun subDataset="animalList" uuid="18feba76-c633-4c3c-ad56-3efb015958bc">
+								<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{animalList})]]></dataSourceExpression>
+							</datasetRun>
+							<jr:listContents height="15" width="504">
+								<textField>
+									<reportElement x="0" y="0" width="190" height="15" uuid="d0bee3de-166b-4229-b81c-2fb492ead1c0">
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+										<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+									</reportElement>
+									<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+										<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+									<textElement>
+										<paragraph leftIndent="3"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{aniNome}]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement x="190" y="0" width="170" height="15" uuid="89b76523-d0b6-4ae6-a18f-c1e20f6bbf87">
+										<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+									</reportElement>
+									<box>
+										<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+									<textElement>
+										<paragraph leftIndent="3"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{aniAndadura}]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement x="360" y="0" width="144" height="15" uuid="8d39b28a-e76d-465b-b7fa-be87fc42a307">
+										<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+									</reportElement>
+									<box>
+										<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+									<textElement>
+										<paragraph leftIndent="3"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{aniComportamento}]]></textFieldExpression>
+								</textField>
+							</jr:listContents>
+						</jr:list>
+					</componentElement>
+					<staticText>
+						<reportElement x="50" y="0" width="190" height="15" uuid="3440f4b2-122a-4763-ae2f-54dc15c19fa2">
+							<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+						</reportElement>
+						<box>
+							<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textElement>
+							<paragraph leftIndent="3"/>
+						</textElement>
+						<text><![CDATA[Nome]]></text>
+					</staticText>
+					<staticText>
+						<reportElement x="240" y="0" width="170" height="15" uuid="b2f21ef0-fe0d-4d51-9476-ce1914597db0">
+							<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+						</reportElement>
+						<box>
+							<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textElement>
+							<paragraph leftIndent="3"/>
+						</textElement>
+						<text><![CDATA[Andadura]]></text>
+					</staticText>
+					<staticText>
+						<reportElement x="410" y="0" width="144" height="15" uuid="354b49b3-2090-41f4-97c5-171080546be6">
+							<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+						</reportElement>
+						<box>
+							<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textElement>
+							<paragraph leftIndent="3"/>
+						</textElement>
+						<text><![CDATA[Comportamento]]></text>
+					</staticText>
+				</frame>
+				<frame>
+					<reportElement x="0" y="24" width="554" height="30" uuid="c9724b99-f52e-4488-8c27-e46401e220e8"/>
+					<componentElement>
+						<reportElement stretchType="ContainerHeight" x="50" y="0" width="504" height="15" uuid="05b9e31e-8423-485a-a247-6f802f0e41a4">
+							<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						</reportElement>
+						<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+							<datasetRun subDataset="funcionarioList" uuid="e02cbd3d-5fc5-4ff1-bb67-7b35ee3d240d">
+								<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{funcionarioList})]]></dataSourceExpression>
+							</datasetRun>
+							<jr:listContents height="15" width="504">
+								<textField>
+									<reportElement x="0" y="0" width="314" height="15" uuid="251152e3-f895-4208-9541-384c4c0cbf3a">
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+									</reportElement>
+									<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+								</textField>
+							</jr:listContents>
+						</jr:list>
+					</componentElement>
+					<staticText>
+						<reportElement x="0" y="0" width="50" height="15" uuid="d2cb5058-e6a4-4fe8-af7b-ff30968980d3">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						</reportElement>
+						<text><![CDATA[Equipe:]]></text>
+					</staticText>
+				</frame>
+			</band>
+		</groupHeader>
+	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -37,42 +226,4 @@
 			</image>
 		</band>
 	</title>
-	<detail>
-		<band height="21" splitType="Stretch">
-			<staticText>
-				<reportElement x="470" y="0" width="30" height="15" uuid="b43d41bd-f9ad-4634-837f-b391ba9037de">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<text><![CDATA[Data:]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="500" y="0" width="54" height="15" uuid="1db84371-6e93-401b-bbc0-aec44069af98">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<textFieldExpression><![CDATA[$F{evolData}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="0" y="0" width="50" height="15" uuid="3629536c-0b23-49d9-ab1b-efc02cade67f">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<text><![CDATA[Praticante:]]></text>
-			</staticText>
-			<componentElement>
-				<reportElement x="50" y="0" width="420" height="15" uuid="e4deea2a-8b78-4eb8-b131-e1f2c4701614">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="praticanteList" uuid="b89e54e2-8a81-48d5-a7a9-04f57c35ccd7">
-						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{praticanteList}) ]]></dataSourceExpression>
-					</datasetRun>
-					<jr:listContents height="15" width="420">
-						<textField>
-							<reportElement x="0" y="0" width="420" height="15" uuid="737c4bf1-3a69-4cae-91f1-1d06f5408cc8"/>
-							<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
-						</textField>
-					</jr:listContents>
-				</jr:list>
-			</componentElement>
-		</band>
-	</detail>
 </jasperReport>

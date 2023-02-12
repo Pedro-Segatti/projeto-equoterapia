@@ -55,12 +55,9 @@ public class FichaEvolucao implements Serializable {
     @JoinColumn(name = "EVOL_ID_MONT", referencedColumnName = "MONT_ID")
     @ManyToOne(optional = false)
     private Montaria evolIdMont;
-    @JsonIgnoreProperties("fichaEvolucaoList")
-    @JoinTable(name = "ficha_evol_praticante", joinColumns = {
-        @JoinColumn(name = "FXPR_ID_FICHA", referencedColumnName = "EVOL_ID")}, inverseJoinColumns = {
-        @JoinColumn(name = "FXPR_ID_PRATICANTE", referencedColumnName = "PRAT_ID")})
-    @ManyToMany
-    private List<Praticante> praticanteList;
+    @JoinColumn(name = "EVOL_ID_PRAT", referencedColumnName = "PRAT_ID")
+    @ManyToOne(optional = false)
+    private Praticante evolIdPraticante;
     @JsonIgnoreProperties("fichaEvolucaoList")
     @JoinTable(name = "ficha_evol_picadeiro", joinColumns = {
         @JoinColumn(name = "FXP_ID_FICHA", referencedColumnName = "EVOL_ID")}, inverseJoinColumns = {
@@ -230,12 +227,12 @@ public class FichaEvolucao implements Serializable {
         this.evolIdMont = evolIdMont;
     }
 
-    public List<Praticante> getPraticanteList() {
-        return praticanteList;
+    public Praticante getEvolIdPraticante() {
+        return evolIdPraticante;
     }
 
-    public void setPraticanteList(List<Praticante> praticanteList) {
-        this.praticanteList = praticanteList;
+    public void setEvolIdPraticante(Praticante evolIdPraticante) {
+        this.evolIdPraticante = evolIdPraticante;
     }
 
     public List<Picadeiro> getPicadeiroList() {
