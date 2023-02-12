@@ -468,11 +468,19 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastraMedico")
-    public ResponseEntity<?> cadastrarMedico(@RequestBody Medico medico) {
-        for (Telefone telefone : medico.getPessoa().getTelefoneList()) {
-            telefone.setPessoa(medico.getPessoa());
-            telefone.setTelNumero(telefone.getTelNumero().replace(" ", ""));
+    public ResponseEntity<Medico> cadastrarMedico(@RequestBody Medico medico) {
+        boolean adicionando = medico.getMedId() == null;
+
+        Pessoa pessoa = null;
+        if (adicionando) {
+            pessoa = pessoaService.getPessoaByPesCpf(medico.getPessoa().getPesCpf());
+            if (pessoa != null) {
+                return new ResponseEntity<Medico>(new Medico(), HttpStatus.BAD_REQUEST);
+            }
         }
+
+        medico.getPessoa().getTelefoneList().forEach(tel -> tel.setPessoa(medico.getPessoa()));
+
         pessoaService.salva(medico.getPessoa());
         medicoService.salva(medico);
         return new ResponseEntity<Medico>(medico, HttpStatus.OK);

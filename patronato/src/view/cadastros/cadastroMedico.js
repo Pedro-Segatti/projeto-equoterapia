@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import { Form, Col, Row, Container, Card, Table, Button } from 'react-bootstrap';
-import { BsFillTrashFill } from "react-icons/bs";
-import TableFooter from '../table/tableFooter';
-import useTable from '../table/useTable';
+import { Form, Col, Row, Container } from 'react-bootstrap';
 import Toolbar from '../toolbar';
 import { IMaskInput } from 'react-imask';
-import { registroSalvo, registroExcluido } from "../../utilitario/mensagemUtil"
+import { registroSalvo, registroExcluido, pessoaDuplicada } from "../../utilitario/mensagemUtil"
 import { ReactNotifications } from 'react-notifications-component'
 import { montaJsonPessoaCompleta } from "../../utilitario/patronatoUtil";
 import { api } from "../../utilitario/baseComunicacao";
@@ -13,20 +10,21 @@ import HTTP_STATUS from "../../utilitario/httpStatus";
 import PesquisaMedico from "../pesquisas/pesquisaMedico";
 import PesquisaLogradouros from "../pesquisas/pesquisaLogradouro";
 import InputConverter from "../componentes/inputConverter";
+import SelectNacionalidade from '../componentes/selectMenuNacionalidade';
+import TabelaTelefones from '../componentes/tabelaTelefones';
 
 import Menu from "../menu"
 import Footer from "../footer"
 
 const cadastroMedico = () => {
     const [medId, setMedId] = useState("");
-
     const [pesNome, setPesNome] = useState("");
     const [pesCpf, setPesCpf] = useState("");
     const [pesSexo, setPesSexo] = useState("");
     const [pesDataNasc, setPesDataNasc] = useState("");
     const [pesEndNum, setPesEndNum] = useState("");
     const [pesEndCompl, setPesEndCompl] = useState("");
-    const [pesNacionalidade, setPesNacionalidade] = useState("");
+    const [pesNacionalidade, setPesNacionalidade] = useState("BRA");
     const [pesFoto, setPesFoto] = useState("");
     const [pesEmail1, setPesEmail1] = useState("");
     const [pesEmail2, setPesEmail2] = useState("");
@@ -40,27 +38,6 @@ const cadastroMedico = () => {
     const [listLogradouro, setListLogradouro] = useState([]);
 
     const [listTelefones, setListTelefones] = useState([]);
-    
-    const criarTelefone = (e) => {
-        const jsonItem = {
-            "telId": null,
-            "telNumero": "",
-            "telIdPessoa": ""
-        }
-        setListTelefones(tel => [...tel, jsonItem]);
-    }
-
-    const atualizaTelefone = (item, telefone) => {
-        item.telNumero = telefone;
-    }
-
-    const removeTelefoneSelecionado = async (e) => {
-        setListTelefones(current =>
-            current.filter(tel => {
-                return tel.telNumero !== e.telNumero;
-            }),
-        );
-    }
 
     const atualizaDlgPesquisa = async () => {
         setList(await (await api.get("/pesquisaMedico")).data);
@@ -107,7 +84,7 @@ const cadastroMedico = () => {
         setPesDataNasc("");
         setPesEndNum("");
         setPesEndCompl("");
-        setPesNacionalidade("");
+        setPesNacionalidade("BRA");
         setPesFoto("");
         setPesEmail1("");
         setPesEmail2("");
@@ -118,43 +95,32 @@ const cadastroMedico = () => {
     }
 
     const enviaJsonGravar = async () => {
-        const pais = await (await api.get("/pesquisaPais?paiIso=" + pesNacionalidade)).data;
-        const pessoa = montaJsonPessoaCompleta(pesId, pesNome, pesCpf, null, pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pais, pesFoto, pesEmail1, pesEmail2, pesLogId, listTelefones);
-        const json = {
-            "medId": medId,
-            "pessoa": pessoa
-        };
-        api.post("/cadastraMedico", json);
-        registroSalvo();
+        try {
+            const pessoa = await montaJsonPessoaCompleta(pesId, pesNome, pesCpf, null, pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pesNacionalidade, pesFoto, pesEmail1, pesEmail2, pesLogId, listTelefones);
+            const json = {
+                "medId": medId,
+                "pessoa": pessoa
+            };
+            const response = await await api.post("/cadastraMedico", json);
+            if (response.status === HTTP_STATUS.OK) {
+                registroSalvo();
+                limparCamposFormulario();
+            }
+        } catch (error) {
+            if (error.response.status === HTTP_STATUS.BAD_REQUEST) {
+                pessoaDuplicada();
+            }
+
+            if (error.response.status === HTTP_STATUS.FORBIDDEN) {
+                console.log(error);
+            }
+        }
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         enviaJsonGravar();
         limparCamposFormulario();
-    };
-
-    const TabelaTelefones = ({ data, rowsPerPage }) => {
-        const [pagina, setPage] = useState(1);
-        const { slice, range } = useTable(data, pagina, rowsPerPage);
-        return (
-            <>
-                <Table size="sm">
-                    <thead>
-                        <tr>
-                            <th>Número</th>
-                            <th className='center'>Ação</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            slice.map(item => <LinhaTabelaTelefones key={item.telId} item={item} removeTelefoneSelecionado={removeTelefoneSelecionado} />)
-                        }
-                    </tbody>
-                </Table>
-                <TableFooter range={range} slice={slice} setPage={setPage} page={pagina} />
-            </>
-        );
     };
 
     const atualizaDlgPesquisaLogradouro = async () => {
@@ -168,32 +134,13 @@ const cadastroMedico = () => {
         setAbrirPesquisaLogradouro(false);
     }
 
-    const LinhaTabelaTelefones = ({ item, removeTelefoneSelecionado }) => {
-        const [telNumero, setTelNumero] = useState(item.telNumero);
-
-        const removerItem = e => removeTelefoneSelecionado(item);
-
-        console.log(item);
-
-        return <tr>
-            <td width={'100px'}>
-                <Form.Control value={telNumero}
-                    onChange={(e) => setTelNumero(e.target.value)}
-                    as={IMaskInput} inputMode="numeric" id="inputTel" mask="(00)00000-0000" maxLength="16" required onComplete={atualizaTelefone(item, telNumero)}/>
-            </td>
-            <td width={'80px'} className='center'>
-                <Button className='btn-danger' onClick={removerItem}><BsFillTrashFill /></Button>
-            </td>
-        </tr>
-    }
-
     return (
         <div>
             <Menu />
             <ReactNotifications />
             <Container>
                 <Form onSubmit={handleSubmit}>
-                <br />
+                    <br />
                     <Row>
                         <h3>Cadastro de Médicos</h3>
                     </Row>
@@ -238,13 +185,7 @@ const cadastroMedico = () => {
                             </Form.Select>
                         </Col>
                         <Col md="6">
-                            <Form.Label htmlFor="inputNacionalidade">Nacionalidade *</Form.Label>
-                            <Form.Select id='inputNacionalidade' required
-                                value={pesNacionalidade}
-                                onChange={(e) => setPesNacionalidade(e.target.value)}>
-                                <option>Selecione</option>
-                                <option value="BRA">Brasileira</option>
-                            </Form.Select>
+                            <SelectNacionalidade pesNacionalidade={pesNacionalidade} setPesNacionalidade={setPesNacionalidade} />
                         </Col>
                     </Row>
                     <Row>
@@ -288,23 +229,10 @@ const cadastroMedico = () => {
 
                     <Row>
                         <Col md="12">
-                            <Card>
-                                <div className='marginLeft'>
-                                    <Row>
-                                        <Col md="12">
-                                            <b>Telefones</b>
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col md="12">
-                                            <Button variant="primary" className='btn-success btnMarginTop' onClick={criarTelefone}>Adicionar</Button>
-                                        </Col>
-                                    </Row>
-                                    <TabelaTelefones data={listTelefones} rowsPerPage={5} selecionaLinha={false} removeResp={removeTelefoneSelecionado} />
-                                </div>
-                            </Card>
+                            <TabelaTelefones listTelefones={listTelefones} setListTelefones={setListTelefones} />
                         </Col>
                     </Row>
+
                     <Toolbar abrirPesquisa={atualizaDlgPesquisa} jsonRemove={removerMedico} />
                 </Form>
             </Container>
