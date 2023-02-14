@@ -179,7 +179,7 @@ const cadastroFuncionario = () => {
                         </Col>
                     </Row>
                     <Row>
-                        <Col md="8">
+                        <Col md="12">
                             <Form.Label htmlFor="inputNome">Nome</Form.Label>
                             <Form.Control value={pesNome} maxLength="60"
                                 onChange={(e) => setPesNome(e.target.value)}
@@ -193,7 +193,7 @@ const cadastroFuncionario = () => {
                             <Form.Control id="inputCpf" type="text" maxLength='14' as={IMaskInput} inputMode="numeric"
                                 mask="000.000.000-00" placeholder='Digite aqui o seu CPF...' required value={pesCpf} onChange={(l) => setPesCpf(l.target.value)} />
                         </Col>
-                        <Col md="2">
+                        <Col md="6">
                             <Form.Label htmlFor="inputDate">Data de Nascimento *</Form.Label>
                             <Form.Control value={pesDataNasc} size={2}
                                 onChange={(e) => setPesDataNasc(e.target.value)}
@@ -216,13 +216,13 @@ const cadastroFuncionario = () => {
                     </Col>
                     </Row>
                     <Row>
-                        <Col md="2">
+                        <Col md="6">
                             <Form.Label htmlFor="inputDate">Data de Admissão *</Form.Label>
                             <Form.Control value={funcDataAdmissao}
                                 onChange={(e) => setFuncDataAdmissao(e.target.value)}
                                 type="date" id="inputDate" />
                         </Col>
-                        <Col md="2">
+                        <Col md="6">
                             <Form.Label htmlFor="inputDate">Data de Desligamento</Form.Label>
                             <Form.Control value={funcDataDesligamento}
                                 onChange={(e) => setFuncDataDesligamento(e.target.value)}

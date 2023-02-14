@@ -595,8 +595,8 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaCidade")
-    public ResponseEntity<List<Cidade>> pesquisaCidade(@RequestParam(required = false) String cidNome) {
-        return cidadeService.pesquisa(cidNome);
+    public ResponseEntity<List<Cidade>> pesquisaCidade(@RequestParam(required = false) String cidNome, Integer cidId) {
+        return cidadeService.pesquisa(cidNome, cidId);
     }
 
     @CrossOrigin(origins = "*")
