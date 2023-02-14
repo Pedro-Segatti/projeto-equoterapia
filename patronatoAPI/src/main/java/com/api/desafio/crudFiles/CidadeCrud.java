@@ -10,6 +10,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface CidadeCrud extends CrudRepository<Cidade,Integer> {
-    @Query("SELECT c FROM Cidade c WHERE (:cidNome is null or :cidNome = '' or c.cidNome like %:cidNome%)")
-    List<Cidade> findCidadeByLogNome(@Param("cidNome") String cidNome);
+
+    Cidade findCidadeByCidId(Integer cidId);
+    @Query("SELECT c FROM Cidade c WHERE (:cidNome is null or :cidNome = '' or c.cidNome like %:cidNome%) AND (:cidId IS NULL OR :cidId = c.cidId)")
+    List<Cidade> findCidadeByCidNomeAndId(@Param("cidNome") String cidNome, @Param("cidId") Integer cidId);
 }
