@@ -510,7 +510,7 @@ public class ComunicacaoController {
     }
 
     @CrossOrigin(origins = "*")
-    @PostMapping("/ uncionario")
+    @PostMapping("/cadastrarFuncionario")
     public ResponseEntity<Funcionario> cadastrarFuncionario(@RequestBody Funcionario funcionario) {
         funcionario.getPessoa().getTelefoneList().forEach(tel -> tel.setPessoa(funcionario.getPessoa()));
         pessoaService.salva(funcionario.getPessoa());
