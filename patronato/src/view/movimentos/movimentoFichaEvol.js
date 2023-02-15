@@ -101,7 +101,7 @@ function cadastroFichaEvol() {
     const [evolProg, setEvolProg] = useState("");
     const [evolReg, setEvolReg] = useState("");
     const [evolObs, setEvolObs] = useState("");
-    const [evolRecLudicos, setEvolRecLudicos] = useState(false);
+    const [evolRecLudicos, setEvolRecLudicos] = useState(true);
     const selecionaRecLudicos = () => setEvolRecLudicos(!evolRecLudicos)
     const [evolQuaisRecLud, setEvolQuaisRecLud] = useState("");
     const [evolObsRecLud, setEvolObsRecLud] = useState("");
@@ -545,14 +545,14 @@ function cadastroFichaEvol() {
                         <Row>
                             <Col md="6">
                                 <Form.Label htmlFor="quaisRecLud">Quais Recursos Lúdicos</Form.Label>
-                                <Form.Control value={evolQuaisRecLud} disabled={evolRecLudicos}
+                                <Form.Control value={evolQuaisRecLud} disabled={!evolRecLudicos}
                                     onChange={(e) => setEvolQuaisRecLud(e.target.value)}
                                     type="text" id="quaisRecLud" as="textarea" className='textArea' />
                             </Col>
 
                             <Col md="6">
                                 <Form.Label htmlFor="obsRecLud">Observação Recursos Lúdicos</Form.Label>
-                                <Form.Control value={evolObsRecLud} disabled={evolRecLudicos}
+                                <Form.Control value={evolObsRecLud} disabled={!evolRecLudicos}
                                     onChange={(e) => setEvolObsRecLud(e.target.value)}
                                     type="text" id="obsRecLud" as="textarea" className='textArea' />
                             </Col>

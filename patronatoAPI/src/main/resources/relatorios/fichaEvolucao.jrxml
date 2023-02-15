@@ -21,6 +21,18 @@
 		<field name="aniAndadura" class="java.lang.String"/>
 		<field name="aniComportamento" class="java.lang.String"/>
 	</subDataset>
+	<subDataset name="atividadeMaterial" uuid="dc5ec177-a25b-406e-8819-e482a48715f9">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="descricao" class="java.lang.String">
+			<fieldDescription><![CDATA[atividade.atvDescricao]]></fieldDescription>
+		</field>
+		<field name="material" class="java.lang.String">
+			<fieldDescription><![CDATA[material.matDescricao]]></fieldDescription>
+		</field>
+	</subDataset>
 	<parameter name="nomeFuncionario" class="java.lang.String"/>
 	<parameter name="IMG_PATRONATO" class="java.lang.Object"/>
 	<queryString>
@@ -35,10 +47,17 @@
 		<fieldDescription><![CDATA[evolIdPraticante.pratId]]></fieldDescription>
 	</field>
 	<field name="animalList" class="java.util.List"/>
+	<field name="fichaEvolAtividadeMaterialList" class="java.util.List"/>
+	<field name="descMontaria" class="java.lang.String">
+		<fieldDescription><![CDATA[evolIdMont.montDescricao]]></fieldDescription>
+	</field>
+	<field name="evolRecLudicos" class="java.lang.Boolean"/>
+	<field name="evolQuaisRecLud" class="java.lang.String"/>
+	<field name="evolObsRecLud" class="java.lang.String"/>
 	<group name="PraticanteGroup">
 		<groupExpression><![CDATA[$F{pratId}]]></groupExpression>
 		<groupHeader>
-			<band height="275">
+			<band height="279">
 				<staticText>
 					<reportElement x="470" y="5" width="30" height="15" uuid="b43d41bd-f9ad-4634-837f-b391ba9037de">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -64,7 +83,35 @@
 					<textFieldExpression><![CDATA[$F{pratNome}]]></textFieldExpression>
 				</textField>
 				<frame>
-					<reportElement x="0" y="58" width="554" height="30" uuid="1e1b0159-95d7-454c-847e-09eafd9bd1c5"/>
+					<reportElement positionType="Float" x="0" y="24" width="554" height="30" uuid="c9724b99-f52e-4488-8c27-e46401e220e8"/>
+					<componentElement>
+						<reportElement stretchType="ContainerHeight" x="50" y="0" width="504" height="15" uuid="05b9e31e-8423-485a-a247-6f802f0e41a4">
+							<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						</reportElement>
+						<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+							<datasetRun subDataset="funcionarioList" uuid="e02cbd3d-5fc5-4ff1-bb67-7b35ee3d240d">
+								<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{funcionarioList})]]></dataSourceExpression>
+							</datasetRun>
+							<jr:listContents height="15" width="504">
+								<textField>
+									<reportElement x="0" y="0" width="314" height="15" uuid="251152e3-f895-4208-9541-384c4c0cbf3a">
+										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+									</reportElement>
+									<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+								</textField>
+							</jr:listContents>
+						</jr:list>
+					</componentElement>
+					<staticText>
+						<reportElement x="0" y="0" width="50" height="15" uuid="d2cb5058-e6a4-4fe8-af7b-ff30968980d3">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						</reportElement>
+						<text><![CDATA[Equipe:]]></text>
+					</staticText>
+				</frame>
+				<frame>
+					<reportElement positionType="Float" x="0" y="58" width="554" height="30" uuid="1e1b0159-95d7-454c-847e-09eafd9bd1c5"/>
 					<staticText>
 						<reportElement x="0" y="0" width="50" height="15" uuid="cb240e17-de60-48ed-82b1-16eb9231f6e2">
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -77,7 +124,7 @@
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							<property name="com.jaspersoft.studio.unit.y" value="px"/>
 						</reportElement>
-						<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
 							<datasetRun subDataset="animalList" uuid="18feba76-c633-4c3c-ad56-3efb015958bc">
 								<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{animalList})]]></dataSourceExpression>
 							</datasetRun>
@@ -178,33 +225,135 @@
 					</staticText>
 				</frame>
 				<frame>
-					<reportElement x="0" y="24" width="554" height="30" uuid="c9724b99-f52e-4488-8c27-e46401e220e8"/>
-					<componentElement>
-						<reportElement stretchType="ContainerHeight" x="50" y="0" width="504" height="15" uuid="05b9e31e-8423-485a-a247-6f802f0e41a4">
-							<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<reportElement positionType="Float" x="0" y="95" width="554" height="30" uuid="4d6a92bd-0a17-46f4-986a-b015bc787871">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<staticText>
+						<reportElement x="0" y="0" width="50" height="15" uuid="2dbcc6ac-3d9a-45ef-8518-93648c87d2d9">
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<property name="com.jaspersoft.studio.unit.y" value="px"/>
 						</reportElement>
-						<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-							<datasetRun subDataset="funcionarioList" uuid="e02cbd3d-5fc5-4ff1-bb67-7b35ee3d240d">
-								<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{funcionarioList})]]></dataSourceExpression>
+						<text><![CDATA[Atividades:]]></text>
+					</staticText>
+					<componentElement>
+						<reportElement stretchType="ContainerHeight" x="50" y="15" width="504" height="15" uuid="e8989e5f-7d8a-427d-9447-4311ac51ef37">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						</reportElement>
+						<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+							<datasetRun subDataset="atividadeMaterial" uuid="d367d8ff-ef38-480d-9d89-eba9681ebdbe">
+								<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{fichaEvolAtividadeMaterialList})]]></dataSourceExpression>
 							</datasetRun>
 							<jr:listContents height="15" width="504">
 								<textField>
-									<reportElement x="0" y="0" width="314" height="15" uuid="251152e3-f895-4208-9541-384c4c0cbf3a">
+									<reportElement x="0" y="0" width="250" height="15" uuid="0180c7a0-6ed3-4f8e-9761-de5d50137aff">
 										<property name="com.jaspersoft.studio.unit.height" value="px"/>
+										<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 									</reportElement>
-									<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+									<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+										<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+									<textElement>
+										<paragraph leftIndent="3"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+								</textField>
+								<textField>
+									<reportElement x="250" y="0" width="254" height="15" uuid="af450d6c-bc01-4577-a969-53f4429d2b7b">
+										<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+									</reportElement>
+									<box>
+										<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+										<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+										<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+										<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									</box>
+									<textElement>
+										<paragraph leftIndent="3"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{material}]]></textFieldExpression>
 								</textField>
 							</jr:listContents>
 						</jr:list>
 					</componentElement>
 					<staticText>
-						<reportElement x="0" y="0" width="50" height="15" uuid="d2cb5058-e6a4-4fe8-af7b-ff30968980d3">
-							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<reportElement x="50" y="0" width="250" height="15" uuid="c02cff58-323a-4566-9d7a-f98194a2d902">
+							<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 						</reportElement>
-						<text><![CDATA[Equipe:]]></text>
+						<box>
+							<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textElement>
+							<paragraph leftIndent="3"/>
+						</textElement>
+						<text><![CDATA[Descrição]]></text>
+					</staticText>
+					<staticText>
+						<reportElement x="300" y="0" width="254" height="15" uuid="856dd408-5200-4517-b397-87a8c650cb59">
+							<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+						</reportElement>
+						<box>
+							<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textElement>
+							<paragraph leftIndent="3"/>
+						</textElement>
+						<text><![CDATA[Material]]></text>
 					</staticText>
 				</frame>
+				<staticText>
+					<reportElement positionType="Float" x="0" y="130" width="70" height="15" uuid="3dc3042b-28cc-4757-9d46-8020bd94a5d0">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<text><![CDATA[Montaria pela:]]></text>
+				</staticText>
+				<textField>
+					<reportElement positionType="Float" x="70" y="130" width="100" height="14" uuid="b8adcfc9-f70c-4be5-81fb-7d56e92a2bb8"/>
+					<textFieldExpression><![CDATA[$F{descMontaria}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement positionType="Float" x="0" y="150" width="110" height="15" uuid="e186bf92-ddf7-4c90-94ed-ccd4227aa07a">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<printWhenExpression><![CDATA[$F{evolRecLudicos}]]></printWhenExpression>
+					</reportElement>
+					<text><![CDATA[Quais recursos lúdicos:]]></text>
+				</staticText>
+				<textField>
+					<reportElement positionType="Float" x="0" y="165" width="553" height="14" uuid="fd17a08c-c5ee-4c83-804c-d0e972c92a4a">
+						<printWhenExpression><![CDATA[$F{evolRecLudicos}]]></printWhenExpression>
+					</reportElement>
+					<textFieldExpression><![CDATA[$F{evolQuaisRecLud}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement positionType="Float" x="0" y="181" width="110" height="15" uuid="64234e74-405b-4aa9-aa91-dff99644f322">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<printWhenExpression><![CDATA[$F{evolRecLudicos}]]></printWhenExpression>
+					</reportElement>
+					<text><![CDATA[Observação:]]></text>
+				</staticText>
+				<textField textAdjust="StretchHeight" evaluationTime="Auto">
+					<reportElement positionType="Float" stretchType="ContainerHeight" x="0" y="196" width="553" height="14" uuid="bd3b777f-2d63-4f61-a4af-fe915384e95f">
+						<printWhenExpression><![CDATA[$F{evolRecLudicos}]]></printWhenExpression>
+					</reportElement>
+					<textFieldExpression><![CDATA[$F{evolObsRecLud}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement positionType="Float" x="0" y="210" width="554" height="1" printWhenGroupChanges="PraticanteGroup" uuid="4d6a79f8-0298-454d-ab0f-b5f82e2af152">
+						<printWhenExpression><![CDATA[$F{evolRecLudicos}]]></printWhenExpression>
+					</reportElement>
+				</line>
 			</band>
 		</groupHeader>
 	</group>
