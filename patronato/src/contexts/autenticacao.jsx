@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext } from "react";
-import { api, criarSessao } from "../utilitario/baseComunicacao";
+import { api, criarSessao, testeConexao } from "../utilitario/baseComunicacao";
 import { useNavigate } from "react-router-dom";
 import HTTP_STATUS from '../utilitario/httpStatus';
 import { loginSenhaInvalidos } from '../utilitario/mensagemUtil'
@@ -13,6 +13,15 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        const testarConexao = async () =>{
+            try {
+                await testeConexao();
+            } catch (error) {
+                navegar("/SemConexao");
+            }
+        }
+        testarConexao();
+
         const recoveredUser = localStorage.getItem("user");
         const recoveredToken = localStorage.getItem("access_token");
 
