@@ -1,4 +1,4 @@
-.childScon {
+.child {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -7,20 +7,20 @@
     width: 35%;
 }
 
-.tituloScon{
+.titulo{
     margin-top: 10%;
     font-size: 26px;
     font-weight: 600;
 }
 
-.subtituloScon{
+.subtitulo{
     font-size: 18px;
 }
 
-.cavaloGifScon {
+.cavaloGif {
     width: 200px;
 }
 
-.logoScon {
+.logo {
     width: 400px;
 }

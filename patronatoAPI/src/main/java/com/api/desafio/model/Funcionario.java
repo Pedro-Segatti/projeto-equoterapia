@@ -162,6 +162,7 @@ public class Funcionario implements Serializable {
         this.pessoa = pessoa;
     }
 
+    @JsonIgnore
     public String getFuncDataAdmissaoFormatada(){
         return DateUtil.dataFormatada(funcDataAdmissao);
     }

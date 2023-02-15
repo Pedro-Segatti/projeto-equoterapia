@@ -119,7 +119,7 @@ public class Animal implements Serializable {
     public List<FichaEvolucao> getFichaEvolucaoList() {
         return fichaEvolucaoList;
     }
-
+    @JsonIgnore
     public void setFichaEvolucaoList(List<FichaEvolucao> fichaEvolucaoList) {
         this.fichaEvolucaoList = fichaEvolucaoList;
     }
@@ -128,7 +128,7 @@ public class Animal implements Serializable {
     public List<Agendamento> getAgendamentoList() {
         return agendamentoList;
     }
-
+    @JsonIgnore
     public void setAgendamentoList(List<Agendamento> agendamentoList) {
         this.agendamentoList = agendamentoList;
     }

@@ -3,7 +3,7 @@ import HTTP_STATUS from "../utilitario/httpStatus";
 import Load from './img/load.gif';
 import Logo from './img/textoPatronatoSaoJoseourado.png';
 import Image from 'react-bootstrap/Image';
-import './style/semConexao.css';
+import estilos from './style/semConexao.module.css';
 
 import { testeConexao } from "../utilitario/baseComunicacao";
 import { useNavigate } from "react-router-dom";
@@ -39,12 +39,12 @@ const SemConexao = () => {
   return (
     <div>
       <div>
-        <div className="childScon">
-          <Image className="cavaloGifScon" src={Load}></Image>
+        <div className={estilos.child}>
+          <Image className={estilos.cavaloGif} src={Load}></Image>
           <br />
-          <Image className="logoScon" src={Logo}></Image>
-          <p className="tituloScon">Não foi possível estabelecer conexão</p>
-          <p className="subtituloScon">Aguarde enquanto o sistema é reestabelecido</p>
+          <Image className={estilos.logo} src={Logo}></Image>
+          <p className={estilos.titulo}>Não foi possível estabelecer conexão</p>
+          <p className={estilos.subtitulo}>Aguarde enquanto o sistema é reestabelecido</p>
           <br />
         </div>
       </div>

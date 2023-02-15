@@ -6,7 +6,7 @@ import { dataApiFormatada, dataFormatadaDiaMesAno, horaFormatadaString, horaForm
 import { Button, Modal, Row, Col, Card, ListGroup } from 'react-bootstrap';
 import HTTP_STATUS from "../utilitario/httpStatus";
 
-import './style/agendamentos.css';
+import estilos from './style/agendamentos.module.css';
 
 const Agendamentos = () => {
   const [agendamentos, setAgendamentos] = useState([]);
@@ -49,7 +49,7 @@ const Agendamentos = () => {
     const selecionarItem = e => atualizaItemSelecionado(item);
 
 
-    return <tr className="tabelaLinha">
+    return <tr className={estilos.tabelaLinha}>
       <td className="bold">{dataFormatadaDiaMesAno(agdData)}</td>
       <td>{horaFormatadaString(agdHora)}</td>
       <td>{agdDescricao}</td>
@@ -69,8 +69,8 @@ const Agendamentos = () => {
   return (
     <div>
       {!loading && agendamentos.length > 0 &&
-        <table className="tabelaAgendamentos">
-          <thead className="tabelaCabecalho">
+        <table className={estilos.tabelaAgendamentos}>
+          <thead className={estilos.tabelaCabecalho}>
             <tr>
               <th>Data</th>
               <th>Hora</th>
@@ -82,7 +82,7 @@ const Agendamentos = () => {
             </tr>
           </thead>
 
-          <tbody className="tabelaCorpo">
+          <tbody className={estilos.tabelaCorpo}>
             { 
               agendamentos.map(agd => <LinhaTabela key={agd.agdId} item={agd} />)
             }
@@ -105,7 +105,7 @@ const Agendamentos = () => {
 
             <Row>
               <Col md="4">
-                <Card className="card_agendamento">
+                <Card className={estilos.card_agendamento}>
                   <Card.Body>
                     <Card.Title>Animais</Card.Title>
                     <Card.Text>
@@ -118,7 +118,7 @@ const Agendamentos = () => {
               </Col>
 
               <Col md="4">
-                <Card className="card_agendamento">
+                <Card className={estilos.card_agendamento}>
                   <Card.Body>
                     <Card.Title>Instrutores</Card.Title>
                     <Card.Text>
@@ -131,7 +131,7 @@ const Agendamentos = () => {
               </Col>
 
               <Col md="4">
-                <Card className="card_agendamento">
+                <Card className={estilos.card_agendamento}>
                   <Card.Body>
                     <Card.Title>Materiais</Card.Title>
                     <Card.Text>
