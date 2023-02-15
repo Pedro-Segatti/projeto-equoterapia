@@ -1,0 +1,26 @@
+.childScon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 35%;
+}
+
+.tituloScon{
+    margin-top: 10%;
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.subtituloScon{
+    font-size: 18px;
+}
+
+.cavaloGifScon {
+    width: 200px;
+}
+
+.logoScon {
+    width: 400px;
+}

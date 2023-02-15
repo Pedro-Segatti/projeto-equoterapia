@@ -35,3 +35,7 @@ export const atualizarResponsavel = async (json) => {
 export const cadastrarFuncionario = async (jsonFuncionario) => {
     return await api.post("/cadastrarFuncionario", jsonFuncionario);
 };
+
+export const testeConexao = async () => {
+    return await api.get("/testeConexao");
+};

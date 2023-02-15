@@ -1,4 +1,6 @@
 import React from 'react';
+import { testeConexao } from "./utilitario/baseComunicacao";
+import { useNavigate } from "react-router-dom";
 
 import {
     BrowserRouter as Router,
@@ -8,6 +10,7 @@ import {
 } from "react-router-dom";
 
 import Login from "./view/login";
+import SemConexao from "./view/SemConexao";
 import HomePage from "./view/homePage";
 import NovaPagina from "./view/novaPagina";
 import CadastroAnimais from "./view/cadastros/cadastroAnimais";
@@ -37,10 +40,20 @@ import { useContext } from 'react';
 const Rotas = () => {
     const Private = ({ children }) => {
         const { autenticado, loading } = useContext(AuthContext);
+        const navegar = useNavigate();
 
         if (loading) {
             return <Carregando showCarregando={loading} />;
         }
+
+        const testarConexao = async () =>{
+            try {
+                await testeConexao();
+            } catch (error) {
+                navegar("/SemConexao");
+            }
+        }
+        testarConexao();
 
         //realizar comunicação com api para autenticar
         if (!autenticado) {
@@ -54,6 +67,7 @@ const Rotas = () => {
             <AuthProvider>
                 <Routes>
                     <Route exact path="/login" element={<Login />} />
+                    <Route exact path="/semConexao" element={<SemConexao />} />
                     <Route exact path="/" element={<Private><HomePage /></Private>} />
                     <Route exact path="/novaPagina" element={<Private><NovaPagina /></Private>} />
                     <Route exact path="/cadastroAnimais" element={<Private><CadastroAnimais /></Private>} />

@@ -456,6 +456,12 @@ public class ComunicacaoController {
     }
 
     @CrossOrigin(origins = "*")
+    @GetMapping("/testeConexao")
+    public boolean testeConexao() {
+        return true;
+    }
+
+    @CrossOrigin(origins = "*")
     @DeleteMapping("/removeMedico")
     public ResponseEntity<Medico> removeMedico(@RequestParam(required = false) Integer medId) {
         try {
