@@ -52,6 +52,7 @@ public class Animal implements Serializable {
         @JoinColumn(name = "FXA_ID_FICHA", referencedColumnName = "EVOL_ID")})
     @ManyToMany
     private List<FichaEvolucao> fichaEvolucaoList;
+
     @ManyToMany(mappedBy = "animalList")
     private List<Agendamento> agendamentoList;
 

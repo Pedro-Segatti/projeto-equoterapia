@@ -39,20 +39,20 @@ public class Agendamento implements Serializable {
     @JoinColumn(name = "AGD_ID_PRATICANTE", referencedColumnName = "PRAT_ID")
     @ManyToOne(optional = false)
     private Praticante praticante;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.DETACH})
     @JoinTable(name = "AGENDAMENTO_MATERIAL",
-            joinColumns = @JoinColumn(name = "AXM_ID_AGENDAMENTO"),
-            inverseJoinColumns = @JoinColumn(name = "AXM_ID_MATERIAL"))
+            joinColumns = @JoinColumn(name = "AXM_ID_AGENDAMENTO", referencedColumnName = "AGD_ID"),
+            inverseJoinColumns = @JoinColumn(name = "AXM_ID_MATERIAL", referencedColumnName = "MAT_ID"))
     private List<Material> materialList;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.DETACH})
     @JoinTable(name = "AGENDAMENTO_FUNCIONARIO",
-                joinColumns = @JoinColumn(name = "AXF_ID_AGENDAMENTO"),
-                inverseJoinColumns = @JoinColumn(name = "AXF_ID_FUNCIONARIO"))
+                joinColumns = @JoinColumn(name = "AXF_ID_AGENDAMENTO", referencedColumnName = "AGD_ID"),
+                inverseJoinColumns = @JoinColumn(name = "AXF_ID_FUNCIONARIO", referencedColumnName = "FUNC_ID"))
     private List<Funcionario> funcionarioList;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.DETACH})
     @JoinTable(name = "AGENDAMENTO_ANIMAL",
-            joinColumns = @JoinColumn(name = "AXA_ID_AGENDAMENTO"),
-            inverseJoinColumns = @JoinColumn(name = "AXA_ID_ANIMAL"))
+            joinColumns = @JoinColumn(name = "AXA_ID_AGENDAMENTO", referencedColumnName = "AGD_ID"),
+            inverseJoinColumns = @JoinColumn(name = "AXA_ID_ANIMAL", referencedColumnName = "ANI_ID"))
     private List<Animal> animalList;
 
     public Agendamento() {

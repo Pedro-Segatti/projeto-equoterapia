@@ -147,21 +147,7 @@ const movimentoAgendamentoSessao = () => {
             document.getElementById("botaoPraticante").focus();
             return;
         }
-        if (agendamentoAnimalList.length < 1) {
-            mensagemCustomizada("Selecione ao menos um animal", "warning");
-            document.getElementById("btnAnimal").focus();
-            return;
-        }
-        if (agendamentoFuncionarioList.length < 1) {
-            mensagemCustomizada("Selecione ao menos um Funcionário", "warning");
-            document.getElementById("btnFuncionario").focus();
-            return;
-        }
-        if (agendamentoMaterialList.length < 1) {
-            mensagemCustomizada("Selecione ao menos um Material", "warning");
-            document.getElementById("btnMaterial").focus();
-            return;
-        }
+       
         
         var jsonAgendamento = {
             "agdId": agdId,

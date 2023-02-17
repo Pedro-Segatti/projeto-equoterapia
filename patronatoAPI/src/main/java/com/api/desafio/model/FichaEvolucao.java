@@ -267,6 +267,26 @@ public class FichaEvolucao implements Serializable {
         this.fichaEvolAtividadeMaterialList = fichaEvolAtividadeMaterialList;
     }
 
+    @JsonIgnore
+    public String getDescClima(){
+        switch (evolClima) {
+            case "V":
+                return "Está ventando";
+            case "E":
+                return "Está ensolarado";
+            case "N":
+                return "Está nublado";
+            case "H":
+                return "Está chuvoso";
+            case "F":
+                return "Está frio";
+            case "C":
+                return "Está calor";
+            default:
+                return "Clima não configurado";
+        }
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;

@@ -74,6 +74,9 @@
 					<reportElement x="0" y="5" width="50" height="15" uuid="3629536c-0b23-49d9-ab1b-efc02cade67f">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
 					<text><![CDATA[Praticante:]]></text>
 				</staticText>
 				<textField>
@@ -107,6 +110,9 @@
 						<reportElement x="0" y="0" width="50" height="15" uuid="d2cb5058-e6a4-4fe8-af7b-ff30968980d3">
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						</reportElement>
+						<textElement>
+							<font isBold="true"/>
+						</textElement>
 						<text><![CDATA[Equipe:]]></text>
 					</staticText>
 				</frame>
@@ -117,6 +123,9 @@
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							<property name="com.jaspersoft.studio.unit.y" value="px"/>
 						</reportElement>
+						<textElement>
+							<font isBold="true"/>
+						</textElement>
 						<text><![CDATA[Animais:]]></text>
 					</staticText>
 					<componentElement>
@@ -233,6 +242,9 @@
 							<property name="com.jaspersoft.studio.unit.height" value="px"/>
 							<property name="com.jaspersoft.studio.unit.y" value="px"/>
 						</reportElement>
+						<textElement>
+							<font isBold="true"/>
+						</textElement>
 						<text><![CDATA[Atividades:]]></text>
 					</staticText>
 					<componentElement>
@@ -315,6 +327,9 @@
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					</reportElement>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
 					<text><![CDATA[Montaria pela:]]></text>
 				</staticText>
 				<textField>
@@ -327,6 +342,9 @@
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 						<printWhenExpression><![CDATA[$F{evolRecLudicos}]]></printWhenExpression>
 					</reportElement>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
 					<text><![CDATA[Quais recursos lúdicos:]]></text>
 				</staticText>
 				<textField>
@@ -341,6 +359,9 @@
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 						<printWhenExpression><![CDATA[$F{evolRecLudicos}]]></printWhenExpression>
 					</reportElement>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
 					<text><![CDATA[Observação:]]></text>
 				</staticText>
 				<textField textAdjust="StretchHeight" evaluationTime="Auto">

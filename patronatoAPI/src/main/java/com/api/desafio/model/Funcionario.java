@@ -46,10 +46,12 @@ public class Funcionario implements Serializable {
     private String funcPis;
     @Column(name = "FUNC_CNH")
     private String funcCnh;
+    @JsonIgnore
     @ManyToMany(mappedBy = "funcionarioList")
     private List<FichaEvolucao> fichaEvolucaoList;
     @ManyToMany(mappedBy = "funcionarioList")
     private List<Cargo> cargoList;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "amnIdFuncionario")
     private List<FichaAnamnese> fichaAnamneseList;
     @JsonIgnore
