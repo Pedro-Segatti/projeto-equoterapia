@@ -1,9 +1,7 @@
 package com.api.desafio.service;
 
 import com.api.desafio.crudFiles.AgendamentoCrud;
-import com.api.desafio.model.Agendamento;
-import com.api.desafio.model.Animal;
-import com.api.desafio.model.FichaEvolucao;
+import com.api.desafio.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +36,17 @@ public class AgendamentoService {
     public ResponseEntity<List<Agendamento>> pesquisaAgendamentosAtivos() {
         List<Agendamento> agendamentos = agendamentoCrud.findAtivos();
         return new ResponseEntity<List<Agendamento>>(agendamentos, HttpStatus.OK);
+    }
+
+    public List<Agendamento> pesquisaAgendamentosByAgdDataAndAgdHoraAndExistsAnimal(Date agdData, Date agdHora, Integer agdDifDe, List<Animal> animalList) {
+       return agendamentoCrud.findAgendamentosByAgdDataAndAgdHoraAndExistsAnimal(agdData, agdHora, agdDifDe, animalList);
+    }
+    public List<Agendamento> pesquisaAgendamentosByAgdDataAndAgdHoraAndExistsFuncionario(Date agdData, Date agdHora, Integer agdDifDe, List<Funcionario> funcionarioList) {
+        return agendamentoCrud.findAgendamentosByAgdDataAndAgdHoraAndExistsFuncionario(agdData, agdHora, agdDifDe,funcionarioList);
+    }
+
+    public List<Agendamento> pesquisaAgendamentosByAgdDataAndAgdHoraAndExistsMaterial(Date agdData, Date agdHora, Integer agdDifDe, List<Material> materialList) {
+        return agendamentoCrud.findAgendamentosByAgdDataAndAgdHoraAndExistsMaterial(agdData, agdHora, agdDifDe, materialList);
     }
 
     public Agendamento pesquisaPorCodigo(Integer agdId) {
