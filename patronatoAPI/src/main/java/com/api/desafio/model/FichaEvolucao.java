@@ -287,6 +287,34 @@ public class FichaEvolucao implements Serializable {
         }
     }
 
+    @JsonIgnore
+    public String getDescDecubito(){
+        switch (evolDecubito) {
+            case "C":
+                return "Clássica";
+            case "L":
+                return "Laterais";
+            case "I":
+                return "Invertido";
+            case "V":
+                return "Ventral";
+            default:
+                return "Decúbito não configurado";
+        }
+    }
+
+    @JsonIgnore
+    public String getDescHumor(){
+        switch (evolHumor) {
+            case "T":
+                return "Tranquilo";
+            case "A":
+                return "Agitado";
+            default:
+                return "Humor não configurado";
+        }
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
