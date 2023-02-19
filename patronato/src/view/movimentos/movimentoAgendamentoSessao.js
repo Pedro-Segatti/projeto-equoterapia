@@ -25,10 +25,11 @@ const movimentoAgendamentoSessao = () => {
     const [agdHora, setAgdHora] = useState("");
     const [agdPraticante, setAgdPraticante] = useState({ "pessoa": { "pesNome": "" } });
     const [agdDescricao, setAgdDescricao] = useState("");
+    const [agdConcluido, setAgdConcluido] = useState(false);
     const [agendamentoMaterialList, setAgendamentoMaterialList] = useState([]);
     const [agendamentoFuncionarioList, setAgendamentoFuncionarioList] = useState([]);
     const [agendamentoAnimalList, setAgendamentoAnimalList] = useState([]);
-    
+
 
     const [listPraticantes, setListPraticantes] = useState([]);
     const [abrirPesquisaPraticante, setAbrirPesquisaPraticante] = useState(false);
@@ -90,6 +91,7 @@ const movimentoAgendamentoSessao = () => {
         setAgendamentoFuncionarioList(item.funcionarioList);
         setAgendamentoMaterialList(item.materialList);
         setAbrirPesquisaAgendamento(false);
+        setAgdConcluido(item.agdConcluido);
     }
 
     const atualizaAnimalSelecionado = (item) => {
@@ -147,17 +149,17 @@ const movimentoAgendamentoSessao = () => {
             document.getElementById("botaoPraticante").focus();
             return;
         }
-       
-        
+
         var jsonAgendamento = {
             "agdId": agdId,
             "agdData": dataApiFormatada(agdData),
             "agdHora": horaFormatada(agdHora),
             "agdDescricao": agdDescricao,
+            "agdConcluido": agdConcluido,
             "praticante": agdPraticante,
             "materialList": agendamentoMaterialList,
-            "funcionarioList":agendamentoFuncionarioList,
-            "animalList":agendamentoAnimalList
+            "funcionarioList": agendamentoFuncionarioList,
+            "animalList": agendamentoAnimalList
         }
         console.log(jsonAgendamento);
 
@@ -165,6 +167,8 @@ const movimentoAgendamentoSessao = () => {
         if (response.status === HTTP_STATUS.OK) {
             registroSalvo();
             limparCamposFormulario();
+        } else if (response.status === HTTP_STATUS.ALREADY_REPORTED) {
+            mensagemCustomizada(response.data, "warning");
         }
     }
 
@@ -177,6 +181,7 @@ const movimentoAgendamentoSessao = () => {
         setAgendamentoMaterialList([]);
         setAgendamentoFuncionarioList([]);
         setAgendamentoAnimalList([]);
+        setAgdConcluido(false);
     }
 
     return (
@@ -189,7 +194,7 @@ const movimentoAgendamentoSessao = () => {
                     <Row>
                         <h3>Agendamento de Sessões</h3>
                     </Row>
-                    
+
                     <Row>
                         <Col md="2">
                             <Form.Label htmlFor="inputId">Código</Form.Label>
@@ -198,14 +203,20 @@ const movimentoAgendamentoSessao = () => {
                         <Col md="2">
                             <Form.Label htmlFor="inputData">Data</Form.Label>
                             <Form.Control value={agdData}
-                                    onChange={(e) => setAgdData(e.target.value)}
-                                    type="date" id="inputDate" required />
+                                onChange={(e) => setAgdData(e.target.value)}
+                                type="date" id="inputDate" required />
                         </Col>
                         <Col md="2">
                             <Form.Label htmlFor="inputHora">Hora</Form.Label>
                             <Form.Control value={agdHora}
-                                    onChange={(e) => setAgdHora(e.target.value)}
-                                    type="time" id="inputHora" required />
+                                onChange={(e) => setAgdHora(e.target.value)}
+                                type="time" id="inputHora" required />
+                        </Col>
+                        <Col md="2">
+                            <Form.Label htmlFor="inputHora"></Form.Label>
+                            <Form.Check checked={agdConcluido}
+                                onChange={(e) => setAgdConcluido(e.target.checked)}
+                                type="checkbox" label="Concluído" />
                         </Col>
                     </Row>
 
@@ -276,16 +287,16 @@ const movimentoAgendamentoSessao = () => {
             }
 
             {abrirPesquisaAgendamento &&
-                    <PesquisaAgendamentos setValores={setListAgendamentos} valores={listAgendamentos} atualizaItemSelecionado={atualizaAgendamentoSelecionado} setAbrirPesquisa={setAbrirPesquisaAgendamento} />
+                <PesquisaAgendamentos setValores={setListAgendamentos} valores={listAgendamentos} atualizaItemSelecionado={atualizaAgendamentoSelecionado} setAbrirPesquisa={setAbrirPesquisaAgendamento} />
             }
             {abrirPesquisaAnimal &&
-                    <PesquisaAnimais setValores={setListAnimal} valores={listAnimal} atualizaItemSelecionado={atualizaAnimalSelecionado} setAbrirPesquisa={setAbrirPesquisaAnimal} />
+                <PesquisaAnimais setValores={setListAnimal} valores={listAnimal} atualizaItemSelecionado={atualizaAnimalSelecionado} setAbrirPesquisa={setAbrirPesquisaAnimal} />
             }
             {abrirPesquisaFuncionario &&
-                    <PesquisaFuncionario setValores={setListFuncionario} valores={listFuncionario} atualizaItemSelecionado={atualizaFuncionarioSelecionado} setAbrirPesquisa={setAbrirPesquisaFuncionario} />
+                <PesquisaFuncionario setValores={setListFuncionario} valores={listFuncionario} atualizaItemSelecionado={atualizaFuncionarioSelecionado} setAbrirPesquisa={setAbrirPesquisaFuncionario} />
             }
             {abrirPesquisaMaterial &&
-                    <PesquisaMaterial setValores={setListMaterial} valores={listMaterial} atualizaItemSelecionado={atualizaMaterialSelecionado} setAbrirPesquisa={setAbrirPesquisaMaterial} />
+                <PesquisaMaterial setValores={setListMaterial} valores={listMaterial} atualizaItemSelecionado={atualizaMaterialSelecionado} setAbrirPesquisa={setAbrirPesquisaMaterial} />
             }
             <Footer />
         </div >

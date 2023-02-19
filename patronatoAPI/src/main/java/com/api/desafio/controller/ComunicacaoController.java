@@ -13,10 +13,7 @@ import com.api.desafio.service.PessoaService;
 import com.api.desafio.service.ResponsavelService;
 import com.api.desafio.utils.ListUtil;
 import com.api.desafio.utils.RelatorioUtil;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.api.desafio.utils.StringUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 public class ComunicacaoController {
@@ -315,7 +313,33 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @PostMapping("/cadastrarAgendamento")
-    public ResponseEntity<Agendamento> cadastrarAgendamento(@RequestBody Agendamento agendamento) {
+    public ResponseEntity<?> cadastrarAgendamento(@RequestBody Agendamento agendamento) {
+
+            List<Agendamento> agendamentosDataHora = agendamentoService.pesquisaAgendamentosByAgdDataAndAgdHoraAndExistsAnimal(agendamento.getAgdData(), agendamento.getAgdHora(), agendamento.getAgdId(), agendamento.getAnimalList());
+            if (ListUtil.isNotEmpty(agendamentosDataHora)) {
+                Agendamento agendamentoJaRealizado = agendamentosDataHora.get(0);
+                List<String> animaisString = agendamentoJaRealizado.getAnimalList().stream().map(ani -> ani.getAniNome()).collect(Collectors.toList());
+                return ResponseEntity
+                        .status(HttpStatus.ALREADY_REPORTED)
+                        .body(String.format("Para essa data e hora existe um agendamento para o praticante %s com os animais %s", agendamentoJaRealizado.getPraticante().getPessoa().getPesNome(), StringUtil.join(animaisString, ", ")));
+            }
+            agendamentosDataHora = agendamentoService.pesquisaAgendamentosByAgdDataAndAgdHoraAndExistsFuncionario(agendamento.getAgdData(), agendamento.getAgdHora(), agendamento.getAgdId(), agendamento.getFuncionarioList());
+            if (ListUtil.isNotEmpty(agendamentosDataHora)) {
+                Agendamento agendamentoJaRealizado = agendamentosDataHora.get(0);
+                List<String> funcionariosString = agendamentoJaRealizado.getFuncionarioList().stream().map(func -> func.getPessoa().getPesNome()).collect(Collectors.toList());
+                return ResponseEntity
+                        .status(HttpStatus.ALREADY_REPORTED)
+                        .body(String.format("Para essa data e hora existe um agendamento para o praticante %s com os funcionários %s", agendamentoJaRealizado.getPraticante().getPessoa().getPesNome(), StringUtil.join(funcionariosString, ", ")));
+            }
+            agendamentosDataHora = agendamentoService.pesquisaAgendamentosByAgdDataAndAgdHoraAndExistsMaterial(agendamento.getAgdData(), agendamento.getAgdHora(), agendamento.getAgdId(), agendamento.getMaterialList());
+            if (ListUtil.isNotEmpty(agendamentosDataHora)) {
+                Agendamento agendamentoJaRealizado = agendamentosDataHora.get(0);
+                List<String> materialString = agendamentoJaRealizado.getMaterialList().stream().map(mat -> mat.getMatDescricao()).collect(Collectors.toList());
+                return ResponseEntity
+                        .status(HttpStatus.ALREADY_REPORTED)
+                        .body(String.format("Para essa data e hora existe um agendamento para o praticante %s utilizando os materiais %s", agendamentoJaRealizado.getPraticante().getPessoa().getPesNome(), StringUtil.join(materialString, ", ")));
+            }
+
         agendamento = agendamentoService.salva(agendamento);
         if (agendamento != null) {
             return new ResponseEntity<>(agendamento, HttpStatus.OK);
