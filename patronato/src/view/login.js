@@ -45,8 +45,9 @@ const Login = () => {
                     <Box>
                         <Form onSubmit={handleSubmit}>
                             <Form.Label htmlFor="inputLogin">Login</Form.Label>
-                            <Form.Control id="inputLogin" type="text" maxLength='14' as={IMaskInput} inputMode="numeric"
-                                mask="000.000.000-00" placeholder='Digite aqui o seu CPF...' required value={log} onChange={(l) => setLog(l.target.value)} className="inputLogin" autocomplete="off" />
+                            <Form.Control id="inputLogin" type="text" maxLength='14' as={IMaskInput}
+                                mask="000.000.000-00" placeholder='Digite aqui o seu CPF...' required value={log} onBlur={(l) => setLog(l.target.value)} 
+                                className="inputLogin" />
                             <br />
                             <Form.Label htmlFor="inputSenha">Senha</Form.Label>
                             <Form.Control id="inputPassword" type="password" placeholder='Digite aqui a sua senha...' required value={password} onChange={(p) => setPassword(p.target.value)} className="inputLogin" />
