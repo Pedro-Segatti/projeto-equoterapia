@@ -6,7 +6,7 @@ import { BsPencilSquare } from "react-icons/bs";
 import { Form, Col, Row, Container, Modal, Button, Table } from 'react-bootstrap';
 import PesquisaPraticantes from '../pesquisas/pesquisaPraticantes';
 import { api } from "../../utilitario/baseComunicacao";
-import { dataFormatadaDiaMesAno, horaFormatadaString, horaFormatada } from '../../utilitario/dateUtil';
+import { dataFormatadaDiaMesAno, horaFormatadaString } from '../../utilitario/dateUtil';
 
 function pesquisaAgendamentos({ setValores, valores, atualizaItemSelecionado, setAbrirPesquisa }) {
     const [listPraticantes, setListPraticantes] = useState([]);
@@ -31,7 +31,7 @@ function pesquisaAgendamentos({ setValores, valores, atualizaItemSelecionado, se
     }
 
     const buscaRegistros = async () => {
-        setValores(await (await api.get("/pesquisaAgendamentos?pratId=" + idPraticante + "&agdData=" + dataFormatadaDiaMesAno(agdData) + "&agdHora=" + horaFormatada(agdHora) + "&agdConcluido=" + agdConcluido)).data);
+        setValores(await (await api.get("/pesquisaAgendamentos?pratId=" + idPraticante + "&agdConcluido=" + agdConcluido)).data);
         setAbrirPesquisa(true);
     }
 
