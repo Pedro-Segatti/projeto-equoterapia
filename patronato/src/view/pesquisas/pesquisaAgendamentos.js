@@ -31,7 +31,7 @@ function pesquisaAgendamentos({ setValores, valores, atualizaItemSelecionado, se
     }
 
     const buscaRegistros = async () => {
-        setValores(await (await api.get("/pesquisaAgendamentos?pratId=" + idPraticante + "&agdData=" + dataFormatadaDiaMesAno(agdData) + "&agdConcluido=" + agdConcluido)).data);
+        setValores(await (await api.get("/pesquisaAgendamentos?pratId=" + idPraticante + "&agdData=" + dataFormatadaDiaMesAno(agdData) + "&agdHora=" + horaFormatada(agdHora) + "&agdConcluido=" + agdConcluido)).data);
         setAbrirPesquisa(true);
     }
 
