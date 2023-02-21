@@ -213,8 +213,8 @@ const movimentoAgendamentoSessao = () => {
                                 type="time" id="inputHora" required />
                         </Col>
                         <Col md="2">
-                            <Form.Label htmlFor="inputHora"></Form.Label>
-                            <Form.Check checked={agdConcluido}
+                            <Form.Label htmlFor="checkConcluido"></Form.Label>
+                            <Form.Check id="checkConcluido" checked={agdConcluido}
                                 onChange={(e) => setAgdConcluido(e.target.checked)}
                                 type="checkbox" label="Concluído" />
                         </Col>

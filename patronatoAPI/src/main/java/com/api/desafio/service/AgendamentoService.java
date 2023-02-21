@@ -28,8 +28,8 @@ public class AgendamentoService {
         agendamentoCrud.delete(agd);
     }
 
-    public ResponseEntity<List<Agendamento>> pesquisaAgendamentos(Integer pratId, Date agdData) {
-        List<Agendamento> agendamentos = agendamentoCrud.findByPratIdAndAgdData(pratId, agdData);
+    public ResponseEntity<List<Agendamento>> pesquisaAgendamentos(Integer pratId, Date agdData, Date agdHora, boolean agdConcluido) {
+        List<Agendamento> agendamentos = agendamentoCrud.findByPratIdAndAgdDataAndAgdHoraAndAgdConcluido(pratId, agdData, agdHora, agdConcluido);
         return new ResponseEntity<List<Agendamento>>(agendamentos, HttpStatus.OK);
     }
 

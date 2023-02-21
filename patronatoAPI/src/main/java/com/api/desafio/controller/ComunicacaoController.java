@@ -361,8 +361,8 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaAgendamentos")
-    public ResponseEntity<List<Agendamento>> pesquisaAgendamentos(@RequestParam(required = false) Integer pratId, @RequestParam(required = false) Date agdData) {
-        return agendamentoService.pesquisaAgendamentos(pratId, agdData);
+    public ResponseEntity<List<Agendamento>> pesquisaAgendamentos(@RequestParam(required = false) Integer pratId, @RequestParam(required = false) Date agdData, @RequestParam(required = false) Date agdHora, @RequestParam(required = false) boolean agdConcluido) {
+        return agendamentoService.pesquisaAgendamentos(pratId, agdData, agdHora, agdConcluido);
     }
 
     @CrossOrigin(origins = "*")

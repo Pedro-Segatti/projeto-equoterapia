@@ -6,7 +6,7 @@ import { BsPencilSquare } from "react-icons/bs";
 import { Form, Col, Row, Container, Modal, Button, Table } from 'react-bootstrap';
 import PesquisaPraticantes from '../pesquisas/pesquisaPraticantes';
 import { api } from "../../utilitario/baseComunicacao";
-import { dataFormatadaDiaMesAno } from '../../utilitario/dateUtil';
+import { dataFormatadaDiaMesAno, horaFormatadaString, horaFormatada } from '../../utilitario/dateUtil';
 
 function pesquisaAgendamentos({ setValores, valores, atualizaItemSelecionado, setAbrirPesquisa }) {
     const [listPraticantes, setListPraticantes] = useState([]);
@@ -15,6 +15,8 @@ function pesquisaAgendamentos({ setValores, valores, atualizaItemSelecionado, se
     const [idPraticante, setIdPraticante] = useState("");
     const [nomePraticante, setNomePraticante] = useState("");
     const [agdData, setAgdData] = useState("");
+    const [agdHora, setAgdHora] = useState("");
+    const [agdConcluido, setAgdConcluido] = useState(false);
 
 
     const atualizaDlgPesquisaPraticante = async () => {
@@ -29,7 +31,7 @@ function pesquisaAgendamentos({ setValores, valores, atualizaItemSelecionado, se
     }
 
     const buscaRegistros = async () => {
-        setValores(await (await api.get("/pesquisaAgendamentos?pratId=" + idPraticante)).data);
+        setValores(await (await api.get("/pesquisaAgendamentos?pratId=" + idPraticante + "&agdData=" + dataFormatadaDiaMesAno(agdData) + "&agdConcluido=" + agdConcluido)).data);
         setAbrirPesquisa(true);
     }
 
@@ -51,6 +53,7 @@ function pesquisaAgendamentos({ setValores, valores, atualizaItemSelecionado, se
                         <tr>
                             <th>Código</th>
                             <th>Data</th>
+                            <th>Hora</th>
                             <th>Descrição</th>
                             <th className='center'>Ação</th>
                         </tr>
@@ -66,12 +69,13 @@ function pesquisaAgendamentos({ setValores, valores, atualizaItemSelecionado, se
         );
     };
 
-    const LinhaTabela = ({ item, selecionaLinha, atualizaItemSelecionado, removeAgendamentoSelecionado }) => {
-        const { agdId, agdData, agdDescricao } = item;
+    const LinhaTabela = ({ item, selecionaLinha, atualizaItemSelecionado }) => {
+        const { agdId, agdData, agdDescricao, agdHora } = item;
         const selecionarItem = e => atualizaItemSelecionado(item);
         return <tr>
             <td width={'80px'}>{agdId}</td>
-            <td width={'80px'}>{dataFormatadaDiaMesAno(agdData)}</td>
+            <td width={'80px'} className="bold">{dataFormatadaDiaMesAno(agdData)}</td>
+            <td width={'80px'}>{horaFormatadaString(agdHora)}</td>
             <td>{agdDescricao}</td>
             {selecionaLinha &&
                 <td width={'80px'} className='center'>
@@ -95,12 +99,31 @@ function pesquisaAgendamentos({ setValores, valores, atualizaItemSelecionado, se
                                 </Col>
 
                                 <Col md="2">
+                                    <Form.Label htmlFor="checkConcluido"></Form.Label>
+                                    <Form.Check id="checkConcluido" checked={agdConcluido}
+                                        onChange={(e) => setAgdConcluido(e.target.checked)}
+                                        type="checkbox" label="Concluído" />
+                                </Col>
+                            </Row>
+
+                            <Row>
+                                <Col md="2">
                                     <Form.Label htmlFor="inputData">Data</Form.Label>
                                     <Form.Control value={agdData}
                                         onChange={(e) => setAgdData(e.target.value)}
                                         type="date" id="inputDate" required />
                                 </Col>
+
+                                <Col md="2">
+                                    <Form.Label htmlFor="inputHora">Hora</Form.Label>
+                                    <Form.Control value={agdHora}
+                                        onChange={(e) => setAgdHora(e.target.value)}
+                                        type="time" id="inputHora" required />
+                                </Col>                                
                             </Row>
+
+                            <br />
+
                             <div className='right'>
                                 <Button className='btnMarginTop btnToolbar' onClick={buscaRegistros}>Pesquisar</Button>
                                 <Button className='btnMarginTop btn-warning btnToolbar' onClick={limparPesquisa}>Limpar</Button>
