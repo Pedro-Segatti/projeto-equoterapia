@@ -3,7 +3,7 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 dayjs.extend(customParseFormat);
 
 export const dataFormatadaAnoMesDia = (data) => {
-    return dayjs(data).format('YYYY-MM-DD');
+    return data !== "" ? dayjs(data).format('YYYY-MM-DD') : "";
 };
 
 export const dataFormatadaDiaMesAno = (data) => {

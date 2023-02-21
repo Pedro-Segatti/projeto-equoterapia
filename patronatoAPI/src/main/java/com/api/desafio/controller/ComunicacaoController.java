@@ -16,6 +16,7 @@ import com.api.desafio.utils.RelatorioUtil;
 import com.api.desafio.utils.StringUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -361,8 +362,8 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaAgendamentos")
-    public ResponseEntity<List<Agendamento>> pesquisaAgendamentos(@RequestParam(required = false) Integer pratId, @RequestParam(required = false) Date agdData, @RequestParam(required = false) Date agdHora, @RequestParam(required = false) boolean agdConcluido) {
-        return agendamentoService.pesquisaAgendamentos(pratId, null, null, agdConcluido);
+    public ResponseEntity<List<Agendamento>> pesquisaAgendamentos(@RequestParam(required = false) Integer pratId, @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date agdData, @RequestParam(required = false) @DateTimeFormat(pattern = "HH:mm") Date agdHora, @RequestParam(required = false) boolean agdConcluido) {
+        return agendamentoService.pesquisaAgendamentos(pratId, agdData, agdHora, agdConcluido);
     }
 
     @CrossOrigin(origins = "*")

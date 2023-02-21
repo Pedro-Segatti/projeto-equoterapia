@@ -11,7 +11,7 @@ import java.util.List;
 public interface AgendamentoCrud extends CrudRepository<Agendamento,Integer> {
 
     public Agendamento findByAgdId(Integer agdId);
-    @Query("SELECT a FROM Agendamento a WHERE (:pratId is null or a.praticante.pratId = :pratId) AND (:agdData is null OR a.agdData = :agdData) AND (:agdData is null OR a.agdHora = :agdHora) AND (a.agdConcluido = :agdConcluido)")
+    @Query("SELECT a FROM Agendamento a WHERE (:pratId is null or a.praticante.pratId = :pratId) AND (:agdData is null OR a.agdData = :agdData) AND (:agdHora is null OR a.agdHora = :agdHora) AND (a.agdConcluido = :agdConcluido)")
     List<Agendamento> findByPratIdAndAgdDataAndAgdHoraAndAgdConcluido(@Param("pratId") Integer pratId, @Param("agdData") Date agdData, @Param("agdHora") Date agdHora, @Param("agdConcluido") boolean agdConcluido);
 
     @Query("SELECT a FROM Agendamento a WHERE a.agdData >= current_date and a.agdConcluido = false order by a.agdData, a.agdHora desc")
