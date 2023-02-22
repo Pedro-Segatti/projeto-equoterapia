@@ -17,7 +17,7 @@ import java.util.*;
 
 public class RelatorioUtil {
 
-    public static ResponseEntity<byte[]> gerarRelatorios(String jsonParams, List registros) {
+    public static ResponseEntity<byte[]> gerarRelatorios(JsonObject jsonParams, List registros) {
         if(ListUtil.isEmpty(registros)){
             return new ResponseEntity<byte[]>(new byte[] {}, HttpStatus.NO_CONTENT);
         }
@@ -38,12 +38,18 @@ public class RelatorioUtil {
             JasperPrint jasperPrint = null;
             jasperPrint = JasperFillManager.fillReport(compileReport, parameters, new JRBeanCollectionDataSource(registros));
             byte data[] = JasperExportManager.exportReportToPdf(jasperPrint);
-
             return new ResponseEntity<byte[]>(Base64.getEncoder().encode(data), HttpStatus.OK);
         } catch (JRException | FileNotFoundException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static Integer getParamInteger(JsonObject json, String param){
+        if(json.get(param) != null){
+            return json.get(param).getAsInt();
+        }
+        return null;
     }
 }

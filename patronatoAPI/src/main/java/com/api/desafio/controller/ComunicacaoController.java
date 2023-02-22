@@ -11,9 +11,12 @@ import com.api.desafio.service.AvalSocioeconService;
 import com.api.desafio.service.FichaEvolService;
 import com.api.desafio.service.PessoaService;
 import com.api.desafio.service.ResponsavelService;
+import com.api.desafio.utils.DateUtil;
 import com.api.desafio.utils.ListUtil;
 import com.api.desafio.utils.RelatorioUtil;
 import com.api.desafio.utils.StringUtil;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -272,7 +275,7 @@ public class ComunicacaoController {
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaFichaEvol")
     public ResponseEntity<List<FichaEvolucao>> pesquisaFichaEvol(@RequestParam(required = false) Integer evolId) {
-        return fichaEvolService.pesquisa(evolId);
+        return fichaEvolService.pesquisa();
     }
 
     @CrossOrigin(origins = "*")
@@ -639,14 +642,20 @@ public class ComunicacaoController {
     @CrossOrigin(origins = "*")
     @PutMapping("/relatorioFuncionarios")
     public ResponseEntity<byte[]> gerarRelatorioFuncionarios(@RequestBody String jsonParams) {
+        JsonObject jsonConvertido = new Gson().fromJson(jsonParams, JsonObject.class);
         List<Funcionario> funcionarios = funcionarioService.pesquisaFuncionario("", "", null).getBody();
-        return RelatorioUtil.gerarRelatorios(jsonParams, funcionarios);
+        return RelatorioUtil.gerarRelatorios(jsonConvertido, funcionarios);
     }
 
     @CrossOrigin(origins = "*")
     @PutMapping("/relatorioFichaEvolucao")
     public ResponseEntity<byte[]> gerarRelatorioFichaEvolucao(@RequestBody String jsonParams) {
-        List<FichaEvolucao> fichaEvol = fichaEvolService.pesquisa(0).getBody();
-        return RelatorioUtil.gerarRelatorios(jsonParams, fichaEvol);
+        JsonObject jsonConvertido = new Gson().fromJson(jsonParams, JsonObject.class);
+        JsonObject filtros = jsonConvertido.get("filtros").getAsJsonObject();
+        Date dataIni = DateUtil.newDate(filtros.get("dataIni").getAsString());
+        Date dataFim = DateUtil.newDate(filtros.get("dataFim").getAsString());
+        Integer pratId = RelatorioUtil.getParamInteger(filtros,"pratId");
+        List<FichaEvolucao> fichaEvol = fichaEvolService.pesquisaRelatorio(dataIni, dataFim, pratId).getBody();
+        return RelatorioUtil.gerarRelatorios(jsonConvertido, fichaEvol);
     }
 }

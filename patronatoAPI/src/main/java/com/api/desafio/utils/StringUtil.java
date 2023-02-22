@@ -21,4 +21,7 @@ public class StringUtil implements Serializable {
         return retorno.toString();
     }
 
+    public static boolean notNullOrEmpty(String valor){
+        return valor != null && !valor.isEmpty();
+    }
 }

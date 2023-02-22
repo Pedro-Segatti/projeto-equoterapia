@@ -48,10 +48,6 @@ public class FichaEvolucao implements Serializable {
     private String evolObsRecLud;
     @Column(name = "EVOL_DECUBITO")
     private String evolDecubito;
-    @Column(name = "EVOL_COMP_ANI")
-    private String evolCompAni;
-    @Column(name = "EVOL_AND_ANI")
-    private String evolAndAni;
     @JoinColumn(name = "EVOL_ID_MONT", referencedColumnName = "MONT_ID")
     @ManyToOne(optional = false)
     private Montaria evolIdMont;
@@ -203,22 +199,6 @@ public class FichaEvolucao implements Serializable {
         this.evolDecubito = evolDecubito;
     }
 
-    public String getEvolCompAni() {
-        return evolCompAni;
-    }
-
-    public void setEvolCompAni(String evolCompAni) {
-        this.evolCompAni = evolCompAni;
-    }
-
-    public String getEvolAndAni() {
-        return evolAndAni;
-    }
-
-    public void setEvolAndAni(String evolAndAni) {
-        this.evolAndAni = evolAndAni;
-    }
-
     public Montaria getEvolIdMont() {
         return evolIdMont;
     }
@@ -311,7 +291,7 @@ public class FichaEvolucao implements Serializable {
             case "A":
                 return "Agitado";
             default:
-                return "Humor não configurado";
+                return "";
         }
     }
 

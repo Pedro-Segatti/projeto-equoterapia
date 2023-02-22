@@ -106,8 +106,6 @@ function cadastroFichaEvol() {
     const [evolQuaisRecLud, setEvolQuaisRecLud] = useState("");
     const [evolObsRecLud, setEvolObsRecLud] = useState("");
     const [evolDecubito, setEvolDecubito] = useState("");
-    const [evolCompAni, setEvolCompAni] = useState("");
-    const [evolAndAni, setEvolAndAni] = useState("");
     const [evolIdMont, setEvolIdMont] = useState({ "montDescricao": "" });
     const [evolAniSelecionado, setEvolAniSelecionado] = useState([]);
     const [evolPicSelecionado, setEvolPicSelecionado] = useState([]);
@@ -130,8 +128,6 @@ function cadastroFichaEvol() {
         setEvolQuaisRecLud(item.evolQuaisRecLud || '');
         setEvolObsRecLud(item.evolObsRecLud || '');
         setEvolDecubito(item.evolDecubito || '');
-        setEvolCompAni(item.evolCompAni || '');
-        setEvolAndAni(item.evolAndAni || '');
         setEvolAniSelecionado(item.animalList || []);
         setEvolPicSelecionado(item.picadeiroList || []);
         setEvolIdPrat(item.evolIdPraticante || {"pessoa": {"pesNome": ""}});
@@ -248,8 +244,6 @@ function cadastroFichaEvol() {
             "evolQuaisRecLud": evolQuaisRecLud,
             "evolDecubito": evolDecubito,
             "evolObsRecLud": evolObsRecLud,
-            "evolCompAni": evolCompAni,
-            "evolAndAni": evolAndAni,
             "evolIdMont": evolIdMont,
             "animalList": evolAniSelecionado.map(animal => (animal)),
             "picadeiroList": evolPicSelecionado.map(picadeiro => (picadeiro)),
@@ -337,7 +331,6 @@ function cadastroFichaEvol() {
     const limparCamposFormulario = () => {
         setEvolId("");
         setEvolHumor("");
-        setEvolAndAni("");
         setEvolClima("");
         setEvolAtenc("");
         setEvolData(Date().now);
@@ -352,8 +345,6 @@ function cadastroFichaEvol() {
         setEvolDecubito("");
         setEvolObsRecLud("");
         setEvolObsRecLud("");
-        setEvolCompAni("");
-        setEvolAndAni("");
         setEvolIdMont("");
         setEvolData("");
         setEvolAniSelecionado([]);
@@ -555,21 +546,6 @@ function cadastroFichaEvol() {
                                 <Form.Control value={evolObsRecLud} disabled={!evolRecLudicos}
                                     onChange={(e) => setEvolObsRecLud(e.target.value)}
                                     type="text" id="obsRecLud" as="textarea" className='textArea' />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md="6">
-                                <Form.Label htmlFor="compAni">Comportamento do Animal</Form.Label>
-                                <Form.Control value={evolCompAni} maxLength={30}
-                                    onChange={(e) => setEvolCompAni(e.target.value)}
-                                    type="text" id="compAni" />
-                            </Col>
-
-                            <Col md="6">
-                                <Form.Label htmlFor="andAni">Andadura do Animal</Form.Label>
-                                <Form.Control value={evolAndAni} maxLength={30}
-                                    onChange={(e) => setEvolAndAni(e.target.value)}
-                                    type="text" id="andAni" />
                             </Col>
                         </Row>
                         <br />

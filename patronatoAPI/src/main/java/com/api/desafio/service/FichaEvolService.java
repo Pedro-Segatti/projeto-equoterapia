@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -28,8 +29,13 @@ public class FichaEvolService {
         fec.delete(evolucao);
     }
 
-    public ResponseEntity<List<FichaEvolucao>> pesquisa(Integer evolId) {
+    public ResponseEntity<List<FichaEvolucao>> pesquisa() {
         List<FichaEvolucao> evolucao = (List<FichaEvolucao>) fec.findAll();
+        return new ResponseEntity<List<FichaEvolucao>>(evolucao, HttpStatus.OK);
+    }
+
+    public ResponseEntity<List<FichaEvolucao>> pesquisaRelatorio(Date dataIni, Date dataFim, Integer pratId) {
+        List<FichaEvolucao> evolucao = (List<FichaEvolucao>) fec.findByPeriodo(dataIni, dataFim, pratId);
         return new ResponseEntity<List<FichaEvolucao>>(evolucao, HttpStatus.OK);
     }
 
