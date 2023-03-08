@@ -319,7 +319,15 @@ public class ComunicacaoController {
     @PostMapping("/cadastrarAgendamento")
     public ResponseEntity<?> cadastrarAgendamento(@RequestBody Agendamento agendamento) {
 
-            List<Agendamento> agendamentosDataHora = agendamentoService.pesquisaAgendamentosByAgdDataAndAgdHoraAndExistsAnimal(agendamento.getAgdData(), agendamento.getAgdHora(), agendamento.getAgdId(), agendamento.getAnimalList());
+            List<Agendamento> agendamentosDataHora  = agendamentoService.pesquisaAgendamentosDiferetesDeDaMesmaDataEHora(agendamento.getAgdId(), agendamento.getAgdData(), agendamento.getAgdHora());
+            if (ListUtil.isNotEmpty(agendamentosDataHora)) {
+                Agendamento agendamentoJaRealizado = agendamentosDataHora.get(0);
+                return ResponseEntity
+                        .status(HttpStatus.ALREADY_REPORTED)
+                        .body(String.format("Para essa data e hora existe um agendamento para o praticante %s", agendamentoJaRealizado.getPraticante().getPessoa().getPesNome()));
+            }
+
+            agendamentosDataHora = agendamentoService.pesquisaAgendamentosByAgdDataAndAgdHoraAndExistsAnimal(agendamento.getAgdData(), agendamento.getAgdHora(), agendamento.getAgdId(), agendamento.getAnimalList());
             if (ListUtil.isNotEmpty(agendamentosDataHora)) {
                 Agendamento agendamentoJaRealizado = agendamentosDataHora.get(0);
                 List<String> animaisString = agendamentoJaRealizado.getAnimalList().stream().map(ani -> ani.getAniNome()).collect(Collectors.toList());
