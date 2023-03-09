@@ -33,6 +33,10 @@ public class AgendamentoService {
         return new ResponseEntity<List<Agendamento>>(agendamentos, HttpStatus.OK);
     }
 
+    public List<Agendamento> pesquisaAgendamentosDiferetesDeDaMesmaDataEHora(Integer agdId, Date agdData, Date agdHora) {
+        return agendamentoCrud.findAgendamentosDiferentesDaMesmaDataEHora(agdId, agdData, agdHora);
+    }
+
     public ResponseEntity<List<Agendamento>> pesquisaAgendamentosAtivos() {
         List<Agendamento> agendamentos = agendamentoCrud.findAtivos();
         return new ResponseEntity<List<Agendamento>>(agendamentos, HttpStatus.OK);
