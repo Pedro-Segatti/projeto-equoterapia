@@ -274,8 +274,8 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaFichaEvol")
-    public ResponseEntity<List<FichaEvolucao>> pesquisaFichaEvol(@RequestParam(required = false) Integer evolId) {
-        return fichaEvolService.pesquisa();
+    public ResponseEntity<List<FichaEvolucao>> pesquisaFichaEvol(@RequestParam(required = false) Integer evolId, @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date evolData, @RequestParam(required = false) Integer pratId) {
+        return fichaEvolService.pesquisa(evolId, evolData, pratId);
     }
 
     @CrossOrigin(origins = "*")

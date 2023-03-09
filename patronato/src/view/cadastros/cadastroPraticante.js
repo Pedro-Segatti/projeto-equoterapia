@@ -104,6 +104,14 @@ const cadastroPraticante = () => {
             "responsavel": item,
             "pxrTipoResp": ""
         }
+        for (var i=0;i<listResponsveisSelecionados.length;i++)
+        {
+        if (listResponsveisSelecionados[i].responsavel.respId===jsonItem.responsavel.respId){
+            mensagemCustomizada("Este responsável já foi selecionado", "warning");
+            setAbrirPesquisaResponsaveis(false);
+            return;
+        }
+        }
 
         setListResponsveisSelecionados(current => [...current, jsonItem])
         setAbrirPesquisaResponsaveis(false);
