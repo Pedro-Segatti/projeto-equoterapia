@@ -29,8 +29,8 @@ public class FichaEvolService {
         fec.delete(evolucao);
     }
 
-    public ResponseEntity<List<FichaEvolucao>> pesquisa() {
-        List<FichaEvolucao> evolucao = (List<FichaEvolucao>) fec.findAll();
+    public ResponseEntity<List<FichaEvolucao>> pesquisa(Integer evolId, Date evolData, Integer pratId) {
+        List<FichaEvolucao> evolucao = (List<FichaEvolucao>) fec.findByIdAndData(evolId, evolData, pratId);
         return new ResponseEntity<List<FichaEvolucao>>(evolucao, HttpStatus.OK);
     }
 

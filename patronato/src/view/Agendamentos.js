@@ -47,8 +47,7 @@ const Agendamentos = () => {
     const { agdData, agdHora, agdDescricao } = item;
     const { pesNome } = item.praticante.pessoa;
     const selecionarItem = e => atualizaItemSelecionado(item);
-
-
+    
     return <tr className={estilos.tabelaLinha}>
       <td className="bold">{dataFormatadaDiaMesAno(agdData)}</td>
       <td>{horaFormatadaString(agdHora)}</td>
@@ -108,11 +107,9 @@ const Agendamentos = () => {
                 <Card className={estilos.card_agendamento}>
                   <Card.Body>
                     <Card.Title>Animais</Card.Title>
-                    <Card.Text>
                       <ListGroup variant="flush">
-                        {existeAgendamento && agendamentoSelecionado.animalList.map(ani => <ListGroup.Item>{ani.aniNome}</ListGroup.Item>)}
+                        {existeAgendamento && agendamentoSelecionado.animalList.map(ani => <ListGroup.Item key={ani.aniId}>{ani.aniNome}</ListGroup.Item>)}
                       </ListGroup>
-                    </Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
@@ -121,11 +118,9 @@ const Agendamentos = () => {
                 <Card className={estilos.card_agendamento}>
                   <Card.Body>
                     <Card.Title>Instrutores</Card.Title>
-                    <Card.Text>
                       <ListGroup variant="flush">
-                        {existeAgendamento && agendamentoSelecionado.funcionarioList.map(agdFunc => <ListGroup.Item>{agdFunc.pessoa.pesNome}</ListGroup.Item>)}
+                        {existeAgendamento && agendamentoSelecionado.funcionarioList.map(agdFunc => <ListGroup.Item key={agdFunc.pessoa.pesId}>{agdFunc.pessoa.pesNome}</ListGroup.Item>)}
                       </ListGroup>
-                    </Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
@@ -134,20 +129,18 @@ const Agendamentos = () => {
                 <Card className={estilos.card_agendamento}>
                   <Card.Body>
                     <Card.Title>Materiais</Card.Title>
-                    <Card.Text>
                       <ListGroup variant="flush">
-                        {existeAgendamento && agendamentoSelecionado.materialList.map(mat => <ListGroup.Item>{mat.matDescricao}</ListGroup.Item>)}
+                        {existeAgendamento && agendamentoSelecionado.materialList.map(mat => <ListGroup.Item key={mat.matId}>{mat.matDescricao}</ListGroup.Item>)}
                       </ListGroup>
-                    </Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
             </Row>
 
-            <p>{agendamentoSelecionado.agdObservacoes}</p>
-
+            <div>{agendamentoSelecionado.agdObservacoes}</div>
 
           </div>
+
         </Modal.Body>
         <Modal.Footer>
           <Button variant="success" title="Concluir Agendamento" onClick={concluirAgendamento}><BsFillCalendarCheckFill /></Button>

@@ -2,13 +2,45 @@ import React, { useState } from 'react';
 import TableFooter from '../table/tableFooter';
 import useTable from '../table/useTable';
 import { BsPencilSquare } from "react-icons/bs";
+import InputConverter from '../componentes/inputConverter';
 import { Form, Col, Row, Container, Modal, Button, Table } from 'react-bootstrap';
+import PesquisaPraticantes from '../pesquisas/pesquisaPraticantes';
 import { api } from "../../utilitario/baseComunicacao";
+import { dataFormatadaDiaMesAno, horaFormatadaString, dataFormatadaAnoMesDia } from '../../utilitario/dateUtil';
 
-function pesquisaAnimais({ setValores, valores, atualizaItemSelecionado, setAbrirPesquisa }) {
+function pesquisaFichaEvol({ setValores, valores, atualizaItemSelecionado, setAbrirPesquisa }) {
+    const [listPraticantes, setListPraticantes] = useState([]);
+    const [abrirPesquisaPraticante, setAbrirPesquisaPraticante] = useState(false);
+    const [idPraticante, setIdPraticante] = useState("");
+    const [nomePraticante, setNomePraticante] = useState("");
+    const [evolData, setEvolData] = useState("");
+    
     const [evolIdPesquisa, setEvolIdPesquisa] = useState("");
 
-    const TablePaginada = ({ data, rowsPerPage }) => {
+    const atualizaDlgPesquisaPraticante = async () => {
+        setListPraticantes(await (await api.get("/pesquisaPraticantes")).data);
+        setAbrirPesquisaPraticante(true);
+    }
+
+    const atualizaPraticanteSelecionado = (item) => {
+        setIdPraticante(item.pratId)
+        setNomePraticante(item.pessoa.pesNome)
+        setAbrirPesquisaPraticante(false);
+    }
+
+    const buscaRegistros = async () => {
+        setValores(await (await api.get("/pesquisaFichaEvol?evolId=" + evolIdPesquisa + "&evolData=" + dataFormatadaAnoMesDia(evolData) + "&pratId=" + idPraticante)).data);
+        setAbrirPesquisa(true);
+    }
+
+    const limparPesquisa = () => {
+        setAbrirPesquisa(false);
+        setIdPraticante("");
+        setEvolData("");
+        buscaRegistros();
+    }
+
+    const TablePaginada = ({ data, rowsPerPage, selecionaLinha, atualizaItemSelecionado, removeFichaEvolSelecionada}) => {
         const [pagina, setPage] = useState(1);
         const { slice, range } = useTable(data, pagina, rowsPerPage);
         return (
@@ -17,15 +49,14 @@ function pesquisaAnimais({ setValores, valores, atualizaItemSelecionado, setAbri
                     <thead>
                         <tr>
                             <th>Codigo</th>
-                            <th>Humor</th>
-                            <th>Autonomia</th>
-                            <th>Postura</th>
+                            <th>Data</th>
+                            <th>Praticante</th>
                             <th className='center'>Ação</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            slice.map(item => <LinhaTabela key={item.evolId} item={item} />)
+                            slice.map(item => <LinhaTabela key={item.evolId} item={item} selecionaLinha={selecionaLinha} atualizaItemSelecionado={atualizaItemSelecionado} removeFichaEvolSelecionada={removeFichaEvolSelecionada} />)
                         }
                     </tbody>
                 </Table>
@@ -34,29 +65,22 @@ function pesquisaAnimais({ setValores, valores, atualizaItemSelecionado, setAbri
         );
     };
 
-    const buscaRegistros = async () => {
-        setValores(await (await api.get("/pesquisaFichaEvol?evolId=" + evolIdPesquisa)).data);
-        setAbrirPesquisa(true);
-    }
-
-    const LinhaTabela = ({ item }) => {
-        const { evolId, evolHumor, evolPostura, evolAutonomia } = item;
+    const LinhaTabela = ({ item, selecionaLinha, atualizaItemSelecionado }) => {
+        const { evolId, evolData, evolIdPraticante } = item;
         const selecionarItem = e => atualizaItemSelecionado(item);
-
         return <tr>
-            <td >{evolId}</td>
-            <td>{evolHumor}</td>
-            <td>{evolPostura}</td>
-            <td >{evolAutonomia}</td>
-            <td width={'80px'} className='center'>
+            <td width={'80px'}>{evolId}</td>
+            <td width={'150px'}>{dataFormatadaDiaMesAno(evolData)}</td>
+            <td>{evolIdPraticante.pessoa.pesNome}</td>
+            {selecionaLinha && 
+                <td width={'20px'} className='center'>
                 <Button className='btn-success' onClick={selecionarItem}><BsPencilSquare /></Button>
-            </td>
+                </td>
+            }
         </tr>
     }
-
-    const pesquisaAnimais = () => {
         return (
-            <>
+            <div>
                 <Modal className='modal-xl' show={true}>
                     <Modal.Header><b>Pesquisa de Ficha de Evolução</b></Modal.Header>
                     <Modal.Body>
@@ -69,21 +93,33 @@ function pesquisaAnimais({ setValores, valores, atualizaItemSelecionado, setAbri
                                             value={evolIdPesquisa}
                                             onChange={(e) => setEvolIdPesquisa(e.target.value)} />
                                     </Col>
+                                    <Col md="6">
+                                    <Form.Label htmlFor="inputLPraticante">Praticante</Form.Label>
+                                    <InputConverter descricao={nomePraticante} atualizaDlgPesquisa={atualizaDlgPesquisaPraticante} />
+                                    </Col>
+                                    <Col md="2">
+                                    <Form.Label htmlFor="inputData">Data</Form.Label>
+                                    <Form.Control value={evolData}
+                                        onChange={(e) => setEvolData(e.target.value)}
+                                        type="date" id="inputDate" required />
+                                    </Col>
                                 </Row>
                                 <div className='right'>
-                                    <Button className='btnMarginTop' onClick={buscaRegistros}>Pesquisar</Button>
+                                    <Button className='btnMarginTop btnToolbar' onClick={buscaRegistros}>Pesquisar</Button>
+                                    <Button className='btnMarginTop btn-warning btnToolbar' onClick={limparPesquisa}>Limpar</Button>
                                 </div>
                             </Form>
                         </Container>
-                        <TablePaginada data={valores} rowsPerPage={5} />
+                        <TablePaginada data={valores} rowsPerPage={5} selecionaLinha={true} atualizaItemSelecionado={atualizaItemSelecionado} />
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="primary" className='btn-danger' onClick={() => setAbrirPesquisa(false)}>Fechar</Button>
                     </Modal.Footer>
                 </Modal>
-            </>
+                {abrirPesquisaPraticante &&
+                    <PesquisaPraticantes setValores={setListPraticantes} valores={listPraticantes} atualizaItemSelecionado={atualizaPraticanteSelecionado} setAbrirPesquisa={setAbrirPesquisaPraticante} />
+                }
+            </div>
         )
-    }
-    return pesquisaAnimais();
 }
-export default pesquisaAnimais;
+export default pesquisaFichaEvol;

@@ -59,7 +59,7 @@ function pesquisaCidade({ setValores, valores, atualizaItemSelecionado, setAbrir
     const [cidNome, setCidNome] = useState("");
 
     const buscaRegistros = async () => {
-        setValores(await (await api.get("/pesquisaCidade?cidNome=" + cidNome)).data);
+        setValores(await (await api.get("/pesquisaCidade?cidNome=" + cidNome + "&cidId=" + cidId)).data);
         setAbrirPesquisa(true);
     }
 
