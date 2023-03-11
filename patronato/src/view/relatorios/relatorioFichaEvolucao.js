@@ -32,7 +32,7 @@ const relatorioFichaEvolucao = () => {
     const json = {
       "nomeRelatorio" : 'fichaEvolucao',
       "parametros": {
-      "nomeFuncionario" : 'Jorge'
+      "nomeFuncionario" : ''
       },
       "filtros": {
         "dataIni" : evolDataIni,

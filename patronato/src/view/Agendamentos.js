@@ -98,7 +98,7 @@ const Agendamentos = () => {
           <div className="center">
             <br />
 
-            <p className="bold font-28">{agendamentoSelecionado.agdData}</p>
+            <p className="bold font-28">{dataFormatadaDiaMesAno(agendamentoSelecionado.agdData)}</p>
             <p className="font-28">{agendamentoSelecionado.agdHora}</p>
 
             <br />
