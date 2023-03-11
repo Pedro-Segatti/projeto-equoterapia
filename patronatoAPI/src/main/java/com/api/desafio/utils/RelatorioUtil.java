@@ -8,10 +8,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.util.*;
 
@@ -27,14 +24,14 @@ public class RelatorioUtil {
             JsonObject jsonConvertido = new Gson().fromJson(jsonParams, JsonObject.class);
             String nomeRelatorio = jsonConvertido.get("nomeRelatorio").getAsString();
             JasperReport compileReport = null;
-            compileReport = JasperCompileManager.compileReport(new FileInputStream("src/main/resources/relatorios/" + nomeRelatorio + ".jrxml"));
+            InputStream stream = RelatorioUtil.class.getClassLoader().getResourceAsStream("relatorios/" + nomeRelatorio + ".jrxml");
+            compileReport = JasperCompileManager.compileReport(stream);
             JsonObject parametros = jsonConvertido.get("parametros").getAsJsonObject();
             Map<String, Object> parameters = new HashMap<>();
             for(Map.Entry<String, JsonElement> valor : parametros.entrySet()){
                 parameters.put(valor.getKey().toString(), valor.getValue().getAsString());
             }
-            File file = new File("src/main/resources/logoPatronato.png");
-            parameters.put("IMG_PATRONATO", Files.readAllBytes(file.toPath()));
+            parameters.put("IMG_PATRONATO", RelatorioUtil.class.getClassLoader().getResourceAsStream("logoPatronato.png").readAllBytes());
             JasperPrint jasperPrint = null;
             jasperPrint = JasperFillManager.fillReport(compileReport, parameters, new JRBeanCollectionDataSource(registros));
             byte data[] = JasperExportManager.exportReportToPdf(jasperPrint);
