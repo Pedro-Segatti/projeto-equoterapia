@@ -1,8 +1,10 @@
 import axios from "axios";
 
-export const api = axios.create({
-  baseURL: `http://${window.location.hostname}:8080`,
-});
+const host = window.location.hostname;
+
+export const api = axios.create(
+  {baseURL: `http://${host}:8080/` + (host === 'localhost' ? '' : 'patronato')}
+);
 
 export const criarSessao = async (login, password) => {
   return api.get("/login", { params: { login: login, password: password } });
