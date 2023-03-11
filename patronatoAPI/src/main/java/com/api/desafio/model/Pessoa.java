@@ -60,7 +60,7 @@ public class Pessoa implements Serializable {
     private List<Telefone> telefoneList;
     @JoinColumn(name = "PES_ID_LOG", referencedColumnName = "LOG_ID")
     @ManyToOne(optional = false)
-    private Logradouro logradouro; // Estudar para remapear usando tabela de ligação
+    private Logradouro logradouro;
     @Transient
     @JsonProperty("access_token")
     private String pesAcessToken;
@@ -96,7 +96,6 @@ public class Pessoa implements Serializable {
     public void setPesCpf(String pesCpf) {
         this.pesCpf = pesCpf;
     }
-    @JsonIgnore
     public String getPesLoginPassword() {
         return pesLoginPassword;
     }

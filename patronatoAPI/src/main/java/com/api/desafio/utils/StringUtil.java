@@ -24,4 +24,8 @@ public class StringUtil implements Serializable {
     public static boolean notNullOrEmpty(String valor){
         return valor != null && !valor.isEmpty();
     }
+
+    public static boolean nullOrEmpty(String valor){
+        return !notNullOrEmpty(valor);
+    }
 }

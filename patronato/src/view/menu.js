@@ -66,7 +66,7 @@ const Menu = () => {
           <Navbar.Collapse className="justify-content-end">
             <div className='user-display'>
               <div>
-                <Navbar.Brand className="mx-3" href="#">
+                <Navbar.Brand className="mx-3" href="/perfil">
                   <Image className="ftPerfil" src={pessoaLogada.pesFoto}></Image>
                 </Navbar.Brand>
               </div>
