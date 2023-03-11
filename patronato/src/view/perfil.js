@@ -90,7 +90,7 @@ const Perfil = () => {
       const jsonPessoa = await montaJsonPessoaCompleta(pessoaLogada.pesId, pessoaLogada.pesNome, pessoaLogada.pesCpf, pessoaLogada.pesLoginPassword, pessoaLogada.pesSexo, pessoaLogada.pesDataNasc, pessoaLogada.pesEndNum, pessoaLogada.pesEndCompl, pessoaLogada.pesNacionalidade.paiIso, pessoaLogada.pesFoto, pessoaLogada.pesEmail1, pessoaLogada.pesEmail2, pessoaLogada.logradouro, pessoaLogada.telefoneList);
       console.log(jsonPessoa);
       
-      const response = cadastrarPessoa(jsonPessoa);
+      const response = await cadastrarPessoa(jsonPessoa);
 
       if (alterouSenha) {
         logout();
