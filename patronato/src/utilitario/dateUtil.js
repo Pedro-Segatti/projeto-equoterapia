@@ -10,6 +10,10 @@ export const dataFormatadaDiaMesAno = (data) => {
     return dayjs(data).format('DD/MM/YYYY');
 };
 
+export const dataFormatadaAno = (data) => {
+    return dayjs(data).format('YYYY');
+};
+
 export const horaFormatada = (hora) => {
     return dayjs(hora,"HH:mm");
 };

@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 
 import Login from "./view/login";
+import Perfil from "./view/perfil";
 import SemConexao from "./view/SemConexao";
 import HomePage from "./view/homePage";
 import NovaPagina from "./view/novaPagina";
@@ -69,6 +70,7 @@ const Rotas = () => {
                     <Route exact path="/login" element={<Login />} />
                     <Route exact path="/semConexao" element={<SemConexao />} />
                     <Route exact path="/" element={<Private><HomePage /></Private>} />
+                    <Route exact path="/perfil" element={<Private><Perfil /></Private>} />
                     <Route exact path="/novaPagina" element={<Private><NovaPagina /></Private>} />
                     <Route exact path="/cadastroAnimais" element={<Private><CadastroAnimais /></Private>} />
                     <Route exact path="/cadastroPraticantes" element={<Private><CadastroPraticantes /></Private>} />

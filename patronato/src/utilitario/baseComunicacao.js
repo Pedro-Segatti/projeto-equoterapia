@@ -16,6 +16,10 @@ export const cadastrarPessoa = async (json) => {
   return api.post("/cadastrarPessoa", json);
 };
 
+export const encriptarSenha = async (senha) => {
+  return api.get("/encriptarSenha", { params: { senha: senha} });
+};
+
 export const atualizaPessoa = async (json) => {
   return api.post("/atualizarPessoa", json);
 };

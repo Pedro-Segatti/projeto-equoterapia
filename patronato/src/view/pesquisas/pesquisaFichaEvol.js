@@ -6,7 +6,7 @@ import InputConverter from '../componentes/inputConverter';
 import { Form, Col, Row, Container, Modal, Button, Table } from 'react-bootstrap';
 import PesquisaPraticantes from '../pesquisas/pesquisaPraticantes';
 import { api } from "../../utilitario/baseComunicacao";
-import { dataFormatadaDiaMesAno, horaFormatadaString, dataFormatadaAnoMesDia } from '../../utilitario/dateUtil';
+import { dataFormatadaDiaMesAno, dataFormatadaAnoMesDia } from '../../utilitario/dateUtil';
 
 function pesquisaFichaEvol({ setValores, valores, atualizaItemSelecionado, setAbrirPesquisa }) {
     const [listPraticantes, setListPraticantes] = useState([]);

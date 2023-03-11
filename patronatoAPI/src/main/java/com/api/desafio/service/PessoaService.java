@@ -4,8 +4,10 @@ import com.api.desafio.crudFiles.PessoaCrud;
 import com.api.desafio.model.Logradouro;
 import com.api.desafio.model.Pais;
 import com.api.desafio.model.Pessoa;
+import com.api.desafio.utils.StringUtil;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

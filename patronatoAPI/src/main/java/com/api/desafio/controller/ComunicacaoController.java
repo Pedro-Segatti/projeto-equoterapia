@@ -230,7 +230,7 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaPais")
-    public Pais pesquisaPicadeiro(@RequestParam String paiIso) {
+    public Pais pesquisaPais(@RequestParam String paiIso) {
         return paisService.getPaisByIso(paiIso);
     }
 
@@ -665,5 +665,18 @@ public class ComunicacaoController {
         Integer pratId = RelatorioUtil.getParamInteger(filtros,"pratId");
         List<FichaEvolucao> fichaEvol = fichaEvolService.pesquisaRelatorio(dataIni, dataFim, pratId).getBody();
         return RelatorioUtil.gerarRelatorios(jsonConvertido, fichaEvol);
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/cadastrarPessoa")
+    public ResponseEntity<?> cadastrarPessoa(@RequestBody Pessoa pessoa) {
+        return new ResponseEntity<>(pessoaService.salva(pessoa), HttpStatus.OK);
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/encriptarSenha")
+    public String encriptarSenha(@RequestParam String senha) {
+        String encryptPassword = DigestUtils.md5Hex(senha);
+        return encryptPassword;
     }
 }
