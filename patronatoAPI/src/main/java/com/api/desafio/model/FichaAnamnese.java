@@ -1,16 +1,10 @@
 package com.api.desafio.model;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javax.persistence.*;
 
 /**
  *
@@ -26,6 +20,11 @@ public class FichaAnamnese implements Serializable {
     @Basic(optional = false)
     @Column(name = "AMN_ID")
     private Integer amnId;
+
+    @Column(name = "AMN_DATA")
+    @Temporal(TemporalType.DATE)
+    private Date amnData;
+
     @Column(name = "AMN_PAIS_CASADOS")
     private Boolean amnPaisCasados;
     @Lob
@@ -101,6 +100,9 @@ public class FichaAnamnese implements Serializable {
     private String amnDivQuartoObs;
     @Column(name = "AMN_HABIT_ESPEC")
     private Boolean amnHabitEspec;
+
+    @Column(name = "AMN_HABIT_ESPEC_OBS")
+    private Boolean amnHabitEspecObs;
     @Column(name = "AMN_ENGATINHA")
     private Boolean amnEngatinha;
     @Column(name = "AMN_SENTA")
@@ -161,12 +163,118 @@ public class FichaAnamnese implements Serializable {
     private Boolean amnComeSoz;
     @Column(name = "AMN_IDADE_RET_FRAL")
     private Integer amnIdadeRetFral;
+
+    @Column(name = "AMN_DIF_VER")
+    private Boolean amnDifVer;
+
+    @Column(name = "AMN_DIF_OUVIR")
+    private Boolean amnDifOuvir;
+
+    @Column(name = "AMN_ASPCT_EMOC")
+    private String amnAspctEmoc;
+
+    @Column(name = "AMN_ASPCT_EMOC_OBS")
+    private String amnAspctEmocObs;
+
+    @Column(name = "AMN_PAIS_VEEM")
+    private String amnPaisVeem;
+
+    @Column(name = "AMN_INTERAGE")
+    private Boolean amnInterage;
+
+    @Column(name = "AMN_INTERAGE_OBS")
+    private String amnInterageObs;
+
+    @Column(name = "AMN_FICAR_SOZ")
+    private String amnFicarSoz;
+
+    @Column(name = "AMN_BRINCAR_SOZ")
+    private String amnBrincarSoz;
+
+    @Column(name = "AMN_BRINCAR_OBS")
+    private String amnBrincarObs;
+
+    @Column(name = "AMN_ANIMAIS_ESTM")
+    private Boolean amnAnimaisEstim;
+
+    @Column(name = "AMN_INTERAGE_ANIMAIS")
+    private Boolean amnInterageAnimais;
+
+    @Column(name = "AMN_ANI_ESPCFC")
+    private String amnAniEspcfc;
+
+    @Column(name = "AMN_ADAPTA_LUGAR")
+    private Boolean amnAdaptaLugar;
+
+    @Column(name = "AMN_ATENDE_INTERV")
+    private Boolean amnAtendeInterv;
+
+    @Column(name = "AMN_ATENDE_ORIENT")
+    private Boolean amnAtendeOrient;
+
+    @Column(name = "AMN_CHORO_FACIL")
+    private Boolean amnChoroFacil;
+
+    @Column(name = "AMN_CHORO_OBS")
+    private String amnChoroObs;
+
+    @Column(name = "AMN_REC_AUXILIO")
+    private Boolean amnRecAuxilio;
+
+    @Column(name = "AMN_REC_AUX_OBS")
+    private String amnRecAuxObs;
+
+    @Column(name = "AMN_RESIST_TOQUE")
+    private Boolean amnResistToque;
+
+    @Column(name = "AMN_BRONQUITE")
+    private Boolean amnBronquite;
+
+    @Column(name = "AMN_ALERGIAS")
+    private Boolean amnAlergias;
+
+    @Column(name = "AMN_ASMA")
+    private Boolean amnAsma;
+
+    @Column(name = "AMN_CONVULSAO")
+    private Boolean amnConvulsao;
+
+    @Column(name = "AMN_VIROSE")
+    private Boolean amnVirose;
+
+    @Column(name = "AMN_INTERNACOES")
+    private String amnInternacoes;
+
+    @Column(name = "AMN_OUT_DOENCAS")
+    private String amnOutDoencas;
+
+    @Column(name = "AMN_TRAT_REALIZADOS")
+    private String amnTratRealizados;
+
+    @Column(name = "AMN_TRAT_ATUAL")
+    private Boolean amnTratAtual;
+
+    @Column(name = "AMN_TRAT_ATUAL_OBS")
+    private String amnTratAtualObs;
+
+    @Column(name = "AMN_MEDICACAO")
+    private Boolean amnMedicacao;
+
+    @Column(name = "AMN_MED_OBS")
+    private String amnMedObs;
+
+    @Column(name = "AMN_CONSIDERACOES")
+    private String amnConsideracoes;
+
     @JoinColumn(name = "AMN_ID_FUNCIONARIO", referencedColumnName = "FUNC_ID")
     @ManyToOne(optional = false)
     private Funcionario amnIdFuncionario;
     @JoinColumn(name = "AMN_ID_PRATICANTE", referencedColumnName = "PRAT_ID")
     @ManyToOne(optional = false)
     private Praticante amnIdPraticante;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fichaAnamnese", orphanRemoval = true)
+    private List<AnexoAmn> anexosList = new ArrayList<>();
 
     public FichaAnamnese() {
     }
@@ -181,6 +289,14 @@ public class FichaAnamnese implements Serializable {
 
     public void setAmnId(Integer amnId) {
         this.amnId = amnId;
+    }
+
+    public Date getAmnData() {
+        return amnData;
+    }
+
+    public void setAmnData(Date amnData) {
+        this.amnData = amnData;
     }
 
     public Boolean getAmnPaisCasados() {
@@ -639,6 +755,224 @@ public class FichaAnamnese implements Serializable {
         this.amnIdadeRetFral = amnIdadeRetFral;
     }
 
+    public Boolean getAmnDifVer() {
+        return amnDifVer;
+    }
+
+    public void setAmnDifVer(Boolean amnDifVer) {
+        this.amnDifVer = amnDifVer;
+    }
+
+    public Boolean getAmnDifOuvir() {
+        return amnDifOuvir;
+    }
+
+    public void setAmnDifOuvir(Boolean amnDifOuvir) {
+        this.amnDifOuvir = amnDifOuvir;
+    }
+
+    public String getAmnAspctEmoc() {
+        return amnAspctEmoc;
+    }
+
+    public void setAmnAspctEmoc(String amnAspctEmoc) {
+        this.amnAspctEmoc = amnAspctEmoc;
+    }
+
+    public String getAmnAspctEmocObs() {
+        return amnAspctEmocObs;
+    }
+
+    public void setAmnAspctEmocObs(String amnAspctEmocObs) {
+        this.amnAspctEmocObs = amnAspctEmocObs;
+    }
+
+    public String getAmnPaisVeem() {
+        return amnPaisVeem;
+    }
+
+    public void setAmnPaisVeem(String amnPaisVeem) {
+        this.amnPaisVeem = amnPaisVeem;
+    }
+
+    public Boolean getAmnInterage() {
+        return amnInterage;
+    }
+
+    public void setAmnInterage(Boolean amnInterage) {
+        this.amnInterage = amnInterage;
+    }
+
+    public String getAmnInterageObs() {
+        return amnInterageObs;
+    }
+
+    public void setAmnInterageObs(String amnInterageObs) {
+        this.amnInterageObs = amnInterageObs;
+    }
+
+    public String getAmnFicarSoz() { return amnFicarSoz;}
+
+    public void setAmnFicarSoz(String amnFicarSoz) {
+        this.amnFicarSoz = amnFicarSoz;
+    }
+
+    public String getAmnBrincarSoz() { return amnBrincarSoz;}
+
+    public void setAmnBrincarSoz(String amnBrincarSoz) {
+        this.amnBrincarSoz = amnBrincarSoz;
+    }
+
+    public String getAmnBrincarObs() { return amnBrincarObs;}
+
+    public void setAmnBrincarObs(String amnBrincarObs) {
+        this.amnBrincarObs = amnBrincarObs;
+    }
+
+    public Boolean getAmnAnimaisEstm() { return amnAnimaisEstim;}
+
+    public void setAmnAnimaisEstm(Boolean amnAnimaisEstim) {
+        this.amnAnimaisEstim = amnAnimaisEstim;
+    }
+
+    public Boolean getAmnInterageAnimais() { return amnInterageAnimais;}
+
+    public void setAmnInterageAnimais(Boolean amnInterageAnimais) {
+        this.amnInterageAnimais = amnInterageAnimais;
+    }
+
+    public String getAmnAniEspcfc() { return amnAniEspcfc;}
+
+    public void setAmnAniEspcfc(String amnAniEspcfc) {
+        this.amnAniEspcfc = amnAniEspcfc;
+    }
+
+    public Boolean getAmnAdaptaLugar() { return amnAdaptaLugar;}
+
+    public void setAmnAdaptaLugar(Boolean amnAdaptaLugar) {
+        this.amnAdaptaLugar = amnAdaptaLugar;
+    }
+
+    public Boolean getAmnAtendeInterv() { return amnAtendeInterv;}
+
+    public void setAmnAtendeInterv(Boolean amnAtendeInterv) {
+        this.amnAtendeInterv = amnAtendeInterv;
+    }
+
+    public Boolean getAmnAtendeOrient() { return amnAtendeOrient;}
+
+    public void setAmnAtendeOrient(Boolean amnAtendeOrient) {
+        this.amnAtendeOrient = amnAtendeOrient;
+    }
+
+    public Boolean getAmnChoroFacil() { return amnChoroFacil;}
+
+    public void setAmnChoroFacil(Boolean amnChoroFacil) {
+        this.amnChoroFacil = amnChoroFacil;
+    }
+
+    public String getAmnChoroObs() { return amnChoroObs;}
+
+    public void setAmnChoroObs(String amnChoroObs) {
+        this.amnChoroObs = amnChoroObs;
+    }
+
+    public Boolean getAmnRecAuxilio() { return amnRecAuxilio;}
+
+    public void setAmnRecAuxilio(Boolean amnRecAuxilio) {
+        this.amnRecAuxilio = amnRecAuxilio;
+    }
+
+    public String getAmnRecAuxObs() { return amnRecAuxObs;}
+
+    public void setAmnRecAuxObs(String amnRecAuxObs) {
+        this.amnRecAuxObs = amnRecAuxObs;
+    }
+
+    public Boolean getAmnResistToque() { return amnResistToque;}
+
+    public void setAmnResistToque(Boolean amnResistToque) {
+        this.amnResistToque = amnResistToque;
+    }
+
+    public Boolean getAmnBronquite() { return amnBronquite;}
+
+    public void setAmnBronquite(Boolean amnBronquite) {
+        this.amnBronquite = amnBronquite;
+    }
+
+    public Boolean getAmnAlergias() { return amnAlergias;}
+
+    public void setAmnAlergias(Boolean amnAlergias) {
+        this.amnAlergias = amnAlergias;
+    }
+
+    public Boolean getAmnAsma() { return amnAsma;}
+
+    public void setAmnAsma(Boolean amnAsma) {
+        this.amnAsma = amnAsma;
+    }
+
+    public Boolean getAmnConvulsao() { return amnConvulsao;}
+
+    public void setAmnConvulsao(Boolean amnConvulsao) {
+        this.amnConvulsao = amnConvulsao;
+    }
+
+    public Boolean getAmnVirose() { return amnVirose;}
+
+    public void setAmnVirose(Boolean amnVirose) {
+        this.amnVirose = amnVirose;
+    }
+
+    public String getAmnInternacoes() { return amnInternacoes;}
+
+    public void setAmnInternacoes(String amnInternacoes) {
+        this.amnInternacoes = amnInternacoes;
+    }
+
+    public String getAmnOutDoencas() { return amnOutDoencas;}
+
+    public void setAmnOutDoencas(String amnOutDoencas) {
+        this.amnOutDoencas = amnOutDoencas;
+    }
+
+    public String getAmnTratRealizados() { return amnTratRealizados;}
+
+    public void setAmnTratRealizados(String amnTratRealizados) {
+        this.amnTratRealizados = amnTratRealizados;
+    }
+
+    public Boolean getAmnTratAtual() { return amnTratAtual;}
+
+    public void setAmnTratAtual(Boolean amnTratAtual) {
+        this.amnTratAtual = amnTratAtual;
+    }
+
+    public String getAmnTratAtualObs() { return amnTratAtualObs;}
+
+    public void setAmnTratAtualObs(String amnTratAtualObs) {
+        this.amnTratAtualObs = amnTratAtualObs;
+    }
+
+    public Boolean getAmnMedicacao() { return amnMedicacao;}
+
+    public void setAmnMedicacao(Boolean amnMedicacao) {
+        this.amnMedicacao = amnMedicacao;
+    }
+
+    public String getAmnMedObs() { return amnMedObs;}
+
+    public void setAmnMedObs(String amnMedObs) {
+        this.amnMedObs = amnMedObs;
+    }
+
+    public String getAmnConsideracoes() { return amnConsideracoes;}
+
+    public void setAmnConsideracoes(String amnConsideracoes) {
+        this.amnConsideracoes = amnConsideracoes;
+    }
+
     public Funcionario getAmnIdFuncionario() {
         return amnIdFuncionario;
     }
@@ -653,6 +987,14 @@ public class FichaAnamnese implements Serializable {
 
     public void setAmnIdPraticante(Praticante amnIdPraticante) {
         this.amnIdPraticante = amnIdPraticante;
+    }
+
+    public List<AnexoAmn> getAnexosList() {
+        return anexosList;
+    }
+
+    public void setAnexosList(List<AnexoAmn> anexosList) {
+        this.anexosList = anexosList;
     }
 
     @Override
