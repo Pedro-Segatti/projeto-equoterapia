@@ -829,9 +829,11 @@ public class FichaAnamnese implements Serializable {
         this.amnBrincarObs = amnBrincarObs;
     }
 
-    public Boolean getAmnAnimaisEstm() { return amnAnimaisEstim;}
+    public Boolean getAmnAnimaisEstim() {
+        return amnAnimaisEstim;
+    }
 
-    public void setAmnAnimaisEstm(Boolean amnAnimaisEstim) {
+    public void setAmnAnimaisEstim(Boolean amnAnimaisEstim) {
         this.amnAnimaisEstim = amnAnimaisEstim;
     }
 
@@ -987,6 +989,14 @@ public class FichaAnamnese implements Serializable {
 
     public void setAmnIdPraticante(Praticante amnIdPraticante) {
         this.amnIdPraticante = amnIdPraticante;
+    }
+
+    public Boolean getAmnHabitEspecObs() {
+        return amnHabitEspecObs;
+    }
+
+    public void setAmnHabitEspecObs(Boolean amnHabitEspecObs) {
+        this.amnHabitEspecObs = amnHabitEspecObs;
     }
 
     public List<AnexoAmn> getAnexosList() {
