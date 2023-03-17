@@ -216,3 +216,8 @@ svg {
 #imgPrat:hover{
   opacity: 0.4;
 }
+
+.accordion-body{
+  background-color: #E0E5E0;
+  border: 1px solid white;
+}
