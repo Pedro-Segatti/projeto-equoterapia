@@ -24,7 +24,7 @@ function movimentoFichaAnamnese() {
     const [abrirPesquisaPraticante, setAbrirPesquisaPraticante] = useState(false);
     const [abrirPesquisaFuncionario, setAbrirPesquisaFuncionario] = useState(false);
 
-    //Variáveis de cadastro
+    //Variáveis de cadastro 
     const [amnId, setAmnId] = useState("");
     const [amnData, setAmnData] = useState("");
     const [amnPaisCasados, setAmnPaisCasados] = useState(false);
@@ -125,56 +125,6 @@ function movimentoFichaAnamnese() {
     const [amnIdFuncionario, setAmnIdFuncionario] = useState({ "pessoa": { "pesNome": "" } });
     const [amnIdPraticante, setAmnIdPraticante] = useState({ "pessoa": { "pesNome": "" } });
 
-    const selecionaPaisCasados = () => setAmnPaisCasados(!amnPaisCasados);
-    const selecionaPossuiIrmao = () => setAmnPossuiIrmao(!amnPossuiIrmao);
-    const selecionaAdotado = () => setAmnAdotado(!amnAdotado);
-    const selecionaCienciaAdocao = () => setAmnCienciaAdocao(!amnCienciaAdocao);
-    const selecionaAmarelao = () => setAmnAmarelao(!amnAmarelao);
-    const selecionaFebre = () => setAmnFebre(!amnFebre);
-    const selecionaPermIncubadora = () => setAmnPermIncubadora(!amnPermIncubadora);
-    const selecionaDifEsfincter = () => setAmnDifEsfincter(!amnDifEsfincter);
-    const selecionaEnureseNotu = () => setAmnEnureseNotu(!amnEnureseNotu);
-    const selecionaPertNot = () => setAmnPertNot(!amnPertNot);
-    const selecionaDormeSoz = () => setAmnDormeSoz(!amnDormeSoz);
-    const selecionaDormePais = () => setAmnDormePais(!amnDormePais);
-    const selecionaDivQuarto = () => setAmnDivQuarto(!amnDivQuarto);
-    const selecionaHabitEspec = () => setAmnHabitEspec(!amnHabitEspec);
-    const selecionaEngatinha = () => setAmnEngatinha(!amnEngatinha);
-    const selecionaSenta = () => setAmnSenta(!amnSenta);
-    const selecionaAnda = () => setAmnAnda(!amnAnda);
-    const selecionaCorre = () => setAmnCorre(!amnCorre);
-    const selecionaDesvNormal = () => setAmnDesvNormal(!amnDesvNormal);
-    const selecionaLvFalaComp = () => setAmnLvFalaComp(!amnLvFalaComp);
-    const selecionaLvApenasPal = () => setAmnLvApenasPal(!amnLvApenasPal);
-    const selecionaLvVocalizacao = () => setAmnLvVocalizacao(!amnLvVocalizacao);
-    const selecionaLgApontaObj = () => setAmnLgApontaObj(!amnLgApontaObj);
-    const selecionaLgMostOqq = () => setAmnLgMostOqq(!amnLgMostOqq);
-    const selecionaLgExpFac = () => setAmnLgExpFac(!amnLgExpFac);
-    const selecionaBanhoSozinho = () => setAmnBanhoSozinho(!amnBanhoSozinho);
-    const selecionaEscovaSozinho = () => setAmnEscovaSozinho(!amnEscovaSozinho);
-    const selecionaBanSozinho = () => setAmnBanSozinho(!amnBanSozinho);
-    const selecionaAuxVestir = () => setAmnAuxVestir(!amnAuxVestir);
-    const selecionaContEsfin = () => setAmnContEsfin(!amnContEsfin);
-    const selecionaComeSoz = () => setAmnComeSoz(!amnComeSoz);
-    const selecionaDifVer = () => setAmnDifVer(!amnDifVer);
-    const selecionaDifOuvir = () => setAmnDifOuvir(!amnDifOuvir);
-    const selecionaInterage = () => setAmnInterage(!amnInterage);
-    const selecionaAnimaisEstim = () => setAmnAnimaisEstim(!amnAnimaisEstim);
-    const selecionaInterageAnimais = () => setAmnInterageAnimais(!amnInterageAnimais);
-    const selecionaAdaptaLugar = () => setAmnAdaptaLugar(!amnAdaptaLugar);
-    const selecionaAtendeInterv = () => setAmnAtendeInterv(!amnAtendeInterv);
-    const selecionaAtendeOrient = () => setAmnAtendeOrient(!amnAtendeOrient);
-    const selecionaChoroFacil = () => setAmnChoroFacil(!amnChoroFacil);
-    const selecionaRecAuxilio = () => setAmnRecAuxilio(!amnRecAuxilio);
-    const selecionaResistToque = () => setAmnResistToque(!amnResistToque);
-    const selecionaBronquite = () => setAmnBronquite(!amnBronquite);
-    const selecionaAlergias = () => setAmnAlergias(!amnAlergias);
-    const selecionaAsma = () => setAmnAsma(!amnAsma);
-    const selecionaConvulsao = () => setAmnConvulsao(!amnConvulsao);
-    const selecionaVirose = () => setAmnVirose(!amnVirose);
-    const selecionaTratAtual = () => setAmnTratAtual(!amnTratAtual);
-    const selecionaMedicacao = () => setAmnMedicacao(!amnMedicacao);
-
     //variáveis da dialog de pesquisa
     var [list, setList] = useState([]);
     var [listPraticantes, setListPraticantes] = useState([]);
@@ -271,6 +221,7 @@ function movimentoFichaAnamnese() {
         setAmnAlergias(item.amnAlergias);
         setAmnAsma(item.amnAsma);
         setAmnConvulsao(item.amnConvulsao);
+        setAmnVirose(item.amnVirose);
         setAmnInternacoes(item.amnInternacoes);
         setAmnOutDoencas(item.amnOutDoencas);
         setAmnTratRealizados(item.amnTratRealizados);
@@ -627,937 +578,1202 @@ function movimentoFichaAnamnese() {
     }
 
     const movimentoFichaAnamnese = () => {
-        return (
-            <div>
-                <Menu />
-                <ReactNotifications />
-                <Container>
-                    <Form onSubmit={handleSubmit}>
+      return (
+        <div>
+          <Menu />
+          <ReactNotifications />
+          <Container>
+            <Form onSubmit={handleSubmit}>
+              <br />
+              <Row>
+                <h3>Ficha de Anamnese</h3>
+              </Row>
+              <Row>
+                <Col md="2">
+                  <Form.Label>Código</Form.Label>
+                  <Form.Control value={amnId} type="text" disabled />
+                </Col>
+              </Row>
+              <Row>
+                <Col md="2">
+                  <Form.Label>Data</Form.Label>
+                  <Form.Control
+                    value={amnData}
+                    type="date"
+                    required
+                    onChange={(e) => setAmnData(e.target.value)}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col md="6">
+                  <Form.Label>Praticante</Form.Label>
+                  <InputConverter
+                    idBtn={"botaoPraticante"}
+                    descricao={amnIdPraticante.pessoa.pesNome}
+                    atualizaDlgPesquisa={atualizaDlgPesquisaPraticantes}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col md="6">
+                  <Form.Label>Funcionário</Form.Label>
+                  <InputConverter
+                    idBtn={"botaoFuncionario"}
+                    descricao={amnIdFuncionario.pessoa.pesNome}
+                    atualizaDlgPesquisa={atualizaDlgPesquisaFuncionarios}
+                  />
+                </Col>
+              </Row>
+
+              <br />
+
+              <Accordion defaultActiveKey={["0"]} alwaysOpen>
+                <Accordion.Item eventKey="0">
+                  <Accordion.Header>Dados Familiares</Accordion.Header>
+                  <Accordion.Body>
+                    <Row>
+                      <Col md="6">
+                        <Form.Check
+                          checked={amnPaisCasados}
+                          onChange={(e) => setAmnPaisCasados(e.target.checked)}
+                          type="checkbox"
+                          label="Pais Casados"
+                        />
+                      </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                      <Col md="6">
+                        <Form.Label>Reação da criança a situação:</Form.Label>
+                        <Form.Control
+                          value={amnReacSeparacao}
+                          onChange={(e) => setAmnReacSeparacao(e.target.value)}
+                          type="text"
+                          as="textarea"
+                          className="textArea"
+                        />
+                      </Col>
+                      <Col md="6">
+                        <Form.Label>
+                          Em caso de separação, a criança vive com:
+                        </Form.Label>
+                        <Form.Control
+                          value={amnMoradia}
+                          onChange={(e) => setAmnMoradia(e.target.value)}
+                          type="text"
+                          as="textarea"
+                          className="textArea"
+                        />
+                      </Col>
+                    </Row>
+
+                    <br />
+
+                    <Accordion.Item eventKey="1">
+                      <Accordion.Header>Queixa Inicial</Accordion.Header>
+                      <Accordion.Body>
+                        <Row>
+                          <Col md="6">
+                            <Form.Check
+                              checked={amnPossuiIrmao}
+                              onChange={(e) =>
+                                setAmnPossuiIrmao(e.target.checked)
+                              }
+                              type="checkbox"
+                              label="Possui Irmão(a/os/as)"
+                            />
+                          </Col>
+                          <Col md="6">
+                            <Form.Label>
+                              Em caso de afirmação, informe sexo e idade:
+                            </Form.Label>
+                            <Form.Control
+                              value={amnInfosIrmao}
+                              onChange={(e) => setAmnInfosIrmao(e.target.value)}
+                              type="text"
+                              as="textarea"
+                              className="textArea"
+                            />
+                          </Col>
+                        </Row>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                    <br />
+                    <Row>
+                      <Col md="6">
+                        <Form.Label>Filho:</Form.Label>
+                        <Form.Check
+                          checked={amnAdotado}
+                          onChange={(e) => setAmnAdotado(e.target.checked)}
+                          type="checkbox"
+                          label="Adotado"
+                        />
+                        <Form.Check
+                          checked={amnCienciaAdocao}
+                          onChange={(e) =>
+                            setAmnCienciaAdocao(e.target.checked)
+                          }
+                          type="checkbox"
+                          label="Ciente da adoção"
+                        />
+                      </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                      <Col md="6">
+                        <Form.Label>Reação da criança a situação:</Form.Label>
+                        <Form.Control
+                          value={amnReacAdocao}
+                          onChange={(e) => setAmnReacAdocao(e.target.value)}
+                          type="text"
+                          as="textarea"
+                          className="textArea"
+                        />
+                      </Col>
+                      <Col md="6">
+                        <Form.Label>Hipótese Diagnóstica (HD):</Form.Label>
+                        <Form.Control
+                          value={amnHipDiag}
+                          onChange={(e) => setAmnHipDiag(e.target.value)}
+                          type="text"
+                          as="textarea"
+                          className="textArea"
+                        />
+                      </Col>
+                    </Row>
+                  </Accordion.Body>
+                </Accordion.Item>
+                <br />
+                <Accordion.Item eventKey="1">
+                  <Accordion.Header>Queixa Inicial</Accordion.Header>
+                  <Accordion.Body>
+                    <Row>
+                      <Form.Label className="bold">Queixa Inicial:</Form.Label>
+                      <Col md="6">
+                        <Form.Label>
+                          Qual o motivo da procura por equoterapia:
+                        </Form.Label>
+                        <Form.Control
+                          value={amnMotivoEquo}
+                          onChange={(e) => setAmnMotivoEquo(e.target.value)}
+                          type="text"
+                          as="textarea"
+                          className="textArea"
+                        />
+                      </Col>
+                      <Col md="6">
+                        <Form.Label>
+                          Quais espectativas para o tratamento:
+                        </Form.Label>
+                        <Form.Control
+                          value={amnExpecTrat}
+                          onChange={(e) => setAmnExpecTrat(e.target.value)}
+                          type="text"
+                          as="textarea"
+                          className="textArea"
+                        />
+                      </Col>
+                    </Row>
+                  </Accordion.Body>
+                </Accordion.Item>
+
+                <br />
+                <Accordion.Item eventKey="2">
+                  <Accordion.Header>Histórico</Accordion.Header>
+                  <Accordion.Body>
+                    <Row>
+                      <Form.Label className="bold">Histórico:</Form.Label>
+                      <Col md="6">
+                        <Form.Label>Gestação:</Form.Label>
+                        <Form.Select
+                          required
+                          value={amnTpGest}
+                          onChange={(e) => setAmnTpGest(e.target.value)}
+                        >
+                          <option>Selecione</option>
+                          <option value="T">A termo</option>
+                          <option value="E">Prematura</option>
+                          <option value="O">Pós-matura</option>
+                        </Form.Select>
+                      </Col>
+                      <Col md="6">
+                        <Form.Label>Parto:</Form.Label>
+                        <Form.Select
+                          required
+                          value={amnTpParto}
+                          onChange={(e) => setAmnTpParto(e.target.value)}
+                        >
+                          <option>Selecione</option>
+                          <option value="N">Normal</option>
+                          <option value="C">Cesariana</option>
+                          <option value="I">Induzido</option>
+                          <option value="F">Fórceps</option>
+                        </Form.Select>
+                      </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                      <Col md="6">
+                        <Form.Label>
+                          Saúde da mãe durante a gravidez:
+                        </Form.Label>
+                        <Form.Control
+                          value={amnSaudeMaeGestacao}
+                          onChange={(e) =>
+                            setAmnSaudeMaeGestacao(e.target.value)
+                          }
+                          type="text"
+                          as="textarea"
+                          className="textArea"
+                        />
+                      </Col>
+                      <Col md="6">
+                        <Form.Label>
+                          Acontecimentos relevantes ao longo do período:
+                        </Form.Label>
+                        <Form.Control
+                          value={amnAcontGestacao}
+                          onChange={(e) => setAmnAcontGestacao(e.target.value)}
+                          type="text"
+                          as="textarea"
+                          className="textArea"
+                        />
+                      </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                      <Col md="6">
+                        <Form.Label>Fatos relevantes:</Form.Label>
+                        <Form.Control
+                          value={amnPartoObs}
+                          onChange={(e) => setAmnPartoObs(e.target.value)}
+                          type="text"
+                          as="textarea"
+                          className="textArea"
+                        />
+                      </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                      <Col md="4">
+                        <Form.Check
+                          checked={amnAmarelao}
+                          onChange={(e) => setAmnAmarelao(e.target.checked)}
+                          type="checkbox"
+                          label="Icterícia - amarelão"
+                        />
+                      </Col>
+                      <Col md="4">
+                        <Form.Check
+                          checked={amnFebre}
+                          onChange={(e) => setAmnFebre(e.target.checked)}
+                          type="checkbox"
+                          label="Febre"
+                        />
+                      </Col>
+                      <Col md="4">
+                        <Form.Check
+                          checked={amnPermIncubadora}
+                          onChange={(e) =>
+                            setAmnPermIncubadora(e.target.checked)
+                          }
+                          type="checkbox"
+                          label="Permanencia na incobadora"
+                        />
+                      </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                      <Col md="6">
+                        <Form.Label>Observações:</Form.Label>
+                        <Form.Control
+                          value={amnTempoIncubadora}
+                          onChange={(e) =>
+                            setAmnTempoIncubadora(e.target.value)
+                          }
+                          type="text"
+                          as="textarea"
+                          className="textArea"
+                        />
+                      </Col>
+                      <Col md="6">
+                        <Form.Label>Reações dos pais e familiares:</Form.Label>
+                        <Form.Control
+                          value={amnReacPaisFam}
+                          onChange={(e) => setAmnReacPaisFam(e.target.value)}
+                          type="text"
+                          as="textarea"
+                          className="textArea"
+                        />
+                      </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                      <Col md="6">
+                        <Form.Label>Amamentação:</Form.Label>
+                        <Form.Select
+                          required
+                          value={amnTpAmamentacao}
+                          onChange={(e) => setAmnTpAmamentacao(e.target.value)}
+                        >
+                          <option>Selecione</option>
+                          <option value="M">Materna</option>
+                          <option value="A">Artificial/desmame</option>
+                        </Form.Select>
+                      </Col>
+                      <Col md="6">
                         <br />
-                        <Row>
-                            <h3>Ficha de Anamnese</h3>
-                        </Row>
-                        <Row>
-                            <Col md="2">
-                                <Form.Label>Código</Form.Label>
-                                <Form.Control value={amnId} type="text" disabled />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md="2">
-                                <Form.Label>Data</Form.Label>
-                                <Form.Control value={amnData} type="date" required
-                                    onChange={(e) => setAmnData(e.target.value)} />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md="6">
-                                <Form.Label>Praticante</Form.Label>
-                                <InputConverter idBtn={"botaoPraticante"} descricao={amnIdPraticante.pessoa.pesNome} atualizaDlgPesquisa={atualizaDlgPesquisaPraticantes} />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md="6">
-                                <Form.Label>Funcionário</Form.Label>
-                                <InputConverter idBtn={"botaoFuncionario"} descricao={amnIdFuncionario.pessoa.pesNome} atualizaDlgPesquisa={atualizaDlgPesquisaFuncionarios} />
-                            </Col>
-                        </Row>
+                        <Form.Check
+                          checked={amnDifEsfincter}
+                          onChange={(e) => setAmnDifEsfincter(e.target.checked)}
+                          type="checkbox"
+                          label="Dificuldade ou atraso no controle do esfíncter"
+                        />
+                      </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                      <Col md="6">
+                        <Form.Check
+                          checked={amnEnureseNotu}
+                          onChange={(e) => setAmnEnureseNotu(e.target.checked)}
+                          type="checkbox"
+                          label="Tem enurese noturna"
+                        />
+                      </Col>
+                      <Col md="6">
+                        <Form.Check
+                          checked={amnPertNot}
+                          onChange={(e) => setAmnPertNot(e.target.checked)}
+                          type="checkbox"
+                          label="Pertubações (pesadelos, sonambulismo, insônia...)"
+                        />
+                      </Col>
+                    </Row>
 
+                    <br />
+
+                    <Row>
+                      <Col md="6">
+                        <Form.Label>Observações:</Form.Label>
+                        <Form.Control
+                          value={amnPertObs}
+                          onChange={(e) => setAmnPertObs(e.target.value)}
+                          type="text"
+                          as="textarea"
+                          className="textArea"
+                        />
+                      </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                      <Col md="6">
+                        <Form.Check
+                          checked={amnDormeSoz}
+                          onChange={(e) => setAmnDormeSoz(e.target.checked)}
+                          type="checkbox"
+                          label="Dorme sozinho"
+                        />
+                        <Form.Check
+                          checked={amnDormePais}
+                          onChange={(e) => setAmnDormePais(e.target.checked)}
+                          type="checkbox"
+                          label="Dorme no quarto dos pais"
+                        />
+                        <Form.Check
+                          checked={amnDivQuarto}
+                          onChange={(e) => setAmnDivQuarto(e.target.checked)}
+                          type="checkbox"
+                          label="Divide o quarto com alguém"
+                        />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col md="3">
+                        <Form.Label>Quem:</Form.Label>
+                        <Form.Control
+                          value={amnDivQuartoObs}
+                          maxLength={20}
+                          onChange={(e) => setAmnDivQuartoObs(e.target.value)}
+                          type="text"
+                        />
+                      </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                      <Col md="6">
+                        <Form.Check
+                          checked={amnHabitEspec}
+                          onChange={(e) => setAmnHabitEspec(e.target.checked)}
+                          type="checkbox"
+                          label="Possui habitos especiais (requer presença de alguém, medos...)"
+                        />
+                      </Col>
+                      <Col md="6">
+                        <Form.Label>Quais:</Form.Label>
+                        <Form.Control
+                          value={amnHabitEspecObs}
+                          onChange={(e) => setAmnHabitEspecObs(e.target.value)}
+                          type="text"
+                          as="textarea"
+                          className="textArea"
+                        />
+                      </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                      <Col md="3">
+                        <Form.Check
+                          checked={amnEngatinha}
+                          onChange={(e) => setAmnEngatinha(e.target.checked)}
+                          type="checkbox"
+                          label="Engatinha"
+                        />
+                      </Col>
+                      <Col md="3">
+                        <Form.Check
+                          checked={amnAnda}
+                          onChange={(e) => setAmnAnda(e.target.checked)}
+                          type="checkbox"
+                          label="Anda"
+                        />
+                      </Col>
+                      <Col md="3">
+                        <Form.Check
+                          checked={amnSenta}
+                          onChange={(e) => setAmnSenta(e.target.checked)}
+                          type="checkbox"
+                          label="Senta"
+                        />
+                      </Col>
+                      <Col md="3">
+                        <Form.Check
+                          checked={amnCorre}
+                          onChange={(e) => setAmnCorre(e.target.checked)}
+                          type="checkbox"
+                          label="Corre"
+                        />
+                      </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                      <Col md="6">
+                        <Form.Label>
+                          Tonicidade (0-1 ano/musculatura firme):
+                        </Form.Label>
+                        <Form.Control
+                          value={amnTonicidade}
+                          maxLength={20}
+                          onChange={(e) => setAmnTonicidade(e.target.value)}
+                          type="text"
+                        />
+                      </Col>
+                      <Col md="6">
+                        <Form.Label>Equilibrio (1-2 anos):</Form.Label>
+                        <Form.Control
+                          value={amnEquilibrio}
+                          maxLength={20}
+                          onChange={(e) => setAmnEquilibrio(e.target.value)}
+                          type="text"
+                        />
+                      </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                      <Col md="6">
+                        <Form.Label>Noção corporal (3-4 anos):</Form.Label>
+                        <Form.Control
+                          value={amnNocaoCorp}
+                          maxLength={20}
+                          onChange={(e) => setAmnNocaoCorp(e.target.value)}
+                          type="text"
+                        />
+                      </Col>
+                      <Col md="6">
+                        <Form.Label>Lateralização (5-6 anos):</Form.Label>
+                        <Form.Control
+                          value={amnLateralizacao}
+                          maxLength={20}
+                          onChange={(e) => setAmnLateralizacao(e.target.value)}
+                          type="text"
+                        />
+                      </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                      <Col md="6">
+                        <Form.Label>
+                          Praxia global (movimento voluntário e consciente ou
+                          automatizado):
+                        </Form.Label>
+                        <Form.Control
+                          value={amnPraxiaGlobal}
+                          maxLength={20}
+                          onChange={(e) => setAmnPraxiaGlobal(e.target.value)}
+                          type="text"
+                        />
+                      </Col>
+                      <Col md="6">
+                        <Form.Label>
+                          Praxia fina (preensão de objetos, segurar,
+                          recortar...):
+                        </Form.Label>
+                        <Form.Control
+                          value={amnPraxiaFina}
+                          maxLength={20}
+                          onChange={(e) => setAmnPraxiaFina(e.target.value)}
+                          type="text"
+                        />
+                      </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                      <Col md="6">
+                        <Form.Label>Estruturação espaço-temporal:</Form.Label>
+                        <Form.Control
+                          value={amnEstEspCorp}
+                          maxLength={20}
+                          onChange={(e) => setAmnEstEspCorp(e.target.value)}
+                          type="text"
+                        />
+                      </Col>
+                    </Row>
+                  </Accordion.Body>
+                </Accordion.Item>
+
+                <br />
+                <Accordion.Item eventKey="3">
+                  <Accordion.Header>Desenvolvimento Cognitivo</Accordion.Header>
+                  <Accordion.Body>
+                    <Row>
+                      <Form.Label className="bold">
+                        Desenvolvimento cognitivo:
+                      </Form.Label>
+                      <Col md="6">
+                        <Form.Check
+                          checked={amnDesvNormal}
+                          onChange={(e) => setAmnDesvNormal(e.target.checked)}
+                          type="checkbox"
+                          label="Desenvolvimento cognitivo dentro do esperado"
+                        />
+                      </Col>
+                      <Col md="6">
+                        <Form.Label>Fatos relevantes:</Form.Label>
+                        <Form.Control
+                          value={amnDesvFatRel}
+                          onChange={(e) => setAmnDesvFatRel(e.target.value)}
+                          type="text"
+                          as="textarea"
+                          className="textArea"
+                        />
+                      </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                      <Col md="6">
+                        <Form.Label>Linguagem verbal:</Form.Label>
+                        <Form.Check
+                          checked={amnLvFalaComp}
+                          onChange={(e) => setAmnLvFalaComp(e.target.checked)}
+                          type="checkbox"
+                          label="Fala completa"
+                        />
+                        <Form.Check
+                          checked={amnLvApenasPal}
+                          onChange={(e) => setAmnLvApenasPal(e.target.checked)}
+                          type="checkbox"
+                          label="Apenas palavras"
+                        />
+                        <Form.Check
+                          checked={amnLvVocalizacao}
+                          onChange={(e) =>
+                            setAmnLvVocalizacao(e.target.checked)
+                          }
+                          type="checkbox"
+                          label="Vocalização"
+                        />
+                      </Col>
+                      <Col md="6">
+                        <Form.Label>Linguagem Gestual:</Form.Label>
+                        <Form.Check
+                          checked={amnLgApontaObj}
+                          onChange={(e) => setAmnLgApontaObj(e.target.checked)}
+                          type="checkbox"
+                          label="Aponta objetos"
+                        />
+                        <Form.Check
+                          checked={amnLgMostOqq}
+                          onChange={(e) => setAmnLgMostOqq(e.target.checked)}
+                          type="checkbox"
+                          label="Mostra o que quer"
+                        />
+                        <Form.Check
+                          checked={amnLgExpFac}
+                          onChange={(e) => setAmnLgExpFac(e.target.checked)}
+                          type="checkbox"
+                          label="Expressão facial"
+                        />
+                      </Col>
+                    </Row>
+                  </Accordion.Body>
+                </Accordion.Item>
+
+                <br />
+                <Accordion.Item eventKey="4">
+                  <Accordion.Header>Atividade de Vida Diária</Accordion.Header>
+                  <Accordion.Body>
+                    <Row>
+                      <Form.Label className="bold">
+                        Atividade de vida diária:
+                      </Form.Label>
+                      <Col md="4">
+                        <Form.Check
+                          checked={amnBanhoSozinho}
+                          onChange={(e) => setAmnBanhoSozinho(e.target.checked)}
+                          type="checkbox"
+                          label="Toma banho sozinho"
+                        />
+                      </Col>
+                      <Col md="4">
+                        <Form.Check
+                          checked={amnEscovaSozinho}
+                          onChange={(e) =>
+                            setAmnEscovaSozinho(e.target.checked)
+                          }
+                          type="checkbox"
+                          label="Escova os dentes sozinho"
+                        />
+                      </Col>
+                      <Col md="4">
+                        <Form.Check
+                          checked={amnBanSozinho}
+                          onChange={(e) => setAmnBanSozinho(e.target.checked)}
+                          type="checkbox"
+                          label="Usa o banheiro sozinho"
+                        />
+                      </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                      <Col md="4">
+                        <Form.Check
+                          checked={amnAuxVestir}
+                          onChange={(e) => setAmnAuxVestir(e.target.checked)}
+                          type="checkbox"
+                          label="Necessita de auxílio para se vestir ou despir"
+                        />
+                      </Col>
+                      <Col md="4">
+                        <Form.Check
+                          checked={amnContEsfin}
+                          onChange={(e) => setAmnContEsfin(e.target.checked)}
+                          type="checkbox"
+                          label="Controle de esfíncteres"
+                        />
+                      </Col>
+                      <Col md="4">
+                        <Form.Check
+                          checked={amnComeSoz}
+                          onChange={(e) => setAmnComeSoz(e.target.checked)}
+                          type="checkbox"
+                          label="Alimenta-se sozinho"
+                        />
+                      </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                      <Col md="6">
+                        <Form.Label>
+                          Em que idade se deu a retirada das fraldas:
+                        </Form.Label>
+                        <Form.Control
+                          value={amnIdadeRetFral}
+                          onChange={(e) => setAmnIdadeRetFral(e.target.value)}
+                          type="integer"
+                          as="textarea"
+                          className="textArea"
+                        />
+                      </Col>
+                    </Row>
+                  </Accordion.Body>
+                </Accordion.Item>
+
+                <br />
+
+                <Accordion.Item eventKey="5">
+                  <Accordion.Header>Aspectos Perceptivos</Accordion.Header>
+                  <Accordion.Body>
+                    <Row>
+                      <Form.Label className="bold">
+                        Aspectos perceptivos:
+                      </Form.Label>
+                      <Col md="6">
+                        <Form.Check
+                          checked={amnDifVer}
+                          onChange={(e) => setAmnDifVer(e.target.checked)}
+                          type="checkbox"
+                          label="Apresenta alguma dificuldade para enxergar"
+                        />
+                      </Col>
+                      <Col md="6">
+                        <Form.Check
+                          checked={amnDifOuvir}
+                          onChange={(e) => setAmnDifOuvir(e.target.checked)}
+                          type="checkbox"
+                          label="Aparenta ter alguma dificuldade para ouvir"
+                        />
+                      </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                      <Col md="6">
+                        <Form.Label>Aspectos emocionais:</Form.Label>
+                        <Form.Select
+                          required
+                          value={amnAspctEmoc}
+                          onChange={(e) => setAmnAspctEmoc(e.target.value)}
+                        >
+                          <option>Selecione</option>
+                          <option value="T">Tranquilo</option>
+                          <option value="A">Ansioso</option>
+                          <option value="I">Intolerante</option>
+                          <option value="P">Introspectivo</option>
+                          <option value="L">Alegre</option>
+                          <option value="F">Afetuoso</option>
+                        </Form.Select>
+                      </Col>
+                      <Col md="6">
+                        <Form.Label>
+                          Outros, quais? E em que situação:
+                        </Form.Label>
+                        <Form.Control
+                          value={amnAspctEmocObs}
+                          onChange={(e) => setAmnAspctEmocObs(e.target.value)}
+                          type="text"
+                          as="textarea"
+                          className="textArea"
+                        />
+                      </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                      <Col md="6">
+                        <Form.Label>
+                          Como os pais e outras pessoas o veem:
+                        </Form.Label>
+                        <Form.Control
+                          value={amnPaisVeem}
+                          onChange={(e) => setAmnPaisVeem(e.target.value)}
+                          type="text"
+                          as="textarea"
+                          className="textArea"
+                        />
+                      </Col>
+                    </Row>
+                  </Accordion.Body>
+                </Accordion.Item>
+
+                <br />
+                <Accordion.Item eventKey="6">
+                  <Accordion.Header>Sociabilização</Accordion.Header>
+                  <Accordion.Body>
+                    <Row>
+                      <Form.Label className="bold">Sociabilização:</Form.Label>
+                      <Col md="6">
+                        <Form.Check
+                          checked={amnInterage}
+                          onChange={(e) => setAmnInterage(e.target.checked)}
+                          type="checkbox"
+                          label="Interage com familiares, amigos e pessoas estranhas"
+                        />
+                      </Col>
+                      <Col md="6">
+                        <Form.Label>Descreva:</Form.Label>
+                        <Form.Control
+                          value={amnInterageObs}
+                          onChange={(e) => setAmnInterageObs(e.target.value)}
+                          type="text"
+                          as="textarea"
+                          className="textArea"
+                        />
+                      </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                      <Col md="6">
+                        <Form.Label>
+                          Prefere ficar sozinho ou em companhia de alguém:
+                        </Form.Label>
+                        <Form.Control
+                          value={amnFicarSoz}
+                          onChange={(e) => setAmnFicarSoz(e.target.value)}
+                          type="text"
+                          as="textarea"
+                          className="textArea"
+                        />
+                      </Col>
+                      <Col md="6">
+                        <Form.Label>
+                          Brinca com outras crianças ou prefere brincar sozinho:
+                        </Form.Label>
+                        <Form.Control
+                          value={amnBrincarSoz}
+                          onChange={(e) => setAmnBrincarSoz(e.target.value)}
+                          type="text"
+                          as="textarea"
+                          className="textArea"
+                        />
+                      </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                      <Col md="6">
+                        <Form.Label>
+                          Quais as brincadeiras ou brinquedos e atividades que
+                          mais gosta:
+                        </Form.Label>
+                        <Form.Control
+                          value={amnBrincarObs}
+                          onChange={(e) => setAmnBrincarObs(e.target.value)}
+                          type="text"
+                          as="textarea"
+                          className="textArea"
+                        />
+                      </Col>
+                      <Col md="3">
+                        <Form.Check
+                          checked={amnAnimaisEstim}
+                          onChange={(e) => setAmnAnimaisEstim(e.target.checked)}
+                          type="checkbox"
+                          label="Tem animais de estimação"
+                        />
+                      </Col>
+                      <Col md="3">
+                        <Form.Check
+                          checked={amnInterageAnimais}
+                          onChange={(e) =>
+                            setAmnInterageAnimais(e.target.checked)
+                          }
+                          type="checkbox"
+                          label="Interage com eles"
+                        />
+                      </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                      <Col md="6">
+                        <Form.Label>
+                          Gosta de algum animal específico:
+                        </Form.Label>
+                        <Form.Control
+                          value={amnAniEspcfc}
+                          maxLength={20}
+                          onChange={(e) => setAmnAniEspcfc(e.target.value)}
+                          type="text"
+                        />
+                      </Col>
+                      <Col md="6">
                         <br />
+                        <Form.Check
+                          checked={amnAdaptaLugar}
+                          onChange={(e) => setAmnAdaptaLugar(e.target.checked)}
+                          type="checkbox"
+                          label="Adapta-se facilmente a novos lugares e pessoas"
+                        />
+                      </Col>
+                    </Row>
+                  </Accordion.Body>
+                </Accordion.Item>
 
-                        <Accordion defaultActiveKey={['0']} alwaysOpen>
-                            <Accordion.Item eventKey="0">
-                                <Accordion.Header>Dados Familiares</Accordion.Header>
-                                <Accordion.Body>
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Pais:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaPaisCasados}
-                                                type="checkbox" label="Casados" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaPaisCasados}
-                                                type="checkbox" label="Separados" />
-                                        </Col>
-                                    </Row>
-                                    <br />
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Reação da criança a situação:</Form.Label>
-                                            <Form.Control value={amnReacSeparacao}
-                                                onChange={(e) => setAmnReacSeparacao(e.target.value)}
-                                                type="text" as="textarea" className='textArea' />
-                                        </Col>
-                                        <Col md="6">
-                                            <Form.Label>Em caso de separação, a criança vive com:</Form.Label>
-                                            <Form.Control value={amnMoradia}
-                                                onChange={(e) => setAmnMoradia(e.target.value)}
-                                                type="text" as="textarea" className='textArea' />
-                                        </Col>
-                                    </Row>
-                                    <br />
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Possui Irmão(a/os/as):</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaPossuiIrmao}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaPossuiIrmao}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-                                        <Col md="6">
-                                            <Form.Label>Em caso de afirmação, informe sexo e idade:</Form.Label>
-                                            <Form.Control value={amnInfosIrmao}
-                                                onChange={(e) => setAmnInfosIrmao(e.target.value)}
-                                                type="text" as="textarea" className='textArea' />
-                                        </Col>
-                                    </Row>
-                                    <br />
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Filho:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaAdotado}
-                                                type="checkbox" label="Biológico" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaAdotado}
-                                                type="checkbox" label="Adotivo" />
-                                        </Col>
-                                        <Col md="6">
-                                            <Form.Label>A criança é ciente de sua adoção?</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaCienciaAdocao}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaCienciaAdocao}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-                                    </Row>
-                                    <br />
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Reação da criança a situação:</Form.Label>
-                                            <Form.Control value={amnReacAdocao}
-                                                onChange={(e) => setAmnReacAdocao(e.target.value)}
-                                                type="text" as="textarea" className='textArea' />
-                                        </Col>
-                                        <Col md="6">
-                                            <Form.Label>Hipótese Diagnóstica (HD):</Form.Label>
-                                            <Form.Control value={amnHipDiag}
-                                                onChange={(e) => setAmnHipDiag(e.target.value)}
-                                                type="text" as="textarea" className='textArea' />
-                                        </Col>
-                                    </Row>
+                <br />
+                <Accordion.Item eventKey="7">
+                  <Accordion.Header>Tendências Próprias</Accordion.Header>
+                  <Accordion.Body>
+                    <Row>
+                      <Form.Label className="bold">
+                        Tendências próprias:
+                      </Form.Label>
+                      <Col md="6">
+                        <Form.Check
+                          checked={amnAtendeInterv}
+                          onChange={(e) => setAmnAtendeInterv(e.target.checked)}
+                          type="checkbox"
+                          label="Atende as intervenções quando está desobedecendo"
+                        />
+                      </Col>
+                      <Col md="6">
+                        <Form.Check
+                          checked={amnAtendeOrient}
+                          onChange={(e) => setAmnAtendeOrient(e.target.checked)}
+                          type="checkbox"
+                          label="Atende orientações simples"
+                        />
+                      </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                      <Col md="6">
+                        <Form.Check
+                          checked={amnChoroFacil}
+                          onChange={(e) => setAmnChoroFacil(e.target.checked)}
+                          type="checkbox"
+                          label="Apresenta choro fácil"
+                        />
+                      </Col>
+                      <Col md="6">
+                        <Form.Label>Em quais situações:</Form.Label>
+                        <Form.Control
+                          value={amnChoroObs}
+                          onChange={(e) => setAmnChoroObs(e.target.value)}
+                          type="text"
+                          as="textarea"
+                          className="textArea"
+                        />
+                      </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                      <Col md="6">
+                        <Form.Check
+                          checked={amnRecAuxilio}
+                          onChange={(e) => setAmnRecAuxilio(e.target.checked)}
+                          type="checkbox"
+                          label="Recusa auxílio"
+                        />
+                      </Col>
+                      <Col md="6">
+                        <Form.Label>Em quais situações:</Form.Label>
+                        <Form.Control
+                          value={amnRecAuxObs}
+                          onChange={(e) => setAmnRecAuxObs(e.target.value)}
+                          type="text"
+                          as="textarea"
+                          className="textArea"
+                        />
+                      </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                      <Col md="6">
+                        <Form.Check
+                          checked={amnResistToque}
+                          onChange={(e) => setAmnResistToque(e.target.checked)}
+                          type="checkbox"
+                          label="Tem resistência ao toque"
+                        />
+                      </Col>
+                    </Row>
+                  </Accordion.Body>
+                </Accordion.Item>
 
-                                </Accordion.Body>
-                            </Accordion.Item>
+                <br />
 
-                            <br />
+                <Accordion.Item eventKey="8">
+                  <Accordion.Header>História Clínica</Accordion.Header>
+                  <Accordion.Body>
+                    <Row>
+                      <Form.Label className="bold">
+                        História clínica:
+                      </Form.Label>
+                      <Col md="6">
+                        <Form.Label>Ocorreram:</Form.Label>
+                        <Form.Check
+                          checked={amnBronquite}
+                          onChange={(e) => setAmnBronquite(e.target.checked)}
+                          type="checkbox"
+                          label="Bronquite"
+                        />
+                        <Form.Check
+                          checked={amnAlergias}
+                          onChange={(e) => setAmnAlergias(e.target.checked)}
+                          type="checkbox"
+                          label="Alergias"
+                        />
+                        <Form.Check
+                          checked={amnAsma}
+                          onChange={(e) => setAmnAsma(e.target.checked)}
+                          type="checkbox"
+                          label="Asma"
+                        />
+                        <Form.Check
+                          checked={amnConvulsao}
+                          onChange={(e) => setAmnConvulsao(e.target.checked)}
+                          type="checkbox"
+                          label="Convulsões"
+                        />
+                        <Form.Check
+                          checked={amnVirose}
+                          onChange={(e) => setAmnVirose(e.target.checked)}
+                          type="checkbox"
+                          label="Viroses infantis"
+                        />
+                      </Col>
+                      <Col md="6">
+                        <Form.Label>Internações cirúrgicas:</Form.Label>
+                        <Form.Control
+                          value={amnInternacoes}
+                          onChange={(e) => setAmnInternacoes(e.target.value)}
+                          type="text"
+                          as="textarea"
+                          className="textArea"
+                        />
+                      </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                      <Col md="6">
+                        <Form.Label>Outras doenças:</Form.Label>
+                        <Form.Control
+                          value={amnOutDoencas}
+                          onChange={(e) => setAmnOutDoencas(e.target.value)}
+                          type="text"
+                          as="textarea"
+                          className="textArea"
+                        />
+                      </Col>
+                      <Col md="6">
+                        <Form.Label>Tratamentos realizados:</Form.Label>
+                        <Form.Control
+                          value={amnTratRealizados}
+                          onChange={(e) => setAmnTratRealizados(e.target.value)}
+                          type="text"
+                          as="textarea"
+                          className="textArea"
+                        />
+                      </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                      <Col md="6">
+                        <Form.Check
+                          checked={amnTratAtual}
+                          onChange={(e) => setAmnTratAtual(e.target.checked)}
+                          type="checkbox"
+                          label="Atualmente faz algum tratamento"
+                        />
+                      </Col>
+                      <Col md="6">
+                        <Form.Label>Quais:</Form.Label>
+                        <Form.Control
+                          value={amnTratAtualObs}
+                          onChange={(e) => setAmnTratAtualObs(e.target.value)}
+                          type="text"
+                          as="textarea"
+                          className="textArea"
+                        />
+                      </Col>
+                    </Row>
+                    <br />
+                    <Row>
+                      <Col md="6">
+                        <Form.Label>Usa medicação:</Form.Label>
+                        <Form.Check
+                          checked={amnMedicacao}
+                          onChange={(e) => setAmnMedicacao(e.target.checked)}
+                          type="checkbox"
+                          label="Usa medicação"
+                        />
+                      </Col>
+                      <Col md="6">
+                        <Form.Label>Qual:</Form.Label>
+                        <Form.Control
+                          value={amnMedObs}
+                          disabled={!amnMedicacao}
+                          onChange={(e) => setAmnMedObs(e.target.value)}
+                          type="text"
+                          as="textarea"
+                          className="textArea"
+                        />
+                      </Col>
+                    </Row>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>
+              <br />
+              <Row>
+                <Col md="12">
+                  <Form.Label>Colocações que considera importante:</Form.Label>
+                  <Form.Control
+                    value={amnConsideracoes}
+                    onChange={(e) => setAmnConsideracoes(e.target.value)}
+                    type="text"
+                    as="textarea"
+                    className="textArea"
+                  />
+                </Col>
+              </Row>
+              <br />
+              <Row>
+                <Col md="12">
+                  <Card>
+                    <div className="marginLeft">
+                      <Row>
+                        <Col md="12">
+                          <b>Documentos</b>
+                        </Col>
+                      </Row>
 
-                            <Accordion.Item eventKey="1">
-                                <Accordion.Header>Queixa Inicial</Accordion.Header>
-                                <Accordion.Body>
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Qual o motivo da procura por equoterapia:</Form.Label>
-                                            <Form.Control value={amnMotivoEquo}
-                                                onChange={(e) => setAmnMotivoEquo(e.target.value)}
-                                                type="text" as="textarea" className='textArea' />
-                                        </Col>
-                                        <Col md="6">
-                                            <Form.Label>Quais espectativas para o tratamento:</Form.Label>
-                                            <Form.Control value={amnExpecTrat}
-                                                onChange={(e) => setAmnExpecTrat(e.target.value)}
-                                                type="text" as="textarea" className='textArea' />
-                                        </Col>
-                                    </Row>
-                                </Accordion.Body>
-                            </Accordion.Item>
-
-                            <br />
-
-                            <Accordion.Item eventKey="2">
-                                <Accordion.Header>Histórico</Accordion.Header>
-                                <Accordion.Body>
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Gestação:</Form.Label>
-                                            <Form.Select required value={amnTpGest}
-                                                onChange={(e) => setAmnTpGest(e.target.value)}>
-                                                <option>Selecione</option>
-                                                <option value="T">A termo</option>
-                                                <option value="E">Prematura</option>
-                                                <option value="O">Pós-matura</option>
-                                            </Form.Select>
-                                        </Col>
-                                        <Col md="6">
-                                            <Form.Label>Parto:</Form.Label>
-                                            <Form.Select required value={amnTpParto}
-                                                onChange={(e) => setAmnTpParto(e.target.value)}>
-                                                <option>Selecione</option>
-                                                <option value="N">Normal</option>
-                                                <option value="C">Cesariana</option>
-                                                <option value="I">Induzido</option>
-                                                <option value="F">Fórceps</option>
-                                            </Form.Select>
-                                        </Col>
-
-                                    </Row>
-                                    <br />
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Saúde da mãe durante a gravidez:</Form.Label>
-                                            <Form.Control value={amnSaudeMaeGestacao}
-                                                onChange={(e) => setAmnSaudeMaeGestacao(e.target.value)}
-                                                type="text" as="textarea" className='textArea' />
-                                        </Col>
-                                        <Col md="6">
-                                            <Form.Label>Acontecimentos relevantes ao longo do período:</Form.Label>
-                                            <Form.Control value={amnAcontGestacao}
-                                                onChange={(e) => setAmnAcontGestacao(e.target.value)}
-                                                type="text" as="textarea" className='textArea' />
-                                        </Col>
-
-                                    </Row>
-                                    <br />
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Fatos relevantes:</Form.Label>
-                                            <Form.Control value={amnPartoObs}
-                                                onChange={(e) => setAmnPartoObs(e.target.value)}
-                                                type="text" as="textarea" className='textArea' />
-                                        </Col>
-                                    </Row>
-                                    <br />
-                                    <Row>
-                                        <Col md="4">
-                                            <Form.Label>Icterícia - amarelão:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaAmarelao}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaAmarelao}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-                                        <Col md="4">
-                                            <Form.Label>Febre:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaFebre}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaFebre}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-                                        <Col md="4">
-                                            <Form.Label>Permanencia na incobadora:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaPermIncubadora}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaPermIncubadora}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-                                    </Row>
-                                    <br />
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Tempo na Incubadora: (Meses)</Form.Label>
-                                            <Form.Control value={amnTempoIncubadora}
-                                                onChange={(e) => setAmnTempoIncubadora(e.target.value)}
-                                                type="number" />
-                                        </Col>
-                                        <Col md="6">
-                                            <Form.Label>Reações dos pais e familiares:</Form.Label>
-                                            <Form.Control value={amnReacPaisFam}
-                                                onChange={(e) => setAmnReacPaisFam(e.target.value)}
-                                                type="text" as="textarea" className='textArea' />
-                                        </Col>
-                                    </Row>
-                                    <br />
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Amamentação:</Form.Label>
-                                            <Form.Select required value={amnTpAmamentacao}
-                                                onChange={(e) => setAmnTpAmamentacao(e.target.value)}>
-                                                <option>Selecione</option>
-                                                <option value="M">Materna</option>
-                                                <option value="A">Artificial/desmame</option>
-                                            </Form.Select>
-                                        </Col>
-                                        <Col md="6">
-                                            <Form.Label>Dificuldade ou atraso no controle do esfíncter:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaDifEsfincter}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaDifEsfincter}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-                                    </Row>
-                                    <br />
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Tem enurese noturna:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaEnureseNotu}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaEnureseNotu}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-                                        <Col md="6">
-                                            <Form.Label>Pertubações (pesadelos, sonambulismo, insônia...):</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaPertNot}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaPertNot}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-
-                                    </Row>
-                                    <br />
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Observações:</Form.Label>
-                                            <Form.Control value={amnPertObs}
-                                                onChange={(e) => setAmnPertObs(e.target.value)}
-                                                type="text" as="textarea" className='textArea' />
-                                        </Col>
-                                    </Row>
-                                    <br />
-                                    <Row>
-
-                                        <Col md="6">
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaDormeSoz}
-                                                type="checkbox" label="Dorme sozinho" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaDormePais}
-                                                type="checkbox" label="Dorme no quarto dos pais" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaDivQuarto}
-                                                type="checkbox" label="Divide o quarto com alguém" />
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col md="3">
-                                            <Form.Label>Quem:</Form.Label>
-                                            <Form.Control value={amnDivQuartoObs} maxLength={20}
-                                                onChange={(e) => setAmnDivQuartoObs(e.target.value)}
-                                                type="text" />
-                                        </Col>
-                                    </Row>
-                                    <br />
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Possui habitos especiais (requer presença de alguém, medos...):</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaHabitEspec}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaHabitEspec}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-                                        <Col md="6">
-                                            <Form.Label>Quais:</Form.Label>
-                                            <Form.Control value={amnHabitEspecObs}
-                                                onChange={(e) => setAmnHabitEspecObs(e.target.value)}
-                                                type="text" as="textarea" className='textArea' />
-                                        </Col>
-                                    </Row>
-                                    <br />
-                                    <Row>
-                                        <Col md="3">
-                                            <Form.Label>Engatinha:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaEngatinha}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaEngatinha}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-                                        <Col md="3">
-                                            <Form.Label>Anda:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaAnda}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaAnda}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-                                        <Col md="3">
-                                            <Form.Label>Senta:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaSenta}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaSenta}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-                                        <Col md="3">
-                                            <Form.Label>Corre:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaCorre}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaCorre}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-                                    </Row>
-                                    <br />
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Tonicidade (0-1 ano/musculatura firme):</Form.Label>
-                                            <Form.Control value={amnTonicidade} maxLength={20}
-                                                onChange={(e) => setAmnTonicidade(e.target.value)}
-                                                type="text" />
-                                        </Col>
-                                        <Col md="6">
-                                            <Form.Label>Equilibrio (1-2 anos):</Form.Label>
-                                            <Form.Control value={amnEquilibrio} maxLength={20}
-                                                onChange={(e) => setAmnEquilibrio(e.target.value)}
-                                                type="text" />
-                                        </Col>
-
-                                    </Row>
-                                    <br />
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Noção corporal (3-4 anos):</Form.Label>
-                                            <Form.Control value={amnNocaoCorp} maxLength={20}
-                                                onChange={(e) => setAmnNocaoCorp(e.target.value)}
-                                                type="text" />
-                                        </Col>
-                                        <Col md="6">
-                                            <Form.Label>Lateralização (5-6 anos):</Form.Label>
-                                            <Form.Control value={amnLateralizacao} maxLength={20}
-                                                onChange={(e) => setAmnLateralizacao(e.target.value)}
-                                                type="text" />
-                                        </Col>
-                                    </Row>
-                                    <br />
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Praxia global (movimento voluntário e consciente ou automatizado):</Form.Label>
-                                            <Form.Control value={amnPraxiaGlobal} maxLength={20}
-                                                onChange={(e) => setAmnPraxiaGlobal(e.target.value)}
-                                                type="text" />
-                                        </Col>
-                                        <Col md="6">
-                                            <Form.Label>Praxia fina (preensão de objetos, segurar, recortar...):</Form.Label>
-                                            <Form.Control value={amnPraxiaFina} maxLength={20}
-                                                onChange={(e) => setAmnPraxiaFina(e.target.value)}
-                                                type="text" />
-                                        </Col>
-
-                                    </Row>
-                                    <br />
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Estruturação espaço-temporal:</Form.Label>
-                                            <Form.Control value={amnEstEspCorp} maxLength={20}
-                                                onChange={(e) => setAmnEstEspCorp(e.target.value)}
-                                                type="text" />
-                                        </Col>
-                                    </Row>
-                                </Accordion.Body>
-                            </Accordion.Item>
-
-                            <br />
-
-                            <Accordion.Item eventKey="3">
-                                <Accordion.Header>Desenvolvimento Cognitivo</Accordion.Header>
-                                <Accordion.Body>
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Desenvolvimento dentro do esperado:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaDesvNormal}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaDesvNormal}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-                                        <Col md="6">
-                                            <Form.Label>Fatos relevantes:</Form.Label>
-                                            <Form.Control value={amnDesvFatRel}
-                                                onChange={(e) => setAmnDesvFatRel(e.target.value)}
-                                                type="text" as="textarea" className='textArea' />
-                                        </Col>
-                                    </Row>
-                                    <br />
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Linguagem verbal:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaLvFalaComp}
-                                                type="checkbox" label="Fala completa" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaLvApenasPal}
-                                                type="checkbox" label="Apenas palavras" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaLvVocalizacao}
-                                                type="checkbox" label="Vocalização" />
-                                        </Col>
-                                        <Col md="6">
-                                            <Form.Label>Linguagem Gestual:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaLgApontaObj}
-                                                type="checkbox" label="Aponta objetos" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaLgMostOqq}
-                                                type="checkbox" label="Mostra o que quer" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaLgExpFac}
-                                                type="checkbox" label="Expressão facial" />
-                                        </Col>
-                                    </Row>
-                                </Accordion.Body>
-                            </Accordion.Item>
-
-                            <br />
-
-                            <Accordion.Item eventKey="4">
-                                <Accordion.Header>Atividade de Vida Diária</Accordion.Header>
-                                <Accordion.Body>
-                                    <Row>
-                                        <Col md="4">
-                                            <Form.Label>Toma banho sozinho:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaBanhoSozinho}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaBanhoSozinho}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-                                        <Col md="4">
-                                            <Form.Label>Escova os dentes sozinho:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaEscovaSozinho}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaEscovaSozinho}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-                                        <Col md="4">
-                                            <Form.Label>Usa o banheiro sozinho:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaBanSozinho}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaBanSozinho}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-
-                                    </Row>
-                                    <br />
-                                    <Row>
-                                        <Col md="4">
-                                            <Form.Label>Necessita de auxílio para se vestir ou despir:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaAuxVestir}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaAuxVestir}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-                                        <Col md="4">
-                                            <Form.Label>Controle de esfíncteres:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaContEsfin}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaContEsfin}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-                                        <Col md="4">
-                                            <Form.Label>Alimenta-se sozinho:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaComeSoz}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaComeSoz}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-
-
-                                    </Row>
-                                    <br />
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Em que idade se deu a retirada das fraldas: (Meses)</Form.Label>
-                                            <Form.Control value={amnIdadeRetFral}
-                                                onChange={(e) => setAmnIdadeRetFral(e.target.value)}
-                                                type="number" />
-                                        </Col>
-                                    </Row>
-                                </Accordion.Body>
-                            </Accordion.Item>
-
-                            <br />
-
-                            <Accordion.Item eventKey="5">
-                                <Accordion.Header>Aspectos Perceptivos</Accordion.Header>
-                                <Accordion.Body>
-
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Apresenta alguma dificuldade para enxergar:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaDifVer}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaDifVer}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-                                        <Col md="6">
-                                            <Form.Label>Aparenta ter alguma dificuldade para ouvir:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaDifOuvir}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaDifOuvir}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-                                    </Row>
-                                    <br />
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Aspectos emocionais:</Form.Label>
-                                            <Form.Select required value={amnAspctEmoc}
-                                                onChange={(e) => setAmnAspctEmoc(e.target.value)}>
-                                                <option>Selecione</option>
-                                                <option value="T">Tranquilo</option>
-                                                <option value="A">Ansioso</option>
-                                                <option value="I">Intolerante</option>
-                                                <option value="P">Introspectivo</option>
-                                                <option value="L">Alegre</option>
-                                                <option value="F">Afetuoso</option>
-                                            </Form.Select>
-                                        </Col>
-                                        <Col md="6">
-                                            <Form.Label>Outros, quais? E em que situação:</Form.Label>
-                                            <Form.Control value={amnAspctEmocObs}
-                                                onChange={(e) => setAmnAspctEmocObs(e.target.value)}
-                                                type="text" as="textarea" className='textArea' />
-                                        </Col>
-
-                                    </Row>
-                                    <br />
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Como os pais e outras pessoas o veem:</Form.Label>
-                                            <Form.Control value={amnPaisVeem}
-                                                onChange={(e) => setAmnPaisVeem(e.target.value)}
-                                                type="text" as="textarea" className='textArea' />
-                                        </Col>
-                                    </Row>
-                                </Accordion.Body>
-                            </Accordion.Item>
-
-                            <br />
-
-                            <Accordion.Item eventKey="6">
-                                <Accordion.Header>Sociabilização</Accordion.Header>
-                                <Accordion.Body>
-
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Interage com familiares, amigos e pessoas estranhas:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaInterage}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaInterage}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-                                        <Col md="6">
-                                            <Form.Label>Descreva:</Form.Label>
-                                            <Form.Control value={amnInterageObs}
-                                                onChange={(e) => setAmnInterageObs(e.target.value)}
-                                                type="text" as="textarea" className='textArea' />
-                                        </Col>
-                                    </Row>
-                                    <br />
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Prefere ficar sozinho ou em companhia de alguém:</Form.Label>
-                                            <Form.Control value={amnFicarSoz}
-                                                onChange={(e) => setAmnFicarSoz(e.target.value)}
-                                                type="text" as="textarea" className='textArea' />
-                                        </Col>
-                                        <Col md="6">
-                                            <Form.Label>Brinca com outras crianças ou prefere brincar sozinho:</Form.Label>
-                                            <Form.Control value={amnBrincarSoz}
-                                                onChange={(e) => setAmnBrincarSoz(e.target.value)}
-                                                type="text" as="textarea" className='textArea' />
-                                        </Col>
-                                    </Row>
-                                    <br />
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Quais as brincadeiras ou brinquedos e atividades que mais gosta:</Form.Label>
-                                            <Form.Control value={amnBrincarObs}
-                                                onChange={(e) => setAmnBrincarObs(e.target.value)}
-                                                type="text" as="textarea" className='textArea' />
-                                        </Col>
-                                        <Col md="3">
-                                            <Form.Label>Tem animais de estimação:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaAnimaisEstim}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaAnimaisEstim}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-                                        <Col md="3">
-                                            <Form.Label>Interage com eles:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaInterageAnimais}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaInterageAnimais}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-                                    </Row>
-                                    <br />
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Gosta de algum animal específico:</Form.Label>
-                                            <Form.Control value={amnAniEspcfc} maxLength={20}
-                                                onChange={(e) => setAmnAniEspcfc(e.target.value)}
-                                                type="text" />
-                                        </Col>
-                                        <Col md="6">
-                                            <Form.Label>Adapta-se facilmente a novos lugares e pessoas:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaAdaptaLugar}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaAdaptaLugar}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-                                    </Row>
-                                </Accordion.Body>
-                            </Accordion.Item>
-
-                            <br />
-
-                            <Accordion.Item eventKey="7">
-                                <Accordion.Header>Tendências Próprias</Accordion.Header>
-                                <Accordion.Body>
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Atende as intervenções quando está desobedecendo:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaAtendeInterv}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaAtendeInterv}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-                                        <Col md="6">
-                                            <Form.Label>Atende orientações simples:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaAtendeOrient}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaAtendeOrient}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-                                    </Row>
-                                    <br />
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Apresenta choro fácil:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaChoroFacil}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaChoroFacil}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-                                        <Col md="6">
-                                            <Form.Label>Em quais situações:</Form.Label>
-                                            <Form.Control value={amnChoroObs}
-                                                onChange={(e) => setAmnChoroObs(e.target.value)}
-                                                type="text" as="textarea" className='textArea' />
-                                        </Col>
-                                    </Row>
-                                    <br />
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Recusa auxílio:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaRecAuxilio}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaRecAuxilio}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-                                        <Col md="6">
-                                            <Form.Label>Em quais situações:</Form.Label>
-                                            <Form.Control value={amnRecAuxObs}
-                                                onChange={(e) => setAmnRecAuxObs(e.target.value)}
-                                                type="text" as="textarea" className='textArea' />
-                                        </Col>
-                                    </Row>
-                                    <br />
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Tem resistência ao toque:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaResistToque}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaResistToque}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-                                    </Row>
-                                </Accordion.Body>
-                            </Accordion.Item>
-
-                            <br />
-
-                            <Accordion.Item eventKey="8">
-                                <Accordion.Header>História Clínica</Accordion.Header>
-                                <Accordion.Body>
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Ocorreram:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaBronquite}
-                                                type="checkbox" label="Bronquite" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaAlergias}
-                                                type="checkbox" label="Alergias" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaAsma}
-                                                type="checkbox" label="Asma" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaConvulsao}
-                                                type="checkbox" label="Convulsões" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaVirose}
-                                                type="checkbox" label="Viroses infantis" />
-                                        </Col>
-                                        <Col md="6">
-                                            <Form.Label>Internações cirúrgicas:</Form.Label>
-                                            <Form.Control value={amnInternacoes}
-                                                onChange={(e) => setAmnInternacoes(e.target.value)}
-                                                type="text" as="textarea" className='textArea' />
-                                        </Col>
-                                    </Row>
-                                    <br />
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Outras doenças:</Form.Label>
-                                            <Form.Control value={amnOutDoencas}
-                                                onChange={(e) => setAmnOutDoencas(e.target.value)}
-                                                type="text" as="textarea" className='textArea' />
-                                        </Col>
-                                        <Col md="6">
-                                            <Form.Label>Tratamentos realizados:</Form.Label>
-                                            <Form.Control value={amnTratRealizados}
-                                                onChange={(e) => setAmnTratRealizados(e.target.value)}
-                                                type="text" as="textarea" className='textArea' />
-                                        </Col>
-                                    </Row>
-                                    <br />
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Atualmente faz algum tratamento:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaTratAtual}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaTratAtual}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-                                        <Col md="6">
-                                            <Form.Label>Quais:</Form.Label>
-                                            <Form.Control value={amnTratAtualObs}
-                                                onChange={(e) => setAmnTratAtualObs(e.target.value)}
-                                                type="text" as="textarea" className='textArea' />
-                                        </Col>
-                                    </Row>
-                                    <br />
-                                    <Row>
-                                        <Col md="6">
-                                            <Form.Label>Usa medicação:</Form.Label>
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaMedicacao}
-                                                type="checkbox" label="Sim" />
-                                            <Form.Check
-                                                defaultChecked={false} onClick={selecionaMedicacao}
-                                                type="checkbox" label="Não" />
-                                        </Col>
-                                        <Col md="6">
-                                            <Form.Label>Qual:</Form.Label>
-                                            <Form.Control value={amnMedObs}
-                                                onChange={(e) => setAmnMedObs(e.target.value)}
-                                                type="text" as="textarea" className='textArea' />
-                                        </Col>
-                                    </Row>
-
-                                </Accordion.Body>
-                            </Accordion.Item>
-                        </Accordion>
-
-                        <br />
-                        <Row>
-                            <Col md="12">
-                                <Form.Label>Colocações que considera importante:</Form.Label>
-                                <Form.Control value={amnConsideracoes}
-                                    onChange={(e) => setAmnConsideracoes(e.target.value)}
-                                    type="text" as="textarea" className='textArea' />
-                            </Col>
-                        </Row>
-
-                        <br />
-
-                        <Row>
-                            <Col md="12">
-                                <Card>
-                                    <div className='marginLeft'>
-                                        <Row>
-                                            <Col md="12">
-                                                <b>Documentos</b>
-                                            </Col>
-                                        </Row>
-
-                                        <Row>
-                                            <Col md="12">
-                                                <Form.Control type="file" id="inputDoc" accept="image/*, application/pdf" onChange={criarAnexo} />
-                                                <Form.Label htmlFor="inputDoc" className='label-input-file-pqn'>Anexar Documento</Form.Label>
-                                            </Col>
-                                        </Row>
-                                        <TabelaDocumentos data={anexosList} rowsPerPage={5} removeDocumentoSelecionado={removeDocumentoSelecionado} />
-                                    </div>
-                                </Card>
-                            </Col>
-                        </Row>
-
-
-                        <br />
-                        <Toolbar jsonRemove={enviaJsonRemove} abrirPesquisa={atualizaDlgPesquisa} />
-                    </Form>
-                </Container>
-                {abrirPesquisa &&
-                    <PesquisaFichaAnamnese setValores={setList} valores={list} atualizaItemSelecionado={atualizaItemSelecionado} setAbrirPesquisa={setAbrirPesquisa} />
-                }
-                {abrirPesquisaPraticante &&
-                    <PesquisaPraticantes setValores={setListPraticantes} valores={listPraticantes} atualizaItemSelecionado={atualizaPraticanteSelecionado} setAbrirPesquisa={setAbrirPesquisaPraticante} />
-                }
-                {abrirPesquisaFuncionario &&
-                    <PesquisaFuncionario setValores={setListFuncionarios} valores={listFuncionarios} atualizaItemSelecionado={atualizaFuncionarioSelecionado} setAbrirPesquisa={setAbrirPesquisaFuncionario} />
-                }
-                <Footer />
-            </div >
-        )
-    }
+                      <Row>
+                        <Col md="12">
+                          <Form.Control
+                            type="file"
+                            id="inputDoc"
+                            accept="image/*, application/pdf"
+                            onChange={criarAnexo}
+                          />
+                          <Form.Label
+                            htmlFor="inputDoc"
+                            className="label-input-file-pqn"
+                          >
+                            Anexar Documento
+                          </Form.Label>
+                        </Col>
+                      </Row>
+                      <TabelaDocumentos
+                        data={anexosList}
+                        rowsPerPage={5}
+                        removeDocumentoSelecionado={removeDocumentoSelecionado}
+                      />
+                    </div>
+                  </Card>
+                </Col>
+              </Row>
+              <br />
+              <Toolbar
+                jsonRemove={enviaJsonRemove}
+                abrirPesquisa={atualizaDlgPesquisa}
+              />
+            </Form>
+          </Container>
+          {abrirPesquisa && (
+            <PesquisaFichaAnamnese
+              setValores={setList}
+              valores={list}
+              atualizaItemSelecionado={atualizaItemSelecionado}
+              setAbrirPesquisa={setAbrirPesquisa}
+            />
+          )}
+          {abrirPesquisaPraticante && (
+            <PesquisaPraticantes
+              setValores={setListPraticantes}
+              valores={listPraticantes}
+              atualizaItemSelecionado={atualizaPraticanteSelecionado}
+              setAbrirPesquisa={setAbrirPesquisaPraticante}
+            />
+          )}
+          {abrirPesquisaFuncionario && (
+            <PesquisaFuncionario
+              setValores={setListFuncionarios}
+              valores={listFuncionarios}
+              atualizaItemSelecionado={atualizaFuncionarioSelecionado}
+              setAbrirPesquisa={setAbrirPesquisaFuncionario}
+            />
+          )}
+          <Footer />
+        </div>
+      );
+    };
     return movimentoFichaAnamnese();
 
 
