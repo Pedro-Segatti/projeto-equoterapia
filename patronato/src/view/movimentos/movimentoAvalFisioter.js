@@ -45,9 +45,6 @@ function movimentoAvalFisioter() {
     const [aftSenseTatil, setAftSenseTatil] = useState(false);
     const [aftSenseDolo, setAftSenseDolo] = useState(false);
     const [aftSenseTerm, setAftSenseTerm] = useState(false);
-    const selecionaSenseTatil = () => setAftSenseTatil(!aftSenseTatil)
-    const selecionaSenseDolo = () => setAftSenseDolo(!aftSenseDolo)
-    const selecionaSenseTerm = () => setAftSenseTerm(!aftSenseTerm)
     const [aftSenseObs, setAftSenseObs] = useState("");
     const [aftEquiEstDin, setAftEquiEstDin] = useState("");
     const [aftAmotoHipe, setAftAmotoHipe] = useState(false);
@@ -57,13 +54,6 @@ function movimentoAvalFisioter() {
     const [aftAmotoContEsp, setAftAmotoContEsp] = useState(false);
     const [aftAmotoDefAtx, setAftAmotoDefAtx] = useState(false);
     const [aftAmotoClonus, setAftAmotoClonus] = useState(false);
-    const selecionaAmotoHipe = () => setAftAmotoHipe(!aftAmotoHipe)
-    const selecionaAmotoHipo = () => setAftAmotoHipo(!aftAmotoHipo)
-    const selecionaAmotoCor = () => setAftAmotoCor(!aftAmotoCor)
-    const selecionaAmotoAte = () => setAftAmotoAte(!aftAmotoAte)
-    const selecionaAmotoContEsp = () => setAftAmotoContEsp(!aftAmotoContEsp)
-    const selecionaAmotoDefAtx = () => setAftAmotoDefAtx(!aftAmotoDefAtx)
-    const selecionaAmotoClonus = () => setAftAmotoClonus(!aftAmotoClonus)
     const [aftAmotoObs, setAftAmotoObs] = useState("");
     const [aftMarLocAtu, setAftMarLocAtu] = useState("");
     const [aftAvalPostSolCav, setAftAvalPostSolCav] = useState("");
@@ -85,8 +75,6 @@ function movimentoAvalFisioter() {
     const [aftPreenPalmar, setAftPreenPalmar] = useState(false);
     const [aftPreenPinca, setAftPreenPinca] = useState(false);
     const [aftPreenObs, setAftPreenObs] = useState("");
-    const selecionaPreenPalmar = () => setAftPreenPalmar(!aftPreenPalmar)
-    const selecionaPreenPinca = () => setAftPreenPinca(!aftPreenPinca)
     const [aftMovPassiva, setAftMovPassiva] = useState("");
     const [aftMovRespira, setAftMovRespira] = useState("");
     const [aftMovDegluti, setAftMovDegluti] = useState("");
@@ -191,7 +179,7 @@ function movimentoAvalFisioter() {
             "aftExameFis": aftExameFis,
             "aftRefPrimTend": aftRefPrimTend,
             "aftSenseTatil": aftSenseTatil,
-            "tSenseDolo": aftSenseDolo,
+            "aftSenseDolo": aftSenseDolo,
             "aftSenseTerm": aftSenseTerm,
             "aftSenseObs": aftSenseObs,
             "aftAmotoHipe": aftAmotoHipe,
@@ -585,13 +573,13 @@ function movimentoAvalFisioter() {
                             <Col md="6">
                                 <Form.Label>Sensibilidade:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaSenseTatil}
+                                    checked={aftSenseTatil} onChange={(e) => setAftSenseTatil(e.target.checked)}
                                     type="checkbox" label="Tátil" />
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaSenseTerm}
+                                    checked={aftSenseTerm} onChange={(e) => setAftSenseTerm(e.target.checked)}
                                     type="checkbox" label="Térmica" />
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaSenseDolo}
+                                    checked={aftSenseDolo} onChange={(e) => setAftSenseDolo(e.target.checked)}
                                     type="checkbox" label="Dolorosa" />
                             </Col>
                             <Col md="6">
@@ -614,27 +602,27 @@ function movimentoAvalFisioter() {
                             <Form.Label>Alteração Motora:</Form.Label>
                             <Col md="3">
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaAmotoCor}
+                                    checked={aftAmotoCor} onChange={(e) => setAftAmotoCor(e.target.checked)}
                                     type="checkbox" label="Coréia" />
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaAmotoHipe}
+                                    checked={aftAmotoHipe} onChange={(e) => setAftAmotoHipe(e.target.checked)}
                                     type="checkbox" label="Hipertonia" />
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaAmotoAte}
+                                    checked={aftAmotoAte} onChange={(e) => setAftAmotoAte(e.target.checked)}
                                     type="checkbox" label="Atetose" />
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaAmotoContEsp}
+                                    checked={aftAmotoContEsp} onChange={(e) => setAftAmotoContEsp(e.target.checked)}
                                     type="checkbox" label="Contratura Espasticidade" />
                             </Col>
                             <Col md="3">
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaAmotoDefAtx}
+                                    checked={aftAmotoDefAtx} onChange={(e) => setAftAmotoDefAtx(e.target.checked)}
                                     type="checkbox" label="Ataxia" />
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaAmotoClonus}
+                                    checked={aftAmotoClonus} onChange={(e) => setAftAmotoClonus(e.target.checked)}
                                     type="checkbox" label="Clônus" />
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaAmotoHipo}
+                                    checked={aftAmotoHipo} onChange={(e) => setAftAmotoHipo(e.target.checked)}
                                     type="checkbox" label="Hipotonia" />
                             </Col>
                             <Col md="6">
@@ -803,10 +791,10 @@ function movimentoAvalFisioter() {
                             <Form.Label>Preensão:</Form.Label>
                             <Col md="6">
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaPreenPalmar}
+                                    checked={aftPreenPalmar} onChange={(e) => setAftPreenPalmar(e.target.checked)}
                                     type="checkbox" label="Palmar" />
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaPreenPinca}
+                                    checked={aftPreenPinca} onChange={(e) => setAftPreenPinca(e.target.checked)}
                                     type="checkbox" label="Pinça" />
                             </Col>
                             <Col md="6">

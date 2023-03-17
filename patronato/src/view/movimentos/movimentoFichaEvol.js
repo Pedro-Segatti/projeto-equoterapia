@@ -102,7 +102,6 @@ function cadastroFichaEvol() {
     const [evolReg, setEvolReg] = useState("");
     const [evolObs, setEvolObs] = useState("");
     const [evolRecLudicos, setEvolRecLudicos] = useState(true);
-    const selecionaRecLudicos = () => setEvolRecLudicos(!evolRecLudicos)
     const [evolQuaisRecLud, setEvolQuaisRecLud] = useState("");
     const [evolObsRecLud, setEvolObsRecLud] = useState("");
     const [evolDecubito, setEvolDecubito] = useState("");
@@ -281,10 +280,10 @@ function cadastroFichaEvol() {
         }
     }
 
-    const atualizaRecursosLudicos = () => {
-        selecionaRecLudicos();
+    const atualizaRecursosLudicos = (parametro) => {
         setEvolObsRecLud("");
         setEvolQuaisRecLud("");
+        setEvolRecLudicos(parametro); 
     }
 
 
@@ -525,8 +524,8 @@ function cadastroFichaEvol() {
                         <Row>
                             <Col md="6">
                                 <Form.Check
-                                    defaultChecked={true}
-                                    onClick={atualizaRecursosLudicos}
+                                    checked={evolRecLudicos}
+                                    onChange={(e) => atualizaRecursosLudicos(e.target.checked)}
                                     type="checkbox"
                                     id="recLud"
                                     label="Recursos Lúdicos"
