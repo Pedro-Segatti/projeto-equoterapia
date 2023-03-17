@@ -124,56 +124,6 @@ function movimentoFichaAnamnese() {
     const [amnIdFuncionario, setAmnIdFuncionario] = useState({ "pessoa": { "pesNome": "" } });
     const [amnIdPraticante, setAmnIdPraticante] = useState({ "pessoa": { "pesNome": "" } });
 
-    const selecionaPaisCasados = () => setAmnPaisCasados(!amnPaisCasados);
-    const selecionaPossuiIrmao = () => setAmnPossuiIrmao(!amnPossuiIrmao);
-    const selecionaAdotado = () => setAmnAdotado(!amnAdotado);
-    const selecionaCienciaAdocao = () => setAmnCienciaAdocao(!amnCienciaAdocao);
-    const selecionaAmarelao = () => setAmnAmarelao(!amnAmarelao);
-    const selecionaFebre = () => setAmnFebre(!amnFebre);
-    const selecionaPermIncubadora = () => setAmnPermIncubadora(!amnPermIncubadora);
-    const selecionaDifEsfincter = () => setAmnDifEsfincter(!amnDifEsfincter);
-    const selecionaEnureseNotu = () => setAmnEnureseNotu(!amnEnureseNotu);
-    const selecionaPertNot = () => setAmnPertNot(!amnPertNot);
-    const selecionaDormeSoz = () => setAmnDormeSoz(!amnDormeSoz);
-    const selecionaDormePais = () => setAmnDormePais(!amnDormePais);
-    const selecionaDivQuarto = () => setAmnDivQuarto(!amnDivQuarto);
-    const selecionaHabitEspec = () => setAmnHabitEspec(!amnHabitEspec);
-    const selecionaEngatinha = () => setAmnEngatinha(!amnEngatinha);
-    const selecionaSenta = () => setAmnSenta(!amnSenta);
-    const selecionaAnda = () => setAmnAnda(!amnAnda);
-    const selecionaCorre = () => setAmnCorre(!amnCorre);
-    const selecionaDesvNormal = () => setAmnDesvNormal(!amnDesvNormal);
-    const selecionaLvFalaComp = () => setAmnLvFalaComp(!amnLvFalaComp);
-    const selecionaLvApenasPal = () => setAmnLvApenasPal(!amnLvApenasPal);
-    const selecionaLvVocalizacao = () => setAmnLvVocalizacao(!amnLvVocalizacao);
-    const selecionaLgApontaObj = () => setAmnLgApontaObj(!amnLgApontaObj);
-    const selecionaLgMostOqq = () => setAmnLgMostOqq(!amnLgMostOqq);
-    const selecionaLgExpFac = () => setAmnLgExpFac(!amnLgExpFac);
-    const selecionaBanhoSozinho = () => setAmnBanhoSozinho(!amnBanhoSozinho);
-    const selecionaEscovaSozinho = () => setAmnEscovaSozinho(!amnEscovaSozinho);
-    const selecionaBanSozinho = () => setAmnBanSozinho(!amnBanSozinho);
-    const selecionaAuxVestir = () => setAmnAuxVestir(!amnAuxVestir);
-    const selecionaContEsfin = () => setAmnContEsfin(!amnContEsfin);
-    const selecionaComeSoz = () => setAmnComeSoz(!amnComeSoz);
-    const selecionaDifVer = () => setAmnDifVer(!amnDifVer);
-    const selecionaDifOuvir = () => setAmnDifOuvir(!amnDifOuvir);
-    const selecionaInterage = () => setAmnInterage(!amnInterage);
-    const selecionaAnimaisEstim = () => setAmnAnimaisEstim(!amnAnimaisEstim);
-    const selecionaInterageAnimais = () => setAmnInterageAnimais(!amnInterageAnimais);
-    const selecionaAdaptaLugar = () => setAmnAdaptaLugar(!amnAdaptaLugar);
-    const selecionaAtendeInterv = () => setAmnAtendeInterv(!amnAtendeInterv);
-    const selecionaAtendeOrient = () => setAmnAtendeOrient(!amnAtendeOrient);
-    const selecionaChoroFacil = () => setAmnChoroFacil(!amnChoroFacil);
-    const selecionaRecAuxilio = () => setAmnRecAuxilio(!amnRecAuxilio);
-    const selecionaResistToque = () => setAmnResistToque(!amnResistToque);
-    const selecionaBronquite = () => setAmnBronquite(!amnBronquite);
-    const selecionaAlergias = () => setAmnAlergias(!amnAlergias);
-    const selecionaAsma = () => setAmnAsma(!amnAsma);
-    const selecionaConvulsao = () => setAmnConvulsao(!amnConvulsao);
-    const selecionaVirose = () => setAmnVirose(!amnVirose);
-    const selecionaTratAtual = () => setAmnTratAtual(!amnTratAtual);
-    const selecionaMedicacao = () => setAmnMedicacao(!amnMedicacao);
-
     //variáveis da dialog de pesquisa
     var [list, setList] = useState([]);
     var [listPraticantes, setListPraticantes] = useState([]);
@@ -270,6 +220,7 @@ function movimentoFichaAnamnese() {
         setAmnAlergias(item.amnAlergias);
         setAmnAsma(item.amnAsma);
         setAmnConvulsao(item.amnConvulsao);
+        setAmnVirose(item.amnVirose);
         setAmnInternacoes(item.amnInternacoes);
         setAmnOutDoencas(item.amnOutDoencas);
         setAmnTratRealizados(item.amnTratRealizados);
@@ -385,6 +336,7 @@ function movimentoFichaAnamnese() {
             "amnIdPraticante": amnIdPraticante
         };
         api.post("/cadastraFichaAnamnese", json);
+        console.log(json);
         registroSalvo();
     }
 
@@ -656,13 +608,9 @@ function movimentoFichaAnamnese() {
                         <br />
                         <Row>
                             <Col md="6">
-                                <Form.Label>Pais:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaPaisCasados}
-                                    type="checkbox" label="Casados" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaPaisCasados}
-                                    type="checkbox" label="Separados" />
+                                    checked={amnPaisCasados} onChange={(e) => setAmnPaisCasados(e.target.checked)}
+                                    type="checkbox" label="Pais Casados" />
                             </Col>
                         </Row>
                         <br />
@@ -683,13 +631,9 @@ function movimentoFichaAnamnese() {
                         <br />
                         <Row>
                             <Col md="6">
-                                <Form.Label>Possui Irmão(a/os/as):</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaPossuiIrmao}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaPossuiIrmao}
-                                    type="checkbox" label="Não" />
+                                    checked={amnPossuiIrmao} onChange={(e) => setAmnPossuiIrmao(e.target.checked)}
+                                    type="checkbox" label="Possui Irmão(a/os/as)" />
                             </Col>
                             <Col md="6">
                                 <Form.Label>Em caso de afirmação, informe sexo e idade:</Form.Label>
@@ -703,20 +647,11 @@ function movimentoFichaAnamnese() {
                             <Col md="6">
                                 <Form.Label>Filho:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaAdotado}
-                                    type="checkbox" label="Biológico" />
+                                    checked={amnAdotado} onChange={(e) => setAmnAdotado(e.target.checked)}
+                                    type="checkbox" label="Adotado" />
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaAdotado}
-                                    type="checkbox" label="Adotivo" />
-                            </Col>
-                            <Col md="6">
-                                <Form.Label>A criança é ciente de sua adoção?</Form.Label>
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaCienciaAdocao}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaCienciaAdocao}
-                                    type="checkbox" label="Não" />
+                                    checked={amnCienciaAdocao} onChange={(e) => setAmnCienciaAdocao(e.target.checked)}
+                                    type="checkbox" label="Ciente da adoção" />
                             </Col>
                         </Row>
                         <br />
@@ -806,31 +741,19 @@ function movimentoFichaAnamnese() {
                         <br />
                         <Row>
                             <Col md="4">
-                                <Form.Label>Icterícia - amarelão:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaAmarelao}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaAmarelao}
-                                    type="checkbox" label="Não" />
+                                    checked={amnAmarelao} onChange={(e) => setAmnAmarelao(e.target.checked)}
+                                    type="checkbox" label="Icterícia - amarelão" />
                             </Col>
                             <Col md="4">
-                                <Form.Label>Febre:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaFebre}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaFebre}
-                                    type="checkbox" label="Não" />
+                                    checked={amnFebre} onChange={(e) => setAmnFebre(e.target.checked)}
+                                    type="checkbox" label="Febre" />
                             </Col>
                             <Col md="4">
-                                <Form.Label>Permanencia na incobadora:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaPermIncubadora}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaPermIncubadora}
-                                    type="checkbox" label="Não" />
+                                    checked={amnPermIncubadora} onChange={(e) => setAmnPermIncubadora(e.target.checked)}
+                                    type="checkbox" label="Permanencia na incobadora" />
                             </Col>
                         </Row>
                         <br />
@@ -860,38 +783,28 @@ function movimentoFichaAnamnese() {
                                 </Form.Select>
                             </Col>
                             <Col md="6">
-                                <Form.Label>Dificuldade ou atraso no controle do esfíncter:</Form.Label>
+                                <br />
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaDifEsfincter}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaDifEsfincter}
-                                    type="checkbox" label="Não" />
+                                    checked={amnDifEsfincter} onChange={(e) => setAmnDifEsfincter(e.target.checked)}
+                                    type="checkbox" label="Dificuldade ou atraso no controle do esfíncter" />
                             </Col>
                         </Row>
                         <br />
                         <Row>
                             <Col md="6">
-                                <Form.Label>Tem enurese noturna:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaEnureseNotu}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaEnureseNotu}
-                                    type="checkbox" label="Não" />
+                                    checked={amnEnureseNotu} onChange={(e) => setAmnEnureseNotu(e.target.checked)}
+                                    type="checkbox" label="Tem enurese noturna" />
                             </Col>
                             <Col md="6">
-                                <Form.Label>Pertubações (pesadelos, sonambulismo, insônia...):</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaPertNot}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaPertNot}
-                                    type="checkbox" label="Não" />
+                                    checked={amnPertNot} onChange={(e) => setAmnPertNot(e.target.checked)}
+                                    type="checkbox" label="Pertubações (pesadelos, sonambulismo, insônia...)" />
                             </Col>
-
                         </Row>
+
                         <br />
+                        
                         <Row>
                             <Col md="6">
                                 <Form.Label>Observações:</Form.Label>
@@ -905,13 +818,13 @@ function movimentoFichaAnamnese() {
 
                             <Col md="6">
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaDormeSoz}
+                                    checked={amnDormeSoz} onChange={(e) => setAmnDormeSoz(e.target.checked)}
                                     type="checkbox" label="Dorme sozinho" />
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaDormePais}
+                                    checked={amnDormePais} onChange={(e) => setAmnDormePais(e.target.checked)}
                                     type="checkbox" label="Dorme no quarto dos pais" />
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaDivQuarto}
+                                    checked={amnDivQuarto} onChange={(e) => setAmnDivQuarto(e.target.checked)}
                                     type="checkbox" label="Divide o quarto com alguém" />
                             </Col>
                         </Row>
@@ -926,13 +839,9 @@ function movimentoFichaAnamnese() {
                         <br />
                         <Row>
                             <Col md="6">
-                                <Form.Label>Possui habitos especiais (requer presença de alguém, medos...):</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaHabitEspec}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaHabitEspec}
-                                    type="checkbox" label="Não" />
+                                    checked={amnHabitEspec} onChange={(e) => setAmnHabitEspec(e.target.checked)}
+                                    type="checkbox" label="Possui habitos especiais (requer presença de alguém, medos...)" />
                             </Col>
                             <Col md="6">
                                 <Form.Label>Quais:</Form.Label>
@@ -944,40 +853,24 @@ function movimentoFichaAnamnese() {
                         <br />
                         <Row>
                             <Col md="3">
-                                <Form.Label>Engatinha:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaEngatinha}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaEngatinha}
-                                    type="checkbox" label="Não" />
+                                    checked={amnEngatinha} onChange={(e) => setAmnEngatinha(e.target.checked)}
+                                    type="checkbox" label="Engatinha" />
                             </Col>
                             <Col md="3">
-                                <Form.Label>Anda:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaAnda}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaAnda}
-                                    type="checkbox" label="Não" />
+                                    checked={amnAnda} onChange={(e) => setAmnAnda(e.target.checked)}
+                                    type="checkbox" label="Anda" />
                             </Col>
                             <Col md="3">
-                                <Form.Label>Senta:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaSenta}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaSenta}
-                                    type="checkbox" label="Não" />
+                                    checked={amnSenta} onChange={(e) => setAmnSenta(e.target.checked)}
+                                    type="checkbox" label="Senta" />
                             </Col>
                             <Col md="3">
-                                <Form.Label>Corre:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaCorre}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaCorre}
-                                    type="checkbox" label="Não" />
+                                    checked={amnCorre} onChange={(e) => setAmnCorre(e.target.checked)}
+                                    type="checkbox" label="Corre" />
                             </Col>
                         </Row>
                         <br />
@@ -1041,13 +934,9 @@ function movimentoFichaAnamnese() {
                         <Row>
                             <Form.Label className='bold'>Desenvolvimento cognitivo:</Form.Label>
                             <Col md="6">
-                                <Form.Label>Desenvolvimento dentro do esperado:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaDesvNormal}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaDesvNormal}
-                                    type="checkbox" label="Não" />
+                                    checked={amnDesvNormal} onChange={(e) => setAmnDesvNormal(e.target.checked)}
+                                    type="checkbox" label="Desenvolvimento cognitivo dentro do esperado" />
                             </Col>
                             <Col md="6">
                                 <Form.Label>Fatos relevantes:</Form.Label>
@@ -1061,25 +950,25 @@ function movimentoFichaAnamnese() {
                             <Col md="6">
                                 <Form.Label>Linguagem verbal:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaLvFalaComp}
+                                    checked={amnLvFalaComp} onChange={(e) => setAmnLvFalaComp(e.target.checked)}
                                     type="checkbox" label="Fala completa" />
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaLvApenasPal}
+                                    checked={amnLvApenasPal} onChange={(e) => setAmnLvApenasPal(e.target.checked)}
                                     type="checkbox" label="Apenas palavras" />
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaLvVocalizacao}
+                                    checked={amnLvVocalizacao} onChange={(e) => setAmnLvVocalizacao(e.target.checked)}
                                     type="checkbox" label="Vocalização" />
                             </Col>
                             <Col md="6">
                                 <Form.Label>Linguagem Gestual:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaLgApontaObj}
+                                    checked={amnLgApontaObj} onChange={(e) => setAmnLgApontaObj(e.target.checked)}
                                     type="checkbox" label="Aponta objetos" />
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaLgMostOqq}
+                                    checked={amnLgMostOqq} onChange={(e) => setAmnLgMostOqq(e.target.checked)}
                                     type="checkbox" label="Mostra o que quer" />
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaLgExpFac}
+                                    checked={amnLgExpFac} onChange={(e) => setAmnLgExpFac(e.target.checked)}
                                     type="checkbox" label="Expressão facial" />
                             </Col>
                         </Row>
@@ -1088,62 +977,37 @@ function movimentoFichaAnamnese() {
                         <Row>
                             <Form.Label className='bold'>Atividade de vida diária:</Form.Label>
                             <Col md="4">
-                                <Form.Label>Toma banho sozinho:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaBanhoSozinho}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaBanhoSozinho}
-                                    type="checkbox" label="Não" />
+                                    checked={amnBanhoSozinho} onChange={(e) => setAmnBanhoSozinho(e.target.checked)}
+                                    type="checkbox" label="Toma banho sozinho" />
                             </Col>
                             <Col md="4">
-                                <Form.Label>Escova os dentes sozinho:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaEscovaSozinho}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaEscovaSozinho}
-                                    type="checkbox" label="Não" />
+                                    checked={amnEscovaSozinho} onChange={(e) => setAmnEscovaSozinho(e.target.checked)}
+                                    type="checkbox" label="Escova os dentes sozinho" />
                             </Col>
                             <Col md="4">
-                                <Form.Label>Usa o banheiro sozinho:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaBanSozinho}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaBanSozinho}
-                                    type="checkbox" label="Não" />
+                                    checked={amnBanSozinho} onChange={(e) => setAmnBanSozinho(e.target.checked)}
+                                    type="checkbox" label="Usa o banheiro sozinho" />
                             </Col>
-
                         </Row>
                         <br />
                         <Row>
                             <Col md="4">
-                                <Form.Label>Necessita de auxílio para se vestir ou despir:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaAuxVestir}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaAuxVestir}
-                                    type="checkbox" label="Não" />
+                                    checked={amnAuxVestir} onChange={(e) => setAmnAuxVestir(e.target.checked)}
+                                    type="checkbox" label="Necessita de auxílio para se vestir ou despir" />
                             </Col>
                             <Col md="4">
-                                <Form.Label>Controle de esfíncteres:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaContEsfin}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaContEsfin}
-                                    type="checkbox" label="Não" />
+                                    checked={amnContEsfin} onChange={(e) => setAmnContEsfin(e.target.checked)}
+                                    type="checkbox" label="Controle de esfíncteres" />
                             </Col>
                             <Col md="4">
-                                <Form.Label>Alimenta-se sozinho:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaComeSoz}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaComeSoz}
-                                    type="checkbox" label="Não" />
+                                    checked={amnComeSoz} onChange={(e) => setAmnComeSoz(e.target.checked)}
+                                    type="checkbox" label="Alimenta-se sozinho" />
                             </Col>
 
 
@@ -1162,22 +1026,14 @@ function movimentoFichaAnamnese() {
                         <Row>
                             <Form.Label className='bold'>Aspectos perceptivos:</Form.Label>
                             <Col md="6">
-                                <Form.Label>Apresenta alguma dificuldade para enxergar:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaDifVer}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaDifVer}
-                                    type="checkbox" label="Não" />
+                                    checked={amnDifVer} onChange={(e) => setAmnDifVer(e.target.checked)}
+                                    type="checkbox" label="Apresenta alguma dificuldade para enxergar" />
                             </Col>
                             <Col md="6">
-                                <Form.Label>Aparenta ter alguma dificuldade para ouvir:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaDifOuvir}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaDifOuvir}
-                                    type="checkbox" label="Não" />
+                                    checked={amnDifOuvir} onChange={(e) => setAmnDifOuvir(e.target.checked)}
+                                    type="checkbox" label="Aparenta ter alguma dificuldade para ouvir" />
                             </Col>
                         </Row>
                         <br />
@@ -1217,13 +1073,9 @@ function movimentoFichaAnamnese() {
                         <Row>
                             <Form.Label className='bold'>Sociabilização:</Form.Label>
                             <Col md="6">
-                                <Form.Label>Interage com familiares, amigos e pessoas estranhas:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaInterage}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaInterage}
-                                    type="checkbox" label="Não" />
+                                    checked={amnInterage} onChange={(e) => setAmnInterage(e.target.checked)}
+                                    type="checkbox" label="Interage com familiares, amigos e pessoas estranhas" />
                             </Col>
                             <Col md="6">
                                 <Form.Label>Descreva:</Form.Label>
@@ -1256,22 +1108,14 @@ function movimentoFichaAnamnese() {
                                     type="text" as="textarea" className='textArea' />
                             </Col>
                             <Col md="3">
-                                <Form.Label>Tem animais de estimação:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaAnimaisEstim}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaAnimaisEstim}
-                                    type="checkbox" label="Não" />
+                                    checked={amnAnimaisEstim} onChange={(e) => setAmnAnimaisEstim(e.target.checked)}
+                                    type="checkbox" label="Tem animais de estimação" />
                             </Col>
                             <Col md="3">
-                                <Form.Label>Interage com eles:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaInterageAnimais}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaInterageAnimais}
-                                    type="checkbox" label="Não" />
+                                    checked={amnInterageAnimais} onChange={(e) => setAmnInterageAnimais(e.target.checked)}
+                                    type="checkbox" label="Interage com eles" />
                             </Col>
                         </Row>
                         <br />
@@ -1283,13 +1127,10 @@ function movimentoFichaAnamnese() {
                                     type="text" />
                             </Col>
                             <Col md="6">
-                                <Form.Label>Adapta-se facilmente a novos lugares e pessoas:</Form.Label>
+                                <br />
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaAdaptaLugar}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaAdaptaLugar}
-                                    type="checkbox" label="Não" />
+                                    checked={amnAdaptaLugar} onChange={(e) => setAmnAdaptaLugar(e.target.checked)}
+                                    type="checkbox" label="Adapta-se facilmente a novos lugares e pessoas" />
                             </Col>
                         </Row>
                         <br />
@@ -1297,34 +1138,22 @@ function movimentoFichaAnamnese() {
                         <Row>
                             <Form.Label className='bold'>Tendências próprias:</Form.Label>
                             <Col md="6">
-                                <Form.Label>Atende as intervenções quando está desobedecendo:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaAtendeInterv}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaAtendeInterv}
-                                    type="checkbox" label="Não" />
+                                    checked={amnAtendeInterv} onChange={(e) => setAmnAtendeInterv(e.target.checked)}
+                                    type="checkbox" label="Atende as intervenções quando está desobedecendo" />
                             </Col>
                             <Col md="6">
-                                <Form.Label>Atende orientações simples:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaAtendeOrient}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaAtendeOrient}
-                                    type="checkbox" label="Não" />
+                                    checked={amnAtendeOrient} onChange={(e) => setAmnAtendeOrient(e.target.checked)}
+                                    type="checkbox" label="Atende orientações simples" />
                             </Col>
                         </Row>
                         <br />
                         <Row>
                             <Col md="6">
-                                <Form.Label>Apresenta choro fácil:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaChoroFacil}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaChoroFacil}
-                                    type="checkbox" label="Não" />
+                                    checked={amnChoroFacil} onChange={(e) => setAmnChoroFacil(e.target.checked)}                                
+                                    type="checkbox" label="Apresenta choro fácil" />
                             </Col>
                             <Col md="6">
                                 <Form.Label>Em quais situações:</Form.Label>
@@ -1336,13 +1165,9 @@ function movimentoFichaAnamnese() {
                         <br />
                         <Row>
                             <Col md="6">
-                                <Form.Label>Recusa auxílio:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaRecAuxilio}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaRecAuxilio}
-                                    type="checkbox" label="Não" />
+                                    checked={amnRecAuxilio} onChange={(e) => setAmnRecAuxilio(e.target.checked)}
+                                    type="checkbox" label="Recusa auxílio" />
                             </Col>
                             <Col md="6">
                                 <Form.Label>Em quais situações:</Form.Label>
@@ -1354,13 +1179,9 @@ function movimentoFichaAnamnese() {
                         <br />
                         <Row>
                             <Col md="6">
-                                <Form.Label>Tem resistência ao toque:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaResistToque}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaResistToque}
-                                    type="checkbox" label="Não" />
+                                    checked={amnResistToque} onChange={(e) => setAmnResistToque(e.target.checked)}
+                                    type="checkbox" label="Tem resistência ao toque" />
                             </Col>
                         </Row>
                         <br />
@@ -1370,19 +1191,19 @@ function movimentoFichaAnamnese() {
                             <Col md="6">
                                 <Form.Label>Ocorreram:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaBronquite}
+                                    checked={amnBronquite} onChange={(e) => setAmnBronquite(e.target.checked)}
                                     type="checkbox" label="Bronquite" />
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaAlergias}
+                                    checked={amnAlergias} onChange={(e) => setAmnAlergias(e.target.checked)}
                                     type="checkbox" label="Alergias" />
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaAsma}
+                                    checked={amnAsma} onChange={(e) => setAmnAsma(e.target.checked)}
                                     type="checkbox" label="Asma" />
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaConvulsao}
+                                    checked={amnConvulsao} onChange={(e) => setAmnConvulsao(e.target.checked)}
                                     type="checkbox" label="Convulsões" />
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaVirose}
+                                    checked={amnVirose} onChange={(e) => setAmnVirose(e.target.checked)}
                                     type="checkbox" label="Viroses infantis" />
                             </Col>
                             <Col md="6">
@@ -1410,13 +1231,9 @@ function movimentoFichaAnamnese() {
                         <br />
                         <Row>
                             <Col md="6">
-                                <Form.Label>Atualmente faz algum tratamento:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaTratAtual}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaTratAtual}
-                                    type="checkbox" label="Não" />
+                                    checked={amnTratAtual} onChange={(e) => setAmnTratAtual(e.target.checked)}
+                                    type="checkbox" label="Atualmente faz algum tratamento" />
                             </Col>
                             <Col md="6">
                                 <Form.Label>Quais:</Form.Label>
@@ -1430,15 +1247,12 @@ function movimentoFichaAnamnese() {
                             <Col md="6">
                                 <Form.Label>Usa medicação:</Form.Label>
                                 <Form.Check
-                                    defaultChecked={false} onClick={selecionaMedicacao}
-                                    type="checkbox" label="Sim" />
-                                <Form.Check
-                                    defaultChecked={false} onClick={selecionaMedicacao}
-                                    type="checkbox" label="Não" />
+                                    checked={amnMedicacao} onChange={(e) => setAmnMedicacao(e.target.checked)}
+                                    type="checkbox" label="Usa medicação" />
                             </Col>
                             <Col md="6">
                                 <Form.Label>Qual:</Form.Label>
-                                <Form.Control value={amnMedObs}
+                                <Form.Control value={amnMedObs} disabled={!amnMedicacao}
                                     onChange={(e) => setAmnMedObs(e.target.value)}
                                     type="text" as="textarea" className='textArea' />
                             </Col>

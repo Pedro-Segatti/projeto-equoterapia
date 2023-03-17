@@ -194,7 +194,7 @@ public class FichaAnamnese implements Serializable {
     @Column(name = "AMN_BRINCAR_OBS")
     private String amnBrincarObs;
 
-    @Column(name = "AMN_ANIMAIS_ESTM")
+    @Column(name = "AMN_ANIMAIS_ESTIM")
     private Boolean amnAnimaisEstim;
 
     @Column(name = "AMN_INTERAGE_ANIMAIS")
