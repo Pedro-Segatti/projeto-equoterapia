@@ -101,5 +101,6 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>${name}</finalName>
     </build>
 </project>

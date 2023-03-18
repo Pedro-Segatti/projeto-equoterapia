@@ -7,18 +7,25 @@ import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 @Configuration
 public class DataConfiguration {
 
     @Bean
-    public DataSource dataSource(){
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setUrl("jdbc:mysql://localhost:3306/patronato?useTimezone=true&serverTimezone=America/Sao_Paulo");
-        dataSource.setUsername("root");
-        dataSource.setPassword("root");
-        return dataSource;
+    public DataSource dataSource() {
+        try{
+        Context initContext = new InitialContext();
+        Context envContext  = (Context)initContext.lookup("java:/comp/env");
+        DataSource ds = (DataSource)envContext.lookup("jdbc/confluence");
+        return ds;
+
+        } catch (Exception e){
+           return null;
+        }
     }
 
     @Bean
