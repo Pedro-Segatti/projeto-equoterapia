@@ -670,35 +670,32 @@ function movimentoFichaAnamnese() {
 
                   <br />
 
-                  <Accordion.Item eventKey="1">
-                    <Accordion.Header>Queixa Inicial</Accordion.Header>
-                    <Accordion.Body>
-                      <Row>
-                        <Col md="6">
-                          <Form.Check
-                            checked={amnPossuiIrmao}
-                            onChange={(e) =>
-                              setAmnPossuiIrmao(e.target.checked)
-                            }
-                            type="checkbox"
-                            label="Possui Irmão(a/os/as)"
-                          />
-                        </Col>
-                        <Col md="6">
-                          <Form.Label>
-                            Em caso de afirmação, informe sexo e idade:
-                          </Form.Label>
-                          <Form.Control
-                            value={amnInfosIrmao}
-                            onChange={(e) => setAmnInfosIrmao(e.target.value)}
-                            type="text"
-                            as="textarea"
-                            className="textArea"
-                          />
-                        </Col>
-                      </Row>
-                    </Accordion.Body>
-                  </Accordion.Item>
+
+                  <Row>
+                    <Col md="6">
+                      <Form.Check
+                        checked={amnPossuiIrmao}
+                        onChange={(e) =>
+                          setAmnPossuiIrmao(e.target.checked)
+                        }
+                        type="checkbox"
+                        label="Possui Irmão(a/os/as)"
+                      />
+                    </Col>
+                    <Col md="6">
+                      <Form.Label>
+                        Em caso de afirmação, informe sexo e idade:
+                      </Form.Label>
+                      <Form.Control
+                        value={amnInfosIrmao}
+                        onChange={(e) => setAmnInfosIrmao(e.target.value)}
+                        type="text"
+                        as="textarea"
+                        className="textArea"
+                      />
+                    </Col>
+                  </Row>
+
                   <br />
                   <Row>
                     <Col md="6">
