@@ -527,7 +527,7 @@ function movimentoFichaAnamnese() {
     const { slice, range } = useTable(data, pagina, rowsPerPage);
     return (
       <>
-        <Table size="sm">
+        <Table responsive>
           <thead>
             <tr>
               <th>Descrição</th>
@@ -760,7 +760,7 @@ function movimentoFichaAnamnese() {
                     </Col>
                     <Col md="6">
                       <Form.Label>
-                        Quais espectativas para o tratamento:
+                        Quais expectativas para o tratamento:
                       </Form.Label>
                       <Form.Control
                         value={amnExpecTrat}
@@ -874,22 +874,18 @@ function movimentoFichaAnamnese() {
                           setAmnPermIncubadora(e.target.checked)
                         }
                         type="checkbox"
-                        label="Permanencia na incobadora"
+                        label="Permanência na incubadora"
                       />
                     </Col>
                   </Row>
                   <br />
                   <Row>
                     <Col md="6">
-                      <Form.Label>Observações:</Form.Label>
+                      <Form.Label>Tempo de Incubadora (Dias):</Form.Label>
                       <Form.Control
                         value={amnTempoIncubadora}
-                        onChange={(e) =>
-                          setAmnTempoIncubadora(e.target.value)
-                        }
-                        type="text"
-                        as="textarea"
-                        className="textArea"
+                        onChange={(e) => setAmnTempoIncubadora(e.target.value)}
+                        type="number"
                       />
                     </Col>
                     <Col md="6">
@@ -1002,7 +998,7 @@ function movimentoFichaAnamnese() {
                         checked={amnHabitEspec}
                         onChange={(e) => setAmnHabitEspec(e.target.checked)}
                         type="checkbox"
-                        label="Possui habitos especiais (requer presença de alguém, medos...)"
+                        label="Possui hábitos especiais (requer presença de alguém, medos...)"
                       />
                     </Col>
                     <Col md="6">
@@ -1065,7 +1061,7 @@ function movimentoFichaAnamnese() {
                       />
                     </Col>
                     <Col md="6">
-                      <Form.Label>Equilibrio (1-2 anos):</Form.Label>
+                      <Form.Label>Equilíbrio (1-2 anos):</Form.Label>
                       <Form.Control
                         value={amnEquilibrio}
                         maxLength={20}
@@ -1274,14 +1270,12 @@ function movimentoFichaAnamnese() {
                   <Row>
                     <Col md="6">
                       <Form.Label>
-                        Em que idade se deu a retirada das fraldas:
+                        Em que idade se deu a retirada das fraldas (meses):
                       </Form.Label>
                       <Form.Control
                         value={amnIdadeRetFral}
                         onChange={(e) => setAmnIdadeRetFral(e.target.value)}
-                        type="integer"
-                        as="textarea"
-                        className="textArea"
+                        type="number"
                       />
                     </Col>
                   </Row>
@@ -1481,7 +1475,7 @@ function movimentoFichaAnamnese() {
                         checked={amnAtendeInterv}
                         onChange={(e) => setAmnAtendeInterv(e.target.checked)}
                         type="checkbox"
-                        label="Atende as intervenções quando está desobedecendo"
+                        label="Atende às intervenções quando está desobedecendo"
                       />
                     </Col>
                     <Col md="6">

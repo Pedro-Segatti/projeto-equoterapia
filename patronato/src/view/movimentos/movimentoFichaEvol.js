@@ -293,10 +293,10 @@ function cadastroFichaEvol() {
 
         return (
             <>
-                <Table size="sm">
+                <Table responsive>
                     <thead>
                         <tr>
-                            <th>Codigo</th>
+                            <th>Código</th>
                             <th>Atividade</th>
                             <th>Material</th>
                             <th className='center'>Ação</th>

@@ -288,7 +288,7 @@ const cadastroPraticante = () => {
         const { slice, range } = useTable(data, pagina, rowsPerPage);
         return (
             <>
-                <Table size="sm">
+                <Table responsive>
                     <thead>
                         <tr>
                             <th>Descrição</th>
@@ -327,7 +327,7 @@ const cadastroPraticante = () => {
         const { slice, range } = useTable(data, pagina, rowsPerPage);
         return (
             <>
-                <Table size="sm">
+                <Table responsive>
                     <thead>
                         <tr>
                             <th>Nome</th>

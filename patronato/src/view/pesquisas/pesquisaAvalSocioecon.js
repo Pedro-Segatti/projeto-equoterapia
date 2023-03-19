@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import TableFooter from '../table/tableFooter';
 import useTable from '../table/useTable';
-import { BsPencilSquare } from "react-icons/bs";
+import { BsCheckLg } from "react-icons/bs";
 import { Form, Container, Modal, Button, Table } from 'react-bootstrap';
 import { api } from "../../utilitario/baseComunicacao";
 
@@ -10,10 +10,10 @@ export const TablePaginada = ({ data, rowsPerPage, atualizaItemSelecionado }) =>
     const { slice, range } = useTable(data, pagina, rowsPerPage);
     return (
         <>
-            <Table size="sm">
+            <Table responsive>
                 <thead>
                     <tr>
-                        <th>Codigo</th>
+                        <th>Código</th>
                         <th>Obs Cont Fam</th>
                         <th>Obs Medicamentos</th>
                         <th className='center'>Ação</th>
@@ -39,7 +39,7 @@ const LinhaTabela = ({ item, atualizaItemSelecionado }) => {
         <td>{aseObsContFam}</td>
         <td>{aseObsMedicamentos}</td>
         <td width={'80px'} className='center'>
-            <Button className='btn-success' onClick={selecionarItem}><BsPencilSquare /></Button>
+            <Button className='btn-success' onClick={selecionarItem}><BsCheckLg /></Button>
         </td>
     </tr>
 }

@@ -3,7 +3,7 @@ import { api } from "../utilitario/baseComunicacao";
 import { reloadPage } from "../utilitario/patronatoUtil";
 import { BsFillCalendarCheckFill, BsEyeFill } from "react-icons/bs";
 import { dataApiFormatada, dataFormatadaDiaMesAno, horaFormatadaString, horaFormatada } from "../utilitario/dateUtil";
-import { Button, Modal, Row, Col, Card, ListGroup } from 'react-bootstrap';
+import { Button, Modal, Row, Col, Card, ListGroup, Table } from 'react-bootstrap';
 import HTTP_STATUS from "../utilitario/httpStatus";
 
 import estilos from './style/agendamentos.module.css';
@@ -68,7 +68,7 @@ const Agendamentos = () => {
   return (
     <div>
       {!loading && agendamentos.length > 0 &&
-        <table className={estilos.tabelaAgendamentos}>
+        <Table className={estilos.tabelaAgendamentos} responsive>
           <thead className={estilos.tabelaCabecalho}>
             <tr>
               <th>Data</th>
@@ -86,7 +86,7 @@ const Agendamentos = () => {
               agendamentos.map(agd => <LinhaTabela key={agd.agdId} item={agd} />)
             }
           </tbody>
-        </table>
+        </Table>
       }
 
       <Modal className='modal-xl' show={show} onHide={handleClose}>
@@ -143,7 +143,7 @@ const Agendamentos = () => {
 
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="success" title="Concluir Agendamento" onClick={concluirAgendamento}><BsFillCalendarCheckFill /></Button>
+          <Button variant="success" title="Concluir Agendamento" onClick={concluirAgendamento}><BsFillCalendarCheckFill />    Concluir Agendamento</Button>
         </Modal.Footer>
       </Modal>
     </div>

@@ -110,7 +110,7 @@ function cadastroLogradouro() {
                         </Row>
                         <Row>
                             <Col md="12">
-                                <Form.Label htmlFor="log">Descricao *</Form.Label>
+                                <Form.Label htmlFor="log">Descrição *</Form.Label>
                                 <Form.Control value={logDescricao} maxLength={100}
                                     onChange={(e) => setLogDescricao(e.target.value)}
                                     type="text" id="log" required />

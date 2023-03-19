@@ -395,7 +395,7 @@ function movimentoAvalFisioter() {
         const { slice, range } = useTable(data, pagina, rowsPerPage);
         return (
             <>
-                <Table size="sm">
+                <Table responsive>
                     <thead>
                         <tr>
                             <th>Descrição</th>
@@ -591,7 +591,7 @@ function movimentoAvalFisioter() {
                         </Row>
                         <Row>
                             <Col md="6">
-                                <Form.Label>Equilibrio Estático/Dinâmico:</Form.Label>
+                                <Form.Label>Equilíbrio Estático/Dinâmico:</Form.Label>
                                 <BsInfoCircleFill className='icone' title=' (sustentação sentado, em pé, com e sem apoio, apoio unipodal - cabeça, tronco), engatinhar, marcha, saltar com pés juntos, desviar obstáculos' />
                                 <Form.Control value={aftExameFis}
                                     onChange={(e) => setAftExameFis(e.target.value)}
@@ -828,7 +828,7 @@ function movimentoAvalFisioter() {
 
                             </Col>
                             <Col md="3">
-                                <Form.Label>Controle Esfincter:</Form.Label>
+                                <Form.Label>Controle Esfíncter:</Form.Label>
                                 <Form.Control value={aftMovContEsfinct} maxLength={20}
                                     onChange={(e) => setAftMovContEsfinct(e.target.value)}
                                     type="text" />

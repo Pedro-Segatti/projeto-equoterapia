@@ -100,9 +100,9 @@ public class FichaAnamnese implements Serializable {
     private String amnDivQuartoObs;
     @Column(name = "AMN_HABIT_ESPEC")
     private Boolean amnHabitEspec;
-
+    @Lob
     @Column(name = "AMN_HABIT_ESPEC_OBS")
-    private Boolean amnHabitEspecObs;
+    private String amnHabitEspecObs;
     @Column(name = "AMN_ENGATINHA")
     private Boolean amnEngatinha;
     @Column(name = "AMN_SENTA")
@@ -991,11 +991,11 @@ public class FichaAnamnese implements Serializable {
         this.amnIdPraticante = amnIdPraticante;
     }
 
-    public Boolean getAmnHabitEspecObs() {
+    public String getAmnHabitEspecObs() {
         return amnHabitEspecObs;
     }
 
-    public void setAmnHabitEspecObs(Boolean amnHabitEspecObs) {
+    public void setAmnHabitEspecObs(String amnHabitEspecObs) {
         this.amnHabitEspecObs = amnHabitEspecObs;
     }
 

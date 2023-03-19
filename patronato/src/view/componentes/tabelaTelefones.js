@@ -51,7 +51,7 @@ const TabelaTelefones = ({ data, rowsPerPage }) => {
   const { slice, range } = useTable(data, pagina, rowsPerPage);
   return (
       <>
-          <Table size="sm">
+          <Table responsive>
               <thead>
                   <tr>
                       <th>Número</th>
