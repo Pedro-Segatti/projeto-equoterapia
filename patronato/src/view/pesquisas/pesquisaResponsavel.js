@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import TableFooter from '../table/tableFooter';
 import useTable from '../table/useTable';
-import { BsPencilSquare, BsXLg } from "react-icons/bs";
+import { BsCheckLg, BsXLg } from "react-icons/bs";
 import { Form, Col, Row, Container, Modal, Button, Table } from 'react-bootstrap';
 import { api } from "../../utilitario/baseComunicacao";
 import { isInputNumber } from "../../utilitario/patronatoUtil";
@@ -11,7 +11,7 @@ export const TablePaginada = ({ data, rowsPerPage, selecionaLinha, atualizaItemS
     const { slice, range } = useTable(data, pagina, rowsPerPage);
     return (
         <>
-            <Table size="sm">
+            <Table responsive>
                 <thead>
                     <tr>
                         <th>Código</th>
@@ -47,7 +47,7 @@ const LinhaTabela = ({ item, selecionaLinha, atualizaItemSelecionado, removeResp
         <td width={'100px'}>{pesDataNasc}</td>
         {selecionaLinha &&
             <td width={'80px'} className='center'>
-                <Button className='btn-success' onClick={selecionarItem}><BsPencilSquare /></Button>
+                <Button className='btn-success' onClick={selecionarItem}><BsCheckLg /></Button>
             </td>
         }
         {!selecionaLinha &&

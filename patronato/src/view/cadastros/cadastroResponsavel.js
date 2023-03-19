@@ -194,7 +194,7 @@ const cadastroResponsavel = () => {
                             </Form.Select>
                         </Col>
                         <Col md="6">
-                            <Form.Label htmlFor="inputRespProfissao">Profissao *</Form.Label>
+                            <Form.Label htmlFor="inputRespProfissao">Profissão *</Form.Label>
                             <Form.Control value={respProfissao}
                                 onChange={(e) => setRespProfissao(e.target.value)}
                                 type="text" id="inputRespProfissao" required />

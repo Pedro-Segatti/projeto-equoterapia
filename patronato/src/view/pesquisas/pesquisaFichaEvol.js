@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import TableFooter from '../table/tableFooter';
 import useTable from '../table/useTable';
-import { BsPencilSquare } from "react-icons/bs";
+import { BsCheckLg } from "react-icons/bs";
 import InputConverter from '../componentes/inputConverter';
 import { Form, Col, Row, Container, Modal, Button, Table } from 'react-bootstrap';
 import PesquisaPraticantes from '../pesquisas/pesquisaPraticantes';
@@ -45,10 +45,10 @@ function pesquisaFichaEvol({ setValores, valores, atualizaItemSelecionado, setAb
         const { slice, range } = useTable(data, pagina, rowsPerPage);
         return (
             <>
-                <Table size="sm">
+                <Table responsive>
                     <thead>
                         <tr>
-                            <th>Codigo</th>
+                            <th>Código</th>
                             <th>Data</th>
                             <th>Praticante</th>
                             <th className='center'>Ação</th>
@@ -74,7 +74,7 @@ function pesquisaFichaEvol({ setValores, valores, atualizaItemSelecionado, setAb
             <td>{evolIdPraticante.pessoa.pesNome}</td>
             {selecionaLinha && 
                 <td width={'20px'} className='center'>
-                <Button className='btn-success' onClick={selecionarItem}><BsPencilSquare /></Button>
+                <Button className='btn-success' onClick={selecionarItem}><BsCheckLg /></Button>
                 </td>
             }
         </tr>

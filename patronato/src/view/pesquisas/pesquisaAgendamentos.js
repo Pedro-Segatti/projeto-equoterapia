@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import TableFooter from '../table/tableFooter';
 import useTable from '../table/useTable';
 import InputConverter from '../componentes/inputConverter';
-import { BsPencilSquare } from "react-icons/bs";
+import { BsCheckLg } from "react-icons/bs";
 import { Form, Col, Row, Container, Modal, Button, Table } from 'react-bootstrap';
 import PesquisaPraticantes from '../pesquisas/pesquisaPraticantes';
 import { api } from "../../utilitario/baseComunicacao";
@@ -48,7 +48,7 @@ function pesquisaAgendamentos({ setValores, valores, atualizaItemSelecionado, se
         const { slice, range } = useTable(data, pagina, rowsPerPage);
         return (
             <>
-                <Table size="sm">
+                <Table responsive>
                     <thead>
                         <tr>
                             <th>Código</th>
@@ -79,7 +79,7 @@ function pesquisaAgendamentos({ setValores, valores, atualizaItemSelecionado, se
             <td>{agdDescricao}</td>
             {selecionaLinha &&
                 <td width={'80px'} className='center'>
-                    <Button className='btn-success' onClick={selecionarItem}><BsPencilSquare /></Button>
+                    <Button className='btn-success' onClick={selecionarItem}><BsCheckLg /></Button>
                 </td>
             }
         </tr>
@@ -119,16 +119,17 @@ function pesquisaAgendamentos({ setValores, valores, atualizaItemSelecionado, se
                                     <Form.Control value={agdHora}
                                         onChange={(e) => setAgdHora(e.target.value)}
                                         type="time" id="inputHora" required />
-                                </Col>                                
+                                </Col>
                             </Row>
 
                             <br />
 
-                            <div className='right'>
+                            <div className="right">
                                 <Button className='btnMarginTop btnToolbar' onClick={buscaRegistros}>Pesquisar</Button>
                                 <Button className='btnMarginTop btn-warning btnToolbar' onClick={limparPesquisa}>Limpar</Button>
                             </div>
                         </Form>
+
                     </Container>
                     <TablePaginada data={valores} rowsPerPage={5} selecionaLinha={true} atualizaItemSelecionado={atualizaItemSelecionado} />
                 </Modal.Body>
@@ -137,7 +138,8 @@ function pesquisaAgendamentos({ setValores, valores, atualizaItemSelecionado, se
                 </Modal.Footer>
             </Modal>
 
-            {abrirPesquisaPraticante &&
+            {
+                abrirPesquisaPraticante &&
                 <PesquisaPraticantes setValores={setListPraticantes} valores={listPraticantes} atualizaItemSelecionado={atualizaPraticanteSelecionado} setAbrirPesquisa={setAbrirPesquisaPraticante} />
             }
 
