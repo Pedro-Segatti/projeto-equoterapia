@@ -193,7 +193,7 @@ const cadastroMedico = () => {
                             <Form.Label htmlFor="inputEmailP">Email Principal</Form.Label>
                             <Form.Control value={pesEmail1}
                                 onChange={(e) => setPesEmail1(e.target.value)}
-                                type="text" id="inputEmailP" />
+                                type="text" id="inputEmailP" required />
                         </Col>
                     </Row>
                     <Row>

@@ -7,7 +7,7 @@ import Toolbar from '../toolbar';
 import { IMaskInput } from 'react-imask';
 import { registroSalvo, pessoaDuplicada, registroExcluido, mensagemCustomizada } from "../../utilitario/mensagemUtil"
 import { ReactNotifications } from 'react-notifications-component'
-import { montaJsonPessoaCompleta, convertBase64ToFile } from "../../utilitario/patronatoUtil";
+import { montaJsonPessoaCompleta, convertBase64ToFile, base64NoPhoto } from "../../utilitario/patronatoUtil";
 import { cadastrarPraticante } from "../../utilitario/baseComunicacao";
 import { api } from "../../utilitario/baseComunicacao";
 import HTTP_STATUS from "../../utilitario/httpStatus";
@@ -50,7 +50,7 @@ const cadastroPraticante = () => {
     const [pesEndNum, setPesEndNum] = useState("");
     const [pesEndCompl, setPesEndCompl] = useState("");
     const [pesNacionalidade, setPesNacionalidade] = useState("BRA");
-    const [pesFoto, setPesFoto] = useState("");
+    const [pesFoto, setPesFoto] = useState(base64NoPhoto);
     const [pesEmail1, setPesEmail1] = useState("");
     const [pesEmail2, setPesEmail2] = useState("");
     const [pesLogId, setPesLogId] = useState("");
@@ -247,6 +247,10 @@ const cadastroPraticante = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (pesFoto === base64NoPhoto) {
+            setPesFoto(null);
+        }
+
         const montaJsonPraticante = async () => {  
             const jsonPessoa = await montaJsonPessoaCompleta(pesId,pesNome,pesCpf,"",pesSexo,pesDataNasc,pesEndNum,pesEndCompl,pesNacionalidade, pesFoto, pesEmail1, pesEmail2, pesLogId, listTelefones);
             const jsonPraticante = {
@@ -392,8 +396,8 @@ const cadastroPraticante = () => {
 
                     <Row>
                         <Col md="12">
-                            <div className='fotoPraticante'>
-                                <Image id="imgPrat" onClick={() => setPesFoto("")} src={pesFoto}></Image>
+                            <div className='fotoPessoa'>
+                                <Image id="imgPessoa" onClick={() => setPesFoto("")} src={pesFoto}></Image>
 
                                 <Form.Control type="file" id="inputFoto" accept="image/png, image/jpg, image/jpeg" onChange={showPreview} />
                                 <Form.Label htmlFor="inputFoto" className='label-input-file'>Selecione a Foto do Praticante</Form.Label>

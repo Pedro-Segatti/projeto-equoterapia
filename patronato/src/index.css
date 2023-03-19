@@ -172,21 +172,6 @@ input[type="file"] {
   border-radius: 8px;
 }
 
-.fotoPraticante {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-#imgPrat {
-  max-height: 200px;
-  max-width: 300px;
-  border-radius: 8px;
-  border: 2px solid #B48F69;
-}
-
 .bold{
   font-weight: bold;
 }
@@ -230,4 +215,19 @@ input[type="file"] {
 
 .marginLeft{
   margin-left: 10px !important;
+}
+
+.fotoPessoa {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#imgPessoa {
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+  border: 2px solid #B48F69;
 }
