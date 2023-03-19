@@ -79,47 +79,48 @@ function pesquisaFichaEvol({ setValores, valores, atualizaItemSelecionado, setAb
             }
         </tr>
     }
-        return (
-            <div>
-                <Modal className='modal-xl' show={true}>
-                    <Modal.Header><b>Pesquisa de Ficha de Evolução</b></Modal.Header>
-                    <Modal.Body>
-                        <Container>
-                            <Form>
-                                <Row>
-                                    <Col md="2">
-                                        <Form.Label>Código</Form.Label>
-                                        <Form.Control type="text" id="idPesquisa"
-                                            value={evolIdPesquisa}
-                                            onChange={(e) => setEvolIdPesquisa(e.target.value)} />
-                                    </Col>
-                                    <Col md="6">
-                                    <Form.Label htmlFor="inputLPraticante">Praticante</Form.Label>
-                                    <InputConverter descricao={nomePraticante} atualizaDlgPesquisa={atualizaDlgPesquisaPraticante} />
-                                    </Col>
-                                    <Col md="2">
-                                    <Form.Label htmlFor="inputData">Data</Form.Label>
-                                    <Form.Control value={evolData}
-                                        onChange={(e) => setEvolData(e.target.value)}
-                                        type="date" id="inputDate" required />
-                                    </Col>
-                                </Row>
-                                <div className='right'>
-                                    <Button className='btnMarginTop btnToolbar' onClick={buscaRegistros}>Pesquisar</Button>
-                                    <Button className='btnMarginTop btn-warning btnToolbar' onClick={limparPesquisa}>Limpar</Button>
-                                </div>
-                            </Form>
-                        </Container>
-                        <TablePaginada data={valores} rowsPerPage={5} selecionaLinha={true} atualizaItemSelecionado={atualizaItemSelecionado} />
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="primary" className='btn-danger' onClick={() => setAbrirPesquisa(false)}>Fechar</Button>
-                    </Modal.Footer>
-                </Modal>
-                {abrirPesquisaPraticante &&
-                    <PesquisaPraticantes setValores={setListPraticantes} valores={listPraticantes} atualizaItemSelecionado={atualizaPraticanteSelecionado} setAbrirPesquisa={setAbrirPesquisaPraticante} />
-                }
-            </div>
-        )
+    
+    return (
+        <div>
+            <Modal className='modal-xl' show={true}>
+                <Modal.Header><b>Pesquisa de Ficha de Evolução</b></Modal.Header>
+                <Modal.Body>
+                    <Container>
+                        <Form>
+                            <Row>
+                                <Col md="2">
+                                    <Form.Label>Código</Form.Label>
+                                    <Form.Control type="text" id="idPesquisa"
+                                        value={evolIdPesquisa}
+                                        onChange={(e) => setEvolIdPesquisa(e.target.value)} />
+                                </Col>
+                                <Col md="6">
+                                <Form.Label htmlFor="inputLPraticante">Praticante</Form.Label>
+                                <InputConverter descricao={nomePraticante} atualizaDlgPesquisa={atualizaDlgPesquisaPraticante} />
+                                </Col>
+                                <Col md="2">
+                                <Form.Label htmlFor="inputData">Data</Form.Label>
+                                <Form.Control value={evolData}
+                                    onChange={(e) => setEvolData(e.target.value)}
+                                    type="date" id="inputDate" required />
+                                </Col>
+                            </Row>
+                            <div className='right'>
+                                <Button className='btnMarginTop btnToolbar' onClick={buscaRegistros}>Pesquisar</Button>
+                                <Button className='btnMarginTop btn-warning btnToolbar' onClick={limparPesquisa}>Limpar</Button>
+                            </div>
+                        </Form>
+                    </Container>
+                    <TablePaginada data={valores} rowsPerPage={5} selecionaLinha={true} atualizaItemSelecionado={atualizaItemSelecionado} />
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="primary" className='btn-danger' onClick={() => setAbrirPesquisa(false)}>Fechar</Button>
+                </Modal.Footer>
+            </Modal>
+            {abrirPesquisaPraticante &&
+                <PesquisaPraticantes setValores={setListPraticantes} valores={listPraticantes} atualizaItemSelecionado={atualizaPraticanteSelecionado} setAbrirPesquisa={setAbrirPesquisaPraticante} />
+            }
+        </div>
+    )
 }
 export default pesquisaFichaEvol;

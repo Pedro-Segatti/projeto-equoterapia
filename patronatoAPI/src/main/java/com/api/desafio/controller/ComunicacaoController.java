@@ -339,8 +339,8 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaAvalFisioter")
-    public ResponseEntity<List<AvalFisioter>> pesquisaAvalFisioter(@RequestParam(required = false) Integer aftId) {
-        return avalFisioterService.pesquisa();
+    public ResponseEntity<List<AvalFisioter>> pesquisaAvalFisioter(@RequestParam(required = false) Integer praticante, @RequestParam(required = false) Integer medico, @RequestParam(required = false) Integer funcionario, @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date data) {
+        return avalFisioterService.pesquisa(praticante, medico, funcionario, data);
     }
 
     @CrossOrigin(origins = "*")
@@ -424,8 +424,8 @@ public class ComunicacaoController {
 
     @CrossOrigin(origins = "*")
     @GetMapping("/pesquisaAvalSocioEcon")
-    public ResponseEntity<List<AvalSocioecon>> pesquisaAvalSocioEcon() {
-        return avalSocioeconService.pesquisa();
+    public ResponseEntity<List<AvalSocioecon>> pesquisaAvalSocioEcon(@RequestParam(required = false) Integer praticante, @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd")  Date data) {
+        return avalSocioeconService.pesquisa(praticante, data);
     }
 
     @CrossOrigin(origins = "*")

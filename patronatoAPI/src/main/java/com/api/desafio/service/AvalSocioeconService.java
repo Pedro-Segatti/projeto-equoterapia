@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -33,8 +34,8 @@ public class AvalSocioeconService {
         return (avalSocioecon);
     }
 
-    public ResponseEntity<List<AvalSocioecon>> pesquisa() {
-        List<AvalSocioecon> avalSocioecon = (List<AvalSocioecon>) asc.findAll();
+    public ResponseEntity<List<AvalSocioecon>> pesquisa(Integer praticante, Date data) {
+        List<AvalSocioecon> avalSocioecon = asc.findByPratAndData(praticante, data);
         return new ResponseEntity<List<AvalSocioecon>>(avalSocioecon, HttpStatus.OK);
     }
 }

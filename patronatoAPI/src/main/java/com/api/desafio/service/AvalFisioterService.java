@@ -1,15 +1,14 @@
 package com.api.desafio.service;
 
 import com.api.desafio.crudFiles.AvalFisioterCrud;
-import com.api.desafio.model.AvalFisioter;
-import com.api.desafio.model.AvalSocioecon;
-import com.api.desafio.model.ResponseModel;
+import com.api.desafio.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -30,9 +29,8 @@ public class AvalFisioterService {
         return (avalFisioter);
     }
 
-    public ResponseEntity<List<AvalFisioter>> pesquisa() {
-        List<AvalFisioter> avalFisioter = (List<AvalFisioter>) afc.findAll();
-        return new ResponseEntity<List<AvalFisioter>>(avalFisioter, HttpStatus.OK);
+    public ResponseEntity<List<AvalFisioter>> pesquisa(Integer praticante, Integer medico, Integer funcionario, Date data){
+        return new ResponseEntity<List<AvalFisioter>>(afc.findByPratAndMedAndFuncAndData(praticante, medico, funcionario, data), HttpStatus.OK);
     }
 
     public AvalFisioter pesquisaPeloCodigo(Integer id) {
