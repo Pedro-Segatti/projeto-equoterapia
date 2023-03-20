@@ -67,13 +67,13 @@ function cadastroMaterial() {
     const cadastroMaterial = () => {
         return (
             <div>
-                <Menu />
+                <Menu tituloPagina={"Cadastro de Material"} />
                 <ReactNotifications />
                 <Container className="vh-100">
                     <Form onSubmit={handleSubmit}>
                         <br />
                         <Row>
-                            <h3>Cadastro de Materiais</h3>
+                            <h3>Cadastro de Material</h3>
                         </Row>
                         <Row>
                             <Col md="2">

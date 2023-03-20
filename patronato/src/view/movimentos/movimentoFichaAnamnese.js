@@ -580,7 +580,7 @@ function movimentoFichaAnamnese() {
   const movimentoFichaAnamnese = () => {
     return (
       <div>
-        <Menu />
+        <Menu tituloPagina={"Ficha de Anamnese"} />
         <ReactNotifications />
         <Container>
           <Form onSubmit={handleSubmit}>

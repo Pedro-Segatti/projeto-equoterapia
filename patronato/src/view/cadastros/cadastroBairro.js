@@ -90,7 +90,7 @@ function cadastroBairro() {
     const cadastroBairro = () => {
         return (
             <div>
-                <Menu />
+                <Menu tituloPagina={"Cadastro de Bairro"} />
                 <ReactNotifications />
                 <Container className="vh-100">
                     <Form onSubmit={handleSubmit}>

@@ -400,7 +400,7 @@ function cadastroFichaEvol() {
     const cadastroFichaEvol = () => {
         return (
             <div>
-                <Menu />
+                <Menu tituloPagina={"Ficha de Evolução"} />
                 <ReactNotifications />
                 <Container>
                     <Form onSubmit={handleSubmit}>

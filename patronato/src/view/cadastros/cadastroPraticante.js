@@ -381,13 +381,13 @@ const cadastroPraticante = () => {
 
     return (
         <div>
-            <Menu />
+            <Menu tituloPagina={"Cadastro de Praticante"} />
             <ReactNotifications />
             <Container>
                 <Form onSubmit={handleSubmit}>
                 <br />
                     <Row>
-                        <h3>Cadastro de Praticantes</h3>
+                        <h3>Cadastro de Praticante</h3>
                     </Row>
 
                     <Row>

@@ -141,13 +141,13 @@ const cadastroResponsavel = () => {
 
     return (
         <div>
-            <Menu />
+            <Menu tituloPagina={"Cadastro de Responsável"}  />
             <ReactNotifications />
             <Container>
                 <Form onSubmit={handleSubmit}>
                     <br />
                     <Row>
-                        <h3>Cadastro de Responsáveis</h3>
+                        <h3>Cadastro de Responsável</h3>
                     </Row>
 
                     <Row>

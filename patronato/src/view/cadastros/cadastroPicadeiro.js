@@ -67,7 +67,7 @@ function cadastroPicadeiro() {
     const cadastroPicadeiro = () => {
         return (
             <div>
-                <Menu />
+                <Menu tituloPagina={"Cadastro de Picadeiro"} />
                 <ReactNotifications />
                 <Container className="vh-100">
                     <Form onSubmit={handleSubmit}>
