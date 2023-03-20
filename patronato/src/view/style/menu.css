@@ -46,6 +46,7 @@ i>.navbar-toggler {
   }
 
   .dropdown-item {
+    width: auto !important;
     margin-left: 6vh;
   }
 

@@ -11,8 +11,6 @@ import Toolbar from './toolbar';
 import Menu from "./menu";
 import Footer from "./footer";
 
-import estilos from './style/perfil.module.css';
-
 const Perfil = () => {
   const [pessoaLogada, setPessoaLogada] = useState(null);
   const { user, logout } = useContext(AuthContext);
@@ -108,12 +106,12 @@ const Perfil = () => {
     <div>
       <Menu />
       <ReactNotifications />
-      {!loading && <Container className="vh-100">
+      {!loading && <Container>
         <Form onSubmit={handleSubmit}>
           <Row>
             <Col md="12">
-              <div className={estilos.fotoPessoa}>
-                <Image id={estilos.imgPessoa} onClick={() => setPesFoto(base64NoPhoto)} src={pesFoto}></Image>
+              <div className="fotoPessoa">
+                <Image id="imgPessoa" onClick={() => setPesFoto(base64NoPhoto)} src={pesFoto}></Image>
 
                 <Form.Control type="file" id="inputFoto" accept="image/png, image/jpg, image/jpeg" onChange={showPreview} />
                 <Form.Label htmlFor="inputFoto" className='label-input-file'>Selecione a Foto</Form.Label>
