@@ -55,9 +55,9 @@ const Login = () => {
                             <br />
                             <Button type="submit" className="buttonLogin">Entrar</Button>
 
-                            <div className="esqueciSenha">
+                            {false && <div className="esqueciSenha">
                                 <a href="https://google.com.br">Esqueci Minha Senha</a>
-                            </div>
+                            </div>}
                         </Form>
                     </Box>
                 </Row>

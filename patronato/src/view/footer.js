@@ -28,26 +28,26 @@ const Footer = () => {
             </Column>
 
             <Column>
-              <FooterLink href="https://m.facebook.com/patronatoequoterapia/" target="_blank">
+              <FooterLink href="https://www.instagram.com/patronatoequoterapia/" target="_blank">
                 <i className="fab fa-instagram"></i>
               </FooterLink>
             </Column>
 
             <Column>
-              <FooterLink href="https://m.facebook.com/patronatoequoterapia/" target="_blank">
+              <FooterLink href="#" target="_blank">
                 <i className="fab fa-twitter"></i>
               </FooterLink>
             </Column>
 
             <Column>
-              <FooterLink href="https://m.facebook.com/patronatoequoterapia/" target="_blank">
+              <FooterLink href="#" target="_blank">
                 <i className="fab fa-youtube"></i>
               </FooterLink>
             </Column>
 
             <ColumnRigth>
               <p style={{ marginBottom: "0", textAlign: "right", fontSize: "12px" }}><b>Versão:</b> 1.0</p>
-              <Link href="https://m.facebook.com/patronatoequoterapia/" target="_blank" style={{ background: "none" }}>
+              <Link href="#" target="_blank" style={{ background: "none" }}>
                 <p style={{ marginBottom: "0" }}><b>Patronato</b></p>
               </Link>
               <p style={{ marginBottom: "0", textAlign: "right", fontSize: "12px" }}>© Copyright 2022. Todos os direitos reservados.</p>
