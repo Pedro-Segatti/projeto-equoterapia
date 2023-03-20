@@ -5,6 +5,7 @@ import { BsFillCalendarCheckFill, BsEyeFill } from "react-icons/bs";
 import { dataApiFormatada, dataFormatadaDiaMesAno, horaFormatadaString, horaFormatada } from "../utilitario/dateUtil";
 import { Button, Modal, Row, Col, Card, ListGroup, Table } from 'react-bootstrap';
 import HTTP_STATUS from "../utilitario/httpStatus";
+import { isMobile } from "react-device-detect";
 
 import estilos from './style/agendamentos.module.css';
 
@@ -53,12 +54,12 @@ const Agendamentos = () => {
       <td>{horaFormatadaString(agdHora)}</td>
       <td>{agdDescricao}</td>
       <td>{pesNome}</td>
-      <td>
+      {!isMobile && <td>
         {item.animalList.length > 0 && item.animalList[0].aniNome}
-      </td>
-      <td>
+      </td>}
+      {!isMobile && <td>
         {item.funcionarioList.length > 0 && item.funcionarioList[0].pessoa.pesNome}
-      </td>
+      </td>}
       <td>
         <Button variant="success" onClick={selecionarItem}><BsEyeFill /></Button>
       </td>
@@ -75,8 +76,8 @@ const Agendamentos = () => {
               <th>Hora</th>
               <th>Descrição</th>
               <th>Praticante</th>
-              <th>Animal</th>
-              <th>Instrutor</th>
+              {!isMobile && <th>Animal</th>}
+              {!isMobile && <th>Instrutor</th>}
               <th>Detalhar</th>
             </tr>
           </thead>
