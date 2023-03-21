@@ -25,6 +25,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -679,6 +681,29 @@ public class ComunicacaoController {
     @GetMapping("/pesquisaAgendamentosAtivos")
     public ResponseEntity<List<Agendamento>> pesquisaAgendamentosAtivos() {
         return agendamentoService.pesquisaAgendamentosAtivos();
+    }
+
+    @CrossOrigin(origins = "*")
+    @PutMapping("/relatorioAgendamentos")
+    public ResponseEntity<byte[]> gerarRelatorioAgendamentos(@RequestBody String jsonParams) {
+        JsonObject jsonConvertido = new Gson().fromJson(jsonParams, JsonObject.class);
+        JsonObject filtros = jsonConvertido.get("filtros").getAsJsonObject();
+        Date agdDataInicial = null;
+        Date agdDataFinal = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            if (!filtros.get("agdDataIncial").isJsonNull() && !filtros.get("agdDataIncial").getAsString().isEmpty()){
+                agdDataInicial = sdf.parse(filtros.get("agdDataIncial").getAsString());
+            }
+            if (!filtros.get("agdDataFinal").isJsonNull() && !filtros.get("agdDataFinal").getAsString().isEmpty()){
+                agdDataFinal = sdf.parse(filtros.get("agdDataFinal").getAsString());
+            }
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        List<Agendamento> agendamentos = agendamentoService.pesquisaAgendamentosDoPeriodo(agdDataInicial, agdDataFinal, filtros.get("agdConcluido").getAsBoolean()).getBody();
+        return RelatorioUtil.gerarRelatorios(jsonConvertido, agendamentos);
     }
 
     @CrossOrigin(origins = "*")

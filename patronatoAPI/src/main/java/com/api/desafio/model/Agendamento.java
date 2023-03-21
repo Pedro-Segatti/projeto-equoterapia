@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
@@ -146,6 +147,17 @@ public class Agendamento implements Serializable {
 
     public void setAnimalList(List<Animal> animalList) {
         this.animalList = animalList;
+    }
+
+    public String getAgdDataFormatada(){
+        SimpleDateFormat simpleformat = new SimpleDateFormat("dd/MM/yyyy");
+        String dataFormatada = simpleformat.format(this.agdData);
+        return dataFormatada;
+    }
+    public String getAgdHoraFormatada(){
+        SimpleDateFormat simpleformat = new SimpleDateFormat("HH:mm");
+        String horaFormatada = simpleformat.format(this.agdHora);
+        return horaFormatada;
     }
 
     @Override

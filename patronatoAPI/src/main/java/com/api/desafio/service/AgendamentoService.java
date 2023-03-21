@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +29,11 @@ public class AgendamentoService {
 
     public ResponseEntity<List<Agendamento>> pesquisaAgendamentos(Integer pratId, Date agdData, Date agdHora, boolean agdConcluido) {
         List<Agendamento> agendamentos = agendamentoCrud.findByPratIdAndAgdDataAndAgdHoraAndAgdConcluido(pratId, agdData, agdHora, agdConcluido);
+        return new ResponseEntity<List<Agendamento>>(agendamentos, HttpStatus.OK);
+    }
+
+    public ResponseEntity<List<Agendamento>> pesquisaAgendamentosDoPeriodo(Date agdDataInicial, Date agdDataFinal, boolean agdConcluido) {
+        List<Agendamento> agendamentos = agendamentoCrud.findAgendamentosDoPeriodo(agdDataInicial, agdDataFinal, agdConcluido);
         return new ResponseEntity<List<Agendamento>>(agendamentos, HttpStatus.OK);
     }
 

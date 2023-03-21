@@ -81,8 +81,7 @@ const relatorioFichaEvolucao = () => {
             <Button
               variant="primary"
               className="btn-success btnToolbar btnMarginTop"
-              type="submit"
-            >
+              type="submit" >
               Imprimir
             </Button>
           </div>
