@@ -90,13 +90,13 @@ function cadastroAnimais() {
     const cadastroAnimais = () => {
         return (
             <div>
-                <Menu />
+                <Menu tituloPagina={"Cadastro de Animal"} />
                 <ReactNotifications />
                 <Container className="vh-100">
                     <Form onSubmit={handleSubmit}>
                         <br />
                         <Row>
-                            <h3>Cadastro de Animais</h3>
+                            <h3>Cadastro de Animal</h3>
                         </Row>
                         <Row>
                             <Col md="2">

@@ -70,7 +70,7 @@ function cadastroMontaria() {
     const cadastroMontaria = () => {
         return (
             <div>
-                <Menu />
+                <Menu tituloPagina={"Cadastro de Montaria"} />
                 <ReactNotifications />
                 <Container className="vh-100">
                     <Form onSubmit={handleSubmit}>

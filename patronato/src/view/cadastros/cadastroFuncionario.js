@@ -164,7 +164,7 @@ const cadastroFuncionario = () => {
 
     return (
         <div>
-            <Menu />
+            <Menu tituloPagina={"Cadastro de Funcionário"} />
             <ReactNotifications />
             <Container>
                 <Form onSubmit={handleSubmit}>

@@ -6,7 +6,7 @@ import Image from 'react-bootstrap/Image';
 import logo from './img/logoSemFundo.png';
 import logoutImg from './img/logout.png';
 
-const Menu = () => {
+const Menu = ({tituloPagina}) => {
   const [pessoaLogada, setPessoaLogada] = useState(null);
   const { user, logout } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
@@ -18,6 +18,11 @@ const Menu = () => {
       setLoading(false);
     };
 
+    const atualizaTitulo = async () => {
+      document.title = tituloPagina;
+    };
+    
+    atualizaTitulo();
     buscarPessoaLogada();
   }, []);
 
@@ -35,15 +40,15 @@ const Menu = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <NavDropdown title="Cadastros" id="basic-nav-dropdown" className="mr-4">
-              <NavDropdown.Item href="/cadastroAnimais">Animais</NavDropdown.Item>
-              <NavDropdown.Item href="/cadastroPraticantes">Praticantes</NavDropdown.Item>
-              <NavDropdown.Item href="/cadastroResponsavel">Responsáveis</NavDropdown.Item>
-              <NavDropdown.Item href="/cadastroFuncionario">Funcionários</NavDropdown.Item>
-              <NavDropdown.Item href="/cadastroMedico">Médicos</NavDropdown.Item>
-              <NavDropdown.Item href="/cadastroAtividade">Atividades</NavDropdown.Item>
-              <NavDropdown.Item href="/cadastroMaterial">Materiais</NavDropdown.Item>
+              <NavDropdown.Item href="/cadastroAnimais">Animal</NavDropdown.Item>
+              <NavDropdown.Item href="/cadastroPraticantes">Praticante</NavDropdown.Item>
+              <NavDropdown.Item href="/cadastroResponsavel">Responsável</NavDropdown.Item>
+              <NavDropdown.Item href="/cadastroFuncionario">Funcionário</NavDropdown.Item>
+              <NavDropdown.Item href="/cadastroMedico">Médico</NavDropdown.Item>
+              <NavDropdown.Item href="/cadastroAtividade">Atividade</NavDropdown.Item>
+              <NavDropdown.Item href="/cadastroMaterial">Material</NavDropdown.Item>
               <NavDropdown.Item href="/cadastroPicadeiro">Picadeiro</NavDropdown.Item>
-              <NavDropdown.Item href="/cadastroCargo">Cargos</NavDropdown.Item>
+              <NavDropdown.Item href="/cadastroCargo">Cargo</NavDropdown.Item>
               <NavDropdown.Item href="/cadastroMontaria">Montaria</NavDropdown.Item>
               <NavDropdown.Item href="/cadastroBairro">Bairro</NavDropdown.Item>
               <NavDropdown.Item href="/cadastroLogradouro">Logradouro</NavDropdown.Item>

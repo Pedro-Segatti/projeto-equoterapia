@@ -23,7 +23,7 @@ const relatorioFuncionarios = () => {
 
   return (
     <div>
-      <Menu />
+      <Menu tituloPagina={"Relatório de Funcionários"} />
       <ReactNotifications />
       <Container className="vh-100">
         <Form onSubmit={handleSubmit}>

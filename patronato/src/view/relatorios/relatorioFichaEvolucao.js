@@ -45,7 +45,7 @@ const relatorioFichaEvolucao = () => {
 
   return (
     <div>
-      <Menu />
+      <Menu tituloPagina={"Relatório de Ficha de Evolução"} />
       <ReactNotifications />
       <Container className="vh-100">
         <Form onSubmit={handleSubmit}>

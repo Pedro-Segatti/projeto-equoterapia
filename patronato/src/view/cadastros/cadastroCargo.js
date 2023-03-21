@@ -67,13 +67,13 @@ function cadastroCargo() {
     const cadastroCargo = () => {
         return (
             <div>
-                <Menu />
+                <Menu tituloPagina={"Cadastro de Cargo"} />
                 <ReactNotifications />
                 <Container className="vh-100">
                     <Form onSubmit={handleSubmit}>
                         <br />
                         <Row>
-                            <h3>Cadastro de Cargos</h3>
+                            <h3>Cadastro de Cargo</h3>
                         </Row>
                         <Row>
                             <Col md="2">

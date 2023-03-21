@@ -136,13 +136,13 @@ const cadastroMedico = () => {
 
     return (
         <div>
-            <Menu />
+            <Menu tituloPagina={"Cadastro de Médico"} />
             <ReactNotifications />
             <Container>
                 <Form onSubmit={handleSubmit}>
                     <br />
                     <Row>
-                        <h3>Cadastro de Médicos</h3>
+                        <h3>Cadastro de Médico</h3>
                     </Row>
 
                     <Row>

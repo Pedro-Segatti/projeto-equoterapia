@@ -101,7 +101,7 @@ function movimentoAvalSocioecon() {
     const movimentoAvalSocioecon = () => {
         return (
             <div>
-                <Menu />
+                <Menu tituloPagina={"Avaliação Socioeconômica"} />
                 <ReactNotifications />
                 <Container className="vh-100">
                     <Form onSubmit={handleSubmit}>

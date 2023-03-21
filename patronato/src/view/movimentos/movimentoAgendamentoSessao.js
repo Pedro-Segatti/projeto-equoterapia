@@ -186,13 +186,13 @@ const movimentoAgendamentoSessao = () => {
 
     return (
         <div>
-            <Menu />
+            <Menu tituloPagina={"Agendamento de Sessão"} />
             <ReactNotifications />
             <Container>
                 <Form onSubmit={handleSubmit}>
                     <br />
                     <Row>
-                        <h3>Agendamento de Sessões</h3>
+                        <h3>Agendamento de Sessão</h3>
                     </Row>
 
                     <Row>

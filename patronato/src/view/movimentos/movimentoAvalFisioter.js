@@ -453,7 +453,7 @@ function movimentoAvalFisioter() {
     const movimentoAvalFisioter = () => {
         return (
             <div>
-                <Menu />
+                <Menu tituloPagina={"Avaliação Fisioterápica"} />
                 <ReactNotifications />
                 <Container>
                     <Form onSubmit={handleSubmit}>

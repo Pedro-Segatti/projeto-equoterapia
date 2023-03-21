@@ -7,7 +7,7 @@ import { Container } from 'react-bootstrap';
 const HomePage = () => {
     return (
         <div>
-            <Menu />
+            <Menu tituloPagina={"Home"} />
             <Container className="vh-100">
                 <Agendamentos />
             </Container>
