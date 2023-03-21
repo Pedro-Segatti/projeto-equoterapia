@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Menu from "../menu";
 import Footer from "../footer";
+import Carregando from "../carregando";
 import { ReactNotifications } from "react-notifications-component";
 import { Col, Form, Button, Row, Container } from "react-bootstrap";
 import { gerarRelatorio } from "../../utilitario/baseRelatorios";
@@ -14,6 +15,7 @@ const relatorioFichaEvolucao = () => {
   const [evolDataFim, setEvolDataFim] = useState("");
   const [evolIdPrat, setEvolIdPrat] = useState({"pessoa": {"pesNome":""}});
   const [abrirPesquisaPraticante, setAbrirPesquisaPraticante] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   var [listPraticante, setListPraticante] = useState([]);
 
@@ -29,6 +31,9 @@ const relatorioFichaEvolucao = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setLoading(true);
+
     const json = {
       "nomeRelatorio" : 'fichaEvolucao',
       "parametros": {
@@ -40,13 +45,16 @@ const relatorioFichaEvolucao = () => {
         "pratId": evolIdPrat.pratId
       }
     }
-    gerarRelatorio("relatorioFichaEvolucao","Ficha_de_Evolução",json);
+    await gerarRelatorio("relatorioFichaEvolucao","Ficha_de_Evolução",json);
+
+    setLoading(false);
   };
 
   return (
     <div>
       <Menu tituloPagina={"Relatório de Ficha de Evolução"} />
       <ReactNotifications />
+      <Carregando showCarregando={loading} />
       <Container className="vh-100">
         <Form onSubmit={handleSubmit}>
           <br />

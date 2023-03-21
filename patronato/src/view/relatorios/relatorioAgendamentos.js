@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Menu from "../menu";
 import Footer from "../footer";
+import Carregando from "../carregando";
 import { ReactNotifications } from "react-notifications-component";
 import { Form, Button, Row, Container, Col } from "react-bootstrap";
 import { gerarRelatorio } from "../../utilitario/baseRelatorios";
@@ -10,9 +11,12 @@ const relatorioAgendamentos = () => {
   const [agdDataInicial, setAgdDataInicial] = useState("");
   const [agdDataFinal, setAgdDataFinal] = useState("");
   const [agdConcluido, setAgdConcluido] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setLoading(true);
     
     const json = {
       "nomeRelatorio": 'relatAgendamentos',
@@ -25,13 +29,16 @@ const relatorioAgendamentos = () => {
         "agdConcluido": agdConcluido,
       }
     }
-    gerarRelatorio("relatorioAgendamentos", "Relatorio_de_Agendamentos", json);
+    await gerarRelatorio("relatorioAgendamentos", "Relatorio_de_Agendamentos", json);
+
+    setLoading(false);
   };
 
   return (
     <div>
       <Menu tituloPagina={"Relatório de Agendamentos"} />
       <ReactNotifications />
+      <Carregando showCarregando={loading} />
       <Container className="vh-100">
         <Form onSubmit={handleSubmit}>
           <br />

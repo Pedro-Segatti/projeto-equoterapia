@@ -5,7 +5,7 @@ import { Modal } from 'react-bootstrap';
 
 import estilos from './style/carregando.module.css';
 
-const Carregando = (showCarregando) => {
+const Carregando = ({showCarregando}) => {
     return (
         <div>
             <Modal show={showCarregando} className={estilos.dialog}>
