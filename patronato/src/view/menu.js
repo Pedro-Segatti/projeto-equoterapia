@@ -63,8 +63,8 @@ const Menu = ({tituloPagina}) => {
             </NavDropdown>
 
             <NavDropdown title="Relatórios" id="basic-nav-dropdown">
-            <NavDropdown.Item href="/relatorioAgendamentos">Agendamentos</NavDropdown.Item>
-              <NavDropdown.Item href="/relatorioFuncionarios">Funcionários</NavDropdown.Item>
+            <NavDropdown.Item href="/relatorioAgendamentos">Agendamento</NavDropdown.Item>
+              <NavDropdown.Item href="/relatorioFuncionarios">Funcionário</NavDropdown.Item>
               <NavDropdown.Item href="/relatorioFichaEvolucao">Ficha de Evolução</NavDropdown.Item>
             </NavDropdown>
           </Nav>

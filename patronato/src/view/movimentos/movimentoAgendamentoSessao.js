@@ -25,6 +25,7 @@ const movimentoAgendamentoSessao = () => {
     const [agdHora, setAgdHora] = useState("");
     const [agdPraticante, setAgdPraticante] = useState({ "pessoa": { "pesNome": "" } });
     const [agdDescricao, setAgdDescricao] = useState("");
+    const [agdObservacoes, setAgdObservacoes] = useState("");
     const [agdConcluido, setAgdConcluido] = useState(false);
     const [agendamentoMaterialList, setAgendamentoMaterialList] = useState([]);
     const [agendamentoFuncionarioList, setAgendamentoFuncionarioList] = useState([]);
@@ -87,6 +88,7 @@ const movimentoAgendamentoSessao = () => {
         setAgdHora(item.agdHora)
         setAgdPraticante(item.praticante);
         setAgdDescricao(item.agdDescricao);
+        setAgdObservacoes(item.agdObservacoes);
         setAgendamentoAnimalList(item.animalList);
         setAgendamentoFuncionarioList(item.funcionarioList);
         setAgendamentoMaterialList(item.materialList);
@@ -157,6 +159,7 @@ const movimentoAgendamentoSessao = () => {
             "agdDescricao": agdDescricao,
             "agdConcluido": agdConcluido,
             "praticante": agdPraticante,
+            "agdObservacoes": agdObservacoes,
             "materialList": agendamentoMaterialList,
             "funcionarioList": agendamentoFuncionarioList,
             "animalList": agendamentoAnimalList
@@ -177,6 +180,7 @@ const movimentoAgendamentoSessao = () => {
         setAgdHora("");
         setAgdPraticante({ "pessoa": { "pesNome": "" } });
         setAgdDescricao("");
+        setAgdObservacoes("");
         setAgendamentoMaterialList([]);
         setAgendamentoFuncionarioList([]);
         setAgendamentoAnimalList([]);
@@ -232,6 +236,19 @@ const movimentoAgendamentoSessao = () => {
                         <Col md="6">
                             <Form.Label htmlFor="inputLPraticante">Praticante</Form.Label>
                             <InputConverter idBtn={"botaoPraticante"} descricao={agdPraticante.pessoa.pesNome} atualizaDlgPesquisa={atualizaDlgPesquisaPraticante} />
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        <Col md="12">
+                            <Form.Label>Observações:</Form.Label>
+                            <Form.Control
+                                value={agdObservacoes}
+                                onChange={(e) => setAgdObservacoes(e.target.value)}
+                                type="text"
+                                as="textarea"
+                                className="textArea"
+                            />
                         </Col>
                     </Row>
                     <br />
