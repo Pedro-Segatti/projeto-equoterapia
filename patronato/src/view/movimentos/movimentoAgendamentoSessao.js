@@ -161,7 +161,6 @@ const movimentoAgendamentoSessao = () => {
             "funcionarioList": agendamentoFuncionarioList,
             "animalList": agendamentoAnimalList
         }
-        console.log(jsonAgendamento);
 
         const response = await api.post("/cadastrarAgendamento", jsonAgendamento);
         if (response.status === HTTP_STATUS.OK) {

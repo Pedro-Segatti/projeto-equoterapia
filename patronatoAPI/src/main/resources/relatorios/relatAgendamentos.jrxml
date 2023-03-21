@@ -74,7 +74,7 @@
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box leftPadding="8"/>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{agdDescricao}]]></textFieldExpression>
@@ -82,7 +82,7 @@
 			<textField textAdjust="StretchHeight">
 				<reportElement x="190" y="0" width="120" height="14" uuid="b9be5413-8f61-4780-bc74-8c6114b49c6d"/>
 				<box leftPadding="8"/>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{pesNome}]]></textFieldExpression>
@@ -90,7 +90,7 @@
 			<textField>
 				<reportElement x="310" y="0" width="60" height="14" uuid="f399b1a1-f7d7-41da-a9f0-32dd13323a01"/>
 				<box leftPadding="8"/>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{agdDataFormatada}]]></textFieldExpression>
@@ -98,13 +98,13 @@
 			<textField>
 				<reportElement x="370" y="0" width="60" height="14" uuid="eedbe535-3c95-406e-b0ff-a1fcd898d18c"/>
 				<box leftPadding="8"/>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{agdHoraFormatada}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="15" width="554" height="1" uuid="5efef9e5-6db4-4515-aacc-3e49c1946652"/>
+				<reportElement positionType="Float" x="0" y="15" width="554" height="1" uuid="5efef9e5-6db4-4515-aacc-3e49c1946652"/>
 				<graphicElement>
 					<pen lineWidth="0.5"/>
 				</graphicElement>

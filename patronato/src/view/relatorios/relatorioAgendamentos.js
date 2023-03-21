@@ -30,7 +30,7 @@ const relatorioAgendamentos = () => {
 
   return (
     <div>
-      <Menu />
+      <Menu tituloPagina={"Relatório de Agendamentos"} />
       <ReactNotifications />
       <Container className="vh-100">
         <Form onSubmit={handleSubmit}>
