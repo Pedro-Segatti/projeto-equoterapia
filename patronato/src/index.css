@@ -189,8 +189,8 @@ input[type="file"] {
 }
 
 .accordion-body{
-  background-color: #E0E5E0;
-  border: 1px solid white;
+  background-color: #efefef;
+  box-shadow: 0em 0em 4px 0px #c3e7f7;
 }
 .btn-primary {
   font-weight: bold !important;
