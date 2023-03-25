@@ -102,7 +102,7 @@ const cadastroPraticante = () => {
             "pxrId": null,
             "praticante": "",
             "responsavel": item,
-            "pxrTipoResp": ""
+            "pxrTipoResp": "S"
         }
         for (var i=0;i<listResponsveisSelecionados.length;i++)
         {
@@ -251,6 +251,29 @@ const cadastroPraticante = () => {
             setPesFoto(null);
         }
 
+        if(pesSexo === "S"){
+            mensagemCustomizada("Selecione um sexo", "warning");
+            document.getElementById("inputSexo").focus();
+            return;
+        }
+
+        if(pesLogDescricao === ""){
+            mensagemCustomizada("Selecione um logradouro", "warning");
+            document.getElementById("btnLogradouro").focus();
+            return;
+        }
+        var bloqueiaResponsavel = false;
+        listResponsveisSelecionados.map(r => {
+            console.log(r);
+            if(r.pxrTipoResp === "S"){
+                mensagemCustomizada("Selecione um parentesco para o responsável " + r.responsavel.pessoa.pesNome, "warning");
+                bloqueiaResponsavel = true;
+            }
+        })
+        if(bloqueiaResponsavel){
+            return;
+        }
+
         const montaJsonPraticante = async () => {  
             const jsonPessoa = await montaJsonPessoaCompleta(pesId,pesNome,pesCpf,"",pesSexo,pesDataNasc,pesEndNum,pesEndCompl,pesNacionalidade, pesFoto, pesEmail1, pesEmail2, pesLogId, listTelefones);
             const jsonPraticante = {
@@ -341,7 +364,7 @@ const cadastroPraticante = () => {
                     </thead>
                     <tbody>
                         {
-                            slice.map((item,i) => <LinhaTabelaResponsaveis key={item.respNome + i} item={item} removeResp={removeResp} />)
+                            slice.map((item) => <LinhaTabelaResponsaveis key={item.responsavel.pessoa.pesNome} item={item} removeResp={removeResp} />)
                         }
                     </tbody>
                 </Table>
@@ -367,7 +390,7 @@ const cadastroPraticante = () => {
                 <Form.Select required
                     value={pxrTipoResp}
                     onChange={(e) => atualizaItem(e.target.value)}>
-                    <option>Selecione</option>
+                    <option value="S">Selecione</option>
                     <option value="M">Mãe</option>
                     <option value="P">Pai</option>
                     <option value="I">Irmão</option>
@@ -439,7 +462,7 @@ const cadastroPraticante = () => {
                             <Form.Select id='inputSexo' required
                                 value={pesSexo}
                                 onChange={(e) => setPesSexo(e.target.value)}>
-                                <option>Selecione</option>
+                                <option value="S">Selecione</option>
                                 <option value="F">Feminino</option>
                                 <option value="M">Masculino</option>
                             </Form.Select>
@@ -485,7 +508,7 @@ const cadastroPraticante = () => {
                     <Row>
                         <Col md="6">
                             <Form.Label htmlFor="inputLogradouro">Logradouro *</Form.Label>
-                            <InputConverter descricao={pesLogDescricao} atualizaDlgPesquisa={atualizaDlgPesquisaLogradouro} />
+                            <InputConverter idBtn={"btnLogradouro"} descricao={pesLogDescricao} atualizaDlgPesquisa={atualizaDlgPesquisaLogradouro} />
                         </Col>
                     </Row>
                     <Row>

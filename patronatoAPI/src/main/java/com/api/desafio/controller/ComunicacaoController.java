@@ -591,6 +591,15 @@ public class ComunicacaoController {
     @PostMapping("/cadastrarFuncionario")
     public ResponseEntity<Funcionario> cadastrarFuncionario(@RequestBody Funcionario funcionario) {
         funcionario.getPessoa().getTelefoneList().forEach(tel -> tel.setPessoa(funcionario.getPessoa()));
+        boolean adicionando = funcionario.getFuncId() == null;
+
+        Pessoa pessoa = null;
+        if (adicionando) {
+            pessoa = pessoaService.getPessoaByPesCpf(funcionario.getPessoa().getPesCpf());
+            if (pessoa != null) {
+                return new ResponseEntity<Funcionario>(new Funcionario(), HttpStatus.BAD_REQUEST);
+            }
+        }
         pessoaService.salva(funcionario.getPessoa());
         return new ResponseEntity<Funcionario>(funcionarioService.salva(funcionario),HttpStatus.OK);
     }

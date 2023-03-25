@@ -119,9 +119,9 @@ function cadastroLogradouro() {
                         <Row>
                             <Col md="6">
                                 <Form.Label htmlFor="log">CEP *</Form.Label>
-                                <Form.Control value={logCep} maxLength={8}
+                                <Form.Control value={logCep} maxLength="8"
                                     onChange={(e) => setLogCep(e.target.value)}
-                                    type="text" id="log" required />
+                                    type="number" id="log" required />
                             </Col>
                         </Row>
                         <Row>

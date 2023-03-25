@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Form, Col, Row, Container } from 'react-bootstrap';
 import Toolbar from '../toolbar';
 import { IMaskInput } from 'react-imask';
-import { registroSalvo, pessoaDuplicada, registroExcluido} from "../../utilitario/mensagemUtil"
+import { registroSalvo, pessoaDuplicada, registroExcluido, mensagemCustomizada} from "../../utilitario/mensagemUtil"
 import { ReactNotifications } from 'react-notifications-component'
 import { montaJsonPessoaCompleta } from "../../utilitario/patronatoUtil";
 import { cadastrarResponsavel } from "../../utilitario/baseComunicacao";
@@ -111,6 +111,18 @@ const cadastroResponsavel = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if(pesSexo === "S"){
+            mensagemCustomizada("Selecione um sexo", "warning");
+            document.getElementById("inputSexo").focus();
+            return;
+        }
+
+        if(pesLogDescricao === ""){
+            mensagemCustomizada("Selecione um logradouro", "warning");
+            document.getElementById("btnLogradouro").focus();
+            return;
+        }
+
         const montaJsonResponsavel = async () => {
             const jsonPessoa = await montaJsonPessoaCompleta(pesId,pesNome,pesCpf,"",pesSexo,pesDataNasc,pesEndNum,pesEndCompl,pesNacionalidade, "", pesEmail1, pesEmail2, pesLogId, listTelefones);
             const jsonResponsavel = {
@@ -188,7 +200,7 @@ const cadastroResponsavel = () => {
                             <Form.Select id='inputSexo' required
                                 value={pesSexo}
                                 onChange={(e) => setPesSexo(e.target.value)}>
-                                <option>Selecione</option>
+                                <option value="S">Selecione</option>
                                 <option value="F">Feminino</option>
                                 <option value="M">Masculino</option>
                             </Form.Select>
@@ -220,7 +232,7 @@ const cadastroResponsavel = () => {
                     <Row>
                         <Col md="6">
                             <Form.Label htmlFor="inputLogradouro">Logradouro *</Form.Label>
-                            <InputConverter descricao={pesLogDescricao} atualizaDlgPesquisa={atualizaDlgPesquisaLogradouro} />
+                            <InputConverter idBtn={"btnLogradouro"} descricao={pesLogDescricao} atualizaDlgPesquisa={atualizaDlgPesquisaLogradouro} />
                         </Col>
                     </Row>
                     <Row>

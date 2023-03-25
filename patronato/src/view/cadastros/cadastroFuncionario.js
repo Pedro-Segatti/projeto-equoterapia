@@ -139,7 +139,6 @@ const cadastroFuncionario = () => {
             return jsonFuncionario;
         }
 
-
         const cadastraFuncionario = async () => {
             return await cadastrarFuncionario(await montaJsonFuncionario());
         }
@@ -181,7 +180,7 @@ const cadastroFuncionario = () => {
                     </Row>
                     <Row>
                         <Col md="12">
-                            <Form.Label htmlFor="inputNome">Nome</Form.Label>
+                            <Form.Label htmlFor="inputNome">Nome *</Form.Label>
                             <Form.Control value={pesNome} maxLength="60"
                                 onChange={(e) => setPesNome(e.target.value)}
                                 type="text" id="inputNome" required />
@@ -219,7 +218,7 @@ const cadastroFuncionario = () => {
                     <Row>
                         <Col md="6">
                             <Form.Label htmlFor="inputDate">Data de Admissão *</Form.Label>
-                            <Form.Control value={funcDataAdmissao}
+                            <Form.Control value={funcDataAdmissao} required
                                 onChange={(e) => setFuncDataAdmissao(e.target.value)}
                                 type="date" id="inputDate" />
                         </Col>
@@ -246,7 +245,7 @@ const cadastroFuncionario = () => {
                     </Row>
                     <Row>
                         <Col md="12">
-                            <Form.Label htmlFor="inputEmailP">Email Principal</Form.Label>
+                            <Form.Label htmlFor="inputEmailP">Email Principal *</Form.Label>
                             <Form.Control value={pesEmail1} maxLength="100"
                                 onChange={(e) => setPesEmail1(e.target.value)}
                                 type="text" id="inputEmailP" required />
@@ -263,7 +262,7 @@ const cadastroFuncionario = () => {
                     <Row>
                         <Col md="6">
                             <Form.Label htmlFor="inputLogradouro">Logradouro *</Form.Label>
-                            <InputConverter descricao={pesLogId.logDescricao} atualizaDlgPesquisa={atualizaDlgPesquisaLogradouro} />
+                            <InputConverter idBtn={"btnLogradouro"} descricao={pesLogId.logDescricao} atualizaDlgPesquisa={atualizaDlgPesquisaLogradouro} />
                         </Col>
                     </Row>
                     <Row>
