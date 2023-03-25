@@ -687,7 +687,7 @@ function movimentoFichaAnamnese() {
                         Em caso de afirmação, informe sexo e idade:
                       </Form.Label>
                       <Form.Control
-                        value={amnInfosIrmao}
+                        value={amnInfosIrmao} disabled={!amnPossuiIrmao}
                         onChange={(e) => setAmnInfosIrmao(e.target.value)}
                         type="text"
                         as="textarea"
@@ -707,7 +707,7 @@ function movimentoFichaAnamnese() {
                         label="Adotado"
                       />
                       <Form.Check
-                        checked={amnCienciaAdocao}
+                        checked={amnCienciaAdocao} disabled={!amnAdotado}
                         onChange={(e) =>
                           setAmnCienciaAdocao(e.target.checked)
                         }
@@ -984,7 +984,7 @@ function movimentoFichaAnamnese() {
                     <Col md="3">
                       <Form.Label>Quem:</Form.Label>
                       <Form.Control
-                        value={amnDivQuartoObs}
+                        value={amnDivQuartoObs} disabled={!amnDivQuarto}
                         maxLength={20}
                         onChange={(e) => setAmnDivQuartoObs(e.target.value)}
                         type="text"
@@ -1004,7 +1004,7 @@ function movimentoFichaAnamnese() {
                     <Col md="6">
                       <Form.Label>Quais:</Form.Label>
                       <Form.Control
-                        value={amnHabitEspecObs}
+                        value={amnHabitEspecObs} disabled={!amnHabitEspec}
                         onChange={(e) => setAmnHabitEspecObs(e.target.value)}
                         type="text"
                         as="textarea"
@@ -1500,7 +1500,7 @@ function movimentoFichaAnamnese() {
                     <Col md="6">
                       <Form.Label>Em quais situações:</Form.Label>
                       <Form.Control
-                        value={amnChoroObs}
+                        value={amnChoroObs} disabled={!amnChoroFacil}
                         onChange={(e) => setAmnChoroObs(e.target.value)}
                         type="text"
                         as="textarea"
@@ -1521,7 +1521,7 @@ function movimentoFichaAnamnese() {
                     <Col md="6">
                       <Form.Label>Em quais situações:</Form.Label>
                       <Form.Control
-                        value={amnRecAuxObs}
+                        value={amnRecAuxObs} disabled={!amnRecAuxilio}
                         onChange={(e) => setAmnRecAuxObs(e.target.value)}
                         type="text"
                         as="textarea"
@@ -1629,7 +1629,7 @@ function movimentoFichaAnamnese() {
                     <Col md="6">
                       <Form.Label>Quais:</Form.Label>
                       <Form.Control
-                        value={amnTratAtualObs}
+                        value={amnTratAtualObs} disabled={!amnTratAtual}
                         onChange={(e) => setAmnTratAtualObs(e.target.value)}
                         type="text"
                         as="textarea"
