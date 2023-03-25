@@ -104,7 +104,7 @@ const Perfil = () => {
 
   return (
     <div>
-      <Menu />
+      <Menu tituloPagina={"Perfil"} />
       <ReactNotifications />
       {!loading && <Container>
         <Form onSubmit={handleSubmit}>
