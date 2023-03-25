@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Form, Col, Row, Container } from 'react-bootstrap';
 import Toolbar from '../toolbar';
 import { IMaskInput } from 'react-imask';
-import { registroSalvo, registroExcluido, pessoaDuplicada } from "../../utilitario/mensagemUtil"
+import { registroSalvo, registroExcluido, pessoaDuplicada, mensagemCustomizada } from "../../utilitario/mensagemUtil"
 import { ReactNotifications } from 'react-notifications-component'
 import { montaJsonPessoaCompleta } from "../../utilitario/patronatoUtil";
 import { api } from "../../utilitario/baseComunicacao";
@@ -20,7 +20,7 @@ const cadastroMedico = () => {
     const [medId, setMedId] = useState("");
     const [pesNome, setPesNome] = useState("");
     const [pesCpf, setPesCpf] = useState("");
-    const [pesSexo, setPesSexo] = useState("");
+    const [pesSexo, setPesSexo] = useState("S");
     const [pesDataNasc, setPesDataNasc] = useState("");
     const [pesEndNum, setPesEndNum] = useState("");
     const [pesEndCompl, setPesEndCompl] = useState("");
@@ -119,6 +119,18 @@ const cadastroMedico = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if(pesSexo === "S"){
+            mensagemCustomizada("Selecione um sexo", "warning");
+            document.getElementById("inputSexo").focus();
+            return;
+        }
+        if(pesLogDescricao === ""){
+            mensagemCustomizada("Selecione um logradouro", "warning");
+            document.getElementById("btnLogradouro").focus();
+            return;
+        }
+
         enviaJsonGravar();
         limparCamposFormulario();
     };
@@ -179,7 +191,7 @@ const cadastroMedico = () => {
                             <Form.Select id='inputSexo' required
                                 value={pesSexo}
                                 onChange={(e) => setPesSexo(e.target.value)}>
-                                <option>Selecione</option>
+                                <option value="S">Selecione</option>
                                 <option value="F">Feminino</option>
                                 <option value="M">Masculino</option>
                             </Form.Select>
@@ -208,7 +220,7 @@ const cadastroMedico = () => {
                     <Row>
                         <Col md="6">
                             <Form.Label htmlFor="inputLogradouro">Logradouro *</Form.Label>
-                            <InputConverter descricao={pesLogDescricao} atualizaDlgPesquisa={atualizaDlgPesquisaLogradouro} />
+                            <InputConverter idBtn={"btnLogradouro"} descricao={pesLogDescricao} atualizaDlgPesquisa={atualizaDlgPesquisaLogradouro} />
                         </Col>
                     </Row>
 

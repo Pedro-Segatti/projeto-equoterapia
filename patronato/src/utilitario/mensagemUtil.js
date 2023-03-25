@@ -67,7 +67,7 @@ export const semRegistros = () => {
 
 export const pessoaDuplicada = () => {
     Store.addNotification({
-        title: "Já existe praticante com o CPF informado",
+        title: "Já uma pessoa com o CPF informado",
         type: "info",
         insert: "top",
         container: "top-right",
