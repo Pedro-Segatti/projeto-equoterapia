@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { AuthContext } from "../contexts/autenticacao";
 import { IMaskInput } from 'react-imask';
 import { Form, Row, Button } from 'react-bootstrap';
@@ -22,6 +22,14 @@ const Login = () => {
 
     const [log, setLog] = useState("");
     const [password, setPassword] = useState("");
+
+    useEffect(() => {
+        const atualizaTitulo = async () => {
+          document.title = "Login";
+        };
+        
+        atualizaTitulo();
+      }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
