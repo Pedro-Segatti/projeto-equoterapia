@@ -204,13 +204,13 @@ const movimentoAgendamentoSessao = () => {
                             <Form.Control value={agdId} type="text" id="id" disabled />
                         </Col>
                         <Col md="2">
-                            <Form.Label htmlFor="inputData">Data</Form.Label>
+                            <Form.Label htmlFor="inputData">Data *</Form.Label>
                             <Form.Control value={agdData}
                                 onChange={(e) => setAgdData(e.target.value)}
                                 type="date" id="inputDate" required />
                         </Col>
                         <Col md="2">
-                            <Form.Label htmlFor="inputHora">Hora</Form.Label>
+                            <Form.Label htmlFor="inputHora">Hora *</Form.Label>
                             <Form.Control value={agdHora}
                                 onChange={(e) => setAgdHora(e.target.value)}
                                 type="time" id="inputHora" required />
@@ -225,7 +225,7 @@ const movimentoAgendamentoSessao = () => {
 
                     <Row>
                         <Col md="12">
-                            <Form.Label htmlFor="inputDescricao">Descrição</Form.Label>
+                            <Form.Label htmlFor="inputDescricao">Descrição *</Form.Label>
                             <Form.Control value={agdDescricao} maxLength={60}
                                 onChange={(e) => setAgdDescricao(e.target.value)}
                                 type="text" id="descricao" required />
@@ -234,7 +234,7 @@ const movimentoAgendamentoSessao = () => {
 
                     <Row>
                         <Col md="6">
-                            <Form.Label htmlFor="inputLPraticante">Praticante</Form.Label>
+                            <Form.Label htmlFor="inputLPraticante">Praticante *</Form.Label>
                             <InputConverter idBtn={"botaoPraticante"} descricao={agdPraticante.pessoa.pesNome} atualizaDlgPesquisa={atualizaDlgPesquisaPraticante} />
                         </Col>
                     </Row>

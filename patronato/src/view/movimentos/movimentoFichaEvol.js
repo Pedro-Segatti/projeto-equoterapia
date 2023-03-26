@@ -358,16 +358,19 @@ function cadastroFichaEvol() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (evolIdMont.montDescricao === "") {
-            mensagemCustomizada("Selecione uma montaria", "warning");
-            document.getElementById("botaoMontaria").focus();
-            return;
-        }
+        
         if (evolIdPrat.pessoa.pesNome === "") {
             mensagemCustomizada("Selecione um Praticante", "warning");
             document.getElementById("botaoPraticante").focus();
             return;
         }
+
+        if (evolIdMont.montDescricao === "") {
+            mensagemCustomizada("Selecione uma montaria", "warning");
+            document.getElementById("botaoMontaria").focus();
+            return;
+        }
+
         if (evolClima === "") {
             mensagemCustomizada("Selecione um clima", "warning");
             document.getElementById("clima").focus();
@@ -416,7 +419,7 @@ function cadastroFichaEvol() {
                         </Row>
                         <Row>
                             <Col md="2">
-                                <Form.Label htmlFor="inputData">Data da evolução</Form.Label>
+                                <Form.Label htmlFor="inputData">Data da evolução *</Form.Label>
                                 <Form.Control value={evolData}
                                     onChange={(e) => setEvolData(e.target.value)}
                                     type="date" id="inputDate" required />
@@ -424,13 +427,13 @@ function cadastroFichaEvol() {
                         </Row>
                         <Row>
                             <Col md="6">
-                                <Form.Label id='txTeste' htmlFor="inputPraticante">Praticante</Form.Label>
+                                <Form.Label id='txTeste' htmlFor="inputPraticante">Praticante *</Form.Label>
                                 <InputConverter idBtn={"botaoPraticante"} descricao={evolIdPrat.pessoa.pesNome} atualizaDlgPesquisa={atualizaDlgPesquisaPraticante} />
                             </Col>
                         </Row>
                         <Row>
                             <Col md="6">
-                                <Form.Label id='txTeste' htmlFor="inputMontaria">Montaria</Form.Label>
+                                <Form.Label id='txTeste' htmlFor="inputMontaria">Montaria *</Form.Label>
                                 <InputConverter idBtn={"botaoMontaria"} descricao={evolIdMont.montDescricao} atualizaDlgPesquisa={atualizaDlgPesquisaMontaria} />
                             </Col>
                         </Row>
@@ -468,10 +471,10 @@ function cadastroFichaEvol() {
                                     type="text" id="post" />
                             </Col>
                             <Col md="3">
-                                <Form.Label htmlFor="inputClima">Clima</Form.Label>
+                                <Form.Label htmlFor="inputClima">Clima *</Form.Label>
                                 <Form.Select id='clima' required value={evolClima}
                                     onChange={(e) => setEvolClima(e.target.value)}>
-                                    <option>Selecione</option>
+                                    <option value="">Selecione</option>
                                     <option value="V">Ventando</option>
                                     <option value="E">Ensolarado</option>
                                     <option value="N">Nublado</option>
@@ -481,7 +484,7 @@ function cadastroFichaEvol() {
                                 </Form.Select>
                             </Col>
                             <Col md="3">
-                                <Form.Label htmlFor="decubito">Decubito</Form.Label>
+                                <Form.Label htmlFor="decubito">Decúbito</Form.Label>
                                 <Form.Select id='decubito' required value={evolDecubito}
                                     onChange={(e) => setEvolDecubito(e.target.value)}>
                                     <option>Selecione</option>
