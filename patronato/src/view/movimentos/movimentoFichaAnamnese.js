@@ -17,12 +17,14 @@ import Footer from "../footer";
 import InputConverter from '../componentes/inputConverter';
 import { saveAs } from 'file-saver';
 import { dataApiFormatada, dataFormatadaAnoMesDia } from '../../utilitario/dateUtil';
+import Carregando from "../carregando";
 
 function movimentoFichaAnamnese() {
 
   const [abrirPesquisa, setAbrirPesquisa] = useState(false);
   const [abrirPesquisaPraticante, setAbrirPesquisaPraticante] = useState(false);
   const [abrirPesquisaFuncionario, setAbrirPesquisaFuncionario] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   //Variáveis de cadastro 
   const [amnId, setAmnId] = useState("");
@@ -563,6 +565,7 @@ function movimentoFichaAnamnese() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     if (amnIdPraticante.pessoa.pesNome === "") {
       mensagemCustomizada("Selecione um praticante", "warning");
       document.getElementById("botaoPraticante").focus();
@@ -575,6 +578,7 @@ function movimentoFichaAnamnese() {
     }
     enviaJsonGravar();
     limparCamposFormulario();
+    setLoading(false);
   }
 
   const movimentoFichaAnamnese = () => {
@@ -582,6 +586,7 @@ function movimentoFichaAnamnese() {
       <div>
         <Menu tituloPagina={"Ficha de Anamnese"} />
         <ReactNotifications />
+        <Carregando showCarregando={loading} />
         <Container>
           <Form onSubmit={handleSubmit}>
             <br />

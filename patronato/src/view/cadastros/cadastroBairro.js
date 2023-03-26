@@ -11,6 +11,7 @@ import HTTP_STATUS from "../../utilitario/httpStatus";
 import PesquisaCidade from "../pesquisas/pesquisaCidade";
 import PesquisaBairro from "../pesquisas/pesquisaBairro";
 import InputConverter from "../componentes/inputConverter";
+import Carregando from "../carregando";
 
 function cadastroBairro() {
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
@@ -22,6 +23,8 @@ function cadastroBairro() {
     const [barId, setBarId] = useState("");
     const [barNome, setBarNome] = useState("");
     const [cidade, setCidade] = useState({"cidNome":""});
+
+    const [loading, setLoading] = useState(false);
 
     const atualizaDlgPesquisa = async () => {
         setList(await (await api.get("/pesquisaBairro?barNome=")).data);
@@ -78,6 +81,7 @@ function cadastroBairro() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         if(cidade.cidNome === ""){
             mensagemCustomizada("Selecione uma Cidade","warning");
             document.getElementById("btnCidade").focus();
@@ -85,6 +89,7 @@ function cadastroBairro() {
         }
         enviaJsonGravar();
         limparCamposFormulario();
+        setLoading(false);
     }
 
     const cadastroBairro = () => {
@@ -92,6 +97,7 @@ function cadastroBairro() {
             <div>
                 <Menu tituloPagina={"Cadastro de Bairro"} />
                 <ReactNotifications />
+                <Carregando showCarregando={loading} />
                 <Container className="vh-100">
                     <Form onSubmit={handleSubmit}>
                         <br />

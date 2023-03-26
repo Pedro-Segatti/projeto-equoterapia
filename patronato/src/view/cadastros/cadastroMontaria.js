@@ -9,6 +9,7 @@ import { api } from "../../utilitario/baseComunicacao";
 import Menu from "../menu";
 import Footer from "../footer";
 import HTTP_STATUS from "../../utilitario/httpStatus";
+import Carregando from "../carregando";
 
 function cadastroMontaria() {
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
@@ -19,6 +20,8 @@ function cadastroMontaria() {
 
     //variáveis da dialog de pesquisa
     var [list, setList] = useState('[]');
+
+    const [loading, setLoading] = useState(false);
 
     const atualizaDlgPesquisa = async () => {
         setList(await (await api.get("/pesquisaMontaria?montId=&montDescricao=")).data);
@@ -63,8 +66,10 @@ function cadastroMontaria() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         enviaJsonGravar();
         limparCamposFormulario();
+        setLoading(false);
     }
 
     const cadastroMontaria = () => {
@@ -72,6 +77,7 @@ function cadastroMontaria() {
             <div>
                 <Menu tituloPagina={"Cadastro de Montaria"} />
                 <ReactNotifications />
+                <Carregando showCarregando={loading} />
                 <Container className="vh-100">
                     <Form onSubmit={handleSubmit}>
                         <br />

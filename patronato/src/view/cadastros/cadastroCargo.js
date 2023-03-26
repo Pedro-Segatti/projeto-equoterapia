@@ -9,6 +9,7 @@ import { api } from "../../utilitario/baseComunicacao";
 import Menu from "../menu";
 import Footer from "../footer";
 import HTTP_STATUS from "../../utilitario/httpStatus";
+import Carregando from "../carregando";
 
 function cadastroCargo() {
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
@@ -17,6 +18,8 @@ function cadastroCargo() {
     //Variáveis de cadastro
     const [carId, setCarId] = useState("");
     const [carDescricao, setCarDescricao] = useState("");
+
+    const [loading, setLoading] = useState(false);
 
     const atualizaDlgPesquisa = async () => {
         setList(await (await api.get("/pesquisaCargo?carId=&carDescricao=")).data);
@@ -60,8 +63,10 @@ function cadastroCargo() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         enviaJsonGravar();
         limparCamposFormulario();
+        setLoading(false);
     }
 
     const cadastroCargo = () => {
@@ -69,6 +74,7 @@ function cadastroCargo() {
             <div>
                 <Menu tituloPagina={"Cadastro de Cargo"} />
                 <ReactNotifications />
+                <Carregando showCarregando={loading} />
                 <Container className="vh-100">
                     <Form onSubmit={handleSubmit}>
                         <br />

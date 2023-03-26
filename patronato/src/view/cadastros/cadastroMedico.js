@@ -12,6 +12,7 @@ import PesquisaLogradouros from "../pesquisas/pesquisaLogradouro";
 import InputConverter from "../componentes/inputConverter";
 import SelectNacionalidade from '../componentes/selectMenuNacionalidade';
 import TabelaTelefones from '../componentes/tabelaTelefones';
+import Carregando from "../carregando";
 
 import Menu from "../menu"
 import Footer from "../footer"
@@ -38,6 +39,8 @@ const cadastroMedico = () => {
     const [listLogradouro, setListLogradouro] = useState([]);
 
     const [listTelefones, setListTelefones] = useState([]);
+
+    const [loading, setLoading] = useState(false);
 
     const atualizaDlgPesquisa = async () => {
         setList(await (await api.get("/pesquisaMedico")).data);
@@ -119,7 +122,7 @@ const cadastroMedico = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        setLoading(true);
         if (pesSexo === "S") {
             mensagemCustomizada("Selecione um sexo", "warning");
             document.getElementById("inputSexo").focus();
@@ -133,6 +136,7 @@ const cadastroMedico = () => {
 
         enviaJsonGravar();
         limparCamposFormulario();
+        setLoading(false);
     };
 
     const atualizaDlgPesquisaLogradouro = async () => {
@@ -150,6 +154,7 @@ const cadastroMedico = () => {
         <div>
             <Menu tituloPagina={"Cadastro de Médico"} />
             <ReactNotifications />
+            <Carregando showCarregando={loading} />
             <Container>
                 <Form onSubmit={handleSubmit}>
                     <br />

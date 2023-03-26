@@ -9,10 +9,12 @@ import Menu from "../menu";
 import Footer from "../footer";
 import HTTP_STATUS from "../../utilitario/httpStatus";
 import PesquisaPicadeiro from '../pesquisas/pesquisaPicadeiro';
+import Carregando from "../carregando";
 
 function cadastroPicadeiro() {
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
     var [list, setList] = useState('[]');
+    const [loading, setLoading] = useState(false);
 
     //Variáveis de cadastro
     const [picId, setPicId] = useState("");
@@ -60,8 +62,10 @@ function cadastroPicadeiro() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         enviaJsonGravar();
         limparCamposFormulario();
+        setLoading(false);
     }
 
     const cadastroPicadeiro = () => {
@@ -69,6 +73,7 @@ function cadastroPicadeiro() {
             <div>
                 <Menu tituloPagina={"Cadastro de Picadeiro"} />
                 <ReactNotifications />
+                <Carregando showCarregando={loading} />
                 <Container className="vh-100">
                     <Form onSubmit={handleSubmit}>
                         <br />

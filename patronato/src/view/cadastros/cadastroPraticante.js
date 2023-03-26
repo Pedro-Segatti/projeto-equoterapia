@@ -18,6 +18,7 @@ import InputConverter from "../componentes/inputConverter";
 import { saveAs } from 'file-saver';
 import SelectNacionalidade from '../componentes/selectMenuNacionalidade';
 import TabelaTelefones from '../componentes/tabelaTelefones';
+import Carregando from "../carregando";
 
 import Menu from "../menu"
 import Footer from "../footer"
@@ -37,6 +38,7 @@ const cadastroPraticante = () => {
             console.log(error);
         }
     }
+    const [loading, setLoading] = useState(false);
 
     const [pratId, setPratId] = useState("");
     const [pratAltura, setPratAltura] = useState("");
@@ -244,7 +246,8 @@ const cadastroPraticante = () => {
     }
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault(); 
+        setLoading(true);
 
         if (pesFoto === base64NoPhoto) {
             setPesFoto(null);
@@ -307,6 +310,7 @@ const cadastroPraticante = () => {
                 console.log(error);
             }
         }
+        setLoading(false);
     };
 
     const TabelaDocumentos = ({ data, rowsPerPage, removeDocumentoSelecionado }) => {
@@ -409,6 +413,7 @@ const cadastroPraticante = () => {
         <div>
             <Menu tituloPagina={"Cadastro de Praticante"} />
             <ReactNotifications />
+            <Carregando showCarregando={loading} />
             <Container>
                 <Form onSubmit={handleSubmit}>
                     <br />

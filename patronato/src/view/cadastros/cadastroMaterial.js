@@ -9,10 +9,12 @@ import Menu from "../menu";
 import Footer from "../footer";
 import HTTP_STATUS from "../../utilitario/httpStatus";
 import PesquisaMaterial from '../pesquisas/pesquisaMaterial';
+import Carregando from "../carregando";
 
 function cadastroMaterial() {
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
     var [list, setList] = useState('[]');
+    const [loading, setLoading] = useState(false);
 
     //Variáveis de cadastro
     const [matId, setMatId] = useState("");
@@ -60,8 +62,10 @@ function cadastroMaterial() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         enviaJsonGravar();
         limparCamposFormulario();
+        setLoading(false);
     }
 
     const cadastroMaterial = () => {
@@ -69,6 +73,7 @@ function cadastroMaterial() {
             <div>
                 <Menu tituloPagina={"Cadastro de Material"} />
                 <ReactNotifications />
+                <Carregando showCarregando={loading} />
                 <Container className="vh-100">
                     <Form onSubmit={handleSubmit}>
                         <br />

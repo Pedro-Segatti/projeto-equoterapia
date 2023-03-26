@@ -12,6 +12,7 @@ import PesquisaResponsaveis from "../pesquisas/pesquisaResponsavel";
 import PesquisaLogradouros from "../pesquisas/pesquisaLogradouro";
 import SelectNacionalidade from '../componentes/selectMenuNacionalidade';
 import TabelaTelefones from '../componentes/tabelaTelefones';
+import Carregando from "../carregando";
 
 import InputConverter from '../componentes/inputConverter';
 
@@ -19,6 +20,7 @@ import Menu from "../menu"
 import Footer from "../footer"
 
 const cadastroResponsavel = () => {
+    const [loading, setLoading] = useState(false);
 
     const [respId, setRespId] = useState("");
     const [respProfissao, setRespProfissao] = useState("");
@@ -111,6 +113,8 @@ const cadastroResponsavel = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        setLoading(true);
+
         if (pesSexo === "S") {
             mensagemCustomizada("Selecione um sexo", "warning");
             document.getElementById("inputSexo").focus();
@@ -149,12 +153,14 @@ const cadastroResponsavel = () => {
                 console.log(error);
             }
         }
+        setLoading(false);
     };
 
     return (
         <div>
             <Menu tituloPagina={"Cadastro de Responsável"} />
             <ReactNotifications />
+            <Carregando showCarregando={loading} />
             <Container>
                 <Form onSubmit={handleSubmit}>
                     <br />

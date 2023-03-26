@@ -9,6 +9,7 @@ import Menu from "../menu";
 import Footer from "../footer";
 import HTTP_STATUS from "../../utilitario/httpStatus";
 import PesquisaAtividade from '../pesquisas/pesquisaAtividade';
+import Carregando from "../carregando";
 
 function cadastroAtividade() {
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
@@ -18,6 +19,8 @@ function cadastroAtividade() {
     const [atvId, setAtvId] = useState("");
     const [atvDescricao, setAtvDescricao] = useState("");
     const [atvDuracao, setAtvDuracao] = useState("");
+
+    const [loading, setLoading] = useState(false);
 
     const atualizaDlgPesquisa = async () => {
         setList(await (await api.get("/pesquisaAtividade?atvId=&atvDescricao=")).data);
@@ -64,8 +67,10 @@ function cadastroAtividade() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         enviaJsonGravar();
         limparCamposFormulario();
+        setLoading(false);
     }
 
     const cadastroAtividade = () => {
@@ -73,6 +78,7 @@ function cadastroAtividade() {
             <div>
                 <Menu tituloPagina={"Cadastro de Atividade"} />
                 <ReactNotifications />
+                <Carregando showCarregando={loading} />
                 <Container className="vh-100">
                     <Form onSubmit={handleSubmit}>
                         <br />

@@ -11,6 +11,7 @@ import HTTP_STATUS from "../../utilitario/httpStatus";
 import PesquisaLogradouros from "../pesquisas/pesquisaLogradouro";
 import PesquisaBairro from "../pesquisas/pesquisaBairro";
 import InputConverter from "../componentes/inputConverter";
+import Carregando from "../carregando";
 
 function cadastroLogradouro() {
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
@@ -23,6 +24,8 @@ function cadastroLogradouro() {
     const [logDescricao, setLogDescricao] = useState("");
     const [logCep, setLogCep] = useState("");
     const [bairro, setBairro] = useState({"barNome":""});
+
+    const [loading, setLoading] = useState(false);
 
     const atualizaDlgPesquisa = async () => {
         setList(await (await api.get("/pesquisaLogradouros?logDesc=")).data);
@@ -82,6 +85,7 @@ function cadastroLogradouro() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         if(bairro.barNome === ""){
             mensagemCustomizada("Selecione um Bairro","warning");
             document.getElementById("btnBairro").focus();
@@ -89,6 +93,7 @@ function cadastroLogradouro() {
         }
         enviaJsonGravar();
         limparCamposFormulario();
+        setLoading(false);
     }
 
     const cadastroLogradouro = () => {
@@ -96,6 +101,7 @@ function cadastroLogradouro() {
             <div>
                 <Menu tituloPagina={"Cadastro de Logradouro"} />
                 <ReactNotifications />
+                <Carregando showCarregando={loading} />
                 <Container className="vh-100">
                     <Form onSubmit={handleSubmit}>
                         <br />

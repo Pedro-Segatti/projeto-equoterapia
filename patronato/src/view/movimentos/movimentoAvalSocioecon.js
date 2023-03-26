@@ -12,10 +12,12 @@ import Footer from "../footer";
 import HTTP_STATUS from "../../utilitario/httpStatus";
 import InputConverter from "../componentes/inputConverter";
 import { dataApiFormatada, dataFormatadaAnoMesDia } from '../../utilitario/dateUtil';
+import Carregando from "../carregando";
 
 function movimentoAvalSocioecon() {
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
     const [abrirPesquisaPraticante, setAbrirPesquisaPraticante] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     //Variáveis de cadastro
     const [aseId, setAseId] = useState("");
@@ -89,6 +91,7 @@ function movimentoAvalSocioecon() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         if(praticante.pessoa.pesNome === ""){
             mensagemCustomizada("Selecione um Praticante","warning");
             document.getElementById("btnPraticante").focus();
@@ -96,6 +99,7 @@ function movimentoAvalSocioecon() {
         }
         enviaJsonGravar();
         limparCamposFormulario();
+        setLoading(false);
     }
 
     const movimentoAvalSocioecon = () => {
@@ -103,6 +107,7 @@ function movimentoAvalSocioecon() {
             <div>
                 <Menu tituloPagina={"Avaliação Socioeconômica"} />
                 <ReactNotifications />
+                <Carregando showCarregando={loading} />
                 <Container className="vh-100">
                     <Form onSubmit={handleSubmit}>
                         <br />

@@ -9,6 +9,7 @@ import { api } from "../../utilitario/baseComunicacao";
 import Menu from "../menu";
 import Footer from "../footer";
 import HTTP_STATUS from "../../utilitario/httpStatus";
+import Carregando from "../carregando";
 
 function cadastroAnimais() {
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
@@ -23,6 +24,8 @@ function cadastroAnimais() {
 
     //variáveis da dialog de pesquisa
     var [list, setList] = useState('[]');
+
+    const [loading, setLoading] = useState(false);
 
     const atualizaDlgPesquisa = async () => {
         setList(await (await api.get("/pesquisaAnimal?aniId=&aniNome=")).data);
@@ -79,12 +82,14 @@ function cadastroAnimais() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         if(aniPorte === ""){
             avisoCustomizado("Selecione um porte para o Animal");
             return; 
         }
         enviaJsonGravar();
         limparCamposFormulario();
+        setLoading(false);
     }
 
     const cadastroAnimais = () => {
@@ -92,6 +97,7 @@ function cadastroAnimais() {
             <div>
                 <Menu tituloPagina={"Cadastro de Animal"} />
                 <ReactNotifications />
+                <Carregando showCarregando={loading} />
                 <Container className="vh-100">
                     <Form onSubmit={handleSubmit}>
                         <br />

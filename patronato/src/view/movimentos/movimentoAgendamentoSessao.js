@@ -11,6 +11,7 @@ import { api } from "../../utilitario/baseComunicacao";
 import PesquisaPraticantes from '../pesquisas/pesquisaPraticantes';
 import PesquisaAgendamentos from '../pesquisas/pesquisaAgendamentos';
 import { dataApiFormatada, dataFormatadaAnoMesDia, horaFormatada } from '../../utilitario/dateUtil';
+import Carregando from "../carregando";
 
 import PesquisaAnimais from "../pesquisas/pesquisaAnimais";
 import PesquisaFuncionario from '../pesquisas/pesquisaFuncionario';
@@ -31,6 +32,7 @@ const movimentoAgendamentoSessao = () => {
     const [agendamentoFuncionarioList, setAgendamentoFuncionarioList] = useState([]);
     const [agendamentoAnimalList, setAgendamentoAnimalList] = useState([]);
 
+    const [loading, setLoading] = useState(false);
 
     const [listPraticantes, setListPraticantes] = useState([]);
     const [abrirPesquisaPraticante, setAbrirPesquisaPraticante] = useState(false);
@@ -145,6 +147,7 @@ const movimentoAgendamentoSessao = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
 
         if (agdPraticante.pessoa.pesNome === "") {
             mensagemCustomizada("Selecione um praticante", "warning");
@@ -172,6 +175,7 @@ const movimentoAgendamentoSessao = () => {
         } else if (response.status === HTTP_STATUS.ALREADY_REPORTED) {
             mensagemCustomizada(response.data, "warning");
         }
+        setLoading(false);
     }
 
     const limparCamposFormulario = () => {
@@ -191,6 +195,7 @@ const movimentoAgendamentoSessao = () => {
         <div>
             <Menu tituloPagina={"Agendamento de Sessão"} />
             <ReactNotifications />
+            <Carregando showCarregando={loading} />
             <Container>
                 <Form onSubmit={handleSubmit}>
                     <br />

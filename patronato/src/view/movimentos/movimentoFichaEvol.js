@@ -21,6 +21,7 @@ import { BsXLg } from "react-icons/bs";
 import TableFooter from '../table/tableFooter';
 import HTTP_STATUS from "../../utilitario/httpStatus";
 import dayjs from 'dayjs';
+import Carregando from "../carregando";
 
 import Menu from "../menu"
 import Footer from "../footer"
@@ -45,6 +46,8 @@ function cadastroFichaEvol() {
     var [listAtividade, setListAtividade] = useState([]);
     var [listMaterial, setListMaterial] = useState([]);
     var [listAtividadeMaterial, setListAtividadeMaterial] = useState([]);
+
+    const [loading, setLoading] = useState(false);
 
     var [ativMaterialMat, setAtivMaterialMat] = useState({ "matDescricao": "" });
     var [ativMaterialAtiv, setAtivMaterialAtiv] = useState({ "atvDescricao": "" });
@@ -358,7 +361,7 @@ function cadastroFichaEvol() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+        setLoading(true);
         if (evolIdPrat.pessoa.pesNome === "") {
             mensagemCustomizada("Selecione um Praticante", "warning");
             document.getElementById("botaoPraticante").focus();
@@ -398,6 +401,7 @@ function cadastroFichaEvol() {
         }
         enviaJsonGravar();
         limparCamposFormulario();
+        setLoading(false);
     }
 
     const cadastroFichaEvol = () => {
@@ -405,6 +409,7 @@ function cadastroFichaEvol() {
             <div>
                 <Menu tituloPagina={"Ficha de Evolução"} />
                 <ReactNotifications />
+                <Carregando showCarregando={loading} />
                 <Container>
                     <Form onSubmit={handleSubmit}>
                         <br />
