@@ -596,7 +596,7 @@ function movimentoFichaAnamnese() {
             </Row>
             <Row>
               <Col md="2">
-                <Form.Label>Data</Form.Label>
+                <Form.Label>Data *</Form.Label>
                 <Form.Control
                   value={amnData}
                   type="date"
@@ -607,7 +607,7 @@ function movimentoFichaAnamnese() {
             </Row>
             <Row>
               <Col md="6">
-                <Form.Label>Praticante</Form.Label>
+                <Form.Label>Praticante *</Form.Label>
                 <InputConverter
                   idBtn={"botaoPraticante"}
                   descricao={amnIdPraticante.pessoa.pesNome}
@@ -617,7 +617,7 @@ function movimentoFichaAnamnese() {
             </Row>
             <Row>
               <Col md="6">
-                <Form.Label>Funcionário</Form.Label>
+                <Form.Label>Funcionário *</Form.Label>
                 <InputConverter
                   idBtn={"botaoFuncionario"}
                   descricao={amnIdFuncionario.pessoa.pesNome}

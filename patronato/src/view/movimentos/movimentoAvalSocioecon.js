@@ -115,7 +115,7 @@ function movimentoAvalSocioecon() {
                                 <Form.Control value={aseId} type="text" id="id" disabled />
                             </Col>
                             <Col md="2">
-                                <Form.Label htmlFor="inputDate">Data da Avaliação</Form.Label>
+                                <Form.Label htmlFor="inputDate">Data da Avaliação *</Form.Label>
                                 <Form.Control value={aseData}
                                               onChange={(e) => setAseData(e.target.value)}
                                               type="date" id="inputDate" required />
@@ -123,7 +123,7 @@ function movimentoAvalSocioecon() {
                         </Row>
                         <Row>
                             <Col md="6">
-                                <Form.Label htmlFor="aseId">Praticante</Form.Label>
+                                <Form.Label htmlFor="aseId">Praticante *</Form.Label>
                                 <InputConverter idBtn={"btnPraticante"} descricao={praticante.pessoa.pesNome} atualizaDlgPesquisa={atualizaDlgPesquisaPraticantes} />
                             </Col>
                         </Row>

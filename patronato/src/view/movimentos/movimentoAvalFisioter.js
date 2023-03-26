@@ -469,26 +469,26 @@ function movimentoAvalFisioter() {
                         </Row>
                         <Row>
                             <Col md="2">
-                                <Form.Label>Data</Form.Label>
+                                <Form.Label>Data *</Form.Label>
                                 <Form.Control value={aftData} type="date" required
                                     onChange={(e) => setAftData(e.target.value)} />
                             </Col>
                         </Row>
                         <Row>
                             <Col md="6">
-                                <Form.Label>Praticante</Form.Label>
+                                <Form.Label>Praticante *</Form.Label>
                                 <InputConverter idBtn={"botaoPraticante"} descricao={aftIdPraticante.pessoa.pesNome} atualizaDlgPesquisa={atualizaDlgPesquisaPraticantes} />
                             </Col>
                         </Row>
                         <Row>
                             <Col md="6">
-                                <Form.Label>Funcionário</Form.Label>
+                                <Form.Label>Funcionário *</Form.Label>
                                 <InputConverter idBtn={"botaoFuncionario"} descricao={aftIdFuncionario.pessoa.pesNome} atualizaDlgPesquisa={atualizaDlgPesquisaFuncionarios} />
                             </Col>
                         </Row>
                         <Row>
                             <Col md="6">
-                                <Form.Label>Médico</Form.Label>
+                                <Form.Label>Médico *</Form.Label>
                                 <InputConverter idBtn={"botaoMedico"} descricao={aftIdMedico.pessoa.pesNome} atualizaDlgPesquisa={atualizaDlgPesquisaMedicos} />
                             </Col>
                         </Row>
