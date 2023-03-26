@@ -14,8 +14,8 @@ public interface AgendamentoCrud extends CrudRepository<Agendamento,Integer> {
     @Query("SELECT a FROM Agendamento a WHERE (:pratId is null or a.praticante.pratId = :pratId) AND (:agdData is null OR a.agdData = :agdData) AND (:agdHora is null OR a.agdHora = :agdHora) AND (a.agdConcluido = :agdConcluido)")
     List<Agendamento> findByPratIdAndAgdDataAndAgdHoraAndAgdConcluido(@Param("pratId") Integer pratId, @Param("agdData") Date agdData, @Param("agdHora") Date agdHora, @Param("agdConcluido") boolean agdConcluido);
 
-    @Query("SELECT a FROM Agendamento a WHERE (:agdDataInicial is null OR a.agdData >= :agdDataInicial) AND (:agdDataFinal is null OR a.agdData <= :agdDataFinal) AND (a.agdConcluido = :agdConcluido) ORDER BY a.agdData DESC")
-    List<Agendamento> findAgendamentosDoPeriodo(@Param("agdDataInicial") Date agdData, @Param("agdDataFinal") Date agdHora, @Param("agdConcluido") boolean agdConcluido);
+    @Query("SELECT a FROM Agendamento a WHERE (:agdDataInicial is null OR a.agdData >= :agdDataInicial) AND (:agdDataFinal is null OR a.agdData <= :agdDataFinal) AND (:agdConcluido IS NULL OR a.agdConcluido = :agdConcluido) ORDER BY a.agdData DESC")
+    List<Agendamento> findAgendamentosDoPeriodo(@Param("agdDataInicial") Date agdData, @Param("agdDataFinal") Date agdHora, @Param("agdConcluido") Boolean agdConcluido);
 
     @Query(value="SELECT * FROM AGENDAMENTO a WHERE  (:agdId IS NULL OR a.AGD_ID <> :agdId) AND a.AGD_DATA = :agdData AND  a.AGD_HORA = :agdHora", nativeQuery = true)
     List<Agendamento> findAgendamentosDiferentesDaMesmaDataEHora(@Param("agdId") Integer agdId, @Param("agdData") Date agdData, @Param("agdHora") Date agdHora);

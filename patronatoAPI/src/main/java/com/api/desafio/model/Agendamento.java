@@ -160,6 +160,10 @@ public class Agendamento implements Serializable {
         return horaFormatada;
     }
 
+    public String getAgdConcluidoDescricao(){
+        return this.agdConcluido ? "Concluído" : "Em Andamento";
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;

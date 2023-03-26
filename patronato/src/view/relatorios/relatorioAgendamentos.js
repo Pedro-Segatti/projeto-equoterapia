@@ -17,7 +17,7 @@ const relatorioAgendamentos = () => {
     e.preventDefault();
 
     setLoading(true);
-    
+
     const json = {
       "nomeRelatorio": 'relatAgendamentos',
       "parametros": {
@@ -60,10 +60,14 @@ const relatorioAgendamentos = () => {
                 type="date" id="inputDate" />
             </Col>
             <Col md="4">
-              <Form.Label htmlFor="checkConcluido"></Form.Label>
-              <Form.Check id="checkConcluido" checked={agdConcluido}
-                onChange={(e) => setAgdConcluido(e.target.checked)}
-                type="checkbox" label="Concluído" />
+              <Form.Label htmlFor="agdConcluido">Situação</Form.Label>
+              <Form.Select id='agdConcluido' required
+                value={agdConcluido}
+                onChange={(e) => setAgdConcluido(e.target.value)}>
+                <option value={true}>Concluído</option>
+                <option value={false}>Em Andamento</option>
+                <option value="">Ambos</option>
+              </Form.Select>
             </Col>
           </Row>
 

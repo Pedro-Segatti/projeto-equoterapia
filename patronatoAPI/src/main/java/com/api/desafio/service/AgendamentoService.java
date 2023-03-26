@@ -32,7 +32,7 @@ public class AgendamentoService {
         return new ResponseEntity<List<Agendamento>>(agendamentos, HttpStatus.OK);
     }
 
-    public ResponseEntity<List<Agendamento>> pesquisaAgendamentosDoPeriodo(Date agdDataInicial, Date agdDataFinal, boolean agdConcluido) {
+    public ResponseEntity<List<Agendamento>> pesquisaAgendamentosDoPeriodo(Date agdDataInicial, Date agdDataFinal, Boolean agdConcluido) {
         List<Agendamento> agendamentos = agendamentoCrud.findAgendamentosDoPeriodo(agdDataInicial, agdDataFinal, agdConcluido);
         return new ResponseEntity<List<Agendamento>>(agendamentos, HttpStatus.OK);
     }

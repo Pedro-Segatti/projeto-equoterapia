@@ -711,7 +711,12 @@ public class ComunicacaoController {
             throw new RuntimeException(e);
         }
 
-        List<Agendamento> agendamentos = agendamentoService.pesquisaAgendamentosDoPeriodo(agdDataInicial, agdDataFinal, filtros.get("agdConcluido").getAsBoolean()).getBody();
+        String situacao = filtros.get("agdConcluido").getAsString();
+        Boolean agdConcluido = null;
+        if (!situacao.isEmpty()){
+            agdConcluido = Boolean.valueOf(situacao);
+        }
+        List<Agendamento> agendamentos = agendamentoService.pesquisaAgendamentosDoPeriodo(agdDataInicial, agdDataFinal, agdConcluido).getBody();
         return RelatorioUtil.gerarRelatorios(jsonConvertido, agendamentos);
     }
 
