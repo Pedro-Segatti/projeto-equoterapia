@@ -31,13 +31,14 @@ function cadastroMaterial() {
         setAbrirPesquisa(false);
     }
 
-    const enviaJsonGravar = () => {
+    const enviaJsonGravar = async () => {
         const json = {
             "matId": matId,
             "matDescricao": matDescricao,
         };
-        api.post("/cadastraMaterial", json);
+        await api.post("/cadastraMaterial", json);
         registroSalvo();
+        setLoading(false);
     }
 
     const enviaJsonRemove = async () => {
@@ -65,7 +66,6 @@ function cadastroMaterial() {
         setLoading(true);
         enviaJsonGravar();
         limparCamposFormulario();
-        setLoading(false);
     }
 
     const cadastroMaterial = () => {

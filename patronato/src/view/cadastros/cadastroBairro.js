@@ -48,14 +48,15 @@ function cadastroBairro() {
         setAbrirPesquisaCidade(false);
     }
 
-    const enviaJsonGravar = () => {
+    const enviaJsonGravar = async () => {
         const json = {
             "barId": barId,
             "barNome": barNome,
             "cidade": cidade
         };
-        api.post("/cadastraBairro", json);
+        await api.post("/cadastraBairro", json);
         registroSalvo();
+        setLoading(false);
     }
 
     const enviaJsonRemove = async () => {
@@ -89,7 +90,6 @@ function cadastroBairro() {
         }
         enviaJsonGravar();
         limparCamposFormulario();
-        setLoading(false);
     }
 
     const cadastroBairro = () => {

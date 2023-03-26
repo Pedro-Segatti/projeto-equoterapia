@@ -22,7 +22,7 @@ const relatorioFuncionarios = () => {
         "teste" : "teste"
       }
     }
-    gerarRelatorio("relatorioFuncionarios","Relatorio_de_funcionarios",json);
+    await gerarRelatorio("relatorioFuncionarios","Relatorio_de_funcionarios",json);
     setLoading(false);
   };
 

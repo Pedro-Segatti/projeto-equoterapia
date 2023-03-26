@@ -31,13 +31,14 @@ function cadastroPicadeiro() {
         setAbrirPesquisa(false);
     }
 
-    const enviaJsonGravar = () => {
+    const enviaJsonGravar = async () => {
         const json = {
             "picId": picId,
             "picDescricao": picDescricao,
         };
-        api.post("/cadastraPicadeiro", json);
+        await api.post("/cadastraPicadeiro", json);
         registroSalvo();
+        setLoading(false);
     }
 
     const enviaJsonRemove = async () => {
@@ -65,7 +66,6 @@ function cadastroPicadeiro() {
         setLoading(true);
         enviaJsonGravar();
         limparCamposFormulario();
-        setLoading(false);
     }
 
     const cadastroPicadeiro = () => {

@@ -266,6 +266,7 @@ function cadastroFichaEvol() {
         }
         await api.post("/cadastraFichaEvol", json);
         registroSalvo();
+        setLoading(false);
     }
 
     const enviaJsonRemove = async () => {
@@ -401,7 +402,6 @@ function cadastroFichaEvol() {
         }
         enviaJsonGravar();
         limparCamposFormulario();
-        setLoading(false);
     }
 
     const cadastroFichaEvol = () => {

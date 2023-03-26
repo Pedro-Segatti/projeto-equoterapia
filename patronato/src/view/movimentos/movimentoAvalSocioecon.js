@@ -54,7 +54,7 @@ function movimentoAvalSocioecon() {
         setAbrirPesquisa(false);
     }
 
-    const enviaJsonGravar = () => {
+    const enviaJsonGravar = async () => {
         const json = {
             "aseId": aseId,
             "aseData": dataApiFormatada(aseData),
@@ -62,8 +62,9 @@ function movimentoAvalSocioecon() {
             "aseObsMedicamentos": aseObsMedicamentos,
             "praticante": praticante
         };
-        api.post("/cadastraAvalSocioEcon", json);
+        await api.post("/cadastraAvalSocioEcon", json);
         registroSalvo();
+        setLoading(false);
     }
 
     const enviaJsonRemove = async () => {
@@ -99,7 +100,6 @@ function movimentoAvalSocioecon() {
         }
         enviaJsonGravar();
         limparCamposFormulario();
-        setLoading(false);
     }
 
     const movimentoAvalSocioecon = () => {

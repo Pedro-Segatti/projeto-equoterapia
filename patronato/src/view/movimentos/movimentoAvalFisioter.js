@@ -171,7 +171,7 @@ function movimentoAvalFisioter() {
         setAbrirPesquisa(false);
     }
 
-    const enviaJsonGravar = () => {
+    const enviaJsonGravar = async () => {
         const json = {
             "aftId": aftId,
             "aftQueixa": aftQueixa,
@@ -237,8 +237,9 @@ function movimentoAvalFisioter() {
             "aftDesMotoNeuroRolou": aftDesMotoNeuroRolou,
             "anexosList": anexosList
         };
-        api.post("/cadastraAvalFisioter", json);
+        await api.post("/cadastraAvalFisioter", json);
         registroSalvo();
+        setLoading(false);
     }
 
     const limparCamposFormulario = () => {
@@ -449,9 +450,8 @@ function movimentoAvalFisioter() {
             document.getElementById("botaoMedico").focus();
             return;
         }
-        enviaJsonGravar();
+        await enviaJsonGravar();
         limparCamposFormulario();
-        setLoading(false);
     }
 
     const movimentoAvalFisioter = () => {

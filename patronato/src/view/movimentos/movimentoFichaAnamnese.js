@@ -348,6 +348,7 @@ function movimentoFichaAnamnese() {
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   }
 
   const limparCamposFormulario = () => {
@@ -578,7 +579,6 @@ function movimentoFichaAnamnese() {
     }
     enviaJsonGravar();
     limparCamposFormulario();
-    setLoading(false);
   }
 
   const movimentoFichaAnamnese = () => {

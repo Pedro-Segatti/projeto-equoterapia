@@ -118,6 +118,7 @@ const cadastroMedico = () => {
                 console.log(error);
             }
         }
+        setLoading(false);
     }
 
     const handleSubmit = async (e) => {
@@ -136,7 +137,6 @@ const cadastroMedico = () => {
 
         enviaJsonGravar();
         limparCamposFormulario();
-        setLoading(false);
     };
 
     const atualizaDlgPesquisaLogradouro = async () => {

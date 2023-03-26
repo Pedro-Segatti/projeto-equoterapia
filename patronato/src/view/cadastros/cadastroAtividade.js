@@ -34,14 +34,15 @@ function cadastroAtividade() {
         setAbrirPesquisa(false);
     }
 
-    const enviaJsonGravar = () => {
+    const enviaJsonGravar = async () => {
         const json = {
             "atvId": atvId,
             "atvDescricao": atvDescricao,
             "atvDuracao": atvDuracao,
         };
-        api.post("/cadastraAtividade", json);
+        await api.post("/cadastraAtividade", json);
         registroSalvo();
+        setLoading(false);
     }
 
     const enviaJsonRemove = async () => {
@@ -70,7 +71,6 @@ function cadastroAtividade() {
         setLoading(true);
         enviaJsonGravar();
         limparCamposFormulario();
-        setLoading(false);
     }
 
     const cadastroAtividade = () => {

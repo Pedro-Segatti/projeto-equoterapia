@@ -50,15 +50,16 @@ function cadastroLogradouro() {
         setAbrirPesquisaBairro(false);
     }
 
-    const enviaJsonGravar = () => {
+    const enviaJsonGravar = async () => {
         const json = {
             "logId": logId,
             "logDescricao": logDescricao,
             "logCep": logCep,
             "bairro": bairro
         };
-        api.post("/cadastraLogradouro", json);
+        await api.post("/cadastraLogradouro", json);
         registroSalvo();
+        setLoading(false);
     }
 
     const enviaJsonRemove = async () => {
@@ -93,7 +94,6 @@ function cadastroLogradouro() {
         }
         enviaJsonGravar();
         limparCamposFormulario();
-        setLoading(false);
     }
 
     const cadastroLogradouro = () => {

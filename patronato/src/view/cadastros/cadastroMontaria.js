@@ -35,13 +35,14 @@ function cadastroMontaria() {
         setAbrirPesquisa(false);
     }
 
-    const enviaJsonGravar = () => {
+    const enviaJsonGravar = async () => {
         const json = {
             "montId": montId,
             "montDescricao": montDescricao
         };
-        api.post("/cadastraMontaria", json);
+        await api.post("/cadastraMontaria", json);
         registroSalvo();
+        setLoading(false);
     }
 
     const enviaJsonRemove = async () => {
@@ -69,7 +70,6 @@ function cadastroMontaria() {
         setLoading(true);
         enviaJsonGravar();
         limparCamposFormulario();
-        setLoading(false);
     }
 
     const cadastroMontaria = () => {

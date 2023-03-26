@@ -42,7 +42,7 @@ function cadastroAnimais() {
         setAbrirPesquisa(false);
     }
 
-    const enviaJsonGravar = () => {
+    const enviaJsonGravar = async () => {
         const json = {
             "aniId": aniId,
             "aniNome": aniNome,
@@ -51,8 +51,9 @@ function cadastroAnimais() {
             "aniComportamento": aniComportamento,
             "aniAndadura": aniAndadura
         };
-        api.post("/cadastraAnimal", json);
+        await api.post("/cadastraAnimal", json);
         registroSalvo();
+        setLoading(false);
     }
 
     const enviaJsonRemove = async () => {
@@ -89,7 +90,6 @@ function cadastroAnimais() {
         }
         enviaJsonGravar();
         limparCamposFormulario();
-        setLoading(false);
     }
 
     const cadastroAnimais = () => {
