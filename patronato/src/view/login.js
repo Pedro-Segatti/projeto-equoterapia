@@ -3,6 +3,7 @@ import { AuthContext } from "../contexts/autenticacao";
 import { IMaskInput } from 'react-imask';
 import { Form, Row, Button } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
+import Carregando from "./carregando";
 import logo from './img/logoComFundo.png';
 import texto from './img/textoPatronatoSaoJoseourado.png';
 import bgimg from './img/login-img.png';
@@ -17,22 +18,25 @@ import {
 
 const Login = () => {
     const { login } = useContext(AuthContext);
+    const [loading, setLoading] = useState(false); 
 
     const [log, setLog] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         const LogUnmask = log.replace(/[^\d]/g, '');
-        login(LogUnmask, password);
+        await login(LogUnmask, password);
         setLog("");
         setPassword("");
+        setLoading(false);
     };
 
     return (
         <Container>
             <ReactNotifications />
-
+            <Carregando showCarregando={loading} />
             <Image className="bgImg" src={bgimg}></Image>
             <Card className='alturaLogin'>
                 <div className="logoContent">

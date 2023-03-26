@@ -8,15 +8,14 @@
     margin-left: 25%;
 }
 
-.dialog .modal-content {
-    top: 50%;
+.dialogCarregando .modal-content {
     background-color: transparent;
     border: none;
 
     -webkit-transform: translate(0, 150%);
-    transform: translate(0, 150%);
+    transform: translate(0, 100%);
 }
 
-.cavaloGif {
+.cavaloGifCarregando {
     width: 200px;
 }
