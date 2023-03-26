@@ -4,7 +4,7 @@ import Toolbar from '../toolbar';
 import { IMaskInput } from 'react-imask';
 import { registroSalvo, registroExcluido, pessoaDuplicada, mensagemCustomizada } from "../../utilitario/mensagemUtil"
 import { ReactNotifications } from 'react-notifications-component'
-import { montaJsonPessoaCompleta } from "../../utilitario/patronatoUtil";
+import { montaJsonPessoaCompleta, validateMaxLength } from "../../utilitario/patronatoUtil";
 import { api } from "../../utilitario/baseComunicacao";
 import HTTP_STATUS from "../../utilitario/httpStatus";
 import PesquisaMedico from "../pesquisas/pesquisaMedico";
@@ -120,12 +120,12 @@ const cadastroMedico = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if(pesSexo === "S"){
+        if (pesSexo === "S") {
             mensagemCustomizada("Selecione um sexo", "warning");
             document.getElementById("inputSexo").focus();
             return;
         }
-        if(pesLogDescricao === ""){
+        if (pesLogDescricao === "") {
             mensagemCustomizada("Selecione um logradouro", "warning");
             document.getElementById("btnLogradouro").focus();
             return;
@@ -227,7 +227,10 @@ const cadastroMedico = () => {
                     <Row>
                         <Col md="2">
                             <Form.Label htmlFor="inputEndNum">Número *</Form.Label>
-                            <Form.Control value={pesEndNum} type="text" id="inputEndNum" onChange={(e) => setPesEndNum(e.target.value)} required />
+                            <Form.Control value={pesEndNum} type="number" id="inputEndNum"
+                                inputMode="numeric"
+                                onKeyDown={(e) => validateMaxLength(e)} maxLength="8"
+                                onChange={(e) => setPesEndNum(e.target.value)} required />
                         </Col>
                         <Col md="10">
                             <Form.Label htmlFor="inputEndCompl">Complemento</Form.Label>

@@ -1,10 +1,10 @@
-import React, { useState  } from 'react';
+import React, { useState } from 'react';
 import { Form, Col, Row, Container } from 'react-bootstrap';
 import Toolbar from '../toolbar';
 import { IMaskInput } from 'react-imask';
 import { registroSalvo, pessoaDuplicada, registroExcluido, mensagemCustomizada } from "../../utilitario/mensagemUtil"
 import { ReactNotifications } from 'react-notifications-component'
-import { montaJsonPessoaCompleta } from "../../utilitario/patronatoUtil";
+import { montaJsonPessoaCompleta, validateMaxLength } from "../../utilitario/patronatoUtil";
 import { cadastrarFuncionario } from "../../utilitario/baseComunicacao";
 import { api } from "../../utilitario/baseComunicacao";
 import HTTP_STATUS from "../../utilitario/httpStatus";
@@ -34,7 +34,7 @@ const cadastroFuncionario = () => {
     const [pesEndCompl, setPesEndCompl] = useState("");
     const [pesEmail1, setPesEmail1] = useState("");
     const [pesEmail2, setPesEmail2] = useState("");
-    const [pesLogId, setPesLogId] = useState({"logDescricao": ""});
+    const [pesLogId, setPesLogId] = useState({ "logDescricao": "" });
     const [pesNacionalidade, setPesNacionalidade] = useState("BRA");
 
     const [abrirPesquisa, setAbrirPesquisa] = useState(false);
@@ -106,7 +106,7 @@ const cadastroFuncionario = () => {
         setFuncDataDesligamento("");
         setFuncPis("");
         setFuncCnh("");
-        setPesLogId({"logDescricao": ""});
+        setPesLogId({ "logDescricao": "" });
         setListTelefones([]);
         setPesNacionalidade("BRA");
     }
@@ -114,19 +114,19 @@ const cadastroFuncionario = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if(pesSexo === "S"){
+        if (pesSexo === "S") {
             mensagemCustomizada("Selecione um sexo", "warning");
             document.getElementById("inputSexo").focus();
             return;
         }
-        if(pesLogId.logDescricao === ""){
+        if (pesLogId.logDescricao === "") {
             mensagemCustomizada("Selecione um logradouro", "warning");
             document.getElementById("btnLogradouro").focus();
             return;
         }
 
-        const montaJsonFuncionario = async () => {  
-            const jsonPessoa = await montaJsonPessoaCompleta(pesId,pesNome,pesCpf,"",pesSexo,pesDataNasc,pesEndNum,pesEndCompl,pesNacionalidade, "", pesEmail1, pesEmail2, pesLogId, listTelefones);
+        const montaJsonFuncionario = async () => {
+            const jsonPessoa = await montaJsonPessoaCompleta(pesId, pesNome, pesCpf, "", pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pesNacionalidade, "", pesEmail1, pesEmail2, pesLogId, listTelefones);
             const jsonFuncionario = {
                 "funcId": funcId,
                 "funcDataAdmissao": funcDataAdmissao,
@@ -167,7 +167,7 @@ const cadastroFuncionario = () => {
             <ReactNotifications />
             <Container>
                 <Form onSubmit={handleSubmit}>
-                <br />
+                    <br />
                     <Row>
                         <h3>Cadastro de Funcionário</h3>
                     </Row>
@@ -185,7 +185,7 @@ const cadastroFuncionario = () => {
                                 onChange={(e) => setPesNome(e.target.value)}
                                 type="text" id="inputNome" required />
                         </Col>
-                        
+
                     </Row>
                     <Row>
                         <Col md="6">
@@ -201,7 +201,7 @@ const cadastroFuncionario = () => {
                         </Col>
                     </Row>
                     <Row>
-                    <Col md="6">
+                        <Col md="6">
                             <Form.Label htmlFor="inputSexo">Sexo *</Form.Label>
                             <Form.Select id='inputSexo' required
                                 value={pesSexo}
@@ -210,10 +210,10 @@ const cadastroFuncionario = () => {
                                 <option value="F">Feminino</option>
                                 <option value="M">Masculino</option>
                             </Form.Select>
-                    </Col>
-                    <Col md="6">
-                        <SelectNacionalidade pesNacionalidade={pesNacionalidade} setPesNacionalidade={setPesNacionalidade} />
-                    </Col>
+                        </Col>
+                        <Col md="6">
+                            <SelectNacionalidade pesNacionalidade={pesNacionalidade} setPesNacionalidade={setPesNacionalidade} />
+                        </Col>
                     </Row>
                     <Row>
                         <Col md="6">
@@ -268,7 +268,10 @@ const cadastroFuncionario = () => {
                     <Row>
                         <Col md="2">
                             <Form.Label htmlFor="inputEndNum">Número *</Form.Label>
-                            <Form.Control value={pesEndNum} type="text" id="inputEndNum" onChange={(e) => setPesEndNum(e.target.value)} required />
+                            <Form.Control value={pesEndNum} type="number" id="inputEndNum"
+                                inputMode="numeric"
+                                onKeyDown={(e) => validateMaxLength(e)} maxLength={8}
+                                onChange={(e) => setPesEndNum(e.target.value)} required />
                         </Col>
                         <Col md="10">
                             <Form.Label htmlFor="inputEndCompl">Complemento</Form.Label>

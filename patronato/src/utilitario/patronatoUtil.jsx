@@ -56,5 +56,11 @@ export function isInputNumber(evt){
     if(!(/[0-9]/.test(ch))){
         evt.preventDefault();
     }
-    
+}
+
+export function validateMaxLength(e){
+    if(e.target.value.length === e.target.maxLength){
+        e.target.value = e.target.value.substring(0, e.target.value.length - 1);
+        e.preventDefault();
+    } 
 }

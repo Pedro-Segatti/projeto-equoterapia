@@ -7,7 +7,7 @@ import Toolbar from '../toolbar';
 import { IMaskInput } from 'react-imask';
 import { registroSalvo, pessoaDuplicada, registroExcluido, mensagemCustomizada } from "../../utilitario/mensagemUtil"
 import { ReactNotifications } from 'react-notifications-component'
-import { montaJsonPessoaCompleta, convertBase64ToFile, base64NoPhoto } from "../../utilitario/patronatoUtil";
+import { montaJsonPessoaCompleta, convertBase64ToFile, base64NoPhoto, validateMaxLength } from "../../utilitario/patronatoUtil";
 import { cadastrarPraticante } from "../../utilitario/baseComunicacao";
 import { api } from "../../utilitario/baseComunicacao";
 import HTTP_STATUS from "../../utilitario/httpStatus";
@@ -104,13 +104,12 @@ const cadastroPraticante = () => {
             "responsavel": item,
             "pxrTipoResp": "S"
         }
-        for (var i=0;i<listResponsveisSelecionados.length;i++)
-        {
-        if (listResponsveisSelecionados[i].responsavel.respId===jsonItem.responsavel.respId){
-            mensagemCustomizada("Este responsável já foi selecionado", "warning");
-            setAbrirPesquisaResponsaveis(false);
-            return;
-        }
+        for (var i = 0; i < listResponsveisSelecionados.length; i++) {
+            if (listResponsveisSelecionados[i].responsavel.respId === jsonItem.responsavel.respId) {
+                mensagemCustomizada("Este responsável já foi selecionado", "warning");
+                setAbrirPesquisaResponsaveis(false);
+                return;
+            }
         }
 
         setListResponsveisSelecionados(current => [...current, jsonItem])
@@ -251,31 +250,31 @@ const cadastroPraticante = () => {
             setPesFoto(null);
         }
 
-        if(pesSexo === "S"){
+        if (pesSexo === "S") {
             mensagemCustomizada("Selecione um sexo", "warning");
             document.getElementById("inputSexo").focus();
             return;
         }
 
-        if(pesLogDescricao === ""){
+        if (pesLogDescricao === "") {
             mensagemCustomizada("Selecione um logradouro", "warning");
             document.getElementById("btnLogradouro").focus();
             return;
         }
         var bloqueiaResponsavel = false;
-        listResponsveisSelecionados.map(r => {
+        listResponsveisSelecionados.forEach(r => {
             console.log(r);
-            if(r.pxrTipoResp === "S"){
+            if (r.pxrTipoResp === "S") {
                 mensagemCustomizada("Selecione um parentesco para o responsável " + r.responsavel.pessoa.pesNome, "warning");
                 bloqueiaResponsavel = true;
             }
-        })
-        if(bloqueiaResponsavel){
+        });
+        if (bloqueiaResponsavel) {
             return;
         }
 
-        const montaJsonPraticante = async () => {  
-            const jsonPessoa = await montaJsonPessoaCompleta(pesId,pesNome,pesCpf,"",pesSexo,pesDataNasc,pesEndNum,pesEndCompl,pesNacionalidade, pesFoto, pesEmail1, pesEmail2, pesLogId, listTelefones);
+        const montaJsonPraticante = async () => {
+            const jsonPessoa = await montaJsonPessoaCompleta(pesId, pesNome, pesCpf, "", pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pesNacionalidade, pesFoto, pesEmail1, pesEmail2, pesLogId, listTelefones);
             const jsonPraticante = {
                 "pratId": pratId,
                 "pratAltura": pratAltura,
@@ -287,8 +286,8 @@ const cadastroPraticante = () => {
             }
 
             return jsonPraticante;
-        }        
-        
+        }
+
         const cadastraPraticante = async () => {
             return await cadastrarPraticante(await montaJsonPraticante());
         }
@@ -412,7 +411,7 @@ const cadastroPraticante = () => {
             <ReactNotifications />
             <Container>
                 <Form onSubmit={handleSubmit}>
-                <br />
+                    <br />
                     <Row>
                         <h3>Cadastro de Praticante</h3>
                     </Row>
@@ -514,7 +513,10 @@ const cadastroPraticante = () => {
                     <Row>
                         <Col md="2">
                             <Form.Label htmlFor="inputEndNum">Número *</Form.Label>
-                            <Form.Control value={pesEndNum} type="text" id="inputEndNum" onChange={(e) => setPesEndNum(e.target.value)} required />
+                            <Form.Control value={pesEndNum} type="number" id="inputEndNum"
+                                inputMode="numeric"
+                                onKeyDown={(e) => validateMaxLength(e)} maxLength="8"
+                                onChange={(e) => setPesEndNum(e.target.value)} required />
                         </Col>
                         <Col md="10">
                             <Form.Label htmlFor="inputEndCompl">Complemento</Form.Label>

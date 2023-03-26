@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Form, Col, Row, Container } from 'react-bootstrap';
 import Toolbar from '../toolbar';
 import { IMaskInput } from 'react-imask';
-import { registroSalvo, pessoaDuplicada, registroExcluido, mensagemCustomizada} from "../../utilitario/mensagemUtil"
+import { registroSalvo, pessoaDuplicada, registroExcluido, mensagemCustomizada } from "../../utilitario/mensagemUtil"
 import { ReactNotifications } from 'react-notifications-component'
-import { montaJsonPessoaCompleta } from "../../utilitario/patronatoUtil";
+import { montaJsonPessoaCompleta, validateMaxLength } from "../../utilitario/patronatoUtil";
 import { cadastrarResponsavel } from "../../utilitario/baseComunicacao";
 import { api } from "../../utilitario/baseComunicacao";
 import HTTP_STATUS from "../../utilitario/httpStatus";
@@ -59,7 +59,7 @@ const cadastroResponsavel = () => {
         setAbrirPesquisaLogradouro(false);
     }
 
-    const removerResponsavel= async () => {
+    const removerResponsavel = async () => {
         try {
             const response = await (await api.delete("/removeResponsavel?respId=" + respId));
             if (response.status === HTTP_STATUS.OK) {
@@ -111,20 +111,20 @@ const cadastroResponsavel = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if(pesSexo === "S"){
+        if (pesSexo === "S") {
             mensagemCustomizada("Selecione um sexo", "warning");
             document.getElementById("inputSexo").focus();
             return;
         }
 
-        if(pesLogDescricao === ""){
+        if (pesLogDescricao === "") {
             mensagemCustomizada("Selecione um logradouro", "warning");
             document.getElementById("btnLogradouro").focus();
             return;
         }
 
         const montaJsonResponsavel = async () => {
-            const jsonPessoa = await montaJsonPessoaCompleta(pesId,pesNome,pesCpf,"",pesSexo,pesDataNasc,pesEndNum,pesEndCompl,pesNacionalidade, "", pesEmail1, pesEmail2, pesLogId, listTelefones);
+            const jsonPessoa = await montaJsonPessoaCompleta(pesId, pesNome, pesCpf, "", pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pesNacionalidade, "", pesEmail1, pesEmail2, pesLogId, listTelefones);
             const jsonResponsavel = {
                 "respId": respId,
                 "pessoa": jsonPessoa,
@@ -153,7 +153,7 @@ const cadastroResponsavel = () => {
 
     return (
         <div>
-            <Menu tituloPagina={"Cadastro de Responsável"}  />
+            <Menu tituloPagina={"Cadastro de Responsável"} />
             <ReactNotifications />
             <Container>
                 <Form onSubmit={handleSubmit}>
@@ -167,7 +167,7 @@ const cadastroResponsavel = () => {
                             <Form.Label htmlFor="inputId">Código</Form.Label>
                             <Form.Control value={respId} type="text" id="inputId" disabled />
                         </Col>
-                        
+
                     </Row>
                     <Row>
                         <Col md="8">
@@ -236,11 +236,14 @@ const cadastroResponsavel = () => {
                         </Col>
                     </Row>
                     <Row>
-                        <Col md="4">
+                        <Col md="2">
                             <Form.Label htmlFor="inputEndNum">Número *</Form.Label>
-                            <Form.Control value={pesEndNum} type="text" id="inputEndNum" onChange={(e) => setPesEndNum(e.target.value)} required />
+                            <Form.Control value={pesEndNum} type="number" id="inputEndNum"
+                                inputMode="numeric"
+                                onKeyDown={(e) => validateMaxLength(e)} maxLength="8"
+                                onChange={(e) => setPesEndNum(e.target.value)} required />
                         </Col>
-                        <Col md="8">
+                        <Col md="10">
                             <Form.Label htmlFor="inputEndCompl">Complemento</Form.Label>
                             <Form.Control value={pesEndCompl}
                                 onChange={(e) => setPesEndCompl(e.target.value)}
@@ -251,7 +254,7 @@ const cadastroResponsavel = () => {
                     <br />
 
                     <Row>
-                    <Col md="12">
+                        <Col md="12">
                             <TabelaTelefones listTelefones={listTelefones} setListTelefones={setListTelefones} />
                         </Col>
                     </Row>
