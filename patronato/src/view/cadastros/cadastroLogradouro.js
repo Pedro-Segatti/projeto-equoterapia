@@ -77,6 +77,17 @@ function cadastroLogradouro() {
         }
     }
 
+    const atualizaCep = async (cep) => {
+        setLogCep(cep);
+        if (cep.length === 8) {
+            const response = await (await api.get("/logradouroPorCep?cep=" + cep));
+            setBairro(response.data.bairro);
+            setLogDescricao(response.data.logDescricao);
+            setLogCep(response.data.logCep);
+            setLogId(response.data.logId);
+        }
+    }
+
     const limparCamposFormulario = () => {
         setLogId("");
         setLogDescricao("");
@@ -126,7 +137,7 @@ function cadastroLogradouro() {
                             <Col md="6">
                                 <Form.Label htmlFor="log">CEP *</Form.Label>
                                 <Form.Control value={logCep} maxLength="8"
-                                    onChange={(e) => setLogCep(e.target.value)}
+                                    onChange={(e) => atualizaCep(e.target.value)}
                                     type="number" id="log" required />
                             </Col>
                         </Row>

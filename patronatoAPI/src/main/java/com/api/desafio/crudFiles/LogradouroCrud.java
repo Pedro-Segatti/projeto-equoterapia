@@ -12,4 +12,7 @@ public interface LogradouroCrud extends CrudRepository<Logradouro,Integer> {
     Logradouro findLogradouroByLogId(Integer logId);
     @Query("SELECT l FROM Logradouro l WHERE (:logDescricao is null or :logDescricao = '' or l.logDescricao like %:logDescricao%) AND (:logId IS NULL OR :logId = l.logId)")
     List<Logradouro> findLogradouroByLogDescricaoAndId(@Param("logDescricao")  String logDescricao, @Param("logId")  Integer logId);
+
+    @Query("SELECT l FROM Logradouro l WHERE (:logDescricao is null or :logDescricao = '' or l.logDescricao like %:logDescricao%) OR (:logDescBairr IS NULL OR l.bairro.barNome like %:logDescBairr%)")
+    List<Logradouro> findLogradouroByLogDescricaoOrBairro(@Param("logDescricao")  String logDescricao, @Param("logDescBairr")  String logDescBairr);
 }

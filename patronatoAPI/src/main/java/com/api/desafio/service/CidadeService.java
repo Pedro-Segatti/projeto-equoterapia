@@ -28,6 +28,10 @@ public class CidadeService {
         return cc.findCidadeByCidNomeAndId(cidNome, cidId);
     }
 
+    public List<Cidade> getCidadeByNome(String cidNome){
+        return cc.findCidadeByCidNome(cidNome);
+    }
+
     public ResponseEntity<List<Cidade>> pesquisa(String cidNome, Integer cidId) {
         List<Cidade> cidade = (List<Cidade>) cc.findCidadeByCidNomeAndId(cidNome, cidId);
         return new ResponseEntity<List<Cidade>>(cidade, HttpStatus.OK);

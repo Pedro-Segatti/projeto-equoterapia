@@ -12,13 +12,11 @@ import com.api.desafio.service.AvalSocioeconService;
 import com.api.desafio.service.FichaEvolService;
 import com.api.desafio.service.PessoaService;
 import com.api.desafio.service.ResponsavelService;
-import com.api.desafio.utils.DateUtil;
-import com.api.desafio.utils.ListUtil;
-import com.api.desafio.utils.RelatorioUtil;
-import com.api.desafio.utils.StringUtil;
+import com.api.desafio.utils.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.jfree.util.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -752,5 +750,36 @@ public class ComunicacaoController {
     public String encriptarSenha(@RequestParam String senha) {
         String encryptPassword = DigestUtils.md5Hex(senha);
         return encryptPassword;
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/logradouroPorCep")
+    public ResponseEntity<Logradouro> pesquisaPraticantes(@RequestParam String cep) {
+        Cep enderecoEncontrado = IntegracaoViaCep.findCep(cep);
+        Logradouro logradouro = new Logradouro();
+        if (enderecoEncontrado != null) {
+            List<Logradouro> logradouros = logradouroService.getLogradouroByDescricaoOrBairro(enderecoEncontrado.getLogradouro(), enderecoEncontrado.getBairro());
+
+            if(ListUtil.isNotEmpty(logradouros)){
+                Logradouro logNoBanco = logradouros.stream().filter(log -> log.getLogDescricao().toUpperCase().equals(enderecoEncontrado.getLogradouro().toUpperCase())).findFirst().orElse(null);
+                if (logNoBanco == null) {
+                    logNoBanco = logradouros.stream().filter(log -> log.getBairro().getBarNome().toUpperCase().equals(enderecoEncontrado.getBairro().toUpperCase())).findFirst().orElse(null);
+                    logradouro.setBairro(logNoBanco.getBairro());
+                    logradouro.setLogDescricao(enderecoEncontrado.getLogradouro());
+                } else {
+                    logradouro = logNoBanco;
+                }
+            } else {
+                logradouro.setLogDescricao(enderecoEncontrado.getLogradouro());
+                Bairro bairro = new Bairro();
+                bairro.setBarNome(enderecoEncontrado.getBairro());
+                Cidade cidade = cidadeService.getCidadeByNome(enderecoEncontrado.getLocalidade()).get(0);
+                bairro.setCidade(cidade);
+                bairro = (Bairro) bairroService.salva(bairro).getBody();
+                logradouro.setBairro(bairro);
+            }
+            logradouro.setLogCep(enderecoEncontrado.getCep().replaceAll("-",""));
+        }
+        return new ResponseEntity<Logradouro>(logradouro, HttpStatus.OK);
     }
 }

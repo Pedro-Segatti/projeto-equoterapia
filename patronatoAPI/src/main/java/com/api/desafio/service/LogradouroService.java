@@ -28,6 +28,10 @@ public class LogradouroService {
         return logradouroCrud.findLogradouroByLogDescricaoAndId(logDescricao, logId);
     }
 
+    public List<Logradouro> getLogradouroByDescricaoOrBairro(String logDescricao, String logDescBairro){
+        return logradouroCrud.findLogradouroByLogDescricaoOrBairro(logDescricao, logDescBairro);
+    }
+
     public ResponseEntity<?> salva(Logradouro logradouro) {
         logradouroCrud.save(logradouro);
         return new ResponseEntity<Logradouro>(logradouro, HttpStatus.OK);
