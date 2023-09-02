@@ -81,6 +81,14 @@ public class ComunicacaoController {
     private AgendamentoService agendamentoService;
     @Autowired
     private FichaAnamneseService fichaAnamneseService;
+    @Autowired
+    private EmailService emailService;
+
+    @PostMapping("/enviarEmail")
+    public String sendMail(@RequestBody Email details) {
+        String status = emailService.enviarEmail(details);
+        return status;
+    }
 
     @CrossOrigin(origins = "*")
     @GetMapping("/login")
