@@ -23,7 +23,7 @@ function cadastroLogradouro() {
     const [logId, setLogId] = useState("");
     const [logDescricao, setLogDescricao] = useState("");
     const [logCep, setLogCep] = useState("");
-    const [bairro, setBairro] = useState({"barNome":""});
+    const [bairro, setBairro] = useState({ "barNome": "" });
 
     const [loading, setLoading] = useState(false);
 
@@ -80,11 +80,14 @@ function cadastroLogradouro() {
     const atualizaCep = async (cep) => {
         setLogCep(cep);
         if (cep.length === 8) {
-            const response = await (await api.get("/logradouroPorCep?cep=" + cep));
-            setBairro(response.data.bairro);
-            setLogDescricao(response.data.logDescricao);
-            setLogCep(response.data.logCep);
-            setLogId(response.data.logId);
+            try {
+                const response = await (await api.get("/logradouroPorCep?cep=" + cep));
+                setBairro(response.data.bairro);
+                setLogDescricao(response.data.logDescricao);
+                setLogCep(response.data.logCep);
+                setLogId(response.data.logId);
+            } catch (error) {
+            }
         }
     }
 
@@ -92,14 +95,14 @@ function cadastroLogradouro() {
         setLogId("");
         setLogDescricao("");
         setLogCep("");
-        setBairro({"barNome":""});
+        setBairro({ "barNome": "" });
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        if(bairro.barNome === ""){
-            mensagemCustomizada("Selecione um Bairro","warning");
+        if (bairro.barNome === "") {
+            mensagemCustomizada("Selecione um Bairro", "warning");
             document.getElementById("btnBairro").focus();
             return;
         }
@@ -143,7 +146,7 @@ function cadastroLogradouro() {
                         </Row>
                         <Row>
                             <Col md="6">
-                            <Form.Label>Bairro</Form.Label>
+                                <Form.Label>Bairro</Form.Label>
                                 <InputConverter idBtn={"btnBairro"} descricao={bairro.barNome} atualizaDlgPesquisa={atualizaDlgPesquisaBairro} />
                             </Col>
                         </Row>

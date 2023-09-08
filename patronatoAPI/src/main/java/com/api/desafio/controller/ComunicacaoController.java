@@ -764,6 +764,9 @@ public class ComunicacaoController {
     @GetMapping("/logradouroPorCep")
     public ResponseEntity<Logradouro> pesquisaPraticantes(@RequestParam String cep) {
         Cep enderecoEncontrado = IntegracaoViaCep.findCep(cep);
+        if(enderecoEncontrado.isErro()) {
+            return new ResponseEntity<Logradouro>(new Logradouro(), HttpStatus.NOT_FOUND);
+        }
         Logradouro logradouro = new Logradouro();
         if (enderecoEncontrado != null) {
             List<Logradouro> logradouros = logradouroService.getLogradouroByDescricaoOrBairro(enderecoEncontrado.getLogradouro(), enderecoEncontrado.getBairro());

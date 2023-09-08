@@ -11,6 +11,8 @@ public class Cep implements Serializable {
     private String localidade;
     private String uf;
 
+    private boolean erro;
+
     public Cep() {
     }
 
@@ -60,5 +62,13 @@ public class Cep implements Serializable {
 
     public void setUf(String uf) {
         this.uf = uf;
+    }
+
+    public boolean isErro() {
+        return erro;
+    }
+
+    public void setErro(boolean erro) {
+        this.erro = erro;
     }
 }
