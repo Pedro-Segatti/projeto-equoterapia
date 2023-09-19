@@ -1,5 +1,6 @@
 package com.api.desafio.model;
 
+import com.api.desafio.utils.StringUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -192,6 +193,18 @@ public class Pessoa implements Serializable {
         }
 
         return pesAcessToken = DigestUtils.md5Hex(this.pesId + Math.random() + this.pesCpf).toUpperCase();
+    }
+
+    public String getEmail () {
+        if (StringUtil.notNullOrEmpty(this.pesEmail1)){
+            return this.pesEmail1;
+        }
+
+        if (StringUtil.notNullOrEmpty(this.pesEmail2)){
+            return this.pesEmail2;
+        }
+
+        return null;
     }
 
     @Override

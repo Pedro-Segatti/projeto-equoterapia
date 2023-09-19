@@ -85,7 +85,7 @@ public class ComunicacaoController {
     private EmailService emailService;
 
     @PostMapping("/enviarEmail")
-    public String sendMail(@RequestBody Email details) {
+    public String enviarEmail(@RequestBody Email details) {
         String status = emailService.enviarEmail(details);
         return status;
     }

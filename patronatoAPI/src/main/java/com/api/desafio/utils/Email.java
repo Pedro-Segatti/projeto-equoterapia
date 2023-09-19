@@ -10,6 +10,10 @@ public class Email {
     private String assunto;
     private String anexo;
 
+    public Email() {
+
+    }
+
     public Email(List<String> destinatarios, String mensagem, String assunto, String anexo) {
         this.destinatarios = destinatarios;
         this.mensagem = mensagem;

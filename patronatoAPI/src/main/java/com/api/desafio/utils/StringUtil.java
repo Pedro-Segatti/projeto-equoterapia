@@ -2,6 +2,7 @@ package com.api.desafio.utils;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class StringUtil implements Serializable {
 
@@ -10,15 +11,7 @@ public class StringUtil implements Serializable {
             return null;
         }
 
-        StringBuilder retorno = new StringBuilder();
-        for (String str : stringList) {
-            if (stringList.size() != 1) {
-                retorno.append(str).append(separator);
-            }
-            retorno.append(str);
-        }
-
-        return retorno.toString();
+        return stringList.stream().collect(Collectors.joining(separator));
     }
 
     public static boolean notNullOrEmpty(String valor){
