@@ -12,6 +12,7 @@ import com.api.desafio.service.AvalSocioeconService;
 import com.api.desafio.service.FichaEvolService;
 import com.api.desafio.service.PessoaService;
 import com.api.desafio.service.ResponsavelService;
+import com.api.desafio.service.ConfiguracoesService;
 import com.api.desafio.utils.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -63,6 +64,8 @@ public class ComunicacaoController {
     private CidadeService cidadeService;
     @Autowired
     private ResponsavelService responsavelService;
+    @Autowired
+    private ConfiguracoesService configuracoesService;
     @Autowired
     private FuncionarioService funcionarioService;
     @Autowired
@@ -525,6 +528,29 @@ public class ComunicacaoController {
 
         pessoaService.salva(responsavel.getPessoa());
         return new ResponseEntity<Responsavel>(responsavelService.salva(responsavel),HttpStatus.OK);
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/configuracoes")
+    public ResponseEntity<?> cadastrarConfiguracoes(@RequestBody Configuracoes configuracoes) {
+        return configuracoesService.salva(configuracoes);
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/pesquisaConfiguracoes")
+    public ResponseEntity<Configuracoes> pesquisaConfiguracoes(@RequestParam(required = false) Integer confId) {
+        return configuracoesService.pesquisaConfiguracoes(confId);
+    }
+
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/removeConfiguracoes")
+    public ResponseEntity<?> removeConfiguracoes(@RequestParam Integer confId) {
+        try {
+            configuracoesService.remove(confId);
+            return new ResponseEntity<>(new Configuracoes(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new Configuracoes(), HttpStatus.FORBIDDEN);
+        }
     }
 
     @CrossOrigin(origins = "*")

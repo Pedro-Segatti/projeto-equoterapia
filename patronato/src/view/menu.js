@@ -4,12 +4,24 @@ import { AuthContext } from "../contexts/autenticacao";
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
 import logo from './img/logoSemFundo.png';
-import logoutImg from './img/logout.png';
 
-const Menu = ({tituloPagina}) => {
+const Menu = ({ tituloPagina }) => {
   const [pessoaLogada, setPessoaLogada] = useState(null);
   const { user, logout } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 993);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 993);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     const buscarPessoaLogada = async () => {
@@ -21,7 +33,7 @@ const Menu = ({tituloPagina}) => {
     const atualizaTitulo = async () => {
       document.title = tituloPagina;
     };
-    
+
     atualizaTitulo();
     buscarPessoaLogada();
   }, []);
@@ -63,7 +75,7 @@ const Menu = ({tituloPagina}) => {
             </NavDropdown>
 
             <NavDropdown title="Relatórios" id="basic-nav-dropdown">
-            <NavDropdown.Item href="/relatorioAgendamentos">Agendamento</NavDropdown.Item>
+              <NavDropdown.Item href="/relatorioAgendamentos">Agendamento</NavDropdown.Item>
               <NavDropdown.Item href="/relatorioFuncionarios">Funcionário</NavDropdown.Item>
               <NavDropdown.Item href="/relatorioFichaEvolucao">Ficha de Evolução</NavDropdown.Item>
             </NavDropdown>
@@ -71,20 +83,16 @@ const Menu = ({tituloPagina}) => {
         </Navbar.Collapse>
         {!loading &&
           <Navbar.Collapse className="justify-content-end">
-            <div className='user-display'>
-              <div>
-                <Navbar.Brand className="mx-3" href="/perfil">
-                  <Image className="ftPerfil" src={pessoaLogada.pesFoto}></Image>
-                </Navbar.Brand>
+            <Nav className='ml-auto'>
+              <div className="d-none d-md-block">
+                <Image className="ftPerfil" src={pessoaLogada.pesFoto} />
               </div>
-
-              <div className='textos'>
-                <p className='nomeLogin'>{pessoaLogada.pesNome}</p>
-                <a onClick={handleClickLogout} href='/'>
-                  <Image className='logout' src={logoutImg}></Image>
-                </a>
-              </div>
-            </div>
+              <NavDropdown title={isMobile ? "Menu" : ""} id="basic-nav-dropdown" align="end" active={true}>
+                <NavDropdown.Item href="/perfil">Meu perfil</NavDropdown.Item>
+                <NavDropdown.Item href="/configuracoes">Configurações</NavDropdown.Item>
+                <NavDropdown.Item onClick={handleClickLogout} href="/">Sair</NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
           </Navbar.Collapse>
         }
       </Navbar>
