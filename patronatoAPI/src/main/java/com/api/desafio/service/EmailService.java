@@ -1,14 +1,14 @@
 package com.api.desafio.service;
 
 import com.api.desafio.crudFiles.AgendamentoCrud;
+import com.api.desafio.crudFiles.ConfiguracoesCrud;
 import com.api.desafio.model.Agendamento;
+import com.api.desafio.model.Configuracoes;
 import com.api.desafio.utils.Email;
 import com.api.desafio.utils.EmailInterface;
 import com.api.desafio.utils.ListUtil;
 import com.api.desafio.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.internet.MimeMessage;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -25,14 +24,28 @@ public class EmailService implements EmailInterface {
 
     @Autowired
     private AgendamentoCrud agendamentoCrud;
+    @Autowired
+    private ConfiguracoesCrud configuracoesCrud;
 
     private JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 
-    public String enviarEmail(Email email) {
+    public void enviarEmail(Email email, Configuracoes configuracoes) {
+        if (configuracoes == null) {
+            return;
+        }
+
+        if (StringUtil.nullOrEmpty(configuracoes.getConfEmail())) {
+            return;
+        }
+
+        if (StringUtil.nullOrEmpty(configuracoes.getConfEmailPassword())) {
+            return;
+        }
+
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
-        mailSender.setUsername("segattipedroh@gmail.com");
-        mailSender.setPassword("aoruybazsxkuaccd");
+        mailSender.setUsername(configuracoes.getConfEmail());
+        mailSender.setPassword(configuracoes.getConfEmailPassword());
 
         Properties properties = new Properties();
         properties.setProperty("mail.smtp.auth", "true");
@@ -41,11 +54,11 @@ public class EmailService implements EmailInterface {
         mailSender.setJavaMailProperties(properties);
 
         if (StringUtil.nullOrEmpty(email.getMensagem())) {
-            return "Error";
+            return;
         }
 
         if (ListUtil.isEmpty(email.getDestinatarios())) {
-            return "Error";
+            return;
         }
 
         try {
@@ -58,12 +71,10 @@ public class EmailService implements EmailInterface {
             mensagemHtml.setText(email.getMensagem(), true);
 
             mailSender.send(mensagem);
-            return "Mail Sent Successfully...";
         }
 
         catch (Exception e) {
             e.printStackTrace();
-            return "Error while Sending Mail";
         }
     }
 
@@ -71,6 +82,7 @@ public class EmailService implements EmailInterface {
     @Transactional
     public void reportCurrentTime() {
         List<Agendamento> agendamentos = agendamentoCrud.findAgendamentosNext15and30minutes();
+        Configuracoes configuracoes = configuracoesCrud.findByConfId(1);
         for (Agendamento agendamento : agendamentos) {
             Set<String> emailDestinatarios = new HashSet<>();
             Set<String> emailFuncionarios = agendamento.getFuncionarioList()
@@ -92,9 +104,9 @@ public class EmailService implements EmailInterface {
             Email email = new Email();
             email.setAssunto("Agendamento em Breve");
             email.setDestinatarios(emailDestinatariosList);
-            email.setMensagem("<b>OIIIIII MOAA NOITIII</b> <br /> <p>Salve Gau</p>");
+            email.setMensagem("<b>OIIIIII BRO</b> <br /> <p>Salve Gau</p>");
 
-            enviarEmail(email);
+            enviarEmail(email, configuracoes);
         }
     }
 }

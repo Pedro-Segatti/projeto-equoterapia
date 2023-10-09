@@ -34,4 +34,8 @@ public class ConfiguracoesService {
         Optional<Configuracoes> configuracoes = configuracoesCrud.findById(confId);
         return new ResponseEntity<>(configuracoes.get(), HttpStatus.OK);
     }
+
+    public Configuracoes getConfiguracoes(Integer confId) {
+        return configuracoesCrud.findByConfId(confId);
+    }
 }

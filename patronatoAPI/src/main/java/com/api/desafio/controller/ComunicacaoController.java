@@ -89,8 +89,9 @@ public class ComunicacaoController {
 
     @PostMapping("/enviarEmail")
     public String enviarEmail(@RequestBody Email details) {
-        String status = emailService.enviarEmail(details);
-        return status;
+        Configuracoes configuracoes = configuracoesService.getConfiguracoes(1);
+        emailService.enviarEmail(details, configuracoes);
+        return "";
     }
 
     @CrossOrigin(origins = "*")

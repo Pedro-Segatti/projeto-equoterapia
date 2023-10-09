@@ -1,5 +1,7 @@
 package com.api.desafio.utils;
 
+import com.api.desafio.model.Configuracoes;
+
 public interface EmailInterface {
-    String enviarEmail(Email details);
+    void enviarEmail(Email details, Configuracoes configuracoes);
 }
