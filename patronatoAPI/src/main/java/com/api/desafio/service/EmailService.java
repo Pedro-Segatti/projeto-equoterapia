@@ -68,7 +68,7 @@ public class EmailService implements EmailInterface {
             mensagemHtml.setFrom(mailSender.getUsername());
             String[] destinatarios = email.getDestinatarios().stream().toArray(String[]::new);
             mensagemHtml.setTo(destinatarios);
-            mensagemHtml.setText(email.getMensagem(), true);
+            mensagemHtml.setText(configuracoes.getConfEmailCorpo(), true);
 
             mailSender.send(mensagem);
         }
@@ -104,7 +104,7 @@ public class EmailService implements EmailInterface {
             Email email = new Email();
             email.setAssunto("Agendamento em Breve");
             email.setDestinatarios(emailDestinatariosList);
-            email.setMensagem("<b>OIIIIII BRO</b> <br /> <p>Salve Gau</p>");
+            email.setMensagem(configuracoes.getConfEmailCorpo());
 
             enviarEmail(email, configuracoes);
         }

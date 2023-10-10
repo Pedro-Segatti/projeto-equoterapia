@@ -3,7 +3,7 @@ import axios from "axios";
 const host = window.location.hostname;
 
 export const api = axios.create(
-  {baseURL: `http://${host}:8080/patronato`}
+  { baseURL: `http://${host}:8080/patronato` }
 );
 
 export const criarSessao = async (login, password) => {
@@ -19,7 +19,7 @@ export const cadastrarPessoa = async (json) => {
 };
 
 export const encriptarSenha = async (senha) => {
-  return api.get("/encriptarSenha", { params: { senha: senha} });
+  return api.get("/encriptarSenha", { params: { senha: senha } });
 };
 
 export const atualizaPessoa = async (json) => {

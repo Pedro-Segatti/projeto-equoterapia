@@ -12,22 +12,27 @@ const configuracoes = () => {
     const [confId, setConfId] = useState("");
     const [confEmail, setConfEmail] = useState("");
     const [confEmailPassword, setConfEmailPassword] = useState("");
+    const [confEmailCorpo, setConfEmailCorpo] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const loadLocalStorage = () => {
-        const savedConfEmail = localStorage.getItem('confEmail');
-        const savedConfEmailPassword = localStorage.getItem('confEmailPassword');
+    const buscaConfiguracao = async () => {
+        const response = await api.get("/configuracoes");
+        const { confId, confEmail, confEmailPassword, confEmailCorpo } = response.data;
 
-        if (savedConfEmail) {
-            setConfEmail(savedConfEmail);
+        setConfId(confId);
+        if (confEmail) {
+            setConfEmail(confEmail);
         }
-        if (savedConfEmailPassword) {
-            setConfEmailPassword(savedConfEmailPassword);
+        if (confEmailPassword) {
+            setConfEmailPassword(confEmailPassword);
+        }
+        if (confEmailCorpo) {
+            setConfEmailCorpo(confEmailCorpo);
         }
     }
 
     useEffect(() => {
-        loadLocalStorage();
+        buscaConfiguracao();
     }, []);
 
     const enviaJsonGravar = () => {
@@ -35,6 +40,7 @@ const configuracoes = () => {
             "confId": confId,
             "confEmail": confEmail,
             "confEmailPassword": confEmailPassword,
+            "confEmailCorpo": confEmailCorpo
         };
         api.post("/configuracoes", json);
         registroSalvo();
@@ -60,16 +66,13 @@ const configuracoes = () => {
         setLoading(true);
         await enviaJsonGravar();
         setLoading(false);
-        localStorage.setItem('confEmail', confEmail);
-        localStorage.setItem('confEmailPassword', confEmailPassword);
     }
 
 
     const limparCamposFormulario = () => {
         setConfEmail("");
         setConfEmailPassword("");
-        localStorage.removeItem('confEmail');
-        localStorage.removeItem('confEmailPassword');
+        setConfEmailCorpo("");
     }
 
     return (
@@ -96,7 +99,21 @@ const configuracoes = () => {
                                 type="password" id="inputEmailPassword" />
                         </Col>
                     </Row>
+
+                    <Row>
+                        <Col md="12">
+                            <Form.Label>Corpo do Email:</Form.Label>
+                            <Form.Control
+                                value={confEmailCorpo}
+                                onChange={(e) => setConfEmailCorpo(e.target.value)}
+                                type="text"
+                                as="textarea"
+                                className="textArea"
+                            />
+                        </Col>
+                    </Row>
                     <Toolbar jsonRemove={enviaJsonRemove} pesquisarHidden={true} />
+                    <div dangerouslySetInnerHTML={{ __html: confEmailCorpo }} />
                 </Form>
             </Container>
             }

@@ -87,11 +87,19 @@ public class ComunicacaoController {
     @Autowired
     private EmailService emailService;
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/enviarEmail")
     public String enviarEmail(@RequestBody Email details) {
-        Configuracoes configuracoes = configuracoesService.getConfiguracoes(1);
+        Configuracoes configuracoes = configuracoesService.getConfiguracoes();
         emailService.enviarEmail(details, configuracoes);
         return "";
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/configuracoes")
+    public ResponseEntity<Configuracoes> getConfiguracoes() {
+        Configuracoes configuracoes = configuracoesService.getConfiguracoes();
+        return new ResponseEntity<Configuracoes>(configuracoes, HttpStatus.OK);
     }
 
     @CrossOrigin(origins = "*")

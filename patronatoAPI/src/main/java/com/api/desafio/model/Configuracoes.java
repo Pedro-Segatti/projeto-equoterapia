@@ -18,6 +18,8 @@ public class Configuracoes implements Serializable {
     private String confEmail;
     @Column(name = "CONF_EMAIL_PASSWORD")
     private String confEmailPassword;
+    @Column(name = "CONF_EMAIL_CORPO")
+    private String confEmailCorpo;
 
     public Configuracoes() {
     }
@@ -26,10 +28,11 @@ public class Configuracoes implements Serializable {
         this.confId = confId;
     }
 
-    public Configuracoes(Integer confId, String confEmail, String confEmailPassword) {
+    public Configuracoes(Integer confId, String confEmail, String confEmailPassword, String confEmailCorpo) {
         this.confId = confId;
         this.confEmail = confEmail;
         this.confEmailPassword = confEmailPassword;
+        this.confEmailCorpo = confEmailCorpo;
     }
 
     public Integer getConfId() {
@@ -54,6 +57,14 @@ public class Configuracoes implements Serializable {
 
     public void setConfEmailPassword(String confEmailPassword) {
         this.confEmailPassword = confEmailPassword;
+    }
+
+    public String getConfEmailCorpo() {
+        return confEmailCorpo;
+    }
+
+    public void setConfEmailCorpo(String confEmailCorpo) {
+        this.confEmailCorpo = confEmailCorpo;
     }
 
     @Override
