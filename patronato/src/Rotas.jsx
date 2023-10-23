@@ -14,7 +14,6 @@ import Perfil from "./view/perfil";
 import Configuracoes from "./view/configuracoes";
 import SemConexao from "./view/SemConexao";
 import HomePage from "./view/homePage";
-import NovaPagina from "./view/novaPagina";
 import CadastroAnimais from "./view/cadastros/cadastroAnimais";
 import CadastroPraticantes from "./view/cadastros/cadastroPraticante";
 import CadastroResponsavel from "./view/cadastros/cadastroResponsavel";
@@ -50,7 +49,7 @@ const Rotas = () => {
             return <Carregando showCarregando={loading} />;
         }
 
-        const testarConexao = async () =>{
+        const testarConexao = async () => {
             try {
                 await testeConexao();
             } catch (error) {
@@ -75,7 +74,6 @@ const Rotas = () => {
                     <Route exact path="/" element={<Private><HomePage /></Private>} />
                     <Route exact path="/perfil" element={<Private><Perfil /></Private>} />
                     <Route exact path="/configuracoes" element={<Private><Configuracoes /></Private>} />
-                    <Route exact path="/novaPagina" element={<Private><NovaPagina /></Private>} />
                     <Route exact path="/cadastroAnimais" element={<Private><CadastroAnimais /></Private>} />
                     <Route exact path="/cadastroPraticantes" element={<Private><CadastroPraticantes /></Private>} />
                     <Route exact path="/cadastroResponsavel" element={<Private><CadastroResponsavel /></Private>} />
@@ -83,7 +81,7 @@ const Rotas = () => {
                     <Route exact path="/cadastroMedico" element={<Private><CadastroMedico /></Private>} />
                     <Route exact path="/cadastroAtividade" element={<Private><CadastroAtividades /></Private>} />
                     <Route exact path="/cadastroMaterial" element={<Private><CadastroMateriais /></Private>} />
-                    <Route exact path="/cadastroPicadeiro" element={<Private><CadastroPicadeiro/></Private>} />
+                    <Route exact path="/cadastroPicadeiro" element={<Private><CadastroPicadeiro /></Private>} />
                     <Route exact path="/cadastroCargo" element={<Private><CadastroCargos /></Private>} />
                     <Route exact path="/cadastroMontaria" element={<Private><CadastroMontaria /></Private>} />
                     <Route exact path="/cadastroBairro" element={<Private><CadastroBairro /></Private>} />

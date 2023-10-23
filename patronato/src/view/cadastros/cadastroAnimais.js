@@ -57,18 +57,18 @@ function cadastroAnimais() {
     }
 
     const enviaJsonRemove = async () => {
-        if(aniId === ""){
+        if (aniId === "") {
             return;
         }
-        try{
+        try {
             const response = await (await api.delete("/removeAnimal?aniId=" + aniId));
             console.log(response.status);
-            if(response.status === HTTP_STATUS.OK){
+            if (response.status === HTTP_STATUS.OK) {
                 registroExcluido();
                 limparCamposFormulario();
             }
-        }catch(error){
-            console.log(error);   
+        } catch (error) {
+            console.log(error);
         }
     }
 
@@ -84,9 +84,9 @@ function cadastroAnimais() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        if(aniPorte === ""){
+        if (aniPorte === "") {
             avisoCustomizado("Selecione um porte para o Animal");
-            return; 
+            return;
         }
         enviaJsonGravar();
         limparCamposFormulario();
@@ -120,10 +120,10 @@ function cadastroAnimais() {
                         </Row>
                         <Row>
                             <Col md="6">
-                                <Form.Label htmlFor="inputIdade">Idade *</Form.Label>
+                                <Form.Label htmlFor="inputIdade">Idade</Form.Label>
                                 <Form.Control value={aniIdade} min={1} max={200}
                                     onChange={(e) => setAniIdade(e.target.value)}
-                                    type="number" id="inputIdade" required />
+                                    type="number" id="inputIdade" />
                             </Col>
                             <Col md="6">
                                 <Form.Label htmlFor="inputPorte">Porte *</Form.Label>

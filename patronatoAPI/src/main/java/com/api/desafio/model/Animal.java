@@ -40,10 +40,8 @@ public class Animal implements Serializable {
     @Basic(optional = false)
     @Column(name = "ANI_PORTE")
     private String aniPorte;
-    @Basic(optional = false)
     @Column(name = "ANI_COMPORTAMENTO")
     private String aniComportamento;
-    @Basic(optional = false)
     @Column(name = "ANI_ANDADURA")
     private String aniAndadura;
     @JsonIgnoreProperties("animalList")
