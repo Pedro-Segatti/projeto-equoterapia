@@ -4,9 +4,7 @@ import { IMaskInput } from 'react-imask';
 import { Form, Row, Button } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
 import Carregando from "./carregando";
-import logo from './img/logoComFundo.png';
-import texto from './img/textoPatronatoSaoJoseourado.png';
-import bgimg from './img/login-img.png';
+import { api } from "../utilitario/baseComunicacao";
 import { ReactNotifications } from 'react-notifications-component'
 import 'react-notifications-component/dist/theme.css'
 
@@ -18,18 +16,28 @@ import {
 
 const Login = () => {
     const { login } = useContext(AuthContext);
-    const [loading, setLoading] = useState(false); 
+    const [loading, setLoading] = useState(false);
 
     const [log, setLog] = useState("");
     const [password, setPassword] = useState("");
+    const [loginLogo, setLoginLogo] = useState("");
+    const [loginBanner, setLoginBanner] = useState("");
+
+    const buscaConfiguracao = async () => {
+        const response = await api.get("/configuracoes");
+        const { confImageLogin, confImageLogo } = response.data;
+        setLoginLogo(confImageLogo);
+        setLoginBanner(confImageLogin);
+        console.log(response.data)
+    }
 
     useEffect(() => {
         const atualizaTitulo = async () => {
-          document.title = "Login";
+            document.title = "Login";
         };
-        
+        buscaConfiguracao();
         atualizaTitulo();
-      }, []);
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -45,12 +53,10 @@ const Login = () => {
         <Container>
             <ReactNotifications />
             <Carregando showCarregando={loading} />
-            <Image className="bgImg" src={bgimg}></Image>
+            <Image className="bgImg" src={loginBanner}></Image>
             <Card className='alturaLogin'>
                 <div className="logoContent">
-                    <Image className="logo" src={logo}></Image>
-                    <br />
-                    <Image className="texto" src={texto}></Image>
+                    <Image className="logo" src={loginLogo}></Image>
                 </div>
 
                 <Row>
@@ -58,7 +64,7 @@ const Login = () => {
                         <Form onSubmit={handleSubmit}>
                             <Form.Label htmlFor="inputLogin">Login</Form.Label>
                             <Form.Control id="inputLogin" type="text" maxLength='14' as={IMaskInput}
-                                mask="000.000.000-00" placeholder='Digite aqui o seu CPF...' required value={log} onBlur={(l) => setLog(l.target.value)} 
+                                mask="000.000.000-00" placeholder='Digite aqui o seu CPF...' required value={log} onBlur={(l) => setLog(l.target.value)}
                                 className="inputLogin" />
                             <br />
                             <Form.Label htmlFor="inputSenha">Senha</Form.Label>

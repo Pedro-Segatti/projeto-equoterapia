@@ -20,6 +20,15 @@ public class Configuracoes implements Serializable {
     private String confEmailPassword;
     @Column(name = "CONF_EMAIL_CORPO")
     private String confEmailCorpo;
+    @Lob
+    @Column(name = "CONF_IMAGE_LOGO")
+    private String confImageLogo;
+    @Lob
+    @Column(name = "CONF_IMAGE_LOADING")
+    private String confImageLoading;
+    @Lob
+    @Column(name = "CONF_IMAGE_LOGIN")
+    private String confImageLogin;
 
     public Configuracoes() {
     }
@@ -28,11 +37,13 @@ public class Configuracoes implements Serializable {
         this.confId = confId;
     }
 
-    public Configuracoes(Integer confId, String confEmail, String confEmailPassword, String confEmailCorpo) {
-        this.confId = confId;
+    public Configuracoes(String confEmail, String confEmailPassword, String confEmailCorpo, String confImageLogo, String confImageLoading, String confImageLogin) {
         this.confEmail = confEmail;
         this.confEmailPassword = confEmailPassword;
         this.confEmailCorpo = confEmailCorpo;
+        this.confImageLogo = confImageLogo;
+        this.confImageLoading = confImageLoading;
+        this.confImageLogin = confImageLogin;
     }
 
     public Integer getConfId() {
@@ -65,6 +76,30 @@ public class Configuracoes implements Serializable {
 
     public void setConfEmailCorpo(String confEmailCorpo) {
         this.confEmailCorpo = confEmailCorpo;
+    }
+
+    public String getConfImageLogo() {
+        return confImageLogo;
+    }
+
+    public void setConfImageLogo(String confImageLogo) {
+        this.confImageLogo = confImageLogo;
+    }
+
+    public String getConfImageLoading() {
+        return confImageLoading;
+    }
+
+    public void setConfImageLoading(String confImageLoading) {
+        this.confImageLoading = confImageLoading;
+    }
+
+    public String getConfImageLogin() {
+        return confImageLogin;
+    }
+
+    public void setConfImageLogin(String confImageLogin) {
+        this.confImageLogin = confImageLogin;
     }
 
     @Override

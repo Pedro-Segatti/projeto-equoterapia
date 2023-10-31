@@ -246,7 +246,7 @@ const cadastroPraticante = () => {
     }
 
     const handleSubmit = async (e) => {
-        e.preventDefault(); 
+        e.preventDefault();
         setLoading(true);
 
         if (pesFoto === base64NoPhoto) {

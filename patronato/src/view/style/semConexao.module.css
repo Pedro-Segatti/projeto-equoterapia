@@ -6,13 +6,13 @@
     text-align: center;
 }
 
-.titulo{
+.titulo {
     margin-top: 10%;
     font-size: 26px;
     font-weight: 600;
 }
 
-.subtitulo{
+.subtitulo {
     font-size: 18px;
 }
 
@@ -21,10 +21,10 @@
 }
 
 .logo {
-    width: 400px;
+    width: 50px;
 }
 
-@media (max-width: 640px){
+@media (max-width: 640px) {
     .logo {
         width: 200px;
     }

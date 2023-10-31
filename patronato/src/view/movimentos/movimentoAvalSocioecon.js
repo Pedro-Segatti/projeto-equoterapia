@@ -24,7 +24,7 @@ function movimentoAvalSocioecon() {
     const [aseData, setAseData] = useState("");
     const [aseObsContFam, setAseObsContFam] = useState("");
     const [aseObsMedicamentos, setAseObsMedicamentos] = useState("");
-    const [praticante, setPraticante] = useState({"pessoa":{"pesNome":""}});
+    const [praticante, setPraticante] = useState({ "pessoa": { "pesNome": "" } });
 
     //variáveis da dialog de pesquisa
     var [list, setList] = useState([]);
@@ -87,14 +87,14 @@ function movimentoAvalSocioecon() {
         setAseData("");
         setAseObsContFam("");
         setAseObsMedicamentos("");
-        setPraticante({"pessoa":{"pesNome":""}});
+        setPraticante({ "pessoa": { "pesNome": "" } });
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        if(praticante.pessoa.pesNome === ""){
-            mensagemCustomizada("Selecione um Praticante","warning");
+        if (praticante.pessoa.pesNome === "") {
+            mensagemCustomizada("Selecione um Praticante", "warning");
             document.getElementById("btnPraticante").focus();
             return;
         }
@@ -122,8 +122,8 @@ function movimentoAvalSocioecon() {
                             <Col md="2">
                                 <Form.Label htmlFor="inputDate">Data da Avaliação *</Form.Label>
                                 <Form.Control value={aseData}
-                                              onChange={(e) => setAseData(e.target.value)}
-                                              type="date" id="inputDate" required />
+                                    onChange={(e) => setAseData(e.target.value)}
+                                    type="date" id="inputDate" required />
                             </Col>
                         </Row>
                         <Row>

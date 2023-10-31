@@ -3,15 +3,24 @@ import { buscarPessoaPeloId } from "../utilitario/baseComunicacao";
 import { AuthContext } from "../contexts/autenticacao";
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
-import logo from './img/logoSemFundo.png';
+import { api } from "../utilitario/baseComunicacao";
 
 const Menu = ({ tituloPagina }) => {
   const [pessoaLogada, setPessoaLogada] = useState(null);
   const { user, logout } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 993);
+  const [loginLogo, setLoginLogo] = useState("");
+
+  const buscaConfiguracao = async () => {
+    const response = await api.get("/configuracoes");
+    const { confImageLogo } = response.data;
+    setLoginLogo(confImageLogo);
+    console.log(response.data)
+  }
 
   useEffect(() => {
+    buscaConfiguracao();
     const handleResize = () => {
       setIsMobile(window.innerWidth < 993);
     };
@@ -47,7 +56,7 @@ const Menu = ({ tituloPagina }) => {
   return (
     <header>
       <Navbar sticky='top' expand="lg">
-        <Navbar.Brand className="mx-3" href="/"><Image className="logo" src={logo}></Image></Navbar.Brand>
+        <Navbar.Brand className="mx-3" href="/"><Image className="logo" src={loginLogo}></Image></Navbar.Brand>
         <Navbar.Toggle className="bg-ligth" aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
