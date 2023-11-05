@@ -38,11 +38,11 @@ public interface AgendamentoCrud extends CrudRepository<Agendamento,Integer> {
             "AND EXISTS (SELECT * FROM AGENDAMENTO_MATERIAL AM WHERE AM.AXM_ID_AGENDAMENTO = AGD.AGD_ID AND AM.AXM_ID_MATERIAL IN (:materialList));", nativeQuery = true)
     List<Agendamento> findAgendamentosByAgdDataAndAgdHoraAndExistsMaterial(@Param("agdData") Date agdData, @Param("agdHora") Date agdHora, @Param("agdDifDe") Integer agdDifDe, @Param("materialList") List<Material> materialList);
 
-    @Query(value="SELECT * FROM AGENDAMENTO WHERE AGD_DATA = CURRENT_DATE() AND AGD_HORA BETWEEN ADDTIME(STR_TO_DATE(CONCAT(DATE_FORMAT(CURRENT_TIME(), '%H:%i'), ':00'), '%H:%i:%s'), '00:15:00') \n" +
+    @Query(value="SELECT * FROM AGENDAMENTO WHERE AGD_CONCLUIDO IS FALSE AND AGD_COMUNICOU_1 IS FALSE AND AGD_COMUNICOU_2 IS FALSE AND AGD_DATA = CURRENT_DATE() AND AGD_HORA BETWEEN ADDTIME(STR_TO_DATE(CONCAT(DATE_FORMAT(CURRENT_TIME(), '%H:%i'), ':00'), '%H:%i:%s'), '00:15:00') \n" +
             "AND ADDTIME(STR_TO_DATE(CONCAT(DATE_FORMAT(CURRENT_TIME(), '%H:%i'), ':00'), '%H:%i:%s'), '0:29:59');", nativeQuery = true)
     List<Agendamento> findAgendamentosNext15and30minutes();
 
-    @Query(value="SELECT * FROM AGENDAMENTO WHERE AGD_DATA = CURRENT_DATE() AND AGD_HORA BETWEEN ADDTIME(STR_TO_DATE(CONCAT(DATE_FORMAT(CURRENT_TIME(), '%H:%i'), ':00'), '%H:%i:%s'), '00:05:00') \n" +
+    @Query(value="SELECT * FROM AGENDAMENTO WHERE AGD_CONCLUIDO IS FALSE AND AGD_COMUNICOU_2 IS FALSE AND  AGD_DATA = CURRENT_DATE() AND AGD_HORA BETWEEN ADDTIME(STR_TO_DATE(CONCAT(DATE_FORMAT(CURRENT_TIME(), '%H:%i'), ':00'), '%H:%i:%s'), '00:05:00') \n" +
             "AND ADDTIME(STR_TO_DATE(CONCAT(DATE_FORMAT(CURRENT_TIME(), '%H:%i'), ':00'), '%H:%i:%s'), '0:09:59');", nativeQuery = true)
     List<Agendamento> findAgendamentosNext5and10minutes();
 }

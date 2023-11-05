@@ -3,11 +3,10 @@ package com.api.desafio.service;
 import com.api.desafio.crudFiles.AgendamentoCrud;
 import com.api.desafio.crudFiles.ConfiguracoesCrud;
 import com.api.desafio.model.Agendamento;
+import com.api.desafio.model.Animal;
 import com.api.desafio.model.Configuracoes;
-import com.api.desafio.utils.Email;
-import com.api.desafio.utils.EmailInterface;
-import com.api.desafio.utils.ListUtil;
-import com.api.desafio.utils.StringUtil;
+import com.api.desafio.model.Funcionario;
+import com.api.desafio.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -21,6 +20,9 @@ import java.util.stream.Collectors;
 
 @Component
 public class EmailService implements EmailInterface {
+
+    private static final int COMUNICOU_5_AND_10 = 2;
+    private static final int COMUNICOU_15_AND_30 = 1;
 
     @Autowired
     private AgendamentoCrud agendamentoCrud;
@@ -68,7 +70,7 @@ public class EmailService implements EmailInterface {
             mensagemHtml.setFrom(mailSender.getUsername());
             String[] destinatarios = email.getDestinatarios().stream().toArray(String[]::new);
             mensagemHtml.setTo(destinatarios);
-            mensagemHtml.setText(configuracoes.getConfEmailCorpo(), true);
+            mensagemHtml.setText(email.getMensagem(), true);
 
             mailSender.send(mensagem);
         }
@@ -78,11 +80,11 @@ public class EmailService implements EmailInterface {
         }
     }
 
-    @Scheduled(fixedRate = 15000)
-    @Transactional
-    public void reportCurrentTime() {
-        List<Agendamento> agendamentos = agendamentoCrud.findAgendamentosNext15and30minutes();
-        Configuracoes configuracoes = configuracoesCrud.findByConfId(1);
+    private void enviarEmail(List<Agendamento> agendamentos, Configuracoes configuracoes, int tipo) {
+        if (ListUtil.isEmpty(agendamentos)) {
+            return;
+        }
+
         for (Agendamento agendamento : agendamentos) {
             Set<String> emailDestinatarios = new HashSet<>();
             Set<String> emailFuncionarios = agendamento.getFuncionarioList()
@@ -101,12 +103,53 @@ public class EmailService implements EmailInterface {
                 continue;
             }
 
-            Email email = new Email();
-            email.setAssunto("Agendamento em Breve");
-            email.setDestinatarios(emailDestinatariosList);
-            email.setMensagem(configuracoes.getConfEmailCorpo());
+            List<String> nomeCavalos = agendamento.getAnimalList().stream().map(Animal::getAniNome).toList();
+            List<String> nomeProfissionais = agendamento.getFuncionarioList().stream().map(funcionario -> funcionario.getPessoa().getPesNome()).toList();
 
-            enviarEmail(email, configuracoes);
+            for (String email : emailDestinatariosList) {
+                Map<String, String> mapVars = new HashMap<>();
+                mapVars.put("[Nome do Destinatario]", agendamento.getPraticante().getPessoa().getPesNome());
+                mapVars.put("[Data]", agendamento.getAgdDataFormatada());
+                mapVars.put("[Hora]", agendamento.getAgdHoraFormatada());
+                mapVars.put("[Animais]", StringUtil.join(nomeCavalos, ", "));
+                mapVars.put("[Profissionais]", StringUtil.join(nomeProfissionais, ", "));
+
+                String corpoEmail = StringUtil.replaceTextVars(mapVars, configuracoes.getConfEmailCorpo());
+
+                Email emailtoSend = new Email();
+                emailtoSend.setAssunto("Agendamento em Breve");
+                emailtoSend.setDestinatarios(List.of(email));
+                emailtoSend.setMensagem(corpoEmail);
+
+                enviarEmail(emailtoSend, configuracoes);
+            }
+
+            agendamento.setAgdComunicou1(true);
+            if (isComunicou5and10(tipo)) {
+                agendamento.setAgdComunicou2(true);
+            }
+
+            agendamentoCrud.save(agendamento);
         }
+    }
+
+    public boolean isComunicou5and10(int tipo) {
+        return COMUNICOU_5_AND_10 == tipo;
+    }
+
+    @Scheduled(fixedRate = 60000)
+    @Transactional
+    public void reportCurrentTime15and30() {
+        List<Agendamento> agendamentos = agendamentoCrud.findAgendamentosNext15and30minutes();
+        Configuracoes configuracoes = configuracoesCrud.findByConfId(1);
+        enviarEmail(agendamentos, configuracoes, COMUNICOU_15_AND_30);
+    }
+
+    @Scheduled(fixedRate = 30000)
+    @Transactional
+    public void reportCurrentTime5and10() {
+        List<Agendamento> agendamentos = agendamentoCrud.findAgendamentosNext5and10minutes();
+        Configuracoes configuracoes = configuracoesCrud.findByConfId(1);
+        enviarEmail(agendamentos, configuracoes, COMUNICOU_5_AND_10);
     }
 }

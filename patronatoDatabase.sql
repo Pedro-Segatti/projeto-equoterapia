@@ -16,7 +16,63 @@ CREATE TABLE CONFIGURACOES (
     CONF_COR_SECUNDARIA VARCHAR(100)
 );
 
-INSERT INTO CONFIGURACOES VALUES (1, NULL, NULL, NULL, NULL, NULL, NULL, '#22382B', '#B48F69');
+INSERT INTO CONFIGURACOES VALUES (1, NULL, NULL, '<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Agendamento de Equoterapia</title>
+  <style>
+    html, body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+    }
+    div.container {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 600px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      color: #0070c9;
+      text-align: center;
+    }
+    p {
+      color: #555;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    .footer {
+      background-color: #0070c9;
+      color: #fff;
+      padding: 10px;
+      border-radius: 0 0 10px 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Agendamento de Equoterapia</h1>
+    <p>Olá [Nome do Destinatario],</p>
+    <p>Este é um lembrete amigável de que você tem uma sessão de equoterapia agendada em breve.</p>
+    <p>Data: [Data]</p>
+    <p>Hora: [Hora]</p>
+    <p>Animais: [Animais]</p>
+    <p>Profissionais: [Profissionais]</p>
+    <p>Lembre-se de estar preparado e chegar com tempo suficiente para aproveitar ao máximo sua sessão.</p>
+    <p>Se você tiver alguma dúvida ou precisar reagendar, entre em contato conosco o mais rápido possível.</p>
+    <p>Agradecemos por escolher a equoterapia como parte do seu cuidado e bem-estar. Esperamos vê-lo em breve!</p>
+    <div class="footer">
+      <p>Atenciosamente</p>
+    </div>
+  </div>
+</body>
+</html>
+', NULL, NULL, NULL, '#22382B', '#B48F69');
 
 CREATE TABLE PAIS (
 	PAI_ISO VARCHAR(4) NOT NULL PRIMARY KEY, 
@@ -6354,6 +6410,8 @@ CREATE TABLE AGENDAMENTO(
     AGD_DESCRICAO VARCHAR(100) NOT NULL,
     AGD_OBSERVACOES VARCHAR(5000), 
     AGD_CONCLUIDO BOOLEAN DEFAULT FALSE NOT NULL,
+    AGD_COMUNICOU_1 BOOLEAN DEFAULT FALSE NOT NULL,
+    AGD_COMUNICOU_2 BOOLEAN DEFAULT FALSE NOT NULL,
     
     CONSTRAINT FK_AGD_PRATICANTE FOREIGN KEY(AGD_ID_PRATICANTE) REFERENCES PRATICANTE(PRAT_ID)
 );

@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { ReactNotifications } from "react-notifications-component";
 import Menu from "./menu";
-import { Form, Col, Row, Container, Image } from 'react-bootstrap';
+import { Form, Col, Row, Container, Image, Modal, Button, Table } from 'react-bootstrap';
 import { registroSalvo, registroExcluido } from "../utilitario/mensagemUtil";
 import { api } from "../utilitario/baseComunicacao";
 import Toolbar from "./toolbar";
 import Footer from './footer';
 import HTTP_STATUS from "../utilitario/httpStatus";
 import { base64NoPhoto } from "../utilitario/patronatoUtil";
+import estilos from './style/configuracoes.module.css';
+
 
 const configuracoes = () => {
     const [confId, setConfId] = useState("");
@@ -18,6 +20,28 @@ const configuracoes = () => {
     const [confImageLoading, setConfImageLoading] = useState("");
     const [confImageLogin, setConfImageLogin] = useState("");
     const [loading, setLoading] = useState(false);
+    const [show, setShow] = useState(false);
+
+    const variables = [
+        { name: "[Nome do Destinatario]", description: "Nome do destinatário do e-mail" },
+        { name: "[Data]", description: "Data da sessão de equoterapia" },
+        { name: "[Hora]", description: "Hora da sessão de equoterapia" },
+        { name: "[Animais]", description: "Cavalos da sessão de equoterapia" },
+        { name: "[Profissionais]", description: "Profissionais da sessão de equoterapia" },
+    ];
+
+    const insertVariable = (variable) => {
+        const textarea = document.getElementById("confEmailCorpo");
+        const cursorPosition = textarea.selectionStart;
+        const textBeforeCursor = textarea.value.substring(0, cursorPosition);
+        const textAfterCursor = textarea.value.substring(cursorPosition);
+        const insertedText = variable.name;
+
+        setConfEmailCorpo(textBeforeCursor + insertedText + textAfterCursor);
+    };
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const selecionaLogo = (e) => {
         try {
@@ -93,18 +117,26 @@ const configuracoes = () => {
         buscaConfiguracao();
     }, []);
 
-    const enviaJsonGravar = () => {
-        const json = {
-            "confId": confId,
-            "confEmail": confEmail,
-            "confEmailPassword": confEmailPassword,
-            "confEmailCorpo": confEmailCorpo,
-            "confImageLogo": confImageLogo,
-            "confImageLoading": confImageLoading,
-            "confImageLogin": confImageLogin,
-        };
-        api.post("/configuracoes", json);
-        registroSalvo();
+    const enviaJsonGravar = async () => {
+        try {
+            const json = {
+                "confId": confId,
+                "confEmail": confEmail,
+                "confEmailPassword": confEmailPassword,
+                "confEmailCorpo": confEmailCorpo,
+                "confImageLogo": confImageLogo,
+                "confImageLoading": confImageLoading,
+                "confImageLogin": confImageLogin,
+            };
+            const response = await api.post("/configuracoes", json);
+
+            if (response.status === 200) {
+                registroSalvo();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+
     }
 
     const enviaJsonRemove = async () => {
@@ -140,12 +172,45 @@ const configuracoes = () => {
         <div>
             <Menu tituloPagina={"Configurações"} />
             <ReactNotifications />
-            {!loading && <Container className="vh-100">
+            {!loading && <Container>
                 <Form onSubmit={handleSubmit}>
                     <br />
+
+                    <Row>
+                        <h3>Configurações</h3>
+                    </Row>
+
+                    <br />
+
+                    <Row>
+                        <Col md="4" className={`${estilos.centered}`}>
+                            <Image id="imgPessoa" onClick={() => setConfImageLogo(base64NoPhoto)} src={confImageLogo}></Image>
+
+                            <Form.Control type="file" id="inputFoto" accept="image/png, image/jpg, image/jpeg" onChange={selecionaLogo} />
+                            <Form.Label htmlFor="inputFoto" className='label-input-file'>Selecione a Logo</Form.Label>
+                        </Col>
+                        <Col md="4" className={`${estilos.centered}`}>
+                            <Image id="imgPessoa" onClick={() => setConfImageLoading(base64NoPhoto)} src={confImageLoading}></Image>
+
+                            <Form.Control type="file" id="inputCarregando" accept="image/gif" onChange={selecionaGif} />
+                            <Form.Label htmlFor="inputCarregando" className='label-input-file'>Selecione o Gif de Carregando</Form.Label>
+                        </Col>
+                        <Col md="4" className={`${estilos.centered}`}>
+                            <Image id="imgPessoa" onClick={() => setConfImageLogin(base64NoPhoto)} src={confImageLogin}></Image>
+
+                            <Form.Control type="file" id="inputBanner" accept="image/png, image/jpg, image/jpeg" onChange={selecionaBanner} />
+                            <Form.Label htmlFor="inputBanner" className='label-input-file'>Selecione O Banner</Form.Label>
+                        </Col>
+                    </Row>
+
+                    <hr />
+                    <br />
+                    <br />
+
                     <Row>
                         <h3>Envio de e-mails:</h3>
                     </Row>
+
                     <Row>
                         <Col md="6">
                             <Form.Label htmlFor="inputEmail">E-mail do Remetente</Form.Label>
@@ -165,43 +230,79 @@ const configuracoes = () => {
                         <Col md="12">
                             <Form.Label>Corpo do Email:</Form.Label>
                             <Form.Control
+                                id="confEmailCorpo"
                                 value={confEmailCorpo}
-                                onChange={(e) => setConfEmailCorpo(e.target.value)}
+                                onChange={(e) => {
+                                    setConfEmailCorpo(e.target.value);
+                                }}
                                 type="text"
                                 as="textarea"
+                                style={{ height: '800px' }} // Defina a altura desejada em pixels
                                 className="textArea"
                             />
                         </Col>
+
+                        <Col md="12" className={`${estilos.right}`}>
+                            <br />
+
+                            <Button variant="primary" onClick={handleShow}>
+                                Variáveis Disponíveis
+                            </Button>
+                        </Col>
+
+
                     </Row>
 
                     <br />
 
                     <Row>
-                        <Col md="4">
-                            <Image id="imgPessoa" onClick={() => setConfImageLogo(base64NoPhoto)} src={confImageLogo}></Image>
-
-                            <Form.Control type="file" id="inputFoto" accept="image/png, image/jpg, image/jpeg" onChange={selecionaLogo} />
-                            <Form.Label htmlFor="inputFoto" className='label-input-file'>Selecione a Logo</Form.Label>
-                        </Col>
-                        <Col md="4">
-                            <Image id="imgPessoa" onClick={() => setConfImageLoading(base64NoPhoto)} src={confImageLoading}></Image>
-
-                            <Form.Control type="file" id="inputCarregando" accept="image/gif" onChange={selecionaGif} />
-                            <Form.Label htmlFor="inputCarregando" className='label-input-file'>Selecione o Gif de Carregando</Form.Label>
-                        </Col>
-                        <Col md="4">
-                            <Image id="imgPessoa" onClick={() => setConfImageLogin(base64NoPhoto)} src={confImageLogin}></Image>
-
-                            <Form.Control type="file" id="inputBanner" accept="image/png, image/jpg, image/jpeg" onChange={selecionaBanner} />
-                            <Form.Label htmlFor="inputBanner" className='label-input-file'>Selecione O Banner</Form.Label>
-                        </Col>
+                        <h3>Pré-Visualização de E-mail</h3>
                     </Row>
+                    <iframe title="contentMail"
+                        id="myFrame" width="100%" height="850" srcDoc={confEmailCorpo} ></iframe>
+
                     <Toolbar jsonRemove={enviaJsonRemove} pesquisarHidden={true} />
-                    <div dangerouslySetInnerHTML={{ __html: confEmailCorpo }} />
                 </Form>
             </Container>
             }
             <Footer />
+
+            <Modal className='modal-md' show={show}>
+                <Modal.Header><b>Variáveis Disponíveis</b></Modal.Header>
+                <Modal.Body>
+                    <Container>
+                        <Table striped bordered hover>
+                            <thead>
+                                <tr>
+                                    <th>Variável</th>
+                                    <th>Descrição</th>
+                                    <th>Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {variables.map((variable, index) => (
+                                    <tr key={index}>
+                                        <td>{variable.name}</td>
+                                        <td>{variable.description}</td>
+                                        <td>
+                                            <Button
+                                                variant="primary"
+                                                onClick={() => insertVariable(variable)}
+                                            >
+                                                Inserir
+                                            </Button>                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </Table>
+                    </Container>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="primary" className='btn-danger' onClick={handleClose}>
+                        Fechar
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </div >
     );
 };

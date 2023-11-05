@@ -35,6 +35,12 @@ public class Agendamento implements Serializable {
     @Basic(optional = false)
     @Column(name = "AGD_CONCLUIDO")
     private boolean agdConcluido;
+    @Basic(optional = false)
+    @Column(name = "AGD_COMUNICOU_1")
+    private boolean agdComunicou1;
+    @Basic(optional = false)
+    @Column(name = "AGD_COMUNICOU_2")
+    private boolean agdComunicou2;
     @Column(name = "AGD_OBSERVACOES")
     private String agdObservacoes;
     @JoinColumn(name = "AGD_ID_PRATICANTE", referencedColumnName = "PRAT_ID")
@@ -107,6 +113,22 @@ public class Agendamento implements Serializable {
 
     public void setAgdConcluido(boolean agdConcluido) {
         this.agdConcluido = agdConcluido;
+    }
+
+    public boolean isAgdComunicou1() {
+        return agdComunicou1;
+    }
+
+    public void setAgdComunicou1(boolean agdComunicou1) {
+        this.agdComunicou1 = agdComunicou1;
+    }
+
+    public boolean isAgdComunicou2() {
+        return agdComunicou2;
+    }
+
+    public void setAgdComunicou2(boolean agdComunicou2) {
+        this.agdComunicou2 = agdComunicou2;
     }
 
     public String getAgdObservacoes() {
