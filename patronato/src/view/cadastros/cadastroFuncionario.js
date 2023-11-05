@@ -137,7 +137,6 @@ const cadastroFuncionario = () => {
                 "funcCnh": funcCnh,
                 "pessoa": jsonPessoa
             }
-            console.log(jsonFuncionario)
             return jsonFuncionario;
         }
 

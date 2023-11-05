@@ -266,7 +266,6 @@ const cadastroPraticante = () => {
         }
         var bloqueiaResponsavel = false;
         listResponsveisSelecionados.forEach(r => {
-            console.log(r);
             if (r.pxrTipoResp === "S") {
                 mensagemCustomizada("Selecione um parentesco para o responsável " + r.responsavel.pessoa.pesNome, "warning");
                 bloqueiaResponsavel = true;

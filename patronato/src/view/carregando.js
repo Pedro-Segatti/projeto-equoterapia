@@ -11,7 +11,6 @@ const Carregando = ({ showCarregando }) => {
         const response = await api.get("/configuracoes");
         const { confImageLoading } = response.data;
         setGifCarregando(confImageLoading);
-        console.log(response.data)
     }
 
     useEffect(() => {

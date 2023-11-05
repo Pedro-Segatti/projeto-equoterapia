@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Created-By: IntelliJ IDEA
+Built-By: edumo
+Build-Jdk: Oracle OpenJDK version 11.0.15
+Implementation-Title: patronato
+Implementation-Version: 0.0.1
+Implementation-Vendor-Id: com.patronato
+Main-Class: ${start-class}
+

@@ -52,6 +52,8 @@ public class EmailService implements EmailInterface {
         Properties properties = new Properties();
         properties.setProperty("mail.smtp.auth", "true");
         properties.setProperty("mail.smtp.starttls.enable", "true");
+        properties.setProperty("mail.mime.charset", "utf-8");
+        properties.setProperty("mail.smtp.allow8bitmime", "true");
 
         mailSender.setJavaMailProperties(properties);
 
@@ -97,14 +99,14 @@ public class EmailService implements EmailInterface {
             if (StringUtil.notNullOrEmpty(emailPraticante)){
                 emailDestinatarios.add(emailPraticante);
             }
-            List<String> emailDestinatariosList = emailDestinatarios.stream().toList();
+            List<String> emailDestinatariosList = emailDestinatarios.stream().collect(Collectors.toList());
 
             if (ListUtil.isEmpty(emailDestinatariosList)){
                 continue;
             }
 
-            List<String> nomeCavalos = agendamento.getAnimalList().stream().map(Animal::getAniNome).toList();
-            List<String> nomeProfissionais = agendamento.getFuncionarioList().stream().map(funcionario -> funcionario.getPessoa().getPesNome()).toList();
+            List<String> nomeCavalos = agendamento.getAnimalList().stream().map(Animal::getAniNome).collect(Collectors.toList());
+            List<String> nomeProfissionais = agendamento.getFuncionarioList().stream().map(funcionario -> funcionario.getPessoa().getPesNome()).collect(Collectors.toList());
 
             for (String email : emailDestinatariosList) {
                 Map<String, String> mapVars = new HashMap<>();

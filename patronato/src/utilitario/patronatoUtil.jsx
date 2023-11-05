@@ -33,7 +33,6 @@ export const montaJsonPessoaCompleta = async (pesId, pesNome, pesCpf,pesLoginPas
         "logradouro": pesLogId,
         "telefoneList": telefoneList
     };
-    console.log(json);
     return json;
 } 
 
