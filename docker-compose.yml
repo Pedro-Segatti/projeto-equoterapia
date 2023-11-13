@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: masterkey
+      MYSQL_DATABASE: patronato
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./dados-mysql:/var/lib/mysql
+    networks: ['mynetwork']
+
+  backend:
+    build:
+      context: /patronatoAPI/.
+    ports:
+      - "8080:8080"
+    depends_on: 
+      - db
+    networks: ['mynetwork']  
+
+  frontend:
+    build:
+      context: /patronato/.
+    ports:
+      - "3000:3000"
+    depends_on: 
+      - backend
+    networks: ['mynetwork']  
+
+
+networks: {mynetwork: {}}
