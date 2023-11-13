@@ -362,19 +362,18 @@ function cadastroFichaEvol() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
         if (evolIdPrat.pessoa.pesNome === "") {
             mensagemCustomizada("Selecione um Praticante", "warning");
             document.getElementById("botaoPraticante").focus();
             return;
         }
-
+        
         if (evolIdMont.montDescricao === "") {
             mensagemCustomizada("Selecione uma montaria", "warning");
             document.getElementById("botaoMontaria").focus();
             return;
         }
-
+        
         if (evolClima === "") {
             mensagemCustomizada("Selecione um clima", "warning");
             document.getElementById("clima").focus();
@@ -400,6 +399,7 @@ function cadastroFichaEvol() {
             document.getElementById("btnAtiv").focus();
             return;
         }
+        setLoading(true);
         enviaJsonGravar();
         limparCamposFormulario();
     }

@@ -100,12 +100,12 @@ function cadastroLogradouro() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
         if (bairro.barNome === "") {
             mensagemCustomizada("Selecione um Bairro", "warning");
             document.getElementById("btnBairro").focus();
             return;
         }
+        setLoading(true);
         enviaJsonGravar();
         limparCamposFormulario();
     }

@@ -434,7 +434,6 @@ function movimentoAvalFisioter() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
         if (aftIdPraticante.pessoa.pesNome === "") {
             mensagemCustomizada("Selecione um praticante", "warning");
             document.getElementById("botaoPraticante").focus();
@@ -450,6 +449,7 @@ function movimentoAvalFisioter() {
             document.getElementById("botaoMedico").focus();
             return;
         }
+        setLoading(true);
         await enviaJsonGravar();
         limparCamposFormulario();
     }

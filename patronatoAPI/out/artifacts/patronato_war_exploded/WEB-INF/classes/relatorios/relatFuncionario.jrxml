@@ -18,7 +18,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="67" splitType="Stretch">
+		<band height="70" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="554" height="20" uuid="81753e9c-6770-465e-a4ab-e2b22c3c5cb9"/>
 				<textElement textAlignment="Center">
@@ -27,7 +27,10 @@
 				<text><![CDATA[Relatório de Funcionários]]></text>
 			</staticText>
 			<image scaleImage="FillFrame">
-				<reportElement x="0" y="0" width="170" height="40" uuid="f4755500-94a9-409f-a37d-4ea830f2daff"/>
+				<reportElement x="10" y="0" width="65" height="65" uuid="f4755500-94a9-409f-a37d-4ea830f2daff">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
 				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.getInstance(DefaultJasperReportsContext.getInstance()).loadAwtImageFromBytes((byte[])$P{IMG_PATRONATO})]]></imageExpression>
 			</image>
 		</band>

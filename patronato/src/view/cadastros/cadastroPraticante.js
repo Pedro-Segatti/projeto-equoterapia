@@ -247,18 +247,17 @@ const cadastroPraticante = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
-
+        
         if (pesFoto === base64NoPhoto) {
             setPesFoto(null);
         }
-
+        
         if (pesSexo === "S") {
             mensagemCustomizada("Selecione um sexo", "warning");
             document.getElementById("inputSexo").focus();
             return;
         }
-
+        
         if (pesLogDescricao === "") {
             mensagemCustomizada("Selecione um logradouro", "warning");
             document.getElementById("btnLogradouro").focus();
@@ -274,7 +273,8 @@ const cadastroPraticante = () => {
         if (bloqueiaResponsavel) {
             return;
         }
-
+        setLoading(true);
+        
         const montaJsonPraticante = async () => {
             const jsonPessoa = await montaJsonPessoaCompleta(pesId, pesNome, pesCpf, "", pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pesNacionalidade, pesFoto, pesEmail1, pesEmail2, pesLogId, listTelefones);
             const jsonPraticante = {

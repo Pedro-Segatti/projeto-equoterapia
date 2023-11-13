@@ -612,7 +612,10 @@
 				<text><![CDATA[Evolução semanal]]></text>
 			</staticText>
 			<image scaleImage="FillFrame">
-				<reportElement x="0" y="0" width="170" height="40" uuid="f4755500-94a9-409f-a37d-4ea830f2daff"/>
+				<reportElement x="17" y="-3" width="45" height="45" uuid="f4755500-94a9-409f-a37d-4ea830f2daff">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
 				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.getInstance(DefaultJasperReportsContext.getInstance()).loadAwtImageFromBytes((byte[])$P{IMG_PATRONATO})]]></imageExpression>
 			</image>
 		</band>

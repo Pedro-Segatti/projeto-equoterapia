@@ -147,13 +147,14 @@ const movimentoAgendamentoSessao = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
-
+        
         if (agdPraticante.pessoa.pesNome === "") {
             mensagemCustomizada("Selecione um praticante", "warning");
             document.getElementById("botaoPraticante").focus();
             return;
         }
+        
+        setLoading(true);
 
         var jsonAgendamento = {
             "agdId": agdId,

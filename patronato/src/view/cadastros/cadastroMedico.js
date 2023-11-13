@@ -123,7 +123,6 @@ const cadastroMedico = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
         if (pesSexo === "S") {
             mensagemCustomizada("Selecione um sexo", "warning");
             document.getElementById("inputSexo").focus();
@@ -134,6 +133,7 @@ const cadastroMedico = () => {
             document.getElementById("btnLogradouro").focus();
             return;
         }
+        setLoading(true);
 
         enviaJsonGravar();
         limparCamposFormulario();

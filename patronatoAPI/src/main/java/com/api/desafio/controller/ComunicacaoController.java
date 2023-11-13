@@ -758,7 +758,8 @@ public class ComunicacaoController {
             agdConcluido = Boolean.valueOf(situacao);
         }
         List<Agendamento> agendamentos = agendamentoService.pesquisaAgendamentosDoPeriodo(agdDataInicial, agdDataFinal, agdConcluido).getBody();
-        return RelatorioUtil.gerarRelatorios(jsonConvertido, agendamentos);
+        Configuracoes config = configuracoesService.getConfiguracoes();
+        return RelatorioUtil.gerarRelatorios(jsonConvertido, agendamentos, config);
     }
 
     @CrossOrigin(origins = "*")
@@ -766,7 +767,8 @@ public class ComunicacaoController {
     public ResponseEntity<byte[]> gerarRelatorioFuncionarios(@RequestBody String jsonParams) {
         JsonObject jsonConvertido = new Gson().fromJson(jsonParams, JsonObject.class);
         List<Funcionario> funcionarios = funcionarioService.pesquisaFuncionario("", "", null).getBody();
-        return RelatorioUtil.gerarRelatorios(jsonConvertido, funcionarios);
+        Configuracoes config = configuracoesService.getConfiguracoes();
+        return RelatorioUtil.gerarRelatorios(jsonConvertido, funcionarios, config);
     }
 
     @CrossOrigin(origins = "*")
@@ -778,7 +780,8 @@ public class ComunicacaoController {
         Date dataFim = DateUtil.newDate(filtros.get("dataFim").getAsString());
         Integer pratId = RelatorioUtil.getParamInteger(filtros,"pratId");
         List<FichaEvolucao> fichaEvol = fichaEvolService.pesquisaRelatorio(dataIni, dataFim, pratId).getBody();
-        return RelatorioUtil.gerarRelatorios(jsonConvertido, fichaEvol);
+        Configuracoes config = configuracoesService.getConfiguracoes();
+        return RelatorioUtil.gerarRelatorios(jsonConvertido, fichaEvol, config);
     }
 
     @CrossOrigin(origins = "*")

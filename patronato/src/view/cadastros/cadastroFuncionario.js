@@ -115,7 +115,6 @@ const cadastroFuncionario = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
         if (pesSexo === "S") {
             mensagemCustomizada("Selecione um sexo", "warning");
             document.getElementById("inputSexo").focus();
@@ -126,7 +125,8 @@ const cadastroFuncionario = () => {
             document.getElementById("btnLogradouro").focus();
             return;
         }
-
+        setLoading(true);
+        
         const montaJsonFuncionario = async () => {
             const jsonPessoa = await montaJsonPessoaCompleta(pesId, pesNome, pesCpf, "", pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pesNacionalidade, "", pesEmail1, pesEmail2, pesLogId, listTelefones);
             const jsonFuncionario = {

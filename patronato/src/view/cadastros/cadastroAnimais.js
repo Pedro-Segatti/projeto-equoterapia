@@ -83,11 +83,11 @@ function cadastroAnimais() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
         if (aniPorte === "") {
             avisoCustomizado("Selecione um porte para o Animal");
             return;
         }
+        setLoading(true);
         enviaJsonGravar();
         limparCamposFormulario();
     }

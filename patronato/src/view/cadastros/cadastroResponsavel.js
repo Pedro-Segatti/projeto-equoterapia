@@ -113,20 +113,21 @@ const cadastroResponsavel = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        setLoading(true);
-
+        
         if (pesSexo === "S") {
             mensagemCustomizada("Selecione um sexo", "warning");
             document.getElementById("inputSexo").focus();
             return;
         }
-
+        
         if (pesLogDescricao === "") {
             mensagemCustomizada("Selecione um logradouro", "warning");
             document.getElementById("btnLogradouro").focus();
             return;
         }
-
+        
+        setLoading(true);
+        
         const montaJsonResponsavel = async () => {
             const jsonPessoa = await montaJsonPessoaCompleta(pesId, pesNome, pesCpf, "", pesSexo, pesDataNasc, pesEndNum, pesEndCompl, pesNacionalidade, "", pesEmail1, pesEmail2, pesLogId, listTelefones);
             const jsonResponsavel = {

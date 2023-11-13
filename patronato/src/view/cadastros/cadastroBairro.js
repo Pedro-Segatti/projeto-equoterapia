@@ -82,12 +82,12 @@ function cadastroBairro() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
         if(cidade.cidNome === ""){
             mensagemCustomizada("Selecione uma Cidade","warning");
             document.getElementById("btnCidade").focus();
             return;
         }
+        setLoading(true);
         enviaJsonGravar();
         limparCamposFormulario();
     }

@@ -92,12 +92,12 @@ function movimentoAvalSocioecon() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
         if (praticante.pessoa.pesNome === "") {
             mensagemCustomizada("Selecione um Praticante", "warning");
             document.getElementById("btnPraticante").focus();
             return;
         }
+        setLoading(true);
         enviaJsonGravar();
         limparCamposFormulario();
     }

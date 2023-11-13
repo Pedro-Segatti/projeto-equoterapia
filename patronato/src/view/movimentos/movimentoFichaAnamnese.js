@@ -566,7 +566,6 @@ function movimentoFichaAnamnese() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
     if (amnIdPraticante.pessoa.pesNome === "") {
       mensagemCustomizada("Selecione um praticante", "warning");
       document.getElementById("botaoPraticante").focus();
@@ -577,6 +576,7 @@ function movimentoFichaAnamnese() {
       document.getElementById("botaoFuncionario").focus();
       return;
     }
+    setLoading(true);
     enviaJsonGravar();
     limparCamposFormulario();
   }
