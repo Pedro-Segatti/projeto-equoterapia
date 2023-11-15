@@ -95,7 +95,7 @@ public class ComunicacaoController {
     @GetMapping("/login")
     public ResponseEntity<?> getAuthenticate(@RequestParam String login, @RequestParam String password) {
         if (login == null || login.isEmpty() || password == null || password.isEmpty()) {
-            return new ResponseEntity<Pessoa>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         Pessoa pessoa = pessoaService.getPessoaByPesCpf(login);
@@ -115,7 +115,7 @@ public class ComunicacaoController {
     @GetMapping("/pessoaLogada")
     public ResponseEntity<?> getPessoaLogada(@RequestParam Integer id) {
         if (id == null) {
-            return new ResponseEntity<Pessoa>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         Pessoa pessoa = pessoaService.getPessoaByPesId(id);
@@ -446,7 +446,7 @@ public class ComunicacaoController {
         if (adicionando) {
             pessoa = pessoaService.getPessoaByPesCpf(praticante.getPessoa().getPesCpf());
             if (pessoa != null) {
-                return new ResponseEntity<Praticante>(HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
         }
 
@@ -518,7 +518,7 @@ public class ComunicacaoController {
         if (adicionando) {
             pessoa = pessoaService.getPessoaByPesCpf(responsavel.getPessoa().getPesCpf());
             if (pessoa != null) {
-                return new ResponseEntity<Responsavel>(HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
         }
 
@@ -583,7 +583,7 @@ public class ComunicacaoController {
         if (adicionando) {
             pessoa = pessoaService.getPessoaByPesCpf(medico.getPessoa().getPesCpf());
             if (pessoa != null) {
-                return new ResponseEntity<Medico>(HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
         }
 
@@ -627,11 +627,12 @@ public class ComunicacaoController {
         if (adicionando) {
             pessoa = pessoaService.getPessoaByPesCpf(funcionario.getPessoa().getPesCpf());
             if (pessoa != null) {
-                return new ResponseEntity<Funcionario>(HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
         }
-        pessoaService.salva(funcionario.getPessoa());
-        return new ResponseEntity<Funcionario>(funcionarioService.salva(funcionario),HttpStatus.OK);
+        pessoa = pessoaService.salva(funcionario.getPessoa());
+        funcionario.setPessoa(pessoa);
+        return new ResponseEntity<Funcionario>(funcionarioService.salva(funcionario), HttpStatus.OK);
     }
 
     @CrossOrigin(origins = "*")
