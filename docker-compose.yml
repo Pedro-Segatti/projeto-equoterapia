@@ -5,7 +5,7 @@ services:
     image: mysql:latest
     environment:
       MYSQL_ROOT_PASSWORD: masterkey
-      MYSQL_DATABASE: patronato
+      MYSQL_DATABASE: equoterapia
     ports:
       - "3306:3306"
     volumes:

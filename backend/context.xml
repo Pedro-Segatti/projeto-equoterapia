@@ -4,7 +4,7 @@
          username="root"
          password="masterkey"
          driverClassName="com.mysql.jdbc.Driver"
-         url="jdbc:mysql://db:3306/patronato?useTimezone=true;serverTimezone=America/Sao_Paulo" />
+         url="jdbc:mysql://db:3306/equoterapia?useTimezone=true;serverTimezone=America/Sao_Paulo" />
 
  Default set of monitored resources. If one of these changes, the    -->
     <!-- web application will be reloaded.                                   -->
