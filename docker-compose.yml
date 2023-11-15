@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   db:
-    image: mysql:latest
+    image: eduardomokfa/equoterapia_database:0.0.1
     environment:
       MYSQL_ROOT_PASSWORD: masterkey
       MYSQL_DATABASE: equoterapia
@@ -10,15 +10,26 @@ services:
       - "3306:3306"
     volumes:
       - ./dados-mysql:/var/lib/mysql
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - |
+          mysql -h localhost -u root -p$${MYSQL_ROOT_PASSWORD} \
+          --database $${MYSQL_DATABASE} -e 'SHOW TABLES' | \
+          [ $$(wc -l) -gt 10 ]
+      interval: 10s 
+      timeout: 5s 
+      retries: 3
     networks: ['mynetwork']
-
+    
   backend:
     build:
       context: /backend/.
     ports:
       - "8080:8080"
-    depends_on: 
-      - db
+    depends_on:
+      db:
+        condition: service_healthy
     networks: ['mynetwork']  
 
   frontend:
