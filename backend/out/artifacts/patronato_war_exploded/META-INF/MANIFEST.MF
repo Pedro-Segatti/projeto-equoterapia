@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Created-By: IntelliJ IDEA
+Built-By: edumo
+Build-Jdk: Oracle OpenJDK version 18.0.2
+Implementation-Title: equoterapia
+Implementation-Version: 0.0.1
+Implementation-Vendor-Id: com.equoterapia
+Main-Class: ${start-class}
+

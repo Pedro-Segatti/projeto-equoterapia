@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatFuncionario" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c2a95f97-aa24-45d2-98b7-b99a2a71570d">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.report.description" value=""/>
+	<parameter name="IMG_PATRONATO" class="java.lang.Object"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="agdHoraFormatada" class="java.lang.String"/>
+	<field name="agdDataFormatada" class="java.lang.String"/>
+	<field name="agdDescricao" class="java.lang.String"/>
+	<field name="pesNome" class="java.lang.String">
+		<fieldDescription><![CDATA[praticante.pessoa.pesNome]]></fieldDescription>
+	</field>
+	<field name="agdConcluidoDescricao" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="67" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="554" height="20" uuid="81753e9c-6770-465e-a4ab-e2b22c3c5cb9"/>
+				<textElement textAlignment="Center">
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[Agendamentos]]></text>
+			</staticText>
+			<image scaleImage="FillFrame">
+				<reportElement x="20" y="0" width="65" height="65" uuid="f4755500-94a9-409f-a37d-4ea830f2daff">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.getInstance(DefaultJasperReportsContext.getInstance()).loadAwtImageFromBytes((byte[])$P{IMG_PATRONATO})]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="14">
+			<staticText>
+				<reportElement x="0" y="0" width="190" height="14" uuid="5b931e7d-e248-41cc-98e3-7c6751997513"/>
+				<box leftPadding="5"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descrição]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="190" y="0" width="120" height="14" uuid="fac1e3a6-de68-474c-bd81-444e8629abc3"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="0"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Praticante]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="0" width="60" height="14" uuid="d5fa21e1-b9f7-42c3-9c6c-add028718930"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="0"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="0" width="60" height="14" uuid="d2df1615-a2aa-44c7-8a27-c78faba1b5a8"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="0"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hora]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="430" y="0" width="80" height="14" uuid="7d08de63-356b-44b1-a843-817a1d30c660"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="0"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Concluído]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="19" splitType="Stretch">
+			<textField textAdjust="StretchHeight">
+				<reportElement x="0" y="0" width="190" height="14" uuid="d70db02c-46d5-4a36-8408-d8a1e029a66b">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box leftPadding="8"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{agdDescricao}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="190" y="0" width="120" height="14" uuid="b9be5413-8f61-4780-bc74-8c6114b49c6d"/>
+				<box leftPadding="8"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pesNome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="0" width="60" height="14" uuid="f399b1a1-f7d7-41da-a9f0-32dd13323a01"/>
+				<box leftPadding="8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{agdDataFormatada}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="370" y="0" width="60" height="14" uuid="eedbe535-3c95-406e-b0ff-a1fcd898d18c"/>
+				<box leftPadding="8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{agdHoraFormatada}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="Float" x="0" y="15" width="554" height="1" uuid="5efef9e5-6db4-4515-aacc-3e49c1946652"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="430" y="0" width="80" height="14" uuid="7794932e-c96a-4f3c-907b-4a5105d8a1ef"/>
+				<box leftPadding="8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{agdConcluidoDescricao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>
