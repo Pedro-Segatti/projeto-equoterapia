@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+	<Resource name="jdbc/confluence" auth="Container" type="javax.sql.DataSource"
+         username="root"
+         password="masterkey"
+         driverClassName="com.mysql.jdbc.Driver"
+         url="jdbc:mysql://db:3306/patronato?useTimezone=true;serverTimezone=America/Sao_Paulo" />
+
+ Default set of monitored resources. If one of these changes, the    -->
+    <!-- web application will be reloaded.                                   -->
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+    <WatchedResource>WEB-INF/tomcat-web.xml</WatchedResource>
+    <WatchedResource>${catalina.base}/conf/web.xml</WatchedResource>
+
+    <!-- Uncomment this to disable session persistence across Tomcat restarts -->
+    <!--
+    <Manager pathname="" />
+    -->
+</Context>

@@ -14,7 +14,7 @@ services:
 
   backend:
     build:
-      context: /patronatoAPI/.
+      context: /backend/.
     ports:
       - "8080:8080"
     depends_on: 
@@ -23,7 +23,7 @@ services:
 
   frontend:
     build:
-      context: /patronato/.
+      context: /frontend/.
     ports:
       - "3000:3000"
     depends_on: 

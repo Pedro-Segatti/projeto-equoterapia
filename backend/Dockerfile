@@ -9,13 +9,13 @@ RUN apt-get update && \
     rm apache-tomcat-9.0.73.tar.gz && \
     rm -rf webapps/*
 
-COPY /target/patronato.war webapps/
+COPY /target/equoterapia.war webapps/
 
 COPY /target/lib/* lib/
 
-RUN rm -rf /conf/context.xml
+RUN rm -rf conf/context.xml
 
-COPY /context.xml /conf/context.xml
+COPY /context.xml conf/
 
 EXPOSE 8080
 
