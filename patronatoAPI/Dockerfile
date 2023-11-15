@@ -13,7 +13,9 @@ COPY /target/patronato.war webapps/
 
 COPY /target/lib/* lib/
 
-COPY /target/context.xml /conf/context.xml
+RUN rm -rf /conf/context.xml
+
+COPY /context.xml /conf/context.xml
 
 EXPOSE 8080
 
