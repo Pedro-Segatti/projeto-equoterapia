@@ -1,0 +1,37 @@
+package com.api.desafio.controller;
+
+import com.api.desafio.model.*;
+import com.api.desafio.service.*;
+import com.api.desafio.utils.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@RestController
+public class DocumentoController {
+
+    @Autowired
+    private DocumentosService documentosService;
+
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/removerDocumento")
+    public ResponseEntity<Documentos> removerDocumento(@RequestParam(required = false) Integer docId) {
+        try {
+            documentosService.remove(docId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
+}
