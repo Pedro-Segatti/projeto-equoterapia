@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Created-By: IntelliJ IDEA
-Built-By: Pedro
-Build-Jdk: 18.0.2
-Implementation-Title: equoterapia
-Implementation-Version: 0.0.1
-Implementation-Vendor-Id: com.equoterapia
-Main-Class: ${start-class}
-

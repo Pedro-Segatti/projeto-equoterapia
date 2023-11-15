@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3bbb600f-0715-4014-a757-c63094fe60f8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/patronatoAPI/src/main/java/com/api/desafio/controller/ComunicacaoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/patronatoAPI/src/main/java/com/api/desafio/controller/ComunicacaoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patronatoAPI/src/main/java/com/api/desafio/service/ConfiguracoesService.java" beforeDir="false" afterPath="$PROJECT_DIR$/patronatoAPI/src/main/java/com/api/desafio/service/ConfiguracoesService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patronatoAPI/src/main/java/com/api/desafio/service/EmailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/patronatoAPI/src/main/java/com/api/desafio/service/EmailService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patronatoAPI/src/main/java/com/api/desafio/utils/EmailInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/patronatoAPI/src/main/java/com/api/desafio/utils/EmailInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/patronatoDatabase.sql" beforeDir="false" afterPath="$PROJECT_DIR$/patronatoDatabase.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/public/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,10 +13,10 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 0
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="2WHMNKWpTByJBx6CYzcmeoyMSRz" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -31,7 +28,8 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/Pedro/Documents/GitHub/projetoPatronato/patronatoAPI",
+    "last_opened_file_path": "C:/Users/Pedro/Documents/GitHub/projeto-equoterapia",
+    "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -44,6 +42,7 @@
       <option name="presentableId" value="Default" />
       <updated>1696385010565</updated>
       <workItem from="1696385011550" duration="46000" />
+      <workItem from="1700012700015" duration="158000" />
     </task>
     <servers />
   </component>
