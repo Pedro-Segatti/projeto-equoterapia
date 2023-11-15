@@ -35,13 +35,27 @@ O banco de dados foi enviado ao docker hub, para que não seja necessário reali
 
 ## Manual de implantação
 Para a execução do projeto, deve-se instalar o orquestrador de containers [Docker](https://www.docker.com/)
+Também deve ser instalado o [Java_18](https://jdk.java.net/java-se-ri/18)
 
-Após realizar a instalação, basta abrir um terminal (CMD) e posicioná-lo no diretório principal do projeto
+Basta abrir um terminal (CMD) e posicioná-lo no diretório principal do projeto
 Para posicionar o terminal deve-se seguir este exemplo:
 ```bash
 cd C:\Users\seuUsuario\Documents\GitHub\projeto-equoterapia
 ```
-Após posicionar, basta executar o seguinte comando:
+
+Primeiro deve-se acessar a pasta do backend com o comando
+```bash
+cd backend
+```
+Executar a construção do projeto com Maeven, para que ele seja gerado corretamente.
+```bash
+mvnw clean install
+```
+Então voltar para o diretório anterior
+```bash
+cd ..
+```
+Após isso, basta executar o seguinte comando:
 ```bash
 docker-compose up --build
 ```
