@@ -35,7 +35,7 @@ public class RelatorioUtil {
             }
 
             String base64Data = config.getConfImageLogo().split(",")[1];
-            parameters.put("IMG_PATRONATO", Base64.getDecoder().decode(new String(base64Data).getBytes("UTF-8")));
+            parameters.put("IMG", Base64.getDecoder().decode(new String(base64Data).getBytes("UTF-8")));
             JasperPrint jasperPrint = null;
             jasperPrint = JasperFillManager.fillReport(compileReport, parameters, new JRBeanCollectionDataSource(registros));
             byte data[] = JasperExportManager.exportReportToPdf(jasperPrint);

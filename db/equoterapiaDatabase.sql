@@ -4,6 +4,12 @@
 
 -- DROP DATABASE PATRONATO;
 
+set character_set_client='utf8';
+set character_set_connection='utf8';
+set character_set_database='utf8';
+set character_set_results='utf8';
+set character_set_server='utf8';
+
 CREATE TABLE CONFIGURACOES (
 	CONF_ID INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
     CONF_EMAIL VARCHAR(100),

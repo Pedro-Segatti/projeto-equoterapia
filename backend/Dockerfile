@@ -9,6 +9,10 @@ RUN apt-get update && \
     rm apache-tomcat-9.0.73.tar.gz && \
     rm -rf webapps/*
 
+RUN apt-get install -y libfreetype6
+
+RUN apt-get install -y fontconfig
+
 COPY /target/equoterapia.war webapps/
 
 COPY /target/lib/* lib/
