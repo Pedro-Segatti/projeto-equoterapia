@@ -24,10 +24,7 @@ Para atender as necessidades da instituição sem fins lucrativos Patronato São
 ## Tecnicamente, como é o projeto.
 A aplicação está inteiramente estruturada com containers, portanto a execução do mesmo é extremamente simples e fácil.
 
-O banco de dados foi enviado ao docker hub, para que não seja necessário realizar a criação de tabelas localmente. https://hub.docker.com/r/eduardomokfa/equoterapia_database 
-
-## Documentações
-
+Ao iniciar o container pela primeira vez será criada uma pasta dados-mysql, portanto todas as informações do banco de dados serão salvas neste diretório. Caso o container seja apagado por algum motivo, todas as informações já enviadas ao banco de dados estarão salvas.
 
 ## Diagramas
 - Entidade Relacionamento
@@ -35,6 +32,7 @@ O banco de dados foi enviado ao docker hub, para que não seja necessário reali
 
 ## Manual de implantação
 Para a execução do projeto, deve-se instalar o orquestrador de containers [Docker](https://www.docker.com/)
+
 Também deve ser instalado o [Java_18](https://jdk.java.net/java-se-ri/18)
 
 Basta abrir um terminal (CMD) e posicioná-lo no diretório principal do projeto
